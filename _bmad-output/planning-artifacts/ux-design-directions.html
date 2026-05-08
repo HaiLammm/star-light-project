@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>star-light — Design Direction: Pixel-Perfect Clone</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  :root {
+    --bg-primary: #FFFFFF;
+    --bg-section: #F5F5F5;
+    --bg-footer: #1E2D4A;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-inverse: #FFFFFF;
+    --accent-navy: #1E2D4A;
+    --accent-cta: #FF6B00;
+    --accent-discount: #D32F2F;
+    --border-light: #E0E0E0;
+    --content-max: 1140px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .container { max-width: var(--content-max); margin: 0 auto; padding: 0 20px; }
+
+  /* === STICKY HEADER === */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: var(--content-max); margin: 0 auto; padding: 12px 20px;
+  }
+  .logo { font-size: 22px; font-weight: 700; color: var(--accent-navy); }
+  .logo span { color: var(--accent-cta); }
+  .header-phone {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--accent-cta); color: white;
+    padding: 8px 20px; border-radius: 6px;
+    font-size: 18px; font-weight: 700; text-decoration: none;
+  }
+  .header-phone:hover { opacity: 0.9; }
+  .header-phone .free { font-size: 11px; font-weight: 400; }
+
+  /* === NAV === */
+  .nav { background: var(--accent-navy); }
+  .nav-inner {
+    display: flex; justify-content: center; gap: 0;
+    max-width: var(--content-max); margin: 0 auto;
+  }
+  .nav a {
+    color: var(--text-inverse); text-decoration: none;
+    padding: 12px 18px; font-size: 13px; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.1); }
+
+  /* === HERO CAROUSEL === */
+  .hero {
+    background: linear-gradient(135deg, var(--accent-navy) 0%, #2C4A7A 100%);
+    color: white; text-align: center; padding: 60px 20px;
+    position: relative; overflow: hidden;
+  }
+  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .hero p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; }
+  .hero-badges { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .hero-badge {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: 500;
+  }
+  .carousel-dots { margin-top: 24px; display: flex; justify-content: center; gap: 8px; }
+  .carousel-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+  }
+  .carousel-dot.active { background: white; }
+
+  /* === SECTION TITLES === */
+  .section { padding: 60px 0; }
+  .section.alt { background: var(--bg-section); }
+  .section-title {
+    text-align: center; font-size: 24px; font-weight: 700;
+    color: var(--accent-navy); margin-bottom: 40px;
+  }
+  .section-title span { color: var(--accent-cta); }
+
+  /* === SERVICE CARDS === */
+  .service-grid { display: grid; gap: 20px; }
+  .service-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+  .service-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .service-card {
+    background: white; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border-light);
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer; text-decoration: none; color: inherit;
+    display: block;
+  }
+  .service-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .service-card-img {
+    height: 140px; background: linear-gradient(135deg, #e8edf2 0%, #d1dbe6 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; color: var(--accent-navy);
+  }
+  .service-card-body { padding: 16px; }
+  .service-card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--accent-navy); }
+  .service-card-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  .service-card-price { font-size: 18px; font-weight: 700; color: var(--accent-cta); }
+  .service-card-price small { font-size: 11px; font-weight: 400; color: var(--text-secondary); }
+  .web-badge {
+    display: inline-block; background: var(--accent-discount); color: white;
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  /* === CTA BLOCK === */
+  .cta-block {
+    background: linear-gradient(135deg, var(--accent-navy) 0%, #2C4A7A 100%);
+    color: white; text-align: center; padding: 40px 20px;
+  }
+  .cta-block h3 { font-size: 20px; margin-bottom: 8px; }
+  .cta-block p { font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
+  .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 32px; border-radius: 8px; font-size: 18px;
+    font-weight: 700; text-decoration: none; transition: opacity 0.2s;
+  }
+  .cta-btn:hover { opacity: 0.9; }
+  .cta-btn.phone { background: var(--accent-cta); color: white; }
+  .cta-btn.email { background: white; color: var(--accent-navy); }
+
+  /* === REASONS GRID === */
+  .reasons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .reason-card { text-align: center; padding: 24px 16px; }
+  .reason-icon {
+    width: 64px; height: 64px; margin: 0 auto 16px;
+    background: var(--bg-section); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--accent-cta);
+  }
+  .reason-title { font-size: 16px; font-weight: 700; color: var(--accent-navy); margin-bottom: 8px; }
+  .reason-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* === PROCESS FLOW === */
+  .flow-steps { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .flow-step {
+    flex: 1; min-width: 160px; max-width: 200px;
+    text-align: center; position: relative;
+  }
+  .flow-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent-cta); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; margin: 0 auto 12px;
+  }
+  .flow-img {
+    width: 100%; height: 100px; background: var(--bg-section);
+    border-radius: 8px; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--accent-navy);
+  }
+  .flow-title { font-size: 14px; font-weight: 700; color: var(--accent-navy); }
+  .flow-desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* === AREA MAP === */
+  .area-map {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+  }
+  .area-map-img {
+    background: var(--bg-section); border-radius: 12px;
+    height: 300px; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-secondary);
+  }
+  .area-list h4 { font-size: 16px; font-weight: 700; color: var(--accent-navy); margin-bottom: 8px; }
+  .area-list ul { list-style: none; padding: 0; columns: 2; }
+  .area-list li { font-size: 13px; padding: 3px 0; color: var(--text-secondary); }
+  .area-list li::before { content: "●"; color: var(--accent-cta); margin-right: 6px; font-size: 8px; }
+
+  /* === CASE/VOICE CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card {
+    background: white; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border-light); transition: box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .card-img {
+    height: 160px; background: linear-gradient(135deg, #e8edf2, #d1dbe6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; color: var(--accent-navy);
+  }
+  .card-body { padding: 16px; }
+  .card-tag {
+    display: inline-block; background: var(--bg-section); color: var(--accent-navy);
+    font-size: 11px; padding: 2px 8px; border-radius: 3px; margin-bottom: 8px;
+  }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-meta { font-size: 12px; color: var(--text-secondary); display: flex; gap: 16px; }
+
+  /* === COMPARISON TABLE === */
+  .comparison-table { width: 100%; border-collapse: collapse; }
+  .comparison-table th, .comparison-table td {
+    padding: 12px 16px; text-align: center; border: 1px solid var(--border-light);
+    font-size: 14px;
+  }
+  .comparison-table thead th {
+    background: var(--accent-navy); color: white; font-weight: 700;
+  }
+  .comparison-table thead th:first-child { background: var(--bg-section); color: var(--text-primary); }
+  .comparison-table .us { background: #FFF8F0; font-weight: 700; color: var(--accent-cta); }
+  .comparison-table .check { color: var(--accent-cta); font-size: 18px; }
+  .comparison-table .cross { color: #CCC; font-size: 18px; }
+
+  /* === FAQ ACCORDION === */
+  .faq-item { border-bottom: 1px solid var(--border-light); }
+  .faq-q {
+    padding: 16px 20px; font-size: 15px; font-weight: 700;
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; color: var(--accent-navy);
+  }
+  .faq-q::after { content: "＋"; font-size: 20px; color: var(--accent-cta); }
+  .faq-q.open::after { content: "－"; }
+  .faq-a { padding: 0 20px 16px; font-size: 14px; color: var(--text-secondary); display: none; }
+  .faq-a.show { display: block; }
+
+  /* === ANCHOR MENU === */
+  .anchor-menu {
+    background: white; border-bottom: 2px solid var(--accent-navy);
+    position: sticky; top: 65px; z-index: 90;
+  }
+  .anchor-inner {
+    display: flex; justify-content: center; gap: 0;
+    max-width: var(--content-max); margin: 0 auto;
+  }
+  .anchor-item {
+    padding: 12px 16px; font-size: 12px; font-weight: 500;
+    color: var(--accent-navy); text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    transition: background 0.2s;
+  }
+  .anchor-item:hover { background: var(--bg-section); }
+  .anchor-icon { font-size: 18px; }
+
+  /* === BREADCRUMB === */
+  .breadcrumb {
+    padding: 12px 0; font-size: 12px; color: var(--text-secondary);
+  }
+  .breadcrumb a { color: var(--accent-navy); text-decoration: none; }
+  .breadcrumb span { margin: 0 8px; }
+
+  /* === PRICING TIER === */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .pricing-card {
+    background: white; border: 1px solid var(--border-light);
+    border-radius: 8px; overflow: hidden; text-align: center;
+  }
+  .pricing-img {
+    height: 120px; background: var(--bg-section);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; color: var(--accent-navy);
+  }
+  .pricing-body { padding: 16px; }
+  .pricing-name { font-size: 14px; font-weight: 700; color: var(--accent-navy); margin-bottom: 8px; }
+  .pricing-amount { font-size: 24px; font-weight: 700; color: var(--accent-cta); }
+  .pricing-amount small { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+
+  /* === FOOTER === */
+  .footer { background: var(--bg-footer); color: var(--text-inverse); padding: 48px 0 24px; }
+  .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px; }
+  .footer h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .footer a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; display: block; padding: 3px 0; }
+  .footer a:hover { color: white; }
+  .footer-bottom { text-align: center; font-size: 12px; opacity: 0.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+
+  /* === PAGE LABEL === */
+  .page-label {
+    background: var(--accent-cta); color: white;
+    text-align: center; padding: 8px; font-size: 12px; font-weight: 700;
+  }
+  .page-divider {
+    background: var(--accent-navy); color: white;
+    text-align: center; padding: 20px; font-size: 20px; font-weight: 700;
+    margin: 40px 0 0;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .service-grid.cols-5, .service-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .reasons-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .area-map { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .flow-steps { flex-direction: column; align-items: center; }
+    .nav-inner { display: none; }
+    .anchor-inner { overflow-x: auto; justify-content: flex-start; }
+    .hero h1 { font-size: 22px; }
+  }
+
+  /* === MOBILE CTA BAR (improvement) === */
+  @media (max-width: 768px) {
+    .mobile-cta-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: var(--accent-cta); padding: 12px 20px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+    }
+    .mobile-cta-bar a {
+      color: white; font-size: 18px; font-weight: 700; text-decoration: none;
+    }
+    .mobile-cta-bar .label { font-size: 11px; font-weight: 400; }
+    body { padding-bottom: 60px; }
+  }
+  @media (min-width: 769px) {
+    .mobile-cta-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== MOBILE STICKY CTA BAR (invisible improvement) ===== -->
+<div class="mobile-cta-bar">
+  <span>📞</span>
+  <a href="tel:0120219695">
+    <span class="label">ご相談無料</span><br>
+    0120-219-695
+  </a>
+</div>
+
+<!-- =========================================================
+     MOCKUP 1: HOMEPAGE
+     ========================================================= -->
+<div class="page-label">📄 MOCKUP 1: HOMEPAGE (トップページ)</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">設備<span>人</span></div>
+    <a href="tel:0120219695" class="header-phone">
+      <span class="free">ご相談無料</span>
+      📞 0120-219-695
+    </a>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#">電気まわり ▾</a>
+    <a href="#">水まわり ▾</a>
+    <a href="#">会社案内 ▾</a>
+    <a href="#">サービスの流れ</a>
+    <a href="#">施工事例</a>
+    <a href="#">お客様の声</a>
+    <a href="#">コラム</a>
+    <a href="#">FAQ</a>
+  </div>
+</nav>
+
+<!-- HERO CAROUSEL -->
+<section class="hero">
+  <h1>電気・水まわりのトラブルは<br>設備人におまかせ！</h1>
+  <p>最短10分で駆けつけ ｜ 24時間365日対応 ｜ お見積り無料</p>
+  <div class="hero-badges">
+    <span class="hero-badge">⚡ 電気修理 1,100円〜</span>
+    <span class="hero-badge">💧 水まわり修理 5,500円〜</span>
+    <span class="hero-badge">🔧 年間実績 15,000件</span>
+  </div>
+  <div class="carousel-dots">
+    <span class="carousel-dot active"></span>
+    <span class="carousel-dot"></span>
+    <span class="carousel-dot"></span>
+  </div>
+</section>
+
+<!-- ELECTRICITY SERVICES -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">⚡ 電気まわりの<span>修理サービス</span></h2>
+    <div class="service-grid cols-5">
+      <a class="service-card">
+        <div class="service-card-img">⚡</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">ブレーカー</div>
+          <div class="service-card-desc">修理・交換・漏電調査等</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">🔌</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">コンセント</div>
+          <div class="service-card-desc">修理・増設・交換等</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">💡</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">照明</div>
+          <div class="service-card-desc">取付・交換・修理等</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">📡</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">アンテナ</div>
+          <div class="service-card-desc">設置・修理・調整等</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">🔥</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">給湯器</div>
+          <div class="service-card-desc">交換・修理・設置等</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WATER SERVICES -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">💧 水まわりの<span>修理サービス</span></h2>
+    <div class="service-grid cols-4">
+      <a class="service-card">
+        <div class="service-card-img">🚽</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">トイレ</div>
+          <div class="service-card-desc">つまり・水漏れ・交換等</div>
+          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">🍳</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">キッチン</div>
+          <div class="service-card-desc">つまり・水漏れ・交換等</div>
+          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">🛁</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">お風呂</div>
+          <div class="service-card-desc">つまり・水漏れ・交換等</div>
+          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">🚿</div>
+        <div class="service-card-body">
+          <span class="web-badge">WEB割引</span>
+          <div class="service-card-title">洗面所</div>
+          <div class="service-card-desc">つまり・水漏れ・交換等</div>
+          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BLOCK 1 -->
+<div class="cta-block">
+  <h3>少しでも不調を感じたら いつでもお気軽にご相談ください</h3>
+  <p>ご相談無料！年中無休で対応 ｜ 必ず事前にお見積り</p>
+  <div class="cta-buttons">
+    <a href="tel:0120219695" class="cta-btn phone">📞 0120-219-695</a>
+    <a href="#" class="cta-btn email">✉ メールで無料相談</a>
+  </div>
+</div>
+
+<!-- 4 REASONS -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">設備人が<span>選ばれる理由</span></h2>
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-icon">🚀</div>
+        <div class="reason-title">最短10分で駆けつけ</div>
+        <div class="reason-desc">お電話いただいてから最短10分でスタッフが現場に到着</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">💰</div>
+        <div class="reason-title">お見積り無料</div>
+        <div class="reason-desc">出張費・見積り費・キャンセル料は一切いただきません</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">🕐</div>
+        <div class="reason-title">24時間365日対応</div>
+        <div class="reason-desc">深夜・早朝・休日も追加料金なしで対応いたします</div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon">📋</div>
+        <div class="reason-title">有資格者が対応</div>
+        <div class="reason-desc">第1種・第2種電気工事士など有資格者が作業を担当</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS FLOW -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">サービスの<span>流れ</span></h2>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-img">📞</div>
+        <div class="flow-title">ご相談</div>
+        <div class="flow-desc">お電話・メールにて<br>お気軽にご相談ください</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-img">🚗</div>
+        <div class="flow-title">ご訪問</div>
+        <div class="flow-desc">最短10分で最寄りの<br>スタッフが駆けつけます</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-img">📋</div>
+        <div class="flow-title">お見積り</div>
+        <div class="flow-desc">現場確認後、作業内容と<br>料金をご説明します</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-img">🔧</div>
+        <div class="flow-title">作業</div>
+        <div class="flow-desc">安心・安全を第一に<br>丁寧に作業いたします</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-img">💳</div>
+        <div class="flow-title">お支払</div>
+        <div class="flow-desc">現金・クレジット・<br>銀行振込に対応</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREA MAP -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">対応可能<span>エリア</span></h2>
+    <div class="area-map">
+      <div class="area-map-img">🗾 関西エリアマップ</div>
+      <div class="area-list">
+        <h4>大阪府</h4>
+        <ul>
+          <li>大阪市</li><li>豊中市</li><li>吹田市</li><li>堺市</li>
+          <li>東大阪市</li><li>枚方市</li><li>高槻市</li><li>茨木市</li>
+        </ul>
+        <h4 style="margin-top:16px">兵庫県</h4>
+        <ul>
+          <li>神戸市</li><li>尼崎市</li><li>西宮市</li><li>姫路市</li>
+        </ul>
+        <h4 style="margin-top:16px">京都府</h4>
+        <ul>
+          <li>京都市</li><li>宇治市</li><li>長岡京市</li><li>向日市</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">施工<span>事例</span></h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-img">🔧</div>
+        <div class="card-body">
+          <span class="card-tag">ブレーカー</span>
+          <div class="card-title">ブレーカー交換工事の施工事例</div>
+          <div class="card-meta"><span>⏱ 45分</span><span>💰 14,000円</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">💧</div>
+        <div class="card-body">
+          <span class="card-tag">トイレ</span>
+          <div class="card-title">トイレつまり修理の施工事例</div>
+          <div class="card-meta"><span>⏱ 30分</span><span>💰 8,800円</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">💡</div>
+        <div class="card-body">
+          <span class="card-tag">照明</span>
+          <div class="card-title">照明器具交換の施工事例</div>
+          <div class="card-meta"><span>⏱ 50分</span><span>💰 11,000円</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">お客様の<span>声</span></h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-img">⭐</div>
+        <div class="card-body">
+          <span class="card-tag">給湯器交換</span>
+          <div class="card-title">迅速な対応で助かりました</div>
+          <div class="card-meta"><span>大阪市住吉区</span><span>💰 55,000円</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">⭐</div>
+        <div class="card-body">
+          <span class="card-tag">水漏れ修理</span>
+          <div class="card-title">深夜にもかかわらず丁寧でした</div>
+          <div class="card-meta"><span>神戸市中央区</span><span>💰 8,800円</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img">⭐</div>
+        <div class="card-body">
+          <span class="card-tag">コンセント修理</span>
+          <div class="card-title">説明が分かりやすかったです</div>
+          <div class="card-meta"><span>豊中市</span><span>💰 5,500円</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">よくある<span>ご質問</span></h2>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">出張費はかかりますか？</div>
+      <div class="faq-a">いいえ、出張費は一切いただいておりません。お見積りも無料です。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">深夜・早朝の追加料金はありますか？</div>
+      <div class="faq-a">追加料金は一切ございません。24時間365日、同一料金で対応いたします。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">どのような資格を持ったスタッフが来ますか？</div>
+      <div class="faq-a">第1種電気工事士、第2種電気工事士などの有資格者が対応いたします。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">キャンセル料はかかりますか？</div>
+      <div class="faq-a">いいえ、キャンセル料は一切いただいておりません。お気軽にご相談ください。</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BLOCK 2 -->
+<div class="cta-block">
+  <h3>お困りの際は、お気軽にご連絡ください</h3>
+  <p>24時間365日受付 ｜ 最短10分で駆けつけ</p>
+  <div class="cta-buttons">
+    <a href="tel:0120219695" class="cta-btn phone">📞 0120-219-695</a>
+    <a href="#" class="cta-btn email">✉ メールで無料相談</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>電気まわり</h4>
+        <a href="#">ブレーカー</a>
+        <a href="#">コンセント</a>
+        <a href="#">照明</a>
+        <a href="#">アンテナ</a>
+        <a href="#">給湯器</a>
+      </div>
+      <div>
+        <h4>水まわり</h4>
+        <a href="#">トイレ</a>
+        <a href="#">キッチン</a>
+        <a href="#">お風呂</a>
+        <a href="#">洗面所</a>
+      </div>
+      <div>
+        <h4>会社案内</h4>
+        <a href="#">会社概要</a>
+        <a href="#">企業理念</a>
+        <a href="#">対応エリア</a>
+        <a href="#">プライバシーポリシー</a>
+      </div>
+      <div>
+        <h4>お問い合わせ</h4>
+        <a href="tel:0120219695" style="color:white;font-size:18px;font-weight:700;">📞 0120-219-695</a>
+        <a href="#">✉ メールで無料相談</a>
+        <a href="#">サービスの流れ</a>
+        <a href="#">施工事例</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">Copyright &copy; SETSUBIT All Rights Reserved.</div>
+  </div>
+</footer>
+
+<!-- =========================================================
+     MOCKUP 2: SERVICE DETAIL PAGE
+     ========================================================= -->
+<div class="page-divider">📄 MOCKUP 2: SERVICE DETAIL PAGE (ブレーカーサービス)</div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">設備<span>人</span></div>
+    <a href="tel:0120219695" class="header-phone">
+      <span class="free">ご相談無料</span>
+      📞 0120-219-695
+    </a>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="container">
+  <div class="breadcrumb">
+    <a href="#">TOP</a><span>></span>
+    <a href="#">電気まわりサービス</a><span>></span>
+    ブレーカーサービス
+  </div>
+</div>
+
+<!-- SERVICE HERO + WEB DISCOUNT -->
+<section class="hero" style="padding: 40px 20px;">
+  <div style="display:inline-block;background:var(--accent-discount);padding:6px 20px;border-radius:4px;font-size:14px;font-weight:700;margin-bottom:16px;">
+    WEB割引 1,500円OFF
+  </div>
+  <h1>ブレーカーが頻繁に落ちる・<br>上がらないトラブル</h1>
+  <p>修理・交換・漏電調査 ｜ 最短10分で駆けつけ</p>
+</section>
+
+<!-- ANCHOR MENU -->
+<div class="anchor-menu">
+  <div class="anchor-inner">
+    <a href="#" class="anchor-item"><span class="anchor-icon">💰</span>料金</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">✅</span>選ばれる理由</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">📊</span>比較</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">🗾</span>エリア</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">📋</span>フロー</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">🔧</span>施工事例</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">⭐</span>お客様の声</a>
+    <a href="#" class="anchor-item"><span class="anchor-icon">❓</span>FAQ</a>
+  </div>
+</div>
+
+<!-- PRICING TIERS -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">料金の<span>ご案内</span></h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-img">🔍</div>
+        <div class="pricing-body">
+          <div class="pricing-name">漏電調査・応急処置</div>
+          <div class="pricing-amount">17,600円<small>[税込]</small></div>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-img">➕</div>
+        <div class="pricing-body">
+          <div class="pricing-name">ブレーカー新設</div>
+          <div class="pricing-amount">20,000円<small>[税込]</small></div>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-img">🔄</div>
+        <div class="pricing-body">
+          <div class="pricing-name">ブレーカー交換</div>
+          <div class="pricing-amount">14,000円<small>[税込]</small></div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:16px;">※作業料金以外に、部品・部材費用、処分費用など別途費用が発生する場合がございます。</p>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">他社との<span>比較</span></h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th style="background:var(--accent-cta)">設備人</th>
+          <th>A社</th>
+          <th>B社</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>出張費</td>
+          <td class="us"><span class="check">✓</span> 無料</td>
+          <td>3,000円〜</td>
+          <td><span class="check">✓</span> 無料</td>
+        </tr>
+        <tr>
+          <td>見積り費</td>
+          <td class="us"><span class="check">✓</span> 無料</td>
+          <td>2,000円〜</td>
+          <td>1,000円〜</td>
+        </tr>
+        <tr>
+          <td>深夜料金</td>
+          <td class="us"><span class="check">✓</span> 無料</td>
+          <td>5,000円〜</td>
+          <td>3,000円〜</td>
+        </tr>
+        <tr>
+          <td>キャンセル料</td>
+          <td class="us"><span class="check">✓</span> 無料</td>
+          <td>2,000円〜</td>
+          <td><span class="check">✓</span> 無料</td>
+        </tr>
+        <tr>
+          <td>有資格者</td>
+          <td class="us"><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td>24時間対応</td>
+          <td class="us"><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CTA BLOCK -->
+<div class="cta-block">
+  <h3>ブレーカートラブルでお困りですか？</h3>
+  <p>有資格者が最短10分で駆けつけます ｜ お見積り無料</p>
+  <div class="cta-buttons">
+    <a href="tel:0120219695" class="cta-btn phone">📞 0120-219-695</a>
+    <a href="#" class="cta-btn email">✉ メールで無料相談</a>
+  </div>
+</div>
+
+<!-- RELATED SERVICES -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">その他の<span>電気サービス</span></h2>
+    <div class="service-grid cols-5">
+      <a class="service-card">
+        <div class="service-card-img">🔌</div>
+        <div class="service-card-body">
+          <div class="service-card-title">コンセント</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">💡</div>
+        <div class="service-card-body">
+          <div class="service-card-title">照明</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">📡</div>
+        <div class="service-card-body">
+          <div class="service-card-title">アンテナ</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+      <a class="service-card">
+        <div class="service-card-img">🔥</div>
+        <div class="service-card-body">
+          <div class="service-card-title">給湯器</div>
+          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">Copyright &copy; SETSUBIT All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

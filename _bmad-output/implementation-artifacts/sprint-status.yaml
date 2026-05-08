@@ -1,0 +1,97 @@
+# generated: 2026-05-08
+# last_updated: 2026-05-08
+# project: star-light
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: {project-root}/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-05-08
+last_updated: 2026-05-08
+# Story 1-2 created: 2026-05-08
+project: star-light
+project_key: NOKEY
+tracking_system: file-system
+story_location: "{project-root}/_bmad-output/implementation-artifacts"
+
+development_status:
+  # Epic 1: Project Foundation & Shared Shell
+  epic-1: in-progress
+  1-1-initialize-astro-project-with-design-tokens: review
+  1-2-create-site-configuration-and-utility-modules: review
+  1-3-define-content-collection-schemas: backlog
+  1-4-build-baselayout-with-header-and-footer: backlog
+  1-5-build-desktop-megamenu-navigation: backlog
+  1-6-build-mobile-menu-and-sticky-cta-bar: backlog
+  1-7-build-breadcrumb-and-ctablock-components: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Homepage Experience
+  epic-2: backlog
+  2-1-build-hero-carousel: backlog
+  2-2-build-service-category-cards-grid: backlog
+  2-3-build-reasons-process-flow-and-area-map-sections: backlog
+  2-4-build-featured-case-studies-testimonials-and-faq-on-homepage: backlog
+  2-5-assemble-complete-homepage: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Service Pages (Water, Electrical, Pest Control)
+  epic-3: backlog
+  3-1-build-service-detail-page-template-with-anchor-menu-and-pricing: backlog
+  3-2-build-comparison-table-reasons-grid-and-trust-signals-for-service-pages: backlog
+  3-3-build-service-area-process-flow-case-studies-testimonials-and-faq-sections-for-service-pages: backlog
+  3-4-create-service-content-data-and-dynamic-route-generation: backlog
+  3-5-build-service-hub-pages: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Contact, Company & Supporting Pages
+  epic-4: backlog
+  4-1-build-contact-form-page: backlog
+  4-2-implement-contact-form-submission-and-feedback: backlog
+  4-3-build-company-pages: backlog
+  4-4-build-process-flow-faq-privacy-sitemap-and-404-pages: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Blog/Column & Content Management
+  epic-5: backlog
+  5-1-build-blog-column-listing-and-detail-pages: backlog
+  5-2-build-paginated-case-studies-and-testimonials-listing-pages: backlog
+  5-3-document-content-management-workflow: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: SEO, Performance & Accessibility Polish
+  epic-6: backlog
+  6-1-implement-schema-org-structured-data-on-all-pages: backlog
+  6-2-implement-technical-seo-sitemap-robots-meta-tags-canonical-urls: backlog
+  6-3-performance-optimization-and-core-web-vitals: backlog
+  6-4-security-headers-and-cloudflare-pages-production-deployment: backlog
+  6-5-wcag-2-1-aa-accessibility-audit-and-fixes: backlog
+  epic-6-retrospective: optional

@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+html {
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  word-break: keep-all;
+  line-break: strict;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, select, textarea {
+  font-size: 16px;
+}
