@@ -1,0 +1,32 @@
+{
+  "serviceName": "トイレつまり・水漏れ修理",
+  "serviceNameShort": "トイレ",
+  "category": "water",
+  "slug": "toilet",
+  "description": "トイレのつまりや水漏れ、部品交換に24時間対応するサービスです。",
+  "startingPrice": 5500,
+  "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
+  "imageAlt": "トイレの点検を行う水道修理スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "つまり除去",
+      "price": 5500,
+      "description": "軽度なつまりを専用工具で除去します。",
+      "imageAlt": "トイレつまり除去作業イメージ"
+    },
+    {
+      "name": "部品交換",
+      "price": 8800,
+      "description": "タンク内部品や排水部品の交換を行います。",
+      "imageAlt": "トイレ部品交換作業イメージ"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "夜間でもトイレ修理を依頼できますか？",
+      "answer": "はい。年中無休で受付しており、夜間や早朝のトラブルにも対応しています。"
+    }
+  ]
+}

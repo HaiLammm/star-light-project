@@ -1,6 +1,6 @@
 # Story 1.2: Create Site Configuration and Utility Modules
 
-Status: review
+Status: done
 
 ## Story
 
@@ -39,6 +39,11 @@ So that phone numbers, company data, and formatters are never hardcoded across c
 - [x] Task 4: Verify TypeScript strict mode compliance (AC: #4)
   - [x] Run `npx astro check` or `npx tsc --noEmit` with zero errors
   - [x] Ensure all exports have explicit types, no `any`
+
+### Review Findings
+
+- [x] [Review][Defer] formatDate uses runtime timezone (not JST) — may produce off-by-one dates on non-JST build servers [src/utils/formatters.ts:10] — deferred, pre-existing JS Date behavior
+- [x] [Review][Defer] generateFAQ([]) and generateBreadcrumb([]) produce empty schema arrays — Google requires ≥1 Question for FAQPage and ≥2 items for BreadcrumbList [src/utils/schema.ts] — deferred, caller responsibility
 
 ## Dev Notes
 

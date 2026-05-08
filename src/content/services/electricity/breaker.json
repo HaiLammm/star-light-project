@@ -1,0 +1,32 @@
+{
+  "serviceName": "ブレーカー修理・交換",
+  "serviceNameShort": "ブレーカー",
+  "category": "electricity",
+  "slug": "breaker",
+  "description": "突然の停電や頻繁な遮断に対応するブレーカー修理・交換サービスです。",
+  "startingPrice": 1100,
+  "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
+  "imageAlt": "ブレーカー点検を行う作業スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "安全点検",
+      "price": 1100,
+      "description": "ブレーカーの状態確認と基本点検を行います。",
+      "imageAlt": "分電盤の安全点検イメージ"
+    },
+    {
+      "name": "交換作業",
+      "price": 8800,
+      "description": "劣化したブレーカーの交換と動作確認を行います。",
+      "imageAlt": "ブレーカー交換作業イメージ"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "ブレーカーが何度も落ちる原因は何ですか？",
+      "answer": "過負荷や漏電、経年劣化などが主な原因です。現地確認のうえで最適な対応をご案内します。"
+    }
+  ]
+}

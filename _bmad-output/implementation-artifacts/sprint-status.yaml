@@ -37,6 +37,8 @@
 generated: 2026-05-08
 last_updated: 2026-05-08
 # Story 1-2 created: 2026-05-08
+# Story 1-2 review done: 2026-05-08
+# Story 1-3 created: 2026-05-08
 project: star-light
 project_key: NOKEY
 tracking_system: file-system
@@ -46,8 +48,8 @@ development_status:
   # Epic 1: Project Foundation & Shared Shell
   epic-1: in-progress
   1-1-initialize-astro-project-with-design-tokens: review
-  1-2-create-site-configuration-and-utility-modules: review
-  1-3-define-content-collection-schemas: backlog
+  1-2-create-site-configuration-and-utility-modules: done
+  1-3-define-content-collection-schemas: review
   1-4-build-baselayout-with-header-and-footer: backlog
   1-5-build-desktop-megamenu-navigation: backlog
   1-6-build-mobile-menu-and-sticky-cta-bar: backlog
