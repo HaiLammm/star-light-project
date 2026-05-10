@@ -1,0 +1,178 @@
+---
+import { NAVIGATION } from '../utils/siteConfig';
+---
+
+{NAVIGATION.map((item, index) =>
+  item.children ? (
+    <div class="relative" data-menu-group>
+      <button
+        type="button"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-controls={`menu-panel-${index}`}
+        data-menu-trigger
+        class="text-sm font-medium text-text-primary hover:text-orange transition-colors flex items-center gap-1"
+      >
+        {item.icon && (
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d={item.icon} />
+          </svg>
+        )}
+        {item.label}
+        <svg data-menu-chevron class="w-4 h-4 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div
+        id={`menu-panel-${index}`}
+        role="menu"
+        data-menu-panel
+        class="hidden absolute top-full left-0 bg-white shadow-lg rounded-md py-2 min-w-[200px] z-40"
+      >
+        {item.children.map((child) => (
+          <a
+            role="menuitem"
+            href={child.href}
+            tabindex="-1"
+            class="block px-4 py-2 text-sm text-text-primary hover:bg-section-gray hover:text-orange transition-colors"
+          >
+            {child.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <a href={item.href} class="text-sm font-medium text-text-primary hover:text-orange transition-colors">
+      {item.label}
+    </a>
+  )
+)}
+
+<script>
+  const DELAY = 150;
+  const groups = document.querySelectorAll('[data-menu-group]');
+  const allTriggers = document.querySelectorAll('[data-menu-trigger]') as NodeListOf<HTMLButtonElement>;
+  const allNavItems = document.querySelectorAll<HTMLElement>('[data-menu-group], nav[aria-label="メインナビゲーション"] > a');
+
+  function closeAllMenus() {
+    groups.forEach((g) => {
+      const t = g.querySelector('[data-menu-trigger]') as HTMLButtonElement;
+      const p = g.querySelector('[data-menu-panel]') as HTMLElement;
+      const c = g.querySelector('[data-menu-chevron]') as SVGElement;
+      if (t && p) {
+        p.classList.add('hidden');
+        t.setAttribute('aria-expanded', 'false');
+        c?.classList.remove('rotate-180');
+      }
+    });
+  }
+
+  document.addEventListener('click', (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('[data-menu-group]')) {
+      closeAllMenus();
+    }
+  });
+
+  groups.forEach((group, groupIndex) => {
+    const trigger = group.querySelector('[data-menu-trigger]') as HTMLButtonElement;
+    const panel = group.querySelector('[data-menu-panel]') as HTMLElement;
+    const chevron = group.querySelector('[data-menu-chevron]') as SVGElement;
+    const items = panel.querySelectorAll('[role="menuitem"]') as NodeListOf<HTMLAnchorElement>;
+    let openTimer: ReturnType<typeof setTimeout>;
+    let closeTimer: ReturnType<typeof setTimeout>;
+
+    function openMenu() {
+      closeAllMenus();
+      panel.classList.remove('hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+      chevron?.classList.add('rotate-180');
+    }
+
+    function closeMenu() {
+      panel.classList.add('hidden');
+      trigger.setAttribute('aria-expanded', 'false');
+      chevron?.classList.remove('rotate-180');
+    }
+
+    group.addEventListener('mouseenter', () => {
+      clearTimeout(closeTimer);
+      openTimer = setTimeout(openMenu, DELAY);
+    });
+
+    group.addEventListener('mouseleave', () => {
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(closeMenu, DELAY);
+    });
+
+    function focusSiblingTrigger(direction: 'left' | 'right') {
+      const currentIndex = Array.from(allNavItems).indexOf(group as HTMLElement);
+      if (currentIndex === -1) return;
+      const nextIndex = direction === 'right'
+        ? (currentIndex + 1) % allNavItems.length
+        : (currentIndex - 1 + allNavItems.length) % allNavItems.length;
+      const nextItem = allNavItems[nextIndex];
+      closeMenu();
+      const nextTrigger = nextItem.querySelector('[data-menu-trigger]') as HTMLElement;
+      (nextTrigger || nextItem).focus();
+    }
+
+    trigger.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+          (items[0] as HTMLElement)?.focus();
+        }
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        openMenu();
+        (items[0] as HTMLElement)?.focus();
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        focusSiblingTrigger('right');
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        focusSiblingTrigger('left');
+      }
+      if (e.key === 'Escape') {
+        closeMenu();
+        trigger.focus();
+      }
+    });
+
+    items.forEach((item, i) => {
+      item.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (items[(i + 1) % items.length] as HTMLElement)?.focus();
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (items[(i - 1 + items.length) % items.length] as HTMLElement)?.focus();
+        }
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          focusSiblingTrigger('right');
+        }
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          focusSiblingTrigger('left');
+        }
+        if (e.key === 'Escape') {
+          closeMenu();
+          trigger.focus();
+        }
+        if (e.key === 'Tab') {
+          closeMenu();
+        }
+      });
+    });
+  });
+</script>

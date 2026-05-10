@@ -1,5 +1,6 @@
 ---
 import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
+import MegaMenu from './MegaMenu.astro';
 ---
 
 <header data-header class="sticky top-0 z-50 bg-white border-b border-border-light transition-shadow">
@@ -9,11 +10,7 @@ import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
     </a>
 
     <nav aria-label="メインナビゲーション" class="hidden lg:flex items-center gap-6">
-      {NAVIGATION.map((item) => (
-        <a href={item.href} class="text-sm font-medium text-text-primary hover:text-orange transition-colors">
-          {item.label}
-        </a>
-      ))}
+      <MegaMenu />
     </nav>
 
     <div class="flex items-center gap-4">

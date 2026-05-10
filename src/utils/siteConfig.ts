@@ -53,6 +53,7 @@ export interface NavigationChild {
 export interface NavigationItem {
   label: string;
   href: string;
+  icon?: string;
   children?: NavigationChild[];
 }
 
@@ -273,16 +274,19 @@ export const NAVIGATION: NavigationItem[] = [
   {
     label: '電気工事',
     href: '/electricity',
+    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
     children: toNavigationChildren(ELECTRICITY_SERVICES),
   },
   {
     label: '水道工事',
     href: '/water',
+    icon: 'M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2C20 10.48 17.33 6.55 12 2z',
     children: toNavigationChildren(WATER_SERVICES),
   },
   {
     label: '害虫駆除',
     href: '/pest-control',
+    icon: 'M14 12h-4l-1.5-3H5v2h2.2l1.1 2.2L7 17H5v2h3l2-4 2 4h3v-2h-2l-1.3-3.8L13.2 11H15v-2h-2.5L14 12zM20 5h-3.2L15 2l-1.4 1.4L15.2 5H8.8l1.6-1.6L9 2 7.2 5H4v2h1.1l.9 1.8H4v2h3l.3-.6L8.5 12h7l1.2-1.8.3.6h3V9h-2l.9-1.8H20V5z',
     children: toNavigationChildren(PEST_CONTROL_SERVICES),
   },
   {
