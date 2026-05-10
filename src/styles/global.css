@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+@theme {
+  --color-navy: #1B2A4A;
+  --color-orange: #FF6B00;
+  --color-red: #E53935;
+  --color-section-gray: #F5F5F5;
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+  --color-border-light: #E0E0E0;
+}
+
+:focus-visible {
+  outline: 2px solid #1B2A4A;
+  outline-offset: 2px;
+}
+
 html {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
   word-break: keep-all;
