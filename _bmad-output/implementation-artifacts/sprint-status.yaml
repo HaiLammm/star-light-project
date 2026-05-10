@@ -42,6 +42,8 @@ last_updated: 2026-05-10
 # Story 1-3 created: 2026-05-08
 # Story 1-4 created: 2026-05-08
 # Story 1-6 created: 2026-05-10
+# Story 1-7 created: 2026-05-10
+# Story 2-1 created: 2026-05-10
 project: star-light
 project_key: NOKEY
 tracking_system: file-system
@@ -50,18 +52,18 @@ story_location: "{project-root}/_bmad-output/implementation-artifacts"
 development_status:
   # Epic 1: Project Foundation & Shared Shell
   epic-1: in-progress
-  1-1-initialize-astro-project-with-design-tokens: review
+  1-1-initialize-astro-project-with-design-tokens: done
   1-2-create-site-configuration-and-utility-modules: done
   1-3-define-content-collection-schemas: review
   1-4-build-baselayout-with-header-and-footer: done
   1-5-build-desktop-megamenu-navigation: done
   1-6-build-mobile-menu-and-sticky-cta-bar: review
-  1-7-build-breadcrumb-and-ctablock-components: backlog
+  1-7-build-breadcrumb-and-ctablock-components: review
   epic-1-retrospective: optional
 
   # Epic 2: Homepage Experience
-  epic-2: backlog
-  2-1-build-hero-carousel: backlog
+  epic-2: in-progress
+  2-1-build-hero-carousel: done
   2-2-build-service-category-cards-grid: backlog
   2-3-build-reasons-process-flow-and-area-map-sections: backlog
   2-4-build-featured-case-studies-testimonials-and-faq-on-homepage: backlog

@@ -14,3 +14,8 @@
 
 - client:load on MobileMenu causes unnecessary JS hydration on desktop — consider client:idle or client:visible (belongs to Story 1.6 scope)
 - Scroll listener on header never removed — safe in MPA mode but will leak if view transitions are enabled
+
+## Deferred from: code review of story-2-1 (2026-05-10)
+
+- No WCAG 2.2.2 pause/stop button for carousel autoplay — design decision; touch/switch-access users cannot pause without hover/focus
+- No responsive images (srcset/picture element) for hero images — 2400px images served to all viewports, bandwidth waste on mobile
