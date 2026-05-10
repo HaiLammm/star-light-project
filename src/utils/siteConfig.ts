@@ -57,12 +57,19 @@ export interface NavigationItem {
   children?: NavigationChild[];
 }
 
+export interface EmailConfig {
+  display: string;
+  href: string;
+  ariaLabel: string;
+}
+
 export interface SiteConfig {
   companyName: string;
   companyNameEn: string;
   legalName: string;
   siteUrl: string;
   phone: PhoneConfig;
+  email: EmailConfig;
   businessHours: string;
 }
 
@@ -183,6 +190,11 @@ export const SITE_CONFIG: SiteConfig = {
   legalName: '合同会社スターライト',
   siteUrl: 'https://star-light15.net',
   phone: SITE_PHONE,
+  email: {
+    display: 'info@star-light15.net',
+    href: 'mailto:info@star-light15.net',
+    ariaLabel: 'メールでお問い合わせ info@star-light15.net',
+  },
   businessHours: '24時間365日',
 };
 

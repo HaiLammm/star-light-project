@@ -11,7 +11,7 @@ import { NAVIGATION } from '../utils/siteConfig';
         aria-haspopup="true"
         aria-controls={`menu-panel-${index}`}
         data-menu-trigger
-        class="text-sm font-medium text-text-primary hover:text-orange transition-colors flex items-center gap-1"
+        class="relative text-[15px] font-medium text-text-primary hover:text-orange transition-colors flex items-center gap-1 py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#fbc102] after:scale-x-0 after:origin-right after:transition-transform after:duration-200 hover:after:scale-x-100 hover:after:origin-left"
       >
         {item.icon && (
           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -27,14 +27,14 @@ import { NAVIGATION } from '../utils/siteConfig';
         id={`menu-panel-${index}`}
         role="menu"
         data-menu-panel
-        class="hidden absolute top-full left-0 bg-white shadow-lg rounded-md py-2 min-w-[200px] z-40"
+        class="hidden absolute top-full left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-[20px] py-5 px-5 min-w-[200px] z-40"
       >
         {item.children.map((child) => (
           <a
             role="menuitem"
             href={child.href}
             tabindex="-1"
-            class="block px-4 py-2 text-sm text-text-primary hover:bg-section-gray hover:text-orange transition-colors"
+            class="flex items-center gap-2 py-1.5 text-[13px] text-text-primary hover:text-[#fbc101] transition-colors"
           >
             {child.label}
           </a>
@@ -42,7 +42,7 @@ import { NAVIGATION } from '../utils/siteConfig';
       </div>
     </div>
   ) : (
-    <a href={item.href} class="text-sm font-medium text-text-primary hover:text-orange transition-colors">
+    <a href={item.href} class="relative text-[15px] font-medium text-text-primary hover:text-orange transition-colors py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#fbc102] after:scale-x-0 after:origin-right after:transition-transform after:duration-200 hover:after:scale-x-100 hover:after:origin-left">
       {item.label}
     </a>
   )

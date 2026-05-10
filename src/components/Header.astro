@@ -4,23 +4,46 @@ import MegaMenu from './MegaMenu.astro';
 import MobileMenu from './MobileMenu.tsx';
 ---
 
-<header data-header class="sticky top-0 z-50 bg-white border-b border-border-light transition-shadow">
-  <div class="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-10 flex items-center justify-between h-16">
-    <a href="/" class="text-xl font-bold text-navy">
-      {SITE_CONFIG.companyName}
+<header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
+  <div class="max-w-[1400px] mx-auto pl-8 flex items-center justify-between h-[100px] lg:h-[100px]">
+    <a href="/" class="shrink-0 relative z-10">
+      <span class="text-2xl lg:text-3xl font-bold text-navy">
+        {SITE_CONFIG.companyName}
+      </span>
     </a>
 
-    <nav aria-label="メインナビゲーション" class="hidden lg:flex items-center gap-6">
-      <MegaMenu />
+    <nav aria-label="メインナビゲーション" class="hidden lg:flex items-center justify-end h-full">
+      <div class="flex items-center gap-5 xl:gap-8">
+        <MegaMenu />
+      </div>
+
+      <div class="ml-5 xl:ml-7 flex flex-col items-center">
+        <span class="inline-flex items-center justify-center px-4 h-5 rounded-full border border-[#2856cb] text-[11px] font-bold text-[#2856cb] whitespace-nowrap">
+          電話相談無料！年中無休で対応
+        </span>
+        <a
+          href={SITE_CONFIG.phone.href}
+          aria-label={SITE_CONFIG.phone.ariaLabel}
+          class="font-['Roboto',sans-serif] text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity whitespace-nowrap"
+        >
+          {SITE_CONFIG.phone.display}
+        </a>
+      </div>
+
+      <a
+        href="/contact"
+        class="ml-3 self-start w-[160px] h-[80px] flex items-center justify-center rounded-bl-[20px] bg-[#fc4076] hover:bg-[#d32a5a] text-white text-lg font-bold leading-tight text-center transition-colors"
+      >
+        <span>メールで<br />無料相談</span>
+      </a>
     </nav>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 lg:hidden">
       <a
         href={SITE_CONFIG.phone.href}
         aria-label={SITE_CONFIG.phone.ariaLabel}
-        class="text-orange font-bold text-lg md:text-xl lg:text-2xl min-w-[44px] min-h-[44px] flex items-center"
+        class="text-orange font-bold text-lg min-w-[44px] min-h-[44px] flex items-center"
       >
-        <span class="hidden md:inline text-xs text-text-secondary mr-1">通話無料</span>
         {SITE_CONFIG.phone.display}
       </a>
 
@@ -30,7 +53,7 @@ import MobileMenu from './MobileMenu.tsx';
         aria-label="メニューを開く"
         aria-controls="mobile-menu"
         aria-expanded="false"
-        class="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center"
+        class="min-w-[44px] min-h-[44px] flex items-center justify-center"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -39,6 +62,8 @@ import MobileMenu from './MobileMenu.tsx';
     </div>
   </div>
 </header>
+
+<div class="h-[60px] lg:h-[100px]"></div>
 
 <MobileMenu client:load navigation={NAVIGATION} phone={SITE_CONFIG.phone} />
 

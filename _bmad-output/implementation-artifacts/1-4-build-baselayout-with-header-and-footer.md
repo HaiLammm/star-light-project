@@ -1,6 +1,6 @@
 # Story 1.4: Build BaseLayout with Header and Footer
 
-Status: review
+Status: done
 
 ## Story
 
@@ -248,11 +248,11 @@ Desktop nav should render flat links from `NAVIGATION`. Items with `children` ju
 
 ### Review Findings
 
-- [ ] [Review][Decision] Header imports MegaMenu component (Story 1.5 scope) — spec anti-pattern says "NO MegaMenu in this story"
-- [ ] [Review][Decision] Header imports MobileMenu component (Story 1.6 scope) — spec anti-pattern says "NO MobileMenu in this story"
-- [ ] [Review][Decision] BaseLayout imports CTABlock sticky variant (Story 1.6 scope) — mobile sticky CTA bar belongs to Story 1.6
-- [ ] [Review][Patch] Footer missing email CTA — AC 5 requires "phone/email CTA" but only phone is present [src/components/Footer.astro]
-- [ ] [Review][Patch] :focus-visible hardcodes color instead of using CSS variable — should use var(--color-navy) [src/styles/global.css:13]
+- [x] [Review][Decision] Header imports MegaMenu component (Story 1.5 scope) — RESOLVED: separated into Story 1.5 commit
+- [x] [Review][Decision] Header imports MobileMenu component (Story 1.6 scope) — RESOLVED: separated into Story 1.6 commit
+- [x] [Review][Decision] BaseLayout imports CTABlock sticky variant (Story 1.6 scope) — RESOLVED: separated into Story 1.6 commit
+- [x] [Review][Patch] Footer missing email CTA — AC 5 requires "phone/email CTA" — FIXED: added email config and CTA
+- [x] [Review][Patch] :focus-visible hardcodes color instead of using CSS variable — FIXED: uses var(--color-navy)
 - [x] [Review][Defer] client:load on MobileMenu causes unnecessary hydration on desktop — deferred, belongs to Story 1.6
 - [x] [Review][Defer] Scroll listener not cleaned up on navigation — deferred, only relevant if view transitions enabled
 

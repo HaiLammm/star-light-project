@@ -14,6 +14,13 @@ import { SITE_CONFIG, NAVIGATION, REGIONAL_OFFICES } from '../utils/siteConfig';
         {SITE_CONFIG.phone.display}
       </a>
       <p class="text-sm mt-2 text-white/70">{SITE_CONFIG.businessHours}受付</p>
+      <a
+        href={SITE_CONFIG.email.href}
+        aria-label={SITE_CONFIG.email.ariaLabel}
+        class="inline-block mt-3 text-sm text-white/70 hover:text-orange transition-colors"
+      >
+        ✉ {SITE_CONFIG.email.display}
+      </a>
     </div>
 
     <nav aria-label="フッターナビゲーション" class="py-10 border-b border-white/20">
