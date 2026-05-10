@@ -1,6 +1,7 @@
 ---
 import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
 import MegaMenu from './MegaMenu.astro';
+import MobileMenu from './MobileMenu.tsx';
 ---
 
 <header data-header class="sticky top-0 z-50 bg-white border-b border-border-light transition-shadow">
@@ -38,6 +39,8 @@ import MegaMenu from './MegaMenu.astro';
     </div>
   </div>
 </header>
+
+<MobileMenu client:load navigation={NAVIGATION} phone={SITE_CONFIG.phone} />
 
 <script>
   const header = document.querySelector('[data-header]');

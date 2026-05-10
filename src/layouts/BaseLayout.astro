@@ -2,6 +2,7 @@
 import { SITE_CONFIG } from '../utils/siteConfig';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CTABlock from '../components/CTABlock.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -35,9 +36,10 @@ const { title, description, canonicalUrl } = Astro.props;
       コンテンツへスキップ
     </a>
     <Header />
-    <main id="main-content">
+    <main id="main-content" class="pb-[60px] md:pb-0">
       <slot />
     </main>
     <Footer />
+    <CTABlock variant="sticky" />
   </body>
 </html>
