@@ -64,7 +64,8 @@ So that I trust the service based on proof and can get quick answers to concerns
   - [x] Compare case study cards layout and styling
   - [x] Compare testimonial cards layout and blockquote styling
   - [x] Compare FAQ accordion behavior and styling
-  - [ ] Verify section order and spacing
+  - [x] Verify section order and spacing
+  - [x] Unified heading pattern across ProcessFlow, ReasonsGrid, AreaMap to match ServiceSlider pattern
 
 ## Dev Notes
 
@@ -254,6 +255,7 @@ None
 ### Change Log
 
 - 2026-05-11: Implemented all tasks — CaseStudyCard, TestimonialCard, FAQAccordion components, content data, homepage integration
+- 2026-05-11: Unified section heading pattern — ProcessFlow, ReasonsGrid, AreaMap updated from inline English text to large decorative background text (vertical line #fbc102 + Roboto 70-180px opacity-30 #b3b3b3), matching ServiceSlider and Case/Voice/Faq sections
 
 ### File List
 
@@ -278,3 +280,6 @@ None
 - src/content/faq/faq-004.json (NEW)
 - src/content/faq/faq-005.json (NEW)
 - src/pages/index.astro (MODIFIED — added Case, Voice, FAQ sections + CTABlock + content collection queries)
+- src/components/ProcessFlow.astro (MODIFIED — unified heading pattern)
+- src/components/ReasonsGrid.astro (MODIFIED — unified heading pattern)
+- src/components/AreaMap.astro (MODIFIED — unified heading pattern)
