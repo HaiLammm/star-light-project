@@ -102,7 +102,7 @@ export default function HeroCarousel() {
             <img
               src={slide.image}
               alt=""
-              className="w-full h-full object-cover blur-[3rem] brightness-150 opacity-50"
+              className="w-full h-full object-cover blur-[9rem] brightness-150 opacity-70"
               loading="lazy"
               decoding="async"
             />

@@ -1,0 +1,76 @@
+---
+interface Props {
+  serviceType: string;
+  serviceCategory: 'electricity' | 'water' | 'pest-control';
+  cost: number;
+  message: string;
+  authorInitial: string;
+  location?: string;
+  imageSrc: string;
+  imageAlt: string;
+}
+
+const {
+  serviceType,
+  serviceCategory,
+  cost,
+  message,
+  authorInitial,
+  location,
+  imageSrc,
+  imageAlt,
+} = Astro.props;
+
+const categoryColorMap: Record<string, string> = {
+  electricity: 'bg-[#fb7502]',
+  water: 'bg-[#2f76eb]',
+  'pest-control': 'bg-[#4CAF50]',
+};
+
+const categoryColor = categoryColorMap[serviceCategory] ?? 'bg-[#717070]';
+---
+
+<article class="h-full">
+  <a href="/voice" class="flex flex-col w-full h-full p-[20px] md:p-[30px] md:pb-[35px] rounded-[30px] md:rounded-[50px] shadow-[0_8px_0_0_rgba(0,0,0,0.16)] bg-[#f7f7f7] hover:shadow-[0_8px_0_0_rgba(0,0,0,0.24)] transition-shadow duration-200 ease">
+    <div class="flex items-start gap-[15px] md:gap-[20px]">
+      <figure class="shrink-0 w-[70px] md:w-[100px] aspect-square rounded-[14px] md:rounded-[20px] overflow-hidden">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          width="300"
+          height="300"
+          decoding="auto"
+          loading="lazy"
+          class="w-full h-full object-cover"
+        />
+      </figure>
+      <div class="grow">
+        <ul class="flex gap-[6px] md:gap-[9px] flex-wrap">
+          <li class={`${categoryColor} text-white text-[10px] md:text-[11px] font-bold leading-[1.27] px-[4px] py-[3px] pb-[2px] rounded-[5px]`}>
+            {serviceType}
+          </li>
+          {location && (
+            <li class="bg-[#717070] text-white text-[10px] md:text-[11px] font-bold leading-[1.27] px-[4px] py-[3px] pb-[2px] rounded-[5px]">
+              {location}
+            </li>
+          )}
+        </ul>
+        <h3 class="text-[14px] md:text-[18px] font-bold leading-[1.67] mt-[8px] md:mt-[10px] line-clamp-2">
+          {serviceType}をご依頼いただいたお客様の声
+        </h3>
+      </div>
+    </div>
+    <blockquote class="text-[11px] md:text-[12px] text-[#333] leading-[1.67] mt-[14px] md:mt-[20px] mb-[10px] md:mb-[15px] line-clamp-3">
+      {message}
+      <cite class="not-italic block mt-1 text-[10px] md:text-[11px] text-[#666]">— {authorInitial}</cite>
+    </blockquote>
+    <div class="w-full px-[8px] md:px-[10px] py-[6px] md:py-[8px] pb-[4px] md:pb-[6px] rounded-[14px] md:rounded-[20px] bg-white flex justify-center gap-[14px] md:gap-[20px] mt-auto">
+      <div class="flex flex-col items-center">
+        <p class="text-[10px] md:text-[12px] leading-[1.17]">作業料金</p>
+        <p class="font-[Roboto] text-[22px] md:text-[32px] font-bold">
+          {cost.toLocaleString()}<span class="text-[11px] md:text-[14px] font-medium">円</span>
+        </p>
+      </div>
+    </div>
+  </a>
+</article>

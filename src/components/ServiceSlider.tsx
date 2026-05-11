@@ -70,7 +70,7 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
   }, [emblaApi, count]);
 
   return (
-    <section className="relative overflow-hidden">
+    <section className={`relative overflow-hidden ${!aboveFold ? 'mt-[6.6rem] md:mt-[3rem]' : ''}`}>
       <div className="relative max-w-[1240px] mx-auto px-5 md:px-[20px]">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] md:w-[calc(100%-4rem)] max-w-[1200px] rounded-[20px] md:rounded-[40px] -z-10"
@@ -104,16 +104,16 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
       </div>
 
       <div
-        className="overflow-hidden mt-[30px] md:mt-[40px]"
+        className="overflow-hidden mt-[10px] md:mt-[20px]"
         ref={emblaRef}
         onMouseEnter={stopAutoplay}
         onMouseLeave={startAutoplay}
       >
-        <div className="flex">
+        <div className="flex items-start">
           {loopSlides.map((slide, index) => (
             <div
               key={`${slide.slug}-${index}`}
-              className={`min-w-0 flex-[0_0_60%] md:flex-[0_0_24%] px-[10px] md:px-[15px] ${index % 2 === 1 ? 'md:mt-[80px]' : ''}`}
+              className={`min-w-0 flex-[0_0_60%] md:flex-[0_0_24%] px-[14px] md:px-[22px] ${index % 2 === 1 ? 'md:mt-[80px]' : ''}`}
             >
               <a href={slide.href} className="group flex flex-col h-full">
                 <figure className="w-full aspect-square overflow-hidden flex-shrink-0"

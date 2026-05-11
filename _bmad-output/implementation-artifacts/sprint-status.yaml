@@ -70,8 +70,8 @@ development_status:
   epic-2: in-progress
   2-1-build-hero-carousel: done
   2-2-build-service-category-cards-grid: done
-  2-3-build-reasons-process-flow-and-area-map-sections: review
-  2-4-build-featured-case-studies-testimonials-and-faq-on-homepage: ready-for-dev
+  2-3-build-reasons-process-flow-and-area-map-sections: done
+  2-4-build-featured-case-studies-testimonials-and-faq-on-homepage: review
   2-5-assemble-complete-homepage: backlog
   epic-2-retrospective: optional
 

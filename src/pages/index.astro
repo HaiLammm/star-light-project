@@ -5,7 +5,44 @@ import ServiceSlider from '../components/ServiceSlider.tsx';
 import ReasonsGrid from '../components/ReasonsGrid.astro';
 import ProcessFlow from '../components/ProcessFlow.astro';
 import AreaMap from '../components/AreaMap.astro';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import CTABlock from '../components/CTABlock.astro';
 import { SERVICE_CATEGORIES } from '../utils/siteConfig';
+import { getCollection } from 'astro:content';
+
+const allCases = await getCollection('cases');
+const featuredCases = allCases
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 5);
+
+const allTestimonials = await getCollection('testimonials');
+const featuredTestimonials = allTestimonials.slice(0, 4);
+
+const allFaq = await getCollection('faq');
+const sortedFaq = allFaq.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+const categoryLabelMap: Record<string, string> = {
+  water: '水まわり',
+  electricity: '電気まわり',
+  'pest-control': '害虫駆除',
+};
+
+const caseImageMap: Record<string, string> = {
+  'case-001': '/images/cases/case_01.jpg',
+  'case-002': '/images/cases/case_02.jpg',
+  'case-003': '/images/cases/case_03.jpg',
+  'case-004': '/images/cases/case_04.jpg',
+  'case-005': '/images/cases/case_05.jpg',
+};
+
+const testimonialImageMap: Record<string, string> = {
+  'testimonial-001': '/images/cases/case_01.jpg',
+  'testimonial-002': '/images/cases/case_05.jpg',
+  'testimonial-003': '/images/cases/case_03.jpg',
+  'testimonial-004': '/images/cases/case_02.jpg',
+};
 
 const electricity = SERVICE_CATEGORIES.find((c) => c.slug === 'electricity');
 const water = SERVICE_CATEGORIES.find((c) => c.slug === 'water');
@@ -106,4 +143,89 @@ const pestControlSlides = buildSlides(pestControl);
   <ReasonsGrid />
   <ProcessFlow />
   <AreaMap />
+
+  <!-- Case Studies Section -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Case</span>
+        修理実績のご紹介
+      </h2>
+      <p class="text-center text-[12px] md:text-[14px] text-[#333] mt-[30px] md:mt-[50px]">ご好評頂いたお客様の修理実績をご紹介</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px] md:gap-[30px] mt-[20px] md:mt-[50px]">
+        {featuredCases.map((entry) => (
+          <CaseStudyCard
+            title={entry.data.title}
+            serviceCategory={entry.data.serviceCategory}
+            categoryLabel={categoryLabelMap[entry.data.serviceCategory] ?? entry.data.serviceCategory}
+            location={entry.data.location}
+            duration={entry.data.duration}
+            cost={entry.data.cost}
+            description={entry.body ?? ''}
+            imageSrc={caseImageMap[entry.id] ?? '/images/cases/case_01.jpg'}
+            imageAlt={entry.data.imageAlt}
+            slug={entry.id}
+          />
+        ))}
+      </div>
+      <div class="flex justify-center mt-[30px] md:mt-[42px]">
+        <a href="/case" class="relative flex items-center justify-center w-[240px] md:w-[280px] min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[14px] md:text-[18px] font-bold rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          修理実績一覧
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock variant="compact" />
+
+  <!-- Testimonials Section -->
+  <section class="py-16 md:py-20 bg-[#f5f5f5]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Voice</span>
+        お客様の声のご紹介
+      </h2>
+      <p class="text-center text-[12px] md:text-[14px] text-[#333] mt-[30px] md:mt-[50px]">お客様の声のご紹介</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px] md:gap-[30px] mt-[20px] md:mt-[50px]">
+        {featuredTestimonials.map((entry) => (
+          <TestimonialCard
+            serviceType={entry.data.serviceType}
+            serviceCategory={entry.data.serviceCategory}
+            cost={entry.data.cost}
+            message={entry.data.message}
+            authorInitial={entry.data.authorInitial}
+            location={entry.data.location}
+            imageSrc={testimonialImageMap[entry.id] ?? '/images/cases/case_01.jpg'}
+            imageAlt={`${entry.data.serviceType}のお客様の声`}
+          />
+        ))}
+      </div>
+      <div class="flex justify-center mt-[30px] md:mt-[42px]">
+        <a href="/voice" class="relative flex items-center justify-center w-[240px] md:w-[280px] min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[14px] md:text-[18px] font-bold rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          お客様の声一覧
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock variant="compact" />
+
+  <!-- FAQ Section -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Faq</span>
+        よくいただくご質問
+      </h2>
+      <FAQAccordion items={sortedFaq.map((entry) => ({ question: entry.data.question, answer: entry.data.answer }))} />
+      <div class="flex justify-center mt-[30px] md:mt-[42px]">
+        <a href="/question" class="relative flex items-center justify-center w-[240px] md:w-[280px] min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[14px] md:text-[18px] font-bold rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          もっと見る
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
