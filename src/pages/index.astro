@@ -15,7 +15,7 @@ import { getCollection } from 'astro:content';
 const allCases = await getCollection('cases');
 const featuredCases = allCases
   .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
-  .slice(0, 5);
+  .slice(0, 4);
 
 const allTestimonials = await getCollection('testimonials');
 const featuredTestimonials = allTestimonials.slice(0, 4);
@@ -23,11 +23,11 @@ const featuredTestimonials = allTestimonials.slice(0, 4);
 const allFaq = await getCollection('faq');
 const sortedFaq = allFaq.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
-const categoryLabelMap: Record<string, string> = {
+const categoryLabelMap = {
   water: '水まわり',
   electricity: '電気まわり',
   'pest-control': '害虫駆除',
-};
+} satisfies Record<'water' | 'electricity' | 'pest-control', string>;
 
 const caseImageMap: Record<string, string> = {
   'case-001': '/images/cases/case_01.jpg',

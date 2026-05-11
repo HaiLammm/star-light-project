@@ -1,6 +1,6 @@
 # Story 2.4: Build Featured Case Studies, Testimonials, and FAQ on Homepage
 
-Status: review
+Status: done
 
 ## Story
 
@@ -283,3 +283,22 @@ None
 - src/components/ProcessFlow.astro (MODIFIED — unified heading pattern)
 - src/components/ReasonsGrid.astro (MODIFIED — unified heading pattern)
 - src/components/AreaMap.astro (MODIFIED — unified heading pattern)
+
+## Review Findings
+
+### Patch Items (Code Review)
+
+- [x] [Review][Patch] Featured case count exceeds spec (5 vs 3-4 required) [src/pages/index.astro:18] — FIXED: Changed `.slice(0, 5)` to `.slice(0, 4)`
+- [x] [Review][Patch] Use formatPrice() utility instead of .toLocaleString() [src/components/CaseStudyCard.astro:78, src/components/TestimonialCard.astro:71] — FIXED: Imported formatPrice() and updated both components
+- [x] [Review][Patch] Add TypeScript validation for categoryLabelMap enum completeness [src/pages/index.astro:26-30] — FIXED: Added `satisfies Record<...>` validation
+
+### Deferred Items
+
+- [x] [Review][Defer] Dead links: /case, /voice, /question pages — deferred, follow-up stories will create these pages
+- [x] [Review][Defer] Image asset fallback missing validation — pre-existing pattern, low priority
+- [x] [Review][Defer] Collection queries lack error handling — deferred to better error handling structure (Epic 6)
+- [x] [Review][Defer] FAQ category field unused in homepage — deferred, for future category filtering on /question page
+- [x] [Review][Defer] Alt text auto-generated for testimonials — deferred, could add imageAlt field to schema later
+- [x] [Review][Defer] Accessibility: missing ARIA on accordion toggle — defer to a11y audit
+- [x] [Review][Defer] Hardcoded Japanese strings as i18n tech debt — defer to international expansion feature
+- [x] [Review][Defer] CTA button styling inconsistency (translate vs opacity) — low priority UX consistency debt

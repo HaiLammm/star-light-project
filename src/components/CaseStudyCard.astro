@@ -1,4 +1,6 @@
 ---
+import { formatPrice } from '../utils/formatters';
+
 interface Props {
   title: string;
   serviceCategory: 'electricity' | 'water' | 'pest-control';
@@ -75,7 +77,7 @@ const categoryColor = categoryColorMap[serviceCategory] ?? 'bg-[#717070]';
       <div class="flex flex-col items-center">
         <p class="text-[10px] md:text-[12px] leading-[1.17]">作業料金</p>
         <p class="font-[Roboto] text-[22px] md:text-[32px] font-bold">
-          {cost.toLocaleString()}<span class="text-[11px] md:text-[14px] font-medium">円</span>
+          {formatPrice(cost)}<span class="text-[11px] md:text-[14px] font-medium">円</span>
         </p>
       </div>
     </div>
