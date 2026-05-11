@@ -1,0 +1,46 @@
+---
+import { REGIONAL_OFFICES } from '../utils/siteConfig';
+---
+
+<section class="py-16 md:py-20">
+  <div class="max-w-[1200px] mx-auto px-4">
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">
+      <span class="text-sm md:text-base font-normal text-[#E8B341] tracking-widest block mb-2">Area</span>
+      対応エリア
+    </h2>
+    <p class="text-center text-gray-600 mb-8 md:mb-12">
+      年中無休で稼働しております。電気まわりや水まわりのトラブルお任せください。急な故障にもすぐに駆けつけ、最短10分・年中無休で安心サポートいたします。
+    </p>
+    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+      <div class="w-full lg:w-1/2">
+        <img
+          src="/images/map/area_2026.png"
+          alt="設備人のサービス対応エリア：東京・名古屋・大阪・兵庫を中心に全国対応"
+          width="600"
+          height="450"
+          decoding="auto"
+          class="w-full h-auto rounded-lg"
+        />
+      </div>
+      <div class="w-full lg:w-1/2">
+        <h3 class="text-xl font-bold mb-6">営業所</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {REGIONAL_OFFICES.map((office) => (
+            <div>
+              <h4 class="font-bold text-lg mb-2">{office.shortName}</h4>
+              <p class="text-sm text-gray-600 mb-2">{office.formattedAddress}</p>
+              <div class="mb-1">
+                <p class="text-xs font-bold text-gray-500 mb-1">対応エリア</p>
+                <p class="text-sm text-gray-700">{office.prefecturesServed.join('・')}</p>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-gray-500 mb-1">主な対応都市</p>
+                <p class="text-sm text-gray-700">{office.areaServed.join('・')}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,76 @@
+---
+interface Reason {
+  icon: string;
+  number: string;
+  heading: string;
+  headingHighlight: string;
+  description: string;
+}
+
+const reasons: Reason[] = [
+  {
+    icon: '/images/icons/reason_01.svg',
+    number: '01',
+    headingHighlight: '最短10分',
+    heading: '即日駆けつけ即日工事',
+    description: '最寄りのサービス拠点より、迅速にスタッフを派遣します（最短10分）。早朝・深夜を問わず営業、突発的なトラブルにも即対応',
+  },
+  {
+    icon: '/images/icons/reason_02.svg',
+    number: '02',
+    headingHighlight: 'ご相談無料',
+    heading: '必ず事前にお見積り',
+    description: '作業料金は、作業費・材料費（部品代）・廃材処分費の合計で算出いたします。お見積り費用や出張費、早朝・深夜の追加料金、キャンセル料などは一切不要です。作業に入る前には必ずお見積りをご提示いたしますので、安心してご相談・ご依頼ください。',
+  },
+  {
+    icon: '/images/icons/reason_03.svg',
+    number: '03',
+    headingHighlight: '24時間365日',
+    heading: '対応',
+    description: '設備人では24時間365日、経験豊富なスタッフが常時対応しております。礼儀・対応マナーの研修を実施し、お客様に安心してご利用いただける接客と丁寧な作業を徹底しております。',
+  },
+  {
+    icon: '/images/icons/reason_04.svg',
+    number: '04',
+    headingHighlight: '国の資格を保有',
+    heading: 'した工事士が作業担当',
+    description: '設備人には、電気・水回りのトラブル対応に豊富な経験を持つ有資格スタッフが多数在籍。日々の社内研修でスキルを磨いております。安心してお任せいただけるよう、常に技術力の向上を目指します。',
+  },
+];
+---
+
+<section class="py-16 md:py-20">
+  <div class="max-w-[1200px] mx-auto px-4">
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">
+      <span class="text-sm md:text-base font-normal text-[#E8B341] tracking-widest block mb-2">Reason</span>
+      設備人が選ばれる理由
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      {reasons.map((reason) => (
+        <div class="bg-[#f7f7f7] rounded-[2rem] md:rounded-[4rem] shadow-[0_0.8rem_0_0_rgba(0,0,0,0.16)] flex items-start gap-4 md:gap-6 p-5 md:p-8">
+          <div class="flex-shrink-0 w-20 h-20 md:w-[140px] md:h-[140px] relative">
+            <img
+              src={reason.icon}
+              alt=""
+              aria-hidden="true"
+              width="140"
+              height="140"
+              decoding="auto"
+              class="w-full h-full object-contain"
+            />
+            <p class="absolute -top-2 left-0 flex flex-col items-center text-[#0044f2] font-semibold leading-none">
+              <span class="text-[10px] md:text-xs font-bold uppercase tracking-normal font-[Roboto]">reason</span>
+              <span class="text-3xl md:text-5xl font-semibold font-[Roboto_Condensed] -tracking-wider">{reason.number}</span>
+            </p>
+          </div>
+          <div class="flex-grow pt-1 md:pt-2">
+            <p class="text-lg md:text-xl font-bold mb-3">
+              <span class="text-[#ff4176]">{reason.headingHighlight}</span>{reason.heading}
+            </p>
+            <p class="text-sm text-gray-600 leading-relaxed">{reason.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

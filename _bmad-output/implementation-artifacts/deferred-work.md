@@ -19,3 +19,10 @@
 
 - No WCAG 2.2.2 pause/stop button for carousel autoplay — design decision; touch/switch-access users cannot pause without hover/focus
 - No responsive images (srcset/picture element) for hero images — 2400px images served to all viewports, bandwidth waste on mobile
+
+## Deferred from: code review of story-2-2 (2026-05-10)
+
+- Hardcoded image/alt maps in ServiceCategorySection.astro should ideally live in siteConfig.ts alongside service definitions — architectural improvement beyond story scope, risk of data drift when adding/renaming services
+- Grid missing 3-column breakpoint (2→4/5 jump) — production site uses Swiper slider not grid, acceptable for static grid alternative
+- imageMap/altMap duplication — production site uses entirely different structure (Swiper), refactor not urgent until architecture stabilizes
+- Raw `<img>` instead of Astro `<Image>` — images in public/ dir, Astro Image cannot optimize public assets; migrating all images to src/ is cross-cutting concern

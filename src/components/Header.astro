@@ -5,11 +5,9 @@ import MobileMenu from './MobileMenu.tsx';
 ---
 
 <header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
-  <div class="max-w-[1400px] mx-auto pl-8 flex items-center justify-between h-[100px] lg:h-[100px]">
+  <div class="w-full flex items-center justify-between h-[100px] lg:h-[100px]">
     <a href="/" class="shrink-0 relative z-10">
-      <span class="text-2xl lg:text-3xl font-bold text-navy">
-        {SITE_CONFIG.companyName}
-      </span>
+      <img src="/images/site_logo.svg" alt={SITE_CONFIG.companyName} class="w-[160px] lg:w-[230px] object-contain" />
     </a>
 
     <nav aria-label="メインナビゲーション" class="hidden lg:flex items-center justify-end h-full">

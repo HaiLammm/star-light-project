@@ -1,0 +1,39 @@
+---
+import { generateBreadcrumb, type BreadcrumbItem } from '../utils/schema';
+import { SITE_CONFIG } from '../utils/siteConfig';
+
+interface Props {
+  items: Array<{ label: string; href: string }>;
+}
+
+const { items } = Astro.props;
+
+const breadcrumbData: BreadcrumbItem[] = items.map((item) => ({
+  name: item.label,
+  url: item.href.startsWith('http') ? item.href : SITE_CONFIG.siteUrl + item.href,
+}));
+
+const jsonLd = generateBreadcrumb(breadcrumbData);
+---
+
+<nav aria-label="パンくずリスト">
+  <ol class="flex flex-wrap items-center gap-1 text-sm text-text-secondary">
+    {items.map((item, index) => (
+      <>
+        {index > 0 && (
+          <li aria-hidden="true" class="mx-1">&gt;</li>
+        )}
+        {index < items.length - 1 ? (
+          <li>
+            <a href={item.href} class="text-navy hover:underline">{item.label}</a>
+          </li>
+        ) : (
+          <li>
+            <span class="font-bold text-text-primary" aria-current="page">{item.label}</span>
+          </li>
+        )}
+      </>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

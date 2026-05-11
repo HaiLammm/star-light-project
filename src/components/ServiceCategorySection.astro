@@ -1,0 +1,93 @@
+---
+import type { ServiceCategory } from '../utils/siteConfig';
+import ServiceCard from './ServiceCard.astro';
+
+interface Props {
+  category: ServiceCategory;
+  heading: string;
+  subheading?: string;
+  englishLabel?: string;
+  bgColor?: string;
+  aboveFold?: boolean;
+}
+
+const { category, heading, subheading, englishLabel, bgColor, aboveFold = false } = Astro.props;
+
+const imageMap: Record<string, Record<string, string>> = {
+  electricity: {
+    breaker: '/images/services/electricity_01.jpg',
+    outlet: '/images/services/electricity_02.jpg',
+    lighting: '/images/services/electricity_03.jpg',
+    antenna: '/images/services/electricity_04.jpg',
+    'water-heater': '/images/services/electricity_05.jpg',
+  },
+  water: {
+    toilet: '/images/services/sanitary_01.jpg',
+    kitchen: '/images/services/sanitary_02.jpg',
+    bath: '/images/services/sanitary_03.jpg',
+    washroom: '/images/services/sanitary_04.jpg',
+  },
+  'pest-control': {
+    cockroach: '/images/services/pest_01.jpg',
+    termite: '/images/services/pest_02.jpg',
+    rodent: '/images/services/pest_03.jpg',
+    'general-pest': '/images/services/pest_04.jpg',
+  },
+};
+
+const altMap: Record<string, Record<string, string>> = {
+  electricity: {
+    breaker: 'ブレーカー修理・交換サービス',
+    outlet: 'コンセント修理・交換サービス',
+    lighting: '照明修理・交換サービス',
+    antenna: 'アンテナ工事サービス',
+    'water-heater': '給湯器交換サービス',
+  },
+  water: {
+    toilet: 'トイレ修理サービス',
+    kitchen: 'キッチン水漏れ修理サービス',
+    bath: 'お風呂修理サービス',
+    washroom: '洗面所修理サービス',
+  },
+  'pest-control': {
+    cockroach: 'ゴキブリ駆除サービス',
+    termite: 'シロアリ駆除サービス',
+    rodent: 'ネズミ駆除サービス',
+    'general-pest': '一般害虫駆除サービス',
+  },
+};
+
+const colsClass = category.subServices.length === 5
+  ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
+  : 'grid-cols-2 md:grid-cols-2 lg:grid-cols-4';
+---
+
+<section class="relative py-16 md:py-20 overflow-hidden">
+  {bgColor && (
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] md:w-[calc(100%-4rem)] max-w-[1200px] aspect-[1200/555] rounded-[2rem] md:rounded-[4rem] -z-10"
+      style={`background: ${bgColor};`}
+    />
+  )}
+  <div class="max-w-[1200px] mx-auto px-4">
+    <div class="text-center mb-6 md:mb-8">
+      <h2 class={`text-2xl md:text-3xl font-bold ${bgColor ? 'text-white' : 'text-gray-900'}`}>
+        {heading}
+        {englishLabel && <span class={`text-sm md:text-base font-normal tracking-widest ml-2 ${bgColor ? 'text-white/80' : 'text-[#E8B341]'}`}>{englishLabel}</span>}
+      </h2>
+      {subheading && <p class={`mt-2 text-sm font-medium ${bgColor ? 'text-white/90' : 'text-gray-600'}`}>{subheading}</p>}
+    </div>
+    <div class={`grid ${colsClass} gap-4 md:gap-6`}>
+      {category.subServices.map((service, index) => (
+        <div class={index % 2 === 1 ? 'lg:mt-16' : ''}>
+          <ServiceCard
+            service={service}
+            imageSrc={imageMap[category.slug]?.[service.slug] ?? `/images/services/${category.slug === 'water' ? 'sanitary' : category.slug === 'pest-control' ? 'pest' : 'electricity'}_01.jpg`}
+            imageAlt={altMap[category.slug]?.[service.slug] ?? service.label}
+            loading={aboveFold ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

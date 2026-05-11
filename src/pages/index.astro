@@ -1,8 +1,109 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCarousel from '../components/HeroCarousel.tsx';
+import ServiceSlider from '../components/ServiceSlider.tsx';
+import ReasonsGrid from '../components/ReasonsGrid.astro';
+import ProcessFlow from '../components/ProcessFlow.astro';
+import AreaMap from '../components/AreaMap.astro';
+import { SERVICE_CATEGORIES } from '../utils/siteConfig';
+
+const electricity = SERVICE_CATEGORIES.find((c) => c.slug === 'electricity');
+const water = SERVICE_CATEGORIES.find((c) => c.slug === 'water');
+const pestControl = SERVICE_CATEGORIES.find((c) => c.slug === 'pest-control');
+
+if (!electricity || !water || !pestControl) {
+  throw new Error('Missing required service category in SERVICE_CATEGORIES');
+}
+
+const imageMap: Record<string, Record<string, string>> = {
+  electricity: {
+    breaker: '/images/services/electricity_01.jpg',
+    outlet: '/images/services/electricity_02.jpg',
+    lighting: '/images/services/electricity_03.jpg',
+    antenna: '/images/services/electricity_04.jpg',
+    'water-heater': '/images/services/electricity_05.jpg',
+  },
+  water: {
+    toilet: '/images/services/sanitary_01.jpg',
+    kitchen: '/images/services/sanitary_02.jpg',
+    bath: '/images/services/sanitary_03.jpg',
+    washroom: '/images/services/sanitary_04.jpg',
+  },
+  'pest-control': {
+    cockroach: '/images/services/pest_01.jpg',
+    termite: '/images/services/pest_02.jpg',
+    rodent: '/images/services/pest_03.jpg',
+    'general-pest': '/images/services/pest_04.jpg',
+  },
+};
+
+const altMap: Record<string, Record<string, string>> = {
+  electricity: {
+    breaker: 'ブレーカー修理・交換サービス',
+    outlet: 'コンセント修理・交換サービス',
+    lighting: '照明修理・交換サービス',
+    antenna: 'アンテナ工事サービス',
+    'water-heater': '給湯器交換サービス',
+  },
+  water: {
+    toilet: 'トイレ修理サービス',
+    kitchen: 'キッチン水漏れ修理サービス',
+    bath: 'お風呂修理サービス',
+    washroom: '洗面所修理サービス',
+  },
+  'pest-control': {
+    cockroach: 'ゴキブリ駆除サービス',
+    termite: 'シロアリ駆除サービス',
+    rodent: 'ネズミ駆除サービス',
+    'general-pest': '一般害虫駆除サービス',
+  },
+};
+
+const buildSlides = (category: typeof electricity) => {
+  return category.subServices.map((s) => ({
+    slug: s.slug,
+    label: s.label,
+    href: s.href,
+    description: s.description,
+    startingPrice: s.startingPrice,
+    imageSrc: imageMap[category.slug]?.[s.slug] ?? '/images/services/electricity_01.jpg',
+    imageAlt: altMap[category.slug]?.[s.slug] ?? s.label,
+  }));
+};
+
+const electricitySlides = buildSlides(electricity);
+const waterSlides = buildSlides(water);
+const pestControlSlides = buildSlides(pestControl);
 ---
 
 <BaseLayout title="設備人｜水漏れ・電気修理・害虫駆除｜24時間対応" description="水漏れ・電気トラブル・害虫駆除なら設備人。24時間365日、全国対応。まずはお気軽にお電話ください。">
   <HeroCarousel client:load />
+  <ServiceSlider
+    client:load
+    slides={electricitySlides}
+    heading="電気まわりの修理サービス"
+    subheading="ブレーカー・コンセント・照明などの電気まわりトラブル解消。安心の事前見積りと24時間即対応"
+    englishLabel="Electricity"
+    bgColor="#fbc101"
+    aboveFold
+  />
+  <ServiceSlider
+    client:load
+    slides={waterSlides}
+    heading="水まわりの修理サービス"
+    subheading="トイレ・お風呂・キッチンなどの水回りのつまり・水漏れ修理。安心の事前見積りと24時間即対応"
+    englishLabel="Sanitary"
+    bgColor="#3ea6ff"
+  />
+  <ServiceSlider
+    client:load
+    slides={pestControlSlides}
+    heading="害虫駆除サービス"
+    subheading="ゴキブリ・シロアリ・ネズミなどの害虫害獣トラブルに対応"
+    englishLabel="Pest Control"
+    bgColor="#4CAF50"
+  />
+  <ReasonsGrid />
+  <ProcessFlow />
+  <AreaMap />
 </BaseLayout>
