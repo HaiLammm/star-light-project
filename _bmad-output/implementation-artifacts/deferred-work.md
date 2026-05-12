@@ -1,5 +1,11 @@
 # Deferred Work
 
+## Deferred from: code review of 2-5-assemble-complete-homepage (2026-05-12)
+
+- H1 logo pattern creates implicit contract — future Epic 3/5 service/blog page story authors must NOT add a second H1; the Header.astro `<h1>` wrapping the logo is the single H1 on all pages (follows star-light15.net production pattern).
+- `og:type` hardcoded as "website" in BaseLayout.astro — blog/article pages (Epic 5) will need `og:type="article"` with article-specific meta; BaseLayout should accept optional `ogType` prop when Epic 5 is built.
+- JSON-LD scripts render in `<body>` not `<head>` (index.astro:132-133) — valid per Google, cosmetic improvement; could be moved to BaseLayout `<head>` slot in future to follow best practice.
+
 ## Deferred from: code review of story 1-2 (2026-05-08)
 
 - formatDate uses runtime timezone (not JST) — may produce off-by-one dates on non-JST build servers. Consider explicit JST offset or Intl.DateTimeFormat with timeZone: 'Asia/Tokyo' when timezone-sensitive rendering is needed.
