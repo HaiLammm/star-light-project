@@ -130,10 +130,10 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
                   />
                 </figure>
                 <div className="px-[14px] md:px-[19px] mt-4 md:mt-[26px] flex flex-col flex-grow">
-                  <h3 className="text-sm md:text-[clamp(16px,1.77vw,22px)] font-extrabold text-gray-900 leading-[1.64] group-hover:text-[#ff4176] transition-colors duration-200">
+                  <h3 className="text-sm md:text-[clamp(16px,1.77vw,22px)] font-extrabold text-gray-900 leading-[1.64] group-hover:text-[#ff4176] transition-colors duration-200 line-clamp-2 min-h-[calc(1.64em*2)]">
                     {slide.label}
                   </h3>
-                  <p className="text-[9px] md:text-[clamp(10px,0.97vw,12px)] text-gray-600 mt-1">{slide.description}</p>
+                  <p className="text-[9px] md:text-[clamp(10px,0.97vw,12px)] text-gray-600 mt-1 line-clamp-3 min-h-[calc(1.5em*3)]">{slide.description}</p>
                   <div className="mt-auto pt-2 md:pt-[15px]">
                     <div className="flex items-center gap-1.5">
                       <span className="text-[9px] md:text-[clamp(10px,0.97vw,12px)]">作業料金</span>

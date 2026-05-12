@@ -75,9 +75,9 @@ const steps: Step[] = [
                 <span class="font-[Roboto_Condensed] text-3xl md:text-4xl font-semibold -tracking-wider mr-1">{step.number}.</span>{step.title}
               </p>
             </figure>
-            <div class="flex-grow">
-              <p class="text-lg md:text-xl font-bold leading-relaxed mb-3">{step.heading}</p>
-              <p class="text-sm text-gray-600 leading-relaxed">{step.description}</p>
+            <div class="flex-grow min-w-0">
+              <p class="text-lg md:text-xl font-bold leading-relaxed mb-3 break-words">{step.heading}</p>
+              <p class="text-sm text-gray-600 leading-relaxed break-words">{step.description}</p>
               {step.number === 1 && (
                 <div class="flex flex-col sm:flex-row gap-3 mt-4">
                   <a
