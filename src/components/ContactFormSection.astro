@@ -29,31 +29,31 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
 ---
 
 <section class="p-top-contact">
-  <div class="max-w-[1200px] mx-auto px-4">
-    <div class="relative bg-[#eff0ff] rounded-[40px] px-6 md:px-[140px] pb-[72px] pt-[10px]">
+  <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+    <div class="relative bg-[#eff0ff] rounded-[20px] sm:rounded-[40px] px-3 sm:px-6 md:px-[140px] pb-[40px] sm:pb-[72px] pt-[10px]">
       <!-- Section Heading -->
-      <h2 class="text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-10 md:pt-16">
-        <span class:list={['block w-[2px] h-[40px] md:h-[70px]', lineColorClass]}></span>
-        <span class:list={['absolute top-[0px] md:top-[00px] left-1/2 -translate-x-1/2 font-[Roboto] text-[56px] md:text-[clamp(100px,14.5vw,180px)] font-bold whitespace-nowrap pointer-events-none', variant === 'page' ? 'opacity-20' : 'opacity-30', headingColorClass]}>Contact</span>
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-6 sm:pt-10 md:pt-16">
+        <span class:list={['block w-[2px] h-[25px] sm:h-[40px] md:h-[70px]', lineColorClass]}></span>
+        <span class:list={['absolute top-[25px] sm:top-[0px] md:top-[00px] left-1/2 -translate-x-1/2 font-[Roboto] text-[40px] sm:text-[56px] md:text-[clamp(100px,14.5vw,180px)] font-bold whitespace-nowrap pointer-events-none', variant === 'page' ? 'opacity-20' : 'opacity-30', headingColorClass]}>Contact</span>
         <span class="relative z-[1]">修理相談</span>
       </h2>
 
       <!-- Form -->
-      <div class="mt-[40px] md:mt-[50px]">
+      <div class="mt-[30px] sm:mt-[40px] md:mt-[50px]">
         <form
           action={formAction}
           method="POST"
           aria-label="コンタクトフォーム"
-          class="flex flex-col gap-[30px]"
+          class="flex flex-col gap-[20px] sm:gap-[30px]"
         >
           <!-- Honeypot -->
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
           {FIELDS.map(({ name, label, type, placeholder, autocomplete }) => (
             <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] md:gap-[45px] gap-[8px] items-center">
-              <label for={`contact-${name}`} class="text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px]">
+              <label for={`contact-${name}`} class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px]">
                 {label}
-                <span class="px-[8px] py-[1px] rounded-[5px] border border-[#fc4076] text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px]">
+                <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px]">
                   必須
                 </span>
               </label>
@@ -67,7 +67,7 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
                   placeholder={placeholder}
                   required
                   aria-required="true"
-                  class="w-full h-[48px] px-[14px] py-[12px] rounded-[5px] border border-[#e0e0e0] bg-white text-[16px] placeholder:text-[#aaa] outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A] focus:border-[#1B2A4A] transition-colors duration-200"
+                  class="w-full h-[40px] sm:h-[48px] px-[10px] sm:px-[14px] py-[10px] sm:py-[12px] rounded-[4px] sm:rounded-[5px] border border-[#e0e0e0] bg-white text-[14px] sm:text-[16px] placeholder:text-[#aaa] outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A] focus:border-[#1B2A4A] transition-colors duration-200"
                 />
               </div>
             </div>
@@ -75,37 +75,37 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
 
           <!-- Service checkboxes -->
           <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] md:gap-[45px] gap-[8px] items-start">
-            <p class="text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px]">
+            <p class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px]">
               修理・交換の内容
-              <span class="px-[8px] py-[1px] rounded-[5px] border border-[#fc4076] text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px]">
+              <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px]">
                 必須
               </span>
             </p>
             <div>
-              <p class="text-[17px] leading-[1.65] mb-[10px]">電気まわりのトラブル</p>
-              <div class="flex flex-wrap gap-[5px_26px] text-[16px] leading-[1.88] text-[#3b4043]">
+              <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px]">電気まわりのトラブル</p>
+              <div class="flex flex-wrap gap-[4px_16px] sm:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
                 {ELECTRICITY_OPTIONS.map((opt) => (
-                  <label class="flex items-center gap-[6px] cursor-pointer min-h-[44px]">
+                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px]">
                     <input
                       type="checkbox"
                       name="service-kinds-electricity[]"
                       value={opt}
-                      class="w-[18px] h-[18px] accent-[#fc4076]"
+                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076]"
                     />
                     <span>{opt}</span>
                   </label>
                 ))}
               </div>
 
-              <p class="text-[17px] leading-[1.65] mb-[10px] mt-[30px]">水まわりのトラブル</p>
-              <div class="flex flex-wrap gap-[5px_26px] text-[16px] leading-[1.88] text-[#3b4043]">
+              <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px] mt-[20px] sm:mt-[30px]">水まわりのトラブル</p>
+              <div class="flex flex-wrap gap-[4px_16px] sm:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
                 {WATER_OPTIONS.map((opt) => (
-                  <label class="flex items-center gap-[6px] cursor-pointer min-h-[44px]">
+                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px]">
                     <input
                       type="checkbox"
                       name="service-kinds-sanitary[]"
                       value={opt}
-                      class="w-[18px] h-[18px] accent-[#fc4076]"
+                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076]"
                     />
                     <span>{opt}</span>
                   </label>
@@ -115,9 +115,9 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
           </div>
 
           <!-- Privacy policy inline -->
-          <div class="mt-[50px]">
-            <h3 class="text-[22px] font-bold text-center">プライバシーポリシー</h3>
-            <div class="mt-[20px] p-[30px_43px_23px_30px] rounded-[5px] bg-white text-[14px] leading-[1.75] text-[#333]">
+          <div class="mt-[30px] sm:mt-[50px]">
+            <h3 class="text-[16px] sm:text-[18px] md:text-[22px] font-bold text-center">プライバシーポリシー</h3>
+            <div class="mt-[15px] sm:mt-[20px] p-[20px_25px_18px_20px] sm:p-[30px_43px_23px_30px] rounded-[4px] sm:rounded-[5px] bg-white text-[12px] sm:text-[13px] md:text-[14px] leading-[1.75] text-[#333]">
               <p class="font-bold">1.法令・規範の遵守</p>
               <p>株式会社設備人（以下「当社」と言います）は個人情報保護に関して適用される法令、国が定める指針その他の規範を遵守し、当社が保有する個人情報の保護に努めます。</p>
               <div class="mt-[16px]">
@@ -134,7 +134,7 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
           <!-- Submit button -->
           <button
             type="submit"
-            class="w-[280px] min-h-[60px] flex justify-center items-center mx-auto mt-[40px] bg-[#ff4176] text-white text-[18px] font-bold rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.3)] hover:translate-y-[5px] hover:shadow-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A]"
+            class="w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] flex justify-center items-center mx-auto mt-[30px] sm:mt-[40px] bg-[#ff4176] text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.3)] hover:translate-y-[5px] hover:shadow-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A]"
           >
             送信
           </button>
