@@ -48,21 +48,21 @@ const steps: Step[] = [
 ];
 ---
 
-<section class="py-16 md:py-20">
-  <div class="max-w-[1200px] mx-auto px-4">
-    <h2 class="text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
-      <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
-      <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Flow</span>
+<section class="py-12 md:py-16 lg:py-20">
+  <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+    <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+      <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+      <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Flow</span>
       ご相談から修理までの流れ
     </h2>
-    <div class="bg-[#f7f7f7] rounded-[2rem] md:rounded-[4rem] px-4 md:px-12 py-10 md:py-16 mt-8 md:mt-12">
-      <ol class="flex flex-col gap-10 md:gap-12 list-none p-0">
+    <div class="bg-[#f7f7f7] rounded-[16px] sm:rounded-[2rem] md:rounded-[4rem] px-3 sm:px-6 md:px-12 py-6 sm:py-10 md:py-16 mt-6 sm:mt-8 md:mt-12">
+      <ol class="flex flex-col gap-8 sm:gap-10 md:gap-12 list-none p-0">
         {steps.map((step, index) => (
-          <li class="flex flex-col md:flex-row items-start gap-4 md:gap-8 relative">
+          <li class="flex flex-col md:flex-row items-start gap-3 sm:gap-4 md:gap-8 relative">
             {index > 0 && (
               <div class="hidden md:block absolute left-[10rem] -top-10 md:-top-12 w-0.5 h-10 md:h-12 bg-[#979bf3]"></div>
             )}
-            <figure class="flex-shrink-0 w-full md:w-[400px] relative rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
+            <figure class="flex-shrink-0 w-full md:w-[400px] relative rounded-[12px] sm:rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
               <img
                 src={step.image}
                 alt={`ステップ${step.number}: ${step.title}`}
@@ -71,35 +71,35 @@ const steps: Step[] = [
                 decoding="auto"
                 class="w-full h-auto object-cover aspect-[400/240]"
               />
-              <p class="absolute top-0 left-0 bg-white rounded-br-[1.5rem] md:rounded-br-[2rem] px-4 md:px-6 py-2 text-[#0044f2] font-bold text-lg md:text-xl flex items-center">
-                <span class="font-[Roboto_Condensed] text-3xl md:text-4xl font-semibold -tracking-wider mr-1">{step.number}.</span>{step.title}
+              <p class="absolute top-0 left-0 bg-white rounded-br-[12px] sm:rounded-br-[1.5rem] md:rounded-br-[2rem] px-2 sm:px-4 md:px-6 py-1 sm:py-2 text-[#0044f2] font-bold text-[12px] sm:text-base md:text-xl flex items-center">
+                <span class="font-[Roboto_Condensed] text-[20px] sm:text-3xl md:text-4xl font-semibold -tracking-wider mr-1">{step.number}.</span>{step.title}
               </p>
             </figure>
             <div class="flex-grow min-w-0">
-              <p class="text-lg md:text-xl font-bold leading-relaxed mb-3 break-words">{step.heading}</p>
-              <p class="text-sm text-gray-600 leading-relaxed break-words">{step.description}</p>
+              <p class="text-[13px] sm:text-base md:text-xl font-bold leading-relaxed mb-2 sm:mb-3 break-words">{step.heading}</p>
+              <p class="text-[11px] sm:text-sm md:text-base text-gray-600 leading-relaxed break-words">{step.description}</p>
               {step.number === 1 && (
-                <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2 sm:mt-4 w-full">
                   <a
                     href="/contact"
-                    class="inline-flex items-center justify-center bg-[#E8B341] text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-shadow text-sm"
+                    class="inline-flex items-center justify-center bg-[#E8B341] text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:shadow-lg transition-shadow text-[11px] sm:text-sm"
                   >
                     メールで無料相談
                   </a>
                   <a
                     href={SITE_CONFIG.phone.href}
                     aria-label={SITE_CONFIG.phone.ariaLabel}
-                    class="inline-flex flex-col items-center justify-center border-2 border-[#E8B341] text-[#E8B341] font-bold py-2 px-6 rounded-lg hover:shadow-lg transition-shadow"
+                    class="inline-flex flex-col items-center justify-center border-2 border-[#E8B341] text-[#E8B341] font-bold py-1 sm:py-2 px-4 sm:px-6 rounded-lg hover:shadow-lg transition-shadow"
                   >
-                    <span class="text-xs">電話相談無料！年中無休で対応</span>
-                    <span class="text-lg font-bold">{SITE_CONFIG.phone.display}</span>
+                    <span class="text-[9px] sm:text-xs">電話相談無料！年中無休で対応</span>
+                    <span class="text-base sm:text-lg font-bold">{SITE_CONFIG.phone.display}</span>
                   </a>
                 </div>
               )}
               {step.number === 5 && (
-                <div class="mt-3">
-                  <p class="text-sm font-bold text-gray-700 mb-1">お支払い方法</p>
-                  <p class="text-xs text-gray-600">現金、銀行振込、または各種クレジットカードがご利用頂けます。</p>
+                <div class="mt-2 sm:mt-3">
+                  <p class="text-[11px] sm:text-sm font-bold text-gray-700 mb-1">お支払い方法</p>
+                  <p class="text-[10px] sm:text-xs text-gray-600">現金、銀行振込、または各種クレジットカードがご利用頂けます。</p>
                 </div>
               )}
             </div>
