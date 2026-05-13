@@ -64,11 +64,11 @@ const reasons: Reason[] = [
               <span class="text-2xl sm:text-3xl md:text-5xl font-semibold font-[Roboto_Condensed] -tracking-wider">{reason.number}</span>
             </p>
           </div>
-          <div class="flex-grow min-w-0 pt-0 sm:pt-1 md:pt-2">
-            <p class="text-[13px] sm:text-base md:text-xl font-bold mb-2 sm:mb-3">
+          <div class="flex-grow min-w-0 pt-0 sm:pt-1 md:pt-2 max-w-[calc(100vw-100px)] sm:max-w-full">
+            <p class="text-[13px] sm:text-base md:text-xl font-bold mb-2 sm:mb-3 break-words max-w-full">
               <span class="text-[#ff4176]">{reason.headingHighlight}</span>{reason.heading}
             </p>
-            <p class="text-[11px] sm:text-sm md:text-base text-gray-600 leading-relaxed break-words">{reason.description}</p>
+            <p class="text-[11px] sm:text-sm md:text-base text-gray-600 leading-relaxed break-words max-w-full">{reason.description}</p>
           </div>
         </div>
       ))}

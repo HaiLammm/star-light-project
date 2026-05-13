@@ -32,10 +32,10 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
   <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
     <div class="relative bg-[#eff0ff] rounded-[20px] sm:rounded-[40px] px-3 sm:px-6 md:px-[140px] pb-[40px] sm:pb-[72px] pt-[10px]">
       <!-- Section Heading -->
-      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-6 sm:pt-10 md:pt-16">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-6 sm:pt-10 md:pt-16 max-w-full">
         <span class:list={['block w-[2px] h-[25px] sm:h-[40px] md:h-[70px]', lineColorClass]}></span>
-        <span class:list={['absolute top-[25px] sm:top-[0px] md:top-[00px] left-1/2 -translate-x-1/2 font-[Roboto] text-[40px] sm:text-[56px] md:text-[clamp(100px,14.5vw,180px)] font-bold whitespace-nowrap pointer-events-none', variant === 'page' ? 'opacity-20' : 'opacity-30', headingColorClass]}>Contact</span>
-        <span class="relative z-[1]">修理相談</span>
+        <span class:list={['absolute top-[25px] sm:top-[0px] md:top-[00px] left-1/2 -translate-x-1/2 font-[Roboto] text-[40px] sm:text-[56px] md:text-[clamp(100px,14.5vw,180px)] font-bold pointer-events-none', variant === 'page' ? 'opacity-20' : 'opacity-30', headingColorClass]}>Contact</span>
+        <span class="relative z-[1] max-w-[80vw] break-words">修理相談</span>
       </h2>
 
       <!-- Form -->
@@ -51,9 +51,9 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
 
           {FIELDS.map(({ name, label, type, placeholder, autocomplete }) => (
             <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] md:gap-[45px] gap-[8px] items-center">
-              <label for={`contact-${name}`} class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px]">
-                {label}
-                <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px]">
+              <label for={`contact-${name}`} class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px] max-w-full">
+                <span class="break-words max-w-[calc(100%-50px)] sm:max-w-[150px] md:max-w-none">{label}</span>
+                <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px] flex-shrink-0">
                   必須
                 </span>
               </label>
@@ -75,39 +75,39 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
 
           <!-- Service checkboxes -->
           <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] md:gap-[45px] gap-[8px] items-start">
-            <p class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px]">
-              修理・交換の内容
-              <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px]">
+            <p class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px] max-w-full">
+              <span class="break-words max-w-[calc(100%-50px)] sm:max-w-[150px] md:max-w-none">修理・交換の内容</span>
+              <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px] flex-shrink-0">
                 必須
               </span>
             </p>
             <div>
               <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px]">電気まわりのトラブル</p>
-              <div class="flex flex-wrap gap-[4px_16px] sm:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
+              <div class="flex flex-wrap gap-[4px_12px] sm:gap-[5px_16px] md:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
                 {ELECTRICITY_OPTIONS.map((opt) => (
-                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px]">
+                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px] max-w-[calc(50%-8px)] sm:max-w-none">
                     <input
                       type="checkbox"
                       name="service-kinds-electricity[]"
                       value={opt}
-                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076]"
+                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076] flex-shrink-0"
                     />
-                    <span>{opt}</span>
+                    <span class="break-words text-[12px] sm:text-[14px]">{opt}</span>
                   </label>
                 ))}
               </div>
 
-              <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px] mt-[20px] sm:mt-[30px]">水まわりのトラブル</p>
-              <div class="flex flex-wrap gap-[4px_16px] sm:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
+              <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px] mt-[20px] sm:mt-[30px] break-words max-w-[90vw]">水まわりのトラブル</p>
+              <div class="flex flex-wrap gap-[4px_12px] sm:gap-[5px_16px] md:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
                 {WATER_OPTIONS.map((opt) => (
-                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px]">
+                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px] max-w-[calc(50%-8px)] sm:max-w-none">
                     <input
                       type="checkbox"
                       name="service-kinds-sanitary[]"
                       value={opt}
-                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076]"
+                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076] flex-shrink-0"
                     />
-                    <span>{opt}</span>
+                    <span class="break-words text-[12px] sm:text-[14px]">{opt}</span>
                   </label>
                 ))}
               </div>

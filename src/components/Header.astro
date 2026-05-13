@@ -18,13 +18,13 @@ import MobileMenu from './MobileMenu.tsx';
       </div>
 
       <div class="ml-5 xl:ml-7 flex flex-col items-center">
-        <span class="inline-flex items-center justify-center px-4 h-5 rounded-full border border-[#2856cb] text-[11px] font-bold text-[#2856cb] whitespace-nowrap">
+        <span class="inline-flex items-center justify-center px-4 h-5 rounded-full border border-[#2856cb] text-[11px] font-bold text-[#2856cb] max-w-[180px] text-center">
           電話相談無料！年中無休で対応
         </span>
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="font-['Roboto',sans-serif] text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity whitespace-nowrap"
+          class="font-['Roboto',sans-serif] text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity max-w-[200px] text-center break-words"
         >
           {SITE_CONFIG.phone.display}
         </a>
