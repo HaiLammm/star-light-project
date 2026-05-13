@@ -9,6 +9,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABlock from '../components/CTABlock.astro';
+import ContactFormSection from '../components/ContactFormSection.astro';
 import { SERVICE_CATEGORIES, REGIONAL_OFFICES, SITE_CONFIG } from '../utils/siteConfig';
 import { generateLocalBusiness, generateFAQ } from '../utils/schema';
 import { getCollection } from 'astro:content';
@@ -242,6 +243,9 @@ const faqSchema = sortedFaq.length > 0
       </div>
     </div>
   </section>
+
+  <!-- Contact Form Section -->
+  <ContactFormSection variant="homepage" />
 
   <CTABlock variant="full-width" />
 </BaseLayout>

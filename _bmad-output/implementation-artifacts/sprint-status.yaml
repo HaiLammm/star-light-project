@@ -35,7 +35,13 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-08
-last_updated: 2026-05-12
+last_updated: 2026-05-13
+# Story 4-2 done: 2026-05-13
+# Story 4-2 review: 2026-05-13
+# Story 4-2 created: 2026-05-13
+# Story 4-1 done: 2026-05-13
+# Story 4-1 review: 2026-05-13
+# Story 4-1 created: 2026-05-13
 # Story 2-5 created: 2026-05-12
 # Story 2-4 created: 2026-05-11
 # Story 2-3 created: 2026-05-10
@@ -86,9 +92,9 @@ development_status:
   epic-3-retrospective: optional
 
   # Epic 4: Contact, Company & Supporting Pages
-  epic-4: backlog
-  4-1-build-contact-form-page: backlog
-  4-2-implement-contact-form-submission-and-feedback: backlog
+  epic-4: in-progress
+  4-1-build-contact-form-page: done
+  4-2-implement-contact-form-submission-and-feedback: done
   4-3-build-company-pages: backlog
   4-4-build-process-flow-faq-privacy-sitemap-and-404-pages: backlog
   epic-4-retrospective: optional
