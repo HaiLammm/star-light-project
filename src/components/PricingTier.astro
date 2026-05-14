@@ -1,0 +1,62 @@
+---
+import { formatPrice } from '../utils/formatters';
+
+interface Tier {
+  name: string;
+  price: number;
+  tax?: string;
+  imageUrl: string;
+  imageAlt: string;
+  description?: string;
+}
+
+interface Props {
+  tiers: Tier[];
+  serviceName?: string;
+}
+
+const { tiers, serviceName } = Astro.props;
+---
+
+<section id="price" class="py-12 md:py-16 lg:py-20">
+  <div class="max-w-[1280px] mx-auto px-3 sm:px-4">
+    <div class="relative bg-[#f7f7f7] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] px-3 sm:px-4 md:px-10 pb-8 sm:pb-12 md:pb-16">
+      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-8 sm:pt-10 md:pt-12 mb-6 sm:mb-8 md:mb-12">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[50px] sm:top-[65px] md:top-[55px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Price</span>
+        {serviceName ? `${serviceName}の料金のご案内` : '料金のご案内'}
+      </h2>
+
+      <div class="flex flex-wrap justify-center gap-5 sm:gap-6 md:gap-[30px]">
+        {tiers.map((tier) => (
+          <div class="w-full md:w-[calc(50%-15px)] md:max-w-[540px] bg-white rounded-[20px] sm:rounded-[30px] md:rounded-[40px] p-4 sm:p-5 md:p-[30px] flex items-center gap-3 sm:gap-4 md:gap-5 shadow-[0_8px_0_0_rgba(0,0,0,0.16)]">
+            <figure class="flex-shrink-0 w-[80px] sm:w-[120px] md:w-[200px] aspect-[200/160] rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden">
+              <img
+                src={tier.imageUrl}
+                alt={tier.imageAlt}
+                width="200"
+                height="160"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </figure>
+            <div class="flex-grow min-w-0">
+              <p class="text-[13px] sm:text-[16px] md:text-[22px] font-extrabold leading-snug">{tier.name}</p>
+              <div class="flex items-center gap-1.5 mt-2 sm:mt-3 md:mt-4">
+                <span class="text-[9px] sm:text-[10px] md:text-[12px] leading-tight">作業料金</span>
+                <span class="inline-flex items-center justify-center bg-black text-white text-[9px] sm:text-[10px] md:text-[12px] font-bold px-1.5 py-0.5 rounded-[5px] leading-tight">WEB割引</span>
+              </div>
+              <p class="font-[Roboto] text-[20px] sm:text-[24px] md:text-[32px] font-bold text-[#ff4176] mt-1">
+                {tier.price.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[12px] md:text-[14px] font-medium ml-1.5 -translate-y-0.5 inline-block">{tier.tax ?? '円[税込]〜'}</span>
+              </p>
+              {tier.description && (
+                <p class="text-[10px] sm:text-[11px] md:text-[12px] text-text-secondary mt-1">{tier.description}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
