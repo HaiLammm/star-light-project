@@ -1,0 +1,52 @@
+{
+  "serviceName": "ネズミ駆除",
+  "serviceNameShort": "ネズミ駆除",
+  "category": "pest-control",
+  "slug": "rodent",
+  "description": "天井から音がする・ネズミの糞を見つけた・噛まれた跡がある・侵入口をふさぎたいなど、ネズミ駆除・侵入防止に24時間対応。侵入経路の調査・捕獲・再侵入防止施工まで徹底的に対応し、衛生的な住環境を取り戻します。",
+  "startingPrice": 5500,
+  "originalPrice": 8800,
+  "webDiscountAmount": 3300,
+  "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
+  "imageAlt": "ネズミ侵入経路の調査を行う専門スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "侵入経路調査",
+      "price": 5500,
+      "imageUrl": "/images/services/pest_02.jpg",
+      "imageAlt": "ネズミ侵入経路調査サービス"
+    },
+    {
+      "name": "捕獲・駆除施工",
+      "price": 16500,
+      "imageUrl": "/images/services/pest_01.jpg",
+      "imageAlt": "ネズミ捕獲・駆除施工サービス"
+    },
+    {
+      "name": "侵入口封鎖・再侵入防止",
+      "price": 22000,
+      "imageUrl": "/images/services/pest_03.jpg",
+      "imageAlt": "ネズミ侵入口封鎖・再侵入防止サービス"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "天井裏でガサガサ音がします。ネズミですか？",
+      "answer": "天井裏での音はネズミ（クマネズミ）が最も一般的な原因です。夜間に活発に動くため夕方〜深夜に音がする場合が多いです。早めの調査をおすすめします。"
+    },
+    {
+      "question": "ネズミ駆除はどのくらいの期間がかかりますか？",
+      "answer": "侵入経路の特定・封鎖から完全駆除まで、通常1〜2週間程度かかります。状況によって複数回の訪問が必要な場合があります。"
+    },
+    {
+      "question": "ネズミの糞の後始末もしてもらえますか？",
+      "answer": "はい、糞・尿の清掃と消毒作業もあわせて対応しています。衛生的な環境に戻すところまでサポートします。"
+    },
+    {
+      "question": "駆除後にまた入ってきた場合はどうなりますか？",
+      "answer": "侵入口の封鎖が完了している場合でも、見落とした経路から再侵入することがあります。再確認のうえ追加対応いたします。"
+    }
+  ]
+}

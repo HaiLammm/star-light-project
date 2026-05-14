@@ -1,0 +1,52 @@
+{
+  "serviceName": "コンセント修理・増設・交換",
+  "serviceNameShort": "コンセント",
+  "category": "electricity",
+  "slug": "outlet",
+  "description": "コンセントから焦げ臭い、差し込んでも電気がつかない、電気工事でコンセントを増設したいなど、コンセント・スイッチまわりのトラブルに即日対応。有資格スタッフが現地で状態を確認し、安全・迅速に修理・交換・増設工事を行います。",
+  "startingPrice": 1100,
+  "originalPrice": 2600,
+  "webDiscountAmount": 1500,
+  "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
+  "imageAlt": "コンセント修理を行う作業スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "コンセント交換",
+      "price": 5500,
+      "imageUrl": "/images/services/electricity_01.jpg",
+      "imageAlt": "コンセント交換サービス"
+    },
+    {
+      "name": "コンセント増設工事",
+      "price": 12100,
+      "imageUrl": "/images/services/electricity_02.jpg",
+      "imageAlt": "コンセント増設工事サービス"
+    },
+    {
+      "name": "コンセント修理・点検",
+      "price": 4400,
+      "imageUrl": "/images/services/electricity_03.jpg",
+      "imageAlt": "コンセント修理・点検サービス"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "コンセントから焦げ臭いにおいがします。どうすればよいですか？",
+      "answer": "すぐに使用を中止し、コンセントに差し込んでいる機器を外してください。焦げ臭いにおいは漏電や過熱のサインです。速やかにご連絡ください。"
+    },
+    {
+      "question": "コンセントの増設にはどれくらい時間がかかりますか？",
+      "answer": "1箇所あたり1〜2時間程度が目安です。配線の引き回し状況により異なりますので、現地確認後にご案内します。"
+    },
+    {
+      "question": "古いコンセントをアース付きに交換できますか？",
+      "answer": "はい、対応可能です。洗濯機・冷蔵庫など水回り家電の近くはアース付きへの交換をおすすめします。"
+    },
+    {
+      "question": "見積り後にキャンセルしても費用はかかりますか？",
+      "answer": "いいえ、キャンセル料は一切いただきません。見積り後でもお断りいただいて構いません。"
+    }
+  ]
+}

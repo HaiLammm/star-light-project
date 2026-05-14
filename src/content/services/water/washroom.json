@@ -1,0 +1,52 @@
+{
+  "serviceName": "洗面所つまり・水漏れ修理",
+  "serviceNameShort": "洗面所",
+  "category": "water",
+  "slug": "washroom",
+  "description": "洗面台の排水が遅い・蛇口から水が止まらない・洗面台下の配管から水漏れしているなど、洗面所まわりの水トラブルに24時間対応。排水つまりの解消から洗面台・水栓器具の交換まで、迅速に対応します。",
+  "startingPrice": 5500,
+  "originalPrice": 8800,
+  "webDiscountAmount": 3300,
+  "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
+  "imageAlt": "洗面台の点検を行う水道修理スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "排水つまり除去",
+      "price": 5500,
+      "imageUrl": "/images/services/sanitary_04.jpg",
+      "imageAlt": "洗面所排水つまり除去作業イメージ"
+    },
+    {
+      "name": "蛇口・水栓交換",
+      "price": 11000,
+      "imageUrl": "/images/services/sanitary_02.jpg",
+      "imageAlt": "洗面所水栓交換作業イメージ"
+    },
+    {
+      "name": "排水管・パイプ交換",
+      "price": 14300,
+      "imageUrl": "/images/services/sanitary_01.jpg",
+      "imageAlt": "洗面所排水管交換作業イメージ"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "洗面台の排水が詰まっています。すぐに来てもらえますか？",
+      "answer": "はい、最短10分で駆けつけます。髪の毛や石鹸カスのつまりであれば即日解消できる場合がほとんどです。"
+    },
+    {
+      "question": "洗面台下の収納スペースが水で濡れています。",
+      "answer": "配管の接続部分やパッキンの劣化による水漏れが考えられます。応急処置として収納物を出し、給水元栓を閉めてからご連絡ください。"
+    },
+    {
+      "question": "洗面台ごと交換したい場合も対応できますか？",
+      "answer": "はい、洗面台の交換・リフォームにも対応しています。機種選定からご相談いただけます。"
+    },
+    {
+      "question": "修理後に不具合が再発した場合はどうなりますか？",
+      "answer": "施工後の不具合は責任を持って対応します。ご満足いただけない場合は料金をいただきません。"
+    }
+  ]
+}

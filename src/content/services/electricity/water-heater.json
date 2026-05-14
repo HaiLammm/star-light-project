@@ -1,0 +1,52 @@
+{
+  "serviceName": "給湯器交換・修理",
+  "serviceNameShort": "給湯器交換",
+  "category": "electricity",
+  "slug": "water-heater",
+  "description": "お湯が出ない・給湯器からエラーコードが表示される・異臭・水漏れなど、給湯器トラブルに24時間対応。ガス・電気・エコキュートなど幅広い機種に対応し、有資格スタッフが現地で診断・交換・修理を行います。",
+  "startingPrice": 1100,
+  "originalPrice": 2600,
+  "webDiscountAmount": 1500,
+  "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
+  "imageAlt": "給湯器の点検を行う作業スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "給湯器診断・応急処置",
+      "price": 11000,
+      "imageUrl": "/images/services/electricity_05.jpg",
+      "imageAlt": "給湯器診断・応急処置サービス"
+    },
+    {
+      "name": "給湯器交換工事（16号）",
+      "price": 88000,
+      "imageUrl": "/images/services/electricity_04.jpg",
+      "imageAlt": "給湯器交換工事サービス"
+    },
+    {
+      "name": "給湯器交換工事（20号）",
+      "price": 110000,
+      "imageUrl": "/images/services/electricity_03.jpg",
+      "imageAlt": "大型給湯器交換工事サービス"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "給湯器にエラーコードが表示されています。どうすればよいですか？",
+      "answer": "エラーコードの内容によって原因が異なります。写真や番号をお伝えいただければ、電話でも概要をお伝えできます。現地確認後に正確な診断と対応をご案内します。"
+    },
+    {
+      "question": "給湯器の交換はどのくらい時間がかかりますか？",
+      "answer": "標準的な交換工事は2〜3時間程度です。機種の在庫状況や配管の状態によっては、当日中の完了が難しい場合もあります。"
+    },
+    {
+      "question": "使用中の給湯器と同じメーカーでないと交換できませんか？",
+      "answer": "いいえ、他メーカーへの切り替えも対応可能です。設置環境に合わせた最適な機種をご提案します。"
+    },
+    {
+      "question": "給湯器から水漏れしています。緊急対応してもらえますか？",
+      "answer": "はい、24時間365日で緊急対応しております。水漏れが続く場合は給湯器への給水を止め、すぐにご連絡ください。"
+    }
+  ]
+}

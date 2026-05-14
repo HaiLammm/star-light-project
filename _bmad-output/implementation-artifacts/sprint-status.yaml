@@ -36,6 +36,10 @@
 
 generated: 2026-05-08
 last_updated: 2026-05-14
+# Story 3-4 created: 2026-05-14
+# Story 3-3 review: 2026-05-14
+# Story 3-3 created: 2026-05-14
+# Story 3-2 created: 2026-05-14
 # Story 3-1 created: 2026-05-14
 # Story 4-2 done: 2026-05-13
 # Story 4-2 review: 2026-05-13
@@ -86,9 +90,9 @@ development_status:
   # Epic 3: Service Pages (Water, Electrical, Pest Control)
   epic-3: in-progress
   3-1-build-service-detail-page-template-with-anchor-menu-and-pricing: review
-  3-2-build-comparison-table-reasons-grid-and-trust-signals-for-service-pages: backlog
-  3-3-build-service-area-process-flow-case-studies-testimonials-and-faq-sections-for-service-pages: backlog
-  3-4-create-service-content-data-and-dynamic-route-generation: backlog
+  3-2-build-comparison-table-reasons-grid-and-trust-signals-for-service-pages: review
+  3-3-build-service-area-process-flow-case-studies-testimonials-and-faq-sections-for-service-pages: review
+  3-4-create-service-content-data-and-dynamic-route-generation: review
   3-5-build-service-hub-pages: backlog
   epic-3-retrospective: optional
 

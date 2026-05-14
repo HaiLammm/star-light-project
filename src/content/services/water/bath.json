@@ -1,0 +1,52 @@
+{
+  "serviceName": "お風呂つまり・水漏れ修理",
+  "serviceNameShort": "お風呂",
+  "category": "water",
+  "slug": "bath",
+  "description": "お風呂の排水がつまった・浴槽から水漏れする・シャワーの水圧が弱いなど、浴室まわりの水トラブルに24時間対応。排水口のつまり解消からシャワーヘッド・混合水栓の交換まで、豊富な経験を持つスタッフが迅速に対応します。",
+  "startingPrice": 5500,
+  "originalPrice": 8800,
+  "webDiscountAmount": 3300,
+  "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
+  "imageAlt": "浴室排水の点検を行う水道修理スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "排水口つまり除去",
+      "price": 5500,
+      "imageUrl": "/images/services/sanitary_03.jpg",
+      "imageAlt": "浴室排水口つまり除去作業イメージ"
+    },
+    {
+      "name": "シャワー水栓交換",
+      "price": 11000,
+      "imageUrl": "/images/services/sanitary_04.jpg",
+      "imageAlt": "シャワー水栓交換作業イメージ"
+    },
+    {
+      "name": "浴槽排水管高圧洗浄",
+      "price": 16500,
+      "imageUrl": "/images/services/sanitary_01.jpg",
+      "imageAlt": "浴槽排水管高圧洗浄作業イメージ"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "お風呂の排水が流れにくくなりました。対応できますか？",
+      "answer": "はい。髪の毛や石鹸カスによるつまりが多い原因です。専用工具や高圧洗浄で対応します。即日での解消が可能な場合がほとんどです。"
+    },
+    {
+      "question": "シャワーの水圧が急に弱くなりました。",
+      "answer": "シャワーヘッドの目詰まりや混合水栓の内部部品劣化が原因の場合があります。清掃や部品交換で改善できるケースが多いです。"
+    },
+    {
+      "question": "浴槽にひびが入って水漏れしています。修理できますか？",
+      "answer": "浴槽の素材や破損の程度によって、補修剤での対応または交換が必要です。現地確認のうえ最適な方法をご提案します。"
+    },
+    {
+      "question": "夜中にお風呂が壊れました。深夜でも来てもらえますか？",
+      "answer": "はい、24時間365日対応しております。深夜・早朝の緊急対応でも追加料金はいただきません。"
+    }
+  ]
+}

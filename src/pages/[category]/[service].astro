@@ -1,0 +1,476 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnchorMenu from '../../components/AnchorMenu.astro';
+import PricingTier from '../../components/PricingTier.astro';
+import ReasonsGrid from '../../components/ReasonsGrid.astro';
+import ProcessFlow from '../../components/ProcessFlow.astro';
+import AreaMap from '../../components/AreaMap.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import TestimonialCard from '../../components/TestimonialCard.astro';
+import FAQAccordion from '../../components/FAQAccordion.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import ComparisonTable from '../../components/ComparisonTable.astro';
+import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, PEST_CONTROL_SERVICES } from '../../utils/siteConfig';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((entry) => ({
+    params: { category: entry.data.category, service: entry.data.slug },
+    props: { serviceData: entry.data },
+  }));
+}
+
+const { serviceData } = Astro.props;
+const { category } = Astro.params;
+
+const serviceName = serviceData.serviceNameShort;
+const serviceLongName = serviceData.serviceName;
+
+const categoryLabels: Record<string, string> = {
+  electricity: '電気まわり',
+  water: '水まわり',
+  'pest-control': '害虫駆除',
+};
+const serviceCategory = categoryLabels[category] ?? category;
+
+const originalPrice = serviceData.originalPrice;
+const discountedPrice = serviceData.startingPrice;
+const webDiscountAmount = serviceData.webDiscountAmount;
+
+const categoryServices = {
+  electricity: ELECTRICITY_SERVICES,
+  water: WATER_SERVICES,
+  'pest-control': PEST_CONTROL_SERVICES,
+} as const;
+
+const kvImageDesktop = serviceData.kvImageDesktop
+  ?? `${categoryLabels[category] ? '' : ''}`; // fallback below
+const categoryKvFallback: Record<string, string> = {
+  electricity: '/images/services/electricity_01.jpg',
+  water: '/images/services/sanitary_01.jpg',
+  'pest-control': '/images/services/pest_01.jpg',
+};
+const kvDesktop = serviceData.kvImageDesktop ?? categoryKvFallback[category];
+const kvMobile = serviceData.kvImageMobile ?? categoryKvFallback[category];
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: serviceCategory, href: `/${category}` },
+  { label: `${serviceName}サービス`, href: '#' },
+];
+
+const anchorSections = [
+  { id: 'price', label: '料金のご案内', icon: '/images/icons/anchor_icon_01.svg' },
+  { id: 'reason', label: '選ばれる理由', icon: '/images/icons/anchor_icon_02.svg' },
+  { id: 'compare', label: '他社比較', icon: '/images/icons/anchor_icon_03.svg' },
+  { id: 'area', label: '対応エリア', icon: '/images/icons/anchor_icon_04.svg' },
+  { id: 'flow', label: '作業の流れ', icon: '/images/icons/anchor_icon_05.svg' },
+  { id: 'case', label: '修理事例', icon: '/images/icons/anchor_icon_06.svg' },
+  { id: 'voice', label: 'お客様の声', icon: '/images/icons/anchor_icon_08.svg' },
+  { id: 'faq', label: 'FAQ', icon: '/images/icons/anchor_icon_07.svg' },
+];
+
+const pricingTiers = serviceData.pricingTiers;
+const faqItems = serviceData.faqEntries;
+
+const stubCaseStudies = [
+  {
+    title: `${serviceName}の施工事例`,
+    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
+    categoryLabel: serviceCategory,
+    location: serviceData.serviceArea[0] ?? '大阪府',
+    duration: '60',
+    cost: serviceData.startingPrice,
+    description: `${serviceData.description}`,
+    imageSrc: categoryKvFallback[category],
+    imageAlt: `${serviceName}の施工事例`,
+    slug: 'case-001',
+  },
+  {
+    title: `${serviceName}修理・対応事例`,
+    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
+    categoryLabel: serviceCategory,
+    location: serviceData.serviceArea[1] ?? serviceData.serviceArea[0] ?? '京都府',
+    duration: '45',
+    cost: serviceData.pricingTiers[1]?.price ?? serviceData.startingPrice,
+    description: `迅速な対応で${serviceName}のトラブルを解決した施工事例です。`,
+    imageSrc: serviceData.pricingTiers[1]?.imageUrl ?? categoryKvFallback[category],
+    imageAlt: `${serviceName}修理事例`,
+    slug: 'case-002',
+  },
+];
+
+const stubTestimonials = [
+  {
+    serviceType: serviceLongName,
+    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
+    cost: serviceData.startingPrice,
+    message: `深夜のトラブルにもすぐ来てくれて、作業前の説明も丁寧で安心してお願いできました。${serviceName}のことなら設備人さんに相談してよかったです。`,
+    authorInitial: 'T.K',
+    location: serviceData.serviceArea[0] ?? '大阪府',
+    imageSrc: categoryKvFallback[category],
+    imageAlt: `${serviceLongName}のお客様の声`,
+  },
+  {
+    serviceType: serviceLongName,
+    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
+    cost: serviceData.pricingTiers[1]?.price ?? serviceData.startingPrice,
+    message: `見積り通りの金額で、追加料金もなく安心でした。作業も丁寧で、また何かあればお願いしたいと思います。`,
+    authorInitial: 'S.M',
+    location: serviceData.serviceArea[1] ?? serviceData.serviceArea[0] ?? '京都府',
+    imageSrc: serviceData.pricingTiers[0]?.imageUrl ?? categoryKvFallback[category],
+    imageAlt: `${serviceLongName}のお客様の声`,
+  },
+];
+
+type CellValue =
+  | { type: 'price'; amount: number }
+  | { type: 'price-zero' }
+  | { type: 'circle' }
+  | { type: 'cross' }
+  | { type: 'triangle' }
+  | { type: 'text'; value: string };
+
+interface ComparisonRow {
+  label: string;
+  our: CellValue;
+  competitorA: CellValue;
+  competitorB: CellValue;
+}
+
+const comparisonData: ComparisonRow[] = [
+  { label: '作業料金', our: { type: 'price', amount: 4000 }, competitorA: { type: 'price', amount: 4000 }, competitorB: { type: 'price', amount: 4000 } },
+  { label: '基本料金', our: { type: 'price-zero' }, competitorA: { type: 'price-zero' }, competitorB: { type: 'price-zero' } },
+  { label: '出張料金', our: { type: 'price-zero' }, competitorA: { type: 'price-zero' }, competitorB: { type: 'price-zero' } },
+  { label: '早朝深夜料金', our: { type: 'price-zero' }, competitorA: { type: 'price-zero' }, competitorB: { type: 'text', value: '別途必要' } },
+  { label: '年間対応実績', our: { type: 'text', value: '15,000件' }, competitorA: { type: 'text', value: '100,000件' }, competitorB: { type: 'text', value: '30,000件' } },
+  { label: '即日対応', our: { type: 'circle' }, competitorA: { type: 'cross' }, competitorB: { type: 'circle' } },
+];
+
+interface Reason {
+  icon: string;
+  number: string;
+  heading: string;
+  headingHighlight: string;
+  description: string;
+}
+
+const serviceReasons: Reason[] = [
+  {
+    icon: '/images/icons/reason_01.svg',
+    number: '01',
+    headingHighlight: '最短10分',
+    heading: '即日駆けつけ即日工事',
+    description: '最寄りのサービス拠点より、迅速にスタッフを派遣します（最短10分）。早朝・深夜を問わず営業、突発的なトラブルにも即対応',
+  },
+  {
+    icon: '/images/icons/reason_02.svg',
+    number: '02',
+    headingHighlight: 'ご相談無料',
+    heading: '必ず事前にお見積り',
+    description: '作業料金は、作業費・材料費（部品代）・廃材処分費の合計で算出いたします。見積り費用や出張費、早朝・深夜の追加料金、キャンセル料などは一切不要です。作業前に必ずお見積りをご提示します。',
+  },
+  {
+    icon: '/images/icons/reason_03.svg',
+    number: '03',
+    headingHighlight: '24時間365日',
+    heading: '対応',
+    description: '設備人では24時間365日、経験豊富なスタッフが常時対応しております。礼儀・対応マナーの研修を実施し、お客様に安心してご利用いただける接客と丁寧な作業を徹底しております。',
+  },
+  {
+    icon: '/images/icons/reason_04.svg',
+    number: '04',
+    headingHighlight: '有資格者',
+    heading: 'が作業担当',
+    description: '設備人には各種専門資格を持つスタッフが多数在籍。日々の社内研修でスキルを磨き、安心・安全な作業をお約束します。',
+  },
+];
+
+const categoryQualifications: Record<string, { title: string; items: string[] }> = {
+  electricity: {
+    title: '電気関連有資格',
+    items: ['第1種電気工事士', '第2種電気工事士', '低圧電気取扱業務特別教育'],
+  },
+  water: {
+    title: '水道関連有資格',
+    items: ['給水装置工事主任技術者', '管工事施工管理技士', '排水設備工事責任技術者'],
+  },
+  'pest-control': {
+    title: '防除関連有資格',
+    items: ['防除施工士', '日本ペストコントロール協会会員', '消毒業登録業者'],
+  },
+};
+const qualifications = categoryQualifications[category] ?? { title: '有資格者', items: [] };
+
+const relatedServiceImages: Record<string, { src: string; alt: string }> = {
+  'breaker':      { src: '/images/services/electricity_01.jpg', alt: 'ブレーカー修理・交換サービス' },
+  'outlet':       { src: '/images/services/electricity_02.jpg', alt: 'コンセント修理・交換サービス' },
+  'lighting':     { src: '/images/services/electricity_03.jpg', alt: '照明修理・交換サービス' },
+  'antenna':      { src: '/images/services/electricity_04.jpg', alt: 'アンテナ工事サービス' },
+  'water-heater': { src: '/images/services/electricity_05.jpg', alt: '給湯器交換サービス' },
+  'toilet':       { src: '/images/services/sanitary_01.jpg', alt: 'トイレ修理サービス' },
+  'kitchen':      { src: '/images/services/sanitary_02.jpg', alt: 'キッチン修理サービス' },
+  'bath':         { src: '/images/services/sanitary_03.jpg', alt: 'お風呂修理サービス' },
+  'washroom':     { src: '/images/services/sanitary_04.jpg', alt: '洗面所修理サービス' },
+  'cockroach':    { src: '/images/services/pest_01.jpg', alt: 'ゴキブリ駆除サービス' },
+  'termite':      { src: '/images/services/pest_02.jpg', alt: 'シロアリ駆除サービス' },
+  'rodent':       { src: '/images/services/pest_03.jpg', alt: 'ネズミ駆除サービス' },
+  'general-pest': { src: '/images/services/pest_01.jpg', alt: '一般害虫駆除サービス' },
+};
+
+const currentCategoryServices = categoryServices[category as keyof typeof categoryServices] ?? [];
+const relatedServices = currentCategoryServices
+  .filter((s) => s.slug !== serviceData.slug)
+  .slice(0, 4)
+  .map((s) => ({
+    ...s,
+    imageSrc: relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
+    imageAlt: relatedServiceImages[s.slug]?.alt ?? `${s.label}サービス`,
+  }));
+
+const pageTitle = `${serviceLongName}なら${SITE_CONFIG.companyName}【年中無休・即対応】`;
+const pageDescription = serviceData.description;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- Section 1: Breadcrumb -->
+  <div class="max-w-[1200px] mx-auto px-3 sm:px-4 py-3 sm:py-4">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- Section 2: KV (Key Visual) -->
+  <div class="w-full">
+    <picture>
+      <source media="(max-width: 900px)" srcset={kvMobile} />
+      <source media="(min-width: 901px)" srcset={kvDesktop} />
+      <img
+        src={kvDesktop}
+        alt={`${serviceLongName}サービス`}
+        width="1200"
+        height="500"
+        class="w-full h-auto object-cover"
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
+  </div>
+
+  <!-- KV Bottom: Price bar -->
+  <div class="bg-[#0044f2]">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4 h-[60px] sm:h-[80px] md:h-[100px] flex items-center justify-center">
+      <div class="flex items-center gap-2 sm:gap-4 md:gap-6">
+        <div class="bg-white rounded-[16px] sm:rounded-[20px] md:rounded-[22px] px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-3">
+          <span class="bg-black text-white text-[9px] sm:text-[11px] md:text-[14px] font-bold leading-tight px-2 sm:px-3 py-1 sm:py-1.5 rounded-[5px] flex items-center justify-center">WEB割引</span>
+          <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[29px] font-bold flex items-center">
+            {webDiscountAmount.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[11px] sm:text-[14px] md:text-[19px] font-extrabold ml-0.5">円割引！</span>
+          </span>
+        </div>
+        <div class="text-white text-center">
+          <span class="block text-[10px] sm:text-[12px] md:text-[15px] font-extrabold">作業料金</span>
+          <span class="text-[14px] sm:text-[18px] md:text-[23px] font-bold">{originalPrice.toLocaleString('ja-JP')}円</span>
+        </div>
+        <div class="w-[10px] sm:w-[14px] md:w-[17px] h-auto aspect-[17/41] bg-[#fbc102] flex-shrink-0" style="clip-path: polygon(100% 50%, 0% 0%, 0% 100%);"></div>
+        <p class="font-[Roboto] text-[28px] sm:text-[46px] md:text-[68px] font-black text-[#fbfb00] leading-none">
+          {discountedPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[12px] sm:text-[16px] md:text-[21px] font-semibold text-white">円[税込]〜</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intro Section -->
+  <section class="py-10 sm:py-14 md:py-20">
+    <div class="max-w-[920px] mx-auto px-3 sm:px-4">
+      <h1 class="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold text-center pb-4 relative">
+        {serviceName}のトラブルなら<wbr />設備人におまかせ
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[30px] sm:w-[35px] md:w-[40px] h-[2px] bg-[#fbc102]"></span>
+      </h1>
+      <p class="text-[13px] sm:text-[14px] md:text-[16px] leading-[1.75] mt-6 sm:mt-8 md:mt-10 text-text-primary" style="word-break: keep-all; overflow-wrap: anywhere;">
+        {serviceData.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- Consultation Section -->
+  <section class="pb-4 sm:pb-6 md:pb-8">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class="bg-[#fbc101] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-5 sm:p-8 md:p-12">
+        <h2 class="text-[18px] sm:text-[24px] md:text-[32px] font-extrabold text-center underline decoration-[#feff00] decoration-4 underline-offset-[13px]">
+          <span class="text-[#ff4176]">ご相談無料！</span>必ず事前にお見積り
+        </h2>
+        <p class="text-[11px] sm:text-[12px] md:text-[14px] leading-relaxed mt-4 sm:mt-6 md:mt-8 text-center max-w-[800px] mx-auto">
+          作業費+材料費部品代+処分費(※)で作業料金を算出いたします。<br />
+          それ以外にかかる見積り費や出張費、早朝・深夜料金、キャンセル料は一切いただきません。<br />
+          作業前に必ずお見積りを提示しますので、まずは相談・見積もりご安心ください。
+        </p>
+        <figure class="mt-4 sm:mt-6 md:mt-8 max-w-[600px] mx-auto">
+          <picture>
+            <source media="(max-width: 900px)" srcset="/images/cta/cta_feature_sp.svg" />
+            <source media="(min-width: 901px)" srcset="/images/cta/cta_feature.svg" />
+            <img src="/images/cta/cta_feature.svg" alt="見積り無料・出張費無料・キャンセル料無料" loading="lazy" decoding="async" class="w-full h-auto" />
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anchor Menu -->
+  <AnchorMenu sections={anchorSections} />
+
+  <!-- Pricing Section -->
+  <PricingTier tiers={pricingTiers} serviceName={`${serviceName}トラブル`} />
+
+  <CTABlock variant="full-width" />
+
+  <!-- Reasons Section -->
+  <div id="reason">
+    <ReasonsGrid reasons={serviceReasons} />
+
+    <!-- Satisfaction Guarantee -->
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4 pb-10 sm:pb-12 md:pb-16">
+      <div class="bg-[#fffbe6] border-2 border-[#fbc102] rounded-[16px] sm:rounded-[24px] md:rounded-[32px] p-5 sm:p-7 md:p-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-5 md:gap-8">
+        <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 bg-[#fbc102] rounded-full flex items-center justify-center">
+          <span class="text-white text-[20px] sm:text-[24px] md:text-[36px] font-black leading-none">✓</span>
+        </div>
+        <div class="text-center sm:text-left">
+          <p class="text-[14px] sm:text-[16px] md:text-[20px] font-extrabold text-[#1c1c1c] mb-1 sm:mb-2">
+            <span class="text-[#ff4176]">ご満足いただけない場合は料金をいただきません</span>
+          </p>
+          <p class="text-[11px] sm:text-[13px] md:text-[15px] text-[#555] leading-relaxed">
+            作業後にご満足いただけなかった場合、料金は一切いただきません。お客様の安心・満足を最優先に、責任を持って対応いたします。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staff Qualifications -->
+  <section class="py-12 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class="flex justify-center">
+        <div class="w-full max-w-[585px] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center py-10 sm:py-12 md:py-[51px] px-4" style="background-image: url('/images/staff_bg.jpg');">
+          <p class="text-[16px] sm:text-[18px] md:text-[22px] font-bold text-white text-center">{qualifications.title}</p>
+          <div class="flex flex-col gap-2 mt-5 sm:mt-6 md:mt-7 w-fit mx-auto">
+            {qualifications.items.map((item) => (
+              <div class="flex items-center">
+                <p class="w-[180px] sm:w-[190px] md:w-[240px] h-[24px] sm:h-[25px] md:h-[27px] bg-white rounded-[13px] text-[11px] sm:text-[11px] md:text-[12px] font-bold text-[#333] flex items-center justify-center">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <ComparisonTable rows={comparisonData} />
+
+  <!-- Service Area -->
+  <div id="area">
+    <AreaMap />
+  </div>
+
+  <CTABlock variant="full-width" />
+
+  <!-- Process Flow -->
+  <div id="flow">
+    <ProcessFlow />
+  </div>
+
+  <!-- Case Studies -->
+  <section id="case" class="py-12 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Case</span>
+        修理実績のご紹介
+      </h2>
+      <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#333] mt-[20px] sm:mt-[30px] md:mt-[50px]">ご好評頂いたお客様の修理実績をご紹介</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[15px] sm:gap-[20px] md:gap-[30px] mt-[15px] sm:mt-[20px] md:mt-[50px]">
+        {stubCaseStudies.map((cs) => (
+          <CaseStudyCard {...cs} />
+        ))}
+      </div>
+      <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
+        <a href="/case" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          修理実績一覧
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="voice" class="py-12 md:py-16 lg:py-20 bg-section-gray">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Voice</span>
+        お客様の声のご紹介
+      </h2>
+      <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#333] mt-[20px] sm:mt-[30px] md:mt-[50px]">お客様の声のご紹介</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[15px] sm:gap-[20px] md:gap-[30px] mt-[15px] sm:mt-[20px] md:mt-[50px]">
+        {stubTestimonials.map((t) => (
+          <TestimonialCard {...t} />
+        ))}
+      </div>
+      <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
+        <a href="/voice" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          お客様の声一覧
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock variant="full-width" />
+
+  <!-- FAQ -->
+  <section id="faq" class="py-12 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Faq</span>
+        よくいただくご質問
+      </h2>
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
+
+  <!-- Related Services (same category) -->
+  <section class="py-12 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-8 sm:pt-10 md:pt-12 mb-6 sm:mb-8 md:mb-12">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Service</span>
+        関連サービス
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {relatedServices.map((rs) => (
+          <a href={rs.href} class="flex flex-col rounded-[16px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.12)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.18)] transition-shadow duration-200 ease bg-white">
+            <figure class="w-full aspect-video overflow-hidden">
+              <img
+                src={rs.imageSrc}
+                alt={rs.imageAlt}
+                width="400"
+                height="225"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </figure>
+            <div class="p-3 sm:p-4 md:p-5">
+              <h3 class="text-[13px] sm:text-[14px] md:text-[16px] font-bold leading-snug">{rs.label}</h3>
+              <p class="text-[10px] sm:text-[11px] md:text-[12px] text-[#666] mt-1">{rs.description}</p>
+              <p class="font-[Roboto] text-[18px] sm:text-[20px] md:text-[24px] font-bold text-[#ff4176] mt-2">
+                {rs.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-[#333]">円[税込]〜</span>
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <CTABlock variant="full-width" />
+</BaseLayout>

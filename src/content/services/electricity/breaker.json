@@ -3,30 +3,52 @@
   "serviceNameShort": "ブレーカー",
   "category": "electricity",
   "slug": "breaker",
-  "description": "突然の停電や頻繁な遮断に対応するブレーカー修理・交換サービスです。",
+  "description": "ブレーカーが頻繁に落ちる・上がらない、漏電ブレーカーが作動する、分電盤から異音や焦げ臭いニオイがするなど、電気まわりのトラブルに24時間対応。第1種・第2種電気工事士の有資格者が最短10分で駆けつけ、現場で安全確認と復旧作業を行います。見積り・キャンセル料は一切無料です。",
   "startingPrice": 1100,
+  "originalPrice": 2600,
+  "webDiscountAmount": 1500,
   "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
   "imageAlt": "ブレーカー点検を行う作業スタッフ",
   "isEmergency": true,
   "hasFreeEstimate": true,
+  "kvImageDesktop": "/images/services/electricity/breaker/kv.png",
+  "kvImageMobile": "/images/services/electricity/breaker/kv_sp.png",
   "pricingTiers": [
     {
-      "name": "安全点検",
-      "price": 1100,
-      "description": "ブレーカーの状態確認と基本点検を行います。",
-      "imageAlt": "分電盤の安全点検イメージ"
+      "name": "漏電調査・応急処置",
+      "price": 17600,
+      "imageUrl": "/images/services/electricity_01.jpg",
+      "imageAlt": "漏電調査・応急処置サービス"
     },
     {
-      "name": "交換作業",
-      "price": 8800,
-      "description": "劣化したブレーカーの交換と動作確認を行います。",
-      "imageAlt": "ブレーカー交換作業イメージ"
+      "name": "ブレーカー新設（配線作業込み）",
+      "price": 20000,
+      "imageUrl": "/images/services/electricity_02.jpg",
+      "imageAlt": "ブレーカー新設サービス"
+    },
+    {
+      "name": "ブレーカー交換",
+      "price": 14000,
+      "imageUrl": "/images/services/electricity_03.jpg",
+      "imageAlt": "ブレーカー交換サービス"
     }
   ],
   "faqEntries": [
     {
-      "question": "ブレーカーが何度も落ちる原因は何ですか？",
-      "answer": "過負荷や漏電、経年劣化などが主な原因です。現地確認のうえで最適な対応をご案内します。"
+      "question": "ブレーカーが頻繁に落ちるのですが、原因は何ですか？",
+      "answer": "主な原因は、電気の使いすぎによる過電流、漏電、ブレーカー本体の劣化の3つです。頻繁に落ちる場合は専門スタッフによる調査をおすすめします。"
+    },
+    {
+      "question": "修理にどのくらい時間がかかりますか？",
+      "answer": "通常30分～1時間程度です。ブレーカー交換の場合は1～2時間ほどかかる場合があります。"
+    },
+    {
+      "question": "見積りは無料ですか？",
+      "answer": "はい、お見積りは完全無料です。出張費やキャンセル料もいただきません。ご納得いただけない場合はお断りいただいて構いません。"
+    },
+    {
+      "question": "深夜や早朝でも対応してもらえますか？",
+      "answer": "はい、24時間365日対応しております。深夜・早朝でも追加料金はいただきません。"
     }
   ]
 }

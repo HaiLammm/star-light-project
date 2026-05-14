@@ -1,0 +1,52 @@
+{
+  "serviceName": "一般害虫駆除",
+  "serviceNameShort": "一般害虫駆除",
+  "category": "pest-control",
+  "slug": "general-pest",
+  "description": "ムカデ・ハチの巣・ダニ・ノミ・トコジラミなど、さまざまな害虫トラブルに24時間対応。害虫の種類に応じた最適な調査・駆除・予防施工を行い、安全で快適な住環境を取り戻します。",
+  "startingPrice": 5500,
+  "originalPrice": 8800,
+  "webDiscountAmount": 3300,
+  "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
+  "imageAlt": "害虫調査・駆除を行う専門スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "害虫調査・応急処置",
+      "price": 5500,
+      "imageUrl": "/images/services/pest_01.jpg",
+      "imageAlt": "害虫調査・応急処置サービス"
+    },
+    {
+      "name": "薬剤駆除施工",
+      "price": 11000,
+      "imageUrl": "/images/services/pest_02.jpg",
+      "imageAlt": "害虫薬剤駆除施工サービス"
+    },
+    {
+      "name": "予防処置・定期管理",
+      "price": 22000,
+      "imageUrl": "/images/services/pest_03.jpg",
+      "imageAlt": "害虫予防処置・定期管理サービス"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "どんな種類の害虫に対応していますか？",
+      "answer": "ムカデ・ハチ・ダニ・ノミ・トコジラミ・カメムシ・ムカデなど幅広い害虫に対応しています。まずはどのような害虫かをお伝えください。"
+    },
+    {
+      "question": "ハチの巣の駆除は危険ではないですか？",
+      "answer": "専用の防護服と機材を使用して安全に対応します。ご自身での駆除は大変危険ですので、必ず専門業者にご依頼ください。"
+    },
+    {
+      "question": "ダニ・ノミが部屋に大量発生しています。即日対応できますか？",
+      "answer": "はい、24時間365日で即日対応しております。特にお子様や高齢者がいるご家庭はお早めにご連絡ください。"
+    },
+    {
+      "question": "施工後に害虫が再発した場合はどうなりますか？",
+      "answer": "施工後の再発は責任を持って追加対応いたします。ご満足いただけない場合は料金をいただきません。"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "serviceName": "シロアリ駆除",
+  "serviceNameShort": "シロアリ駆除",
+  "category": "pest-control",
+  "slug": "termite",
+  "description": "シロアリの羽アリを見た・床下から木材がボロボロになっている・シロアリ被害が心配など、シロアリ駆除・予防に対応。床下調査から薬剤処理・防蟻施工まで、認定薬剤を使用した確実な駆除で大切な住まいを守ります。",
+  "startingPrice": 5500,
+  "originalPrice": 8800,
+  "webDiscountAmount": 3300,
+  "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
+  "imageAlt": "シロアリ床下調査を行う専門スタッフ",
+  "isEmergency": false,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "床下調査",
+      "price": 5500,
+      "imageUrl": "/images/services/pest_01.jpg",
+      "imageAlt": "シロアリ床下調査サービス"
+    },
+    {
+      "name": "薬剤処理・駆除施工",
+      "price": 33000,
+      "imageUrl": "/images/services/pest_02.jpg",
+      "imageAlt": "シロアリ薬剤処理・駆除施工サービス"
+    },
+    {
+      "name": "防蟻処理（予防施工）",
+      "price": 55000,
+      "imageUrl": "/images/services/pest_03.jpg",
+      "imageAlt": "シロアリ防蟻処理・予防施工サービス"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "羽アリを見かけましたが、シロアリですか？",
+      "answer": "4〜6月ごろに羽アリが発生した場合、シロアリの可能性があります。黒アリの羽アリとの見分け方は、腰のくびれ・羽の大きさで判断できます。不安な場合は現地調査をおすすめします。"
+    },
+    {
+      "question": "床下調査はどのくらい時間がかかりますか？",
+      "answer": "一般的な戸建て住宅で1〜2時間程度です。床下のスペースや構造によって異なります。"
+    },
+    {
+      "question": "駆除後の保証はありますか？",
+      "answer": "施工後5年間の再発保証を提供しています。期間内に再発した場合は無償で追加対応します。"
+    },
+    {
+      "question": "新築の家ですが、予防施工は必要ですか？",
+      "answer": "はい。シロアリは築年数に関係なく発生します。特に木造住宅は定期的な予防施工をおすすめします。"
+    }
+  ]
+}

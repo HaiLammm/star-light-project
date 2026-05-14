@@ -1,0 +1,52 @@
+{
+  "serviceName": "照明器具取付・交換・修理",
+  "serviceNameShort": "照明",
+  "category": "electricity",
+  "slug": "lighting",
+  "description": "電気がつかない・照明がチカチカする・シーリングライトを取り付けたいなど、照明まわりのトラブルや工事に24時間対応。LED照明への切り替えや新規取付にも対応し、有資格スタッフが安全・確実に施工します。",
+  "startingPrice": 1100,
+  "originalPrice": 2600,
+  "webDiscountAmount": 1500,
+  "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
+  "imageAlt": "照明器具の取付を行う作業スタッフ",
+  "isEmergency": true,
+  "hasFreeEstimate": true,
+  "pricingTiers": [
+    {
+      "name": "照明器具交換",
+      "price": 6600,
+      "imageUrl": "/images/services/electricity_01.jpg",
+      "imageAlt": "照明器具交換サービス"
+    },
+    {
+      "name": "シーリングライト取付",
+      "price": 8800,
+      "imageUrl": "/images/services/electricity_02.jpg",
+      "imageAlt": "シーリングライト取付サービス"
+    },
+    {
+      "name": "ダウンライト新設工事",
+      "price": 15400,
+      "imageUrl": "/images/services/electricity_03.jpg",
+      "imageAlt": "ダウンライト新設工事サービス"
+    }
+  ],
+  "faqEntries": [
+    {
+      "question": "電球を交換しても照明がつきません。どうすればよいですか？",
+      "answer": "電球以外の器具内部（安定器・スイッチ）の故障や、配線系統の問題が考えられます。専門スタッフによる点検をおすすめします。"
+    },
+    {
+      "question": "LED照明への切り替えはどのくらいの費用がかかりますか？",
+      "answer": "器具の種類や数、配線状況によって異なります。現地確認後にお見積りをご提示しますので、お気軽にご相談ください。"
+    },
+    {
+      "question": "高い位置の照明器具も交換してもらえますか？",
+      "answer": "はい、吹き抜けや天井の高い場所の照明交換にも対応しています。安全に作業できる環境を整えて対応いたします。"
+    },
+    {
+      "question": "夜間でも照明工事を依頼できますか？",
+      "answer": "はい、24時間365日対応しております。急な照明トラブルでも夜間・早朝問わずご対応します。"
+    }
+  ]
+}

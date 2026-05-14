@@ -8,7 +8,7 @@ const faqCategoryValues = ['general', 'electricity', 'water', 'pest-control', 'p
 const pricingTierSchema = z.object({
   name: z.string(),
   price: z.number(),
-  description: z.string(),
+  imageUrl: z.string(),
   imageAlt: z.string(),
 });
 
@@ -26,12 +26,16 @@ const services = defineCollection({
     slug: z.string(),
     description: z.string(),
     startingPrice: z.number().positive(),
+    originalPrice: z.number().optional(),
+    webDiscountAmount: z.number().optional(),
     serviceArea: z.array(z.string()),
     imageAlt: z.string(),
     isEmergency: z.boolean().default(false),
     hasFreeEstimate: z.boolean().default(true),
-    pricingTiers: z.array(pricingTierSchema).optional(),
-    faqEntries: z.array(faqEntrySchema).optional(),
+    kvImageDesktop: z.string().optional(),
+    kvImageMobile: z.string().optional(),
+    pricingTiers: z.array(pricingTierSchema).min(1),
+    faqEntries: z.array(faqEntrySchema).min(1),
   }),
 });
 

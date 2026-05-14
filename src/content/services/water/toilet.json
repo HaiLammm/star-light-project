@@ -3,30 +3,50 @@
   "serviceNameShort": "トイレ",
   "category": "water",
   "slug": "toilet",
-  "description": "トイレのつまりや水漏れ、部品交換に24時間対応するサービスです。",
+  "description": "トイレがつまった・水が止まらない・タンクから水漏れしているなど、トイレまわりのトラブルに24時間即日対応。専用機材と豊富な経験を持つスタッフが原因を素早く特定し、確実に修理・パーツ交換を行います。",
   "startingPrice": 5500,
+  "originalPrice": 8800,
+  "webDiscountAmount": 3300,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "トイレの点検を行う水道修理スタッフ",
   "isEmergency": true,
   "hasFreeEstimate": true,
   "pricingTiers": [
     {
-      "name": "つまり除去",
+      "name": "トイレつまり除去",
       "price": 5500,
-      "description": "軽度なつまりを専用工具で除去します。",
+      "imageUrl": "/images/services/sanitary_01.jpg",
       "imageAlt": "トイレつまり除去作業イメージ"
     },
     {
-      "name": "部品交換",
+      "name": "タンク・部品交換",
       "price": 8800,
-      "description": "タンク内部品や排水部品の交換を行います。",
-      "imageAlt": "トイレ部品交換作業イメージ"
+      "imageUrl": "/images/services/sanitary_02.jpg",
+      "imageAlt": "トイレタンク・部品交換作業イメージ"
+    },
+    {
+      "name": "便器・配管修理",
+      "price": 16500,
+      "imageUrl": "/images/services/sanitary_03.jpg",
+      "imageAlt": "トイレ便器・配管修理作業イメージ"
     }
   ],
   "faqEntries": [
     {
       "question": "夜間でもトイレ修理を依頼できますか？",
-      "answer": "はい。年中無休で受付しており、夜間や早朝のトラブルにも対応しています。"
+      "answer": "はい。年中無休で受付しており、夜間や早朝のトラブルにも対応しています。追加料金はいただきません。"
+    },
+    {
+      "question": "トイレのつまりが直らない場合はどうなりますか？",
+      "answer": "ご満足いただけない場合は料金をいただきません。まず無料診断のうえ、原因に応じた最適な方法をご提案します。"
+    },
+    {
+      "question": "ウォシュレットの水漏れも修理できますか？",
+      "answer": "はい、ウォシュレット本体の水漏れや電気系統のトラブルにも対応しています。"
+    },
+    {
+      "question": "修理費用の目安を教えてください。",
+      "answer": "軽度のつまりであれば5,500円〜対応可能です。状況により異なりますので、現地確認後に正確なお見積りをご案内します。"
     }
   ]
 }
