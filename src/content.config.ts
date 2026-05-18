@@ -25,6 +25,7 @@ const services = defineCollection({
     category: z.enum(serviceCategoryValues),
     slug: z.string(),
     description: z.string(),
+    introText: z.string().optional(),
     startingPrice: z.number().positive(),
     originalPrice: z.number().optional(),
     webDiscountAmount: z.number().optional(),

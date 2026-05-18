@@ -58,7 +58,7 @@ const kvMobile = serviceData.kvImageMobile ?? categoryKvFallback[category];
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
-  { label: serviceCategory, href: `/${category}` },
+  { label: `${serviceCategory}サービス`, href: `/${category}` },
   { label: `${serviceName}サービス`, href: '#' },
 ];
 
@@ -141,44 +141,6 @@ const comparisonData: ComparisonRow[] = [
   { label: '即日対応', our: { type: 'circle' }, competitorA: { type: 'cross' }, competitorB: { type: 'circle' } },
 ];
 
-interface Reason {
-  icon: string;
-  number: string;
-  heading: string;
-  headingHighlight: string;
-  description: string;
-}
-
-const serviceReasons: Reason[] = [
-  {
-    icon: '/images/icons/reason_01.svg',
-    number: '01',
-    headingHighlight: '最短10分',
-    heading: '即日駆けつけ即日工事',
-    description: '最寄りのサービス拠点より、迅速にスタッフを派遣します（最短10分）。早朝・深夜を問わず営業、突発的なトラブルにも即対応',
-  },
-  {
-    icon: '/images/icons/reason_02.svg',
-    number: '02',
-    headingHighlight: 'ご相談無料',
-    heading: '必ず事前にお見積り',
-    description: '作業料金は、作業費・材料費（部品代）・廃材処分費の合計で算出いたします。見積り費用や出張費、早朝・深夜の追加料金、キャンセル料などは一切不要です。作業前に必ずお見積りをご提示します。',
-  },
-  {
-    icon: '/images/icons/reason_03.svg',
-    number: '03',
-    headingHighlight: '24時間365日',
-    heading: '対応',
-    description: '設備人では24時間365日、経験豊富なスタッフが常時対応しております。礼儀・対応マナーの研修を実施し、お客様に安心してご利用いただける接客と丁寧な作業を徹底しております。',
-  },
-  {
-    icon: '/images/icons/reason_04.svg',
-    number: '04',
-    headingHighlight: '有資格者',
-    heading: 'が作業担当',
-    description: '設備人には各種専門資格を持つスタッフが多数在籍。日々の社内研修でスキルを磨き、安心・安全な作業をお約束します。',
-  },
-];
 
 const categoryQualifications: Record<string, { title: string; items: string[] }> = {
   electricity: {
@@ -235,17 +197,17 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
   </div>
 
   <!-- Section 2: KV (Key Visual) -->
-  <div class="relative overflow-hidden py-[2rem] sm:py-[2.5rem] md:py-[3.9rem]" style={`background-color: ${kvBg};`}>
+  <div class="relative overflow-hidden py-[10px] md:py-[39px]">
     <!-- blurred background -->
-    <div class="absolute inset-0 -z-10">
+    <div class="absolute inset-0 -z-[1]">
       <picture>
         <source media="(max-width: 900px)" srcset={kvMobile} />
         <source media="(min-width: 901px)" srcset={kvDesktop} />
-        <img src={kvDesktop} alt="" aria-hidden="true" class="w-full h-full object-cover" style="filter: blur(3rem) brightness(1.5); opacity: 0.5;" loading="eager" decoding="async" />
+        <img src={kvDesktop} alt="" aria-hidden="true" class="w-full h-full object-cover" style="filter: blur(30px) brightness(1.5); opacity: 0.5;" loading="eager" decoding="async" />
       </picture>
     </div>
     <!-- centered sharp banner -->
-    <figure class="w-[87.85vw] mx-auto">
+    <figure class="w-[94.7%] md:w-[87.85vw] mx-auto">
       <picture>
         <source media="(max-width: 900px)" srcset={kvMobile} />
         <source media="(min-width: 901px)" srcset={kvDesktop} />
@@ -264,7 +226,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
 
   <!-- KV Bottom: Price bar -->
   <div class="bg-[#0044f2]">
-    <div class="max-w-[1200px] mx-auto px-3 sm:px-4 h-[60px] sm:h-[80px] md:h-[100px] flex items-center justify-center">
+    <div class="max-w-[1240px] mx-auto px-3 sm:px-4 h-[60px] md:h-[100px] flex items-center justify-center">
       <div class="flex items-center gap-2 sm:gap-4 md:gap-6">
         <div class="bg-white rounded-[16px] sm:rounded-[20px] md:rounded-[22px] px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-3">
           <span class="bg-black text-white text-[9px] sm:text-[11px] md:text-[14px] font-bold leading-tight px-2 sm:px-3 py-1 sm:py-1.5 rounded-[5px] flex items-center justify-center">WEB割引</span>
@@ -274,7 +236,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
         </div>
         <div class="text-white text-center">
           <span class="block text-[10px] sm:text-[12px] md:text-[15px] font-extrabold">作業料金</span>
-          <span class="text-[14px] sm:text-[18px] md:text-[23px] font-bold">{originalPrice.toLocaleString('ja-JP')}円</span>
+          <span class="text-[14px] sm:text-[18px] md:text-[23px] font-bold line-through decoration-white/60">{originalPrice.toLocaleString('ja-JP')}円</span>
         </div>
         <div class="w-[10px] sm:w-[14px] md:w-[17px] h-auto aspect-[17/41] bg-[#fbc102] flex-shrink-0" style="clip-path: polygon(100% 50%, 0% 0%, 0% 100%);"></div>
         <p class="font-[Roboto] text-[28px] sm:text-[46px] md:text-[68px] font-black text-[#fbfb00] leading-none">
@@ -291,9 +253,11 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
         {serviceName}のトラブルなら<wbr />設備人におまかせ
         <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[30px] sm:w-[35px] md:w-[40px] h-[2px] bg-[#fbc102]"></span>
       </h1>
-      <p class="text-[13px] sm:text-[14px] md:text-[16px] leading-[1.75] mt-6 sm:mt-8 md:mt-10 text-text-primary" style="word-break: keep-all; overflow-wrap: anywhere;">
-        {serviceData.description}
-      </p>
+      <div class="text-[13px] sm:text-[14px] md:text-[16px] leading-[1.75] mt-6 sm:mt-8 md:mt-10 text-text-primary" style="word-break: keep-all; overflow-wrap: anywhere;">
+        {(serviceData.introText ?? serviceData.description).split('\n\n').map((paragraph: string) => (
+          <p class="mb-4 last:mb-0">{paragraph}</p>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -306,8 +270,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
         </h2>
         <p class="text-[11px] sm:text-[12px] md:text-[14px] leading-relaxed mt-4 sm:mt-6 md:mt-8 text-center max-w-[800px] mx-auto">
           作業費+材料費部品代+処分費(※)で作業料金を算出いたします。<br />
-          それ以外にかかる見積り費や出張費、早朝・深夜料金、キャンセル料は一切いただきません。<br />
-          作業前に必ずお見積りを提示しますので、まずは相談・見積もりご安心ください。
+          それ以外にかかる見積り費や出張費、早朝・深夜料金、キャンセル料は一切いただきません。
         </p>
         <figure class="mt-4 sm:mt-6 md:mt-8 max-w-[600px] mx-auto">
           <picture>
@@ -330,7 +293,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
 
   <!-- Reasons Section -->
   <div id="reason">
-    <ReasonsGrid reasons={serviceReasons} />
+    <ReasonsGrid />
   </div>
 
   <!-- Staff Qualifications -->
@@ -354,12 +317,12 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
   <!-- Comparison Table -->
   <ComparisonTable rows={comparisonData} />
 
+  <CTABlock variant="full-width" />
+
   <!-- Service Area -->
   <div id="area">
     <AreaMap serviceSlug={serviceData.slug} category={category} />
   </div>
-
-  <CTABlock variant="full-width" />
 
   <!-- Process Flow -->
   <div id="flow">
@@ -369,6 +332,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
   <!-- Business Locations -->
   <section class="pb-10 sm:pb-12 md:pb-16">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h3 class="text-[14px] sm:text-[16px] md:text-[20px] font-bold text-center mb-4 sm:mb-5 md:mb-6">営業所</h3>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         {[
           { name: '関東営業所', address: '準備中' },
@@ -447,12 +411,18 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
         よくいただくご質問
       </h2>
       <FAQAccordion items={faqItems} />
+      <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
+        <a href="/question" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.30)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          もっと見る
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Blog/Column Section -->
   <section class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class="relative bg-[#fbc101] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] px-3 sm:px-6 md:px-[45px] pb-6 sm:pb-10 md:pb-[80px] pt-8 sm:pt-10 md:pt-12">
       <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
         <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
         <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Column</span>
@@ -461,11 +431,11 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
       <div class="swiper columnSwiper mt-[20px] sm:mt-[30px] md:mt-[50px] overflow-hidden pb-3">
         <div class="swiper-wrapper items-stretch">
           {[
+            { title: 'お風呂のお湯がでない！シャワーや給湯器の故障原因と対処法', date: '2026.5.18', category: 'お風呂', image: '/images/column/col_05.jpg', href: '/columns/' },
+            { title: '洗面台の交換費用の相場はいくら？工事費込みで安く抑えるコツ', date: '2026.5.18', category: '洗面所', image: '/images/column/col_04.jpg', href: '/columns/' },
             { title: 'トイレ修理の費用相場はいくら？症状別の料金と業者選びのポイント！', date: '2026.5.18', category: 'トイレ', image: '/images/column/col_06.jpg', href: '/columns/' },
             { title: 'エアコンのガス入れは必要？補充の判断基準と注意点を解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_01.jpg', href: '/columns/' },
             { title: 'エアコンのガス漏れ修理｜原因・費用・対処法を完全解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_02.jpg', href: '/columns/' },
-            { title: 'エアコンのガス漏れ症状｜見分け方と危険サインを徹底解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_03.jpg', href: '/columns/' },
-            { title: 'エアコンの電源が入らない原因と対処法｜今すぐ確認すべきポイント', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_04.jpg', href: '/columns/' },
           ].map((article) => (
             <div class="swiper-slide !h-auto">
               <a href={article.href} class="flex flex-col h-full rounded-[20px] sm:rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white">
@@ -487,15 +457,19 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
           お役立ち情報一覧
         </a>
       </div>
+      </div>
     </div>
   </section>
 
   <!-- All Category Services with Tabs + Swiper -->
   <section class="py-12 md:py-16 lg:py-20 bg-[#0044f2]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
-      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold text-white text-center mb-4 sm:mb-6 md:mb-8">
+      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold text-white text-center mb-2 sm:mb-3 md:mb-4">
         {serviceCategory}サービス<span class="block font-[Roboto] text-[14px] sm:text-[18px] md:text-[24px] font-semibold mt-1 opacity-80">{category === 'electricity' ? 'Electricity' : category === 'water' ? 'Sanitary' : 'Pest'}</span>
       </h2>
+      <p class="text-[11px] sm:text-[12px] md:text-[14px] text-white/80 text-center mb-4 sm:mb-6 md:mb-8">
+        {category === 'electricity' ? 'ブレーカー・コンセント・照明などの電気まわりトラブル解消 安心の事前見積りと24時間即対応' : category === 'water' ? 'トイレ・キッチン・お風呂などの水まわりトラブル解消 安心の事前見積りと24時間即対応' : '害虫駆除のトラブル解消 安心の事前見積りと24時間即対応'}
+      </p>
       <!-- Tab navigation -->
       <div class="flex justify-center mb-4 sm:mb-6 md:mb-8">
         <ul id="serviceTabList" class="flex gap-1 sm:gap-2 bg-white rounded-full px-2 sm:px-3 py-1.5 sm:py-2 flex-wrap justify-center">
@@ -517,7 +491,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
             return (
               <div class="swiper-slide !h-auto">
                 <a href={rs.href} class={`flex flex-col items-center text-white rounded-[20px] sm:rounded-[24px] md:rounded-[30px] p-3 sm:p-4 md:p-5 transition-transform duration-200 hover:-translate-y-1 ${i % 2 === 1 ? 'mt-6 sm:mt-8 md:mt-12' : ''}`}>
-                  <figure class="w-full aspect-square overflow-hidden rounded-[16px] sm:rounded-[20px] md:rounded-[24px] drop-shadow-[0_0.8rem_0_#b2b2b2]">
+                  <figure class="w-full aspect-square overflow-hidden rounded-[30px] sm:rounded-[40px] md:rounded-[60px] drop-shadow-[0_0.8rem_0_#b2b2b2]">
                     <img src={img.src} alt={img.alt} width="300" height="300" loading="lazy" decoding="async" class="w-full h-full object-cover" />
                   </figure>
                   <p class="text-[13px] sm:text-[14px] md:text-[18px] font-extrabold leading-snug mt-3 sm:mt-4 md:mt-5 text-center">{rs.label}トラブル</p>
