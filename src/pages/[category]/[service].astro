@@ -375,6 +375,24 @@ const pageDescription = serviceData.description;
     <ProcessFlow />
   </div>
 
+  <!-- Business Locations -->
+  <section class="pb-10 sm:pb-12 md:pb-16">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        {[
+          { name: '関東営業所', address: '準備中' },
+          { name: '東海営業所', address: '愛知県北名古屋市 伊咲1068-205' },
+          { name: '中国営業所', address: '広島県広島市西区 中広2丁目19-33' },
+        ].map((office) => (
+          <div class="bg-[#f7f7f7] rounded-[12px] sm:rounded-[16px] p-4 sm:p-5">
+            <p class="text-[12px] sm:text-[13px] md:text-[15px] font-bold text-[#1c1c1c] mb-1">{office.name}</p>
+            <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#555]">{office.address}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Case Studies -->
   <section id="case" class="py-12 md:py-16 lg:py-20">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
@@ -430,6 +448,42 @@ const pageDescription = serviceData.description;
         よくいただくご質問
       </h2>
       <FAQAccordion items={faqItems} />
+    </div>
+  </section>
+
+  <!-- Blog/Column Section -->
+  <section class="py-12 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Column</span>
+        <span><span class="font-[Roboto] mr-2">Column</span>お役立ち情報</span>
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-[20px] sm:mt-[30px] md:mt-[50px]">
+        {[
+          { title: 'エアコンのガス入れは必要？補充の判断基準と注意点を解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_01.jpg', href: '/columns/' },
+          { title: 'エアコンのガス漏れ修理｜原因・費用・対処法を完全解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_02.jpg', href: '/columns/' },
+          { title: 'エアコンのガス漏れ症状｜見分け方と危険サインを徹底解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_03.jpg', href: '/columns/' },
+          { title: 'エアコンの電源が入らない原因と対処法｜修理か買い替えかの判断基準も解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_04.jpg', href: '/columns/' },
+          { title: 'エアコン修理の料金相場｜故障の種類別に費用を徹底解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_05.jpg', href: '/columns/' },
+        ].map((article) => (
+          <a href={article.href} class="flex flex-col rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.10)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.16)] transition-shadow duration-200 bg-white">
+            <figure class="w-full aspect-video overflow-hidden">
+              <img src={article.image} alt={article.title} width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </figure>
+            <div class="p-3 sm:p-4">
+              <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-[4px] mb-2">{article.category}</span>
+              <p class="text-[12px] sm:text-[13px] md:text-[14px] font-bold leading-snug line-clamp-2">{article.title}</p>
+              <p class="text-[10px] sm:text-[11px] text-[#888] mt-2">{article.date}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
+        <a href="/columns" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          お役立ち情報一覧
+        </a>
+      </div>
     </div>
   </section>
 

@@ -38,13 +38,6 @@ const steps: Step[] = [
     heading: '資格を有した専門スタッフが安心・安全を第一に迅速に作業を行います',
     description: 'お見積り内容に同意いただいた上で作業開始となります。安心・安全を第一に迅速に作業いたします。早いものであれば最短15分程度で作業完了いたします。',
   },
-  {
-    number: 5,
-    image: '/images/process/flow_05.jpg',
-    title: 'お支払',
-    heading: '作業完了後、料金をお支払いいただき完了となります。現金払い以外にも決済方法をご用意しております。',
-    description: 'お支払いいただき作業完了となります。クレジットやキャッシュレスにも対応しておりますので、急なトラブルなどで現金のお手持ちがない場合でも問題ございません。',
-  },
 ];
 ---
 
@@ -96,10 +89,14 @@ const steps: Step[] = [
                   </a>
                 </div>
               )}
-              {step.number === 5 && (
-                <div class="mt-2 sm:mt-3">
-                  <p class="text-[11px] sm:text-sm font-bold text-gray-700 mb-1">お支払い方法</p>
-                  <p class="text-[10px] sm:text-xs text-gray-600">現金、銀行振込、または各種クレジットカードがご利用頂けます。</p>
+              {step.number === 4 && (
+                <div class="mt-3 sm:mt-4">
+                  <p class="text-[11px] sm:text-sm font-bold text-gray-700 mb-2">お支払い方法</p>
+                  <div class="flex flex-wrap gap-2">
+                    {['現金払い', 'クレジット/デビット決済', '銀行振込'].map((method) => (
+                      <span class="text-[10px] sm:text-xs bg-white border border-gray-200 rounded-[6px] px-2 py-1 text-gray-600">{method}</span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
