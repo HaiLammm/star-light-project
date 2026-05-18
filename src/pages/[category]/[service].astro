@@ -25,6 +25,9 @@ export async function getStaticPaths() {
 const { serviceData } = Astro.props;
 const { category } = Astro.params;
 
+const allCases = await getCollection('cases');
+const allTestimonials = await getCollection('testimonials');
+
 const serviceName = serviceData.serviceNameShort;
 const serviceLongName = serviceData.serviceName;
 
@@ -72,55 +75,47 @@ const anchorSections = [
 const pricingTiers = serviceData.pricingTiers;
 const faqItems = serviceData.faqEntries;
 
-const stubCaseStudies = [
-  {
-    title: `${serviceName}の施工事例`,
-    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
-    categoryLabel: serviceCategory,
-    location: serviceData.serviceArea[0] ?? '大阪府',
-    duration: '60',
-    cost: serviceData.startingPrice,
-    description: `${serviceData.description}`,
-    imageSrc: categoryKvFallback[category],
-    imageAlt: `${serviceName}の施工事例`,
-    slug: 'case-001',
-  },
-  {
-    title: `${serviceName}修理・対応事例`,
-    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
-    categoryLabel: serviceCategory,
-    location: serviceData.serviceArea[1] ?? serviceData.serviceArea[0] ?? '京都府',
-    duration: '45',
-    cost: serviceData.pricingTiers[1]?.price ?? serviceData.startingPrice,
-    description: `迅速な対応で${serviceName}のトラブルを解決した施工事例です。`,
-    imageSrc: serviceData.pricingTiers[1]?.imageUrl ?? categoryKvFallback[category],
-    imageAlt: `${serviceName}修理事例`,
-    slug: 'case-002',
-  },
-];
+const caseImageMap: Record<string, string> = {
+  'toilet':       '/images/services/sanitary_01.jpg',
+  'kitchen':      '/images/services/sanitary_02.jpg',
+  'bath':         '/images/services/sanitary_03.jpg',
+  'washroom':     '/images/services/sanitary_04.jpg',
+  'breaker':      '/images/services/electricity_01.jpg',
+  'outlet':       '/images/services/electricity_02.jpg',
+  'lighting':     '/images/services/electricity_03.jpg',
+  'antenna':      '/images/services/electricity_04.jpg',
+  'water-heater': '/images/services/electricity_05.jpg',
+};
 
-const stubTestimonials = [
-  {
-    serviceType: serviceLongName,
-    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
-    cost: serviceData.startingPrice,
-    message: `深夜のトラブルにもすぐ来てくれて、作業前の説明も丁寧で安心してお願いできました。${serviceName}のことなら設備人さんに相談してよかったです。`,
-    authorInitial: 'T.K',
-    location: serviceData.serviceArea[0] ?? '大阪府',
-    imageSrc: categoryKvFallback[category],
-    imageAlt: `${serviceLongName}のお客様の声`,
-  },
-  {
-    serviceType: serviceLongName,
-    serviceCategory: category as 'electricity' | 'water' | 'pest-control',
-    cost: serviceData.pricingTiers[1]?.price ?? serviceData.startingPrice,
-    message: `見積り通りの金額で、追加料金もなく安心でした。作業も丁寧で、また何かあればお願いしたいと思います。`,
-    authorInitial: 'S.M',
-    location: serviceData.serviceArea[1] ?? serviceData.serviceArea[0] ?? '京都府',
-    imageSrc: serviceData.pricingTiers[0]?.imageUrl ?? categoryKvFallback[category],
-    imageAlt: `${serviceLongName}のお客様の声`,
-  },
-];
+const realCaseStudies = allCases
+  .filter((c) => c.data.serviceCategory === category)
+  .sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime())
+  .slice(0, 5)
+  .map((c) => ({
+    title: c.data.title,
+    serviceCategory: c.data.serviceCategory as 'electricity' | 'water' | 'pest-control',
+    categoryLabel: categoryLabels[c.data.serviceCategory] ?? c.data.serviceCategory,
+    location: c.data.location,
+    duration: c.data.duration,
+    cost: c.data.cost,
+    description: c.body ?? '',
+    imageSrc: caseImageMap[c.data.serviceSlug] ?? categoryKvFallback[c.data.serviceCategory],
+    imageAlt: c.data.imageAlt,
+    slug: c.id,
+  }));
+
+const realTestimonials = allTestimonials
+  .filter((t) => t.data.serviceCategory === category)
+  .map((t) => ({
+  serviceType: t.data.serviceType,
+  serviceCategory: t.data.serviceCategory as 'electricity' | 'water' | 'pest-control',
+  cost: t.data.cost,
+  message: t.data.message,
+  authorInitial: t.data.authorInitial,
+  location: t.data.location,
+  imageSrc: categoryKvFallback[t.data.serviceCategory] ?? categoryKvFallback['electricity'],
+  imageAlt: `${t.data.serviceType}のお客様の声`,
+}));
 
 type CellValue =
   | { type: 'price'; amount: number }
@@ -372,7 +367,7 @@ const pageDescription = serviceData.description;
 
   <!-- Process Flow -->
   <div id="flow">
-    <ProcessFlow />
+    <ProcessFlow serviceName={serviceName} />
   </div>
 
   <!-- Business Locations -->
@@ -381,7 +376,7 @@ const pageDescription = serviceData.description;
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         {[
           { name: '関東営業所', address: '準備中' },
-          { name: '東海営業所', address: '愛知県北名古屋市 伊咲1068-205' },
+          { name: '東海営業所', address: '愛知県北名古屋市井瀬木1068-205' },
           { name: '中国営業所', address: '広島県広島市西区 中広2丁目19-33' },
         ].map((office) => (
           <div class="bg-[#f7f7f7] rounded-[12px] sm:rounded-[16px] p-4 sm:p-5">
@@ -403,7 +398,7 @@ const pageDescription = serviceData.description;
       </h2>
       <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#333] mt-[20px] sm:mt-[30px] md:mt-[50px]">ご好評頂いたお客様の修理実績をご紹介</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-[15px] sm:gap-[20px] md:gap-[30px] mt-[15px] sm:mt-[20px] md:mt-[50px]">
-        {stubCaseStudies.map((cs) => (
+        {realCaseStudies.map((cs) => (
           <CaseStudyCard {...cs} />
         ))}
       </div>
@@ -425,7 +420,7 @@ const pageDescription = serviceData.description;
       </h2>
       <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#333] mt-[20px] sm:mt-[30px] md:mt-[50px]">お客様の声のご紹介</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-[15px] sm:gap-[20px] md:gap-[30px] mt-[15px] sm:mt-[20px] md:mt-[50px]">
-        {stubTestimonials.map((t) => (
+        {realTestimonials.map((t) => (
           <TestimonialCard {...t} />
         ))}
       </div>

@@ -1,6 +1,12 @@
 ---
 import { SITE_CONFIG } from '../utils/siteConfig';
 
+interface Props {
+  serviceName?: string;
+}
+
+const { serviceName } = Astro.props;
+
 interface Step {
   number: number;
   image: string;
@@ -46,7 +52,7 @@ const steps: Step[] = [
     <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
       <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
       <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Flow</span>
-      ご相談から修理までの流れ
+      {serviceName ? `${serviceName}修理までの流れ` : 'ご相談から修理までの流れ'}
     </h2>
     <div class="bg-[#f7f7f7] rounded-[16px] sm:rounded-[2rem] md:rounded-[4rem] px-3 sm:px-6 md:px-12 py-6 sm:py-10 md:py-16 mt-6 sm:mt-8 md:mt-12">
       <ol class="flex flex-col gap-8 sm:gap-10 md:gap-12 list-none p-0">
