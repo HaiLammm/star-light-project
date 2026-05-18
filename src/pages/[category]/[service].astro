@@ -12,6 +12,7 @@ import TestimonialCard from '../../components/TestimonialCard.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
+import ServiceSlider from '../../components/ServiceSlider.tsx';
 import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, PEST_CONTROL_SERVICES } from '../../utils/siteConfig';
 
 export async function getStaticPaths() {
@@ -104,11 +105,23 @@ const realCaseStudies = allCases
     slug: c.id,
   }));
 
+const testimonialDetailMap: Record<string, { title: string; duration: string }> = {
+  'testimonial-002': { title: '追いだき付き給湯器交換をご依頼いただいたお客様の声', duration: '180' },
+  'testimonial-003': { title: 'ブースター工事をご依頼いただいたお客様の声', duration: '40' },
+  'testimonial-005': { title: 'ガス給湯器交換をご依頼いただいたお客様の声', duration: '120' },
+  'testimonial-006': { title: 'アンテナ工事をご依頼いただいたお客様の声', duration: '90' },
+  'testimonial-007': { title: 'シーリング照明取付をご依頼いただいたお客様の声', duration: '30' },
+  'testimonial-001': { title: 'トイレ修理をご依頼いただいたお客様の声', duration: '30' },
+  'testimonial-004': { title: '洗面所つまり修理をご依頼いただいたお客様の声', duration: '20' },
+};
+
 const realTestimonials = allTestimonials
   .filter((t) => t.data.serviceCategory === category)
   .map((t) => ({
   serviceType: t.data.serviceType,
   serviceCategory: t.data.serviceCategory as 'electricity' | 'water' | 'pest-control',
+  title: testimonialDetailMap[t.id]?.title ?? `${t.data.serviceType}をご依頼いただいたお客様の声`,
+  duration: testimonialDetailMap[t.id]?.duration,
   cost: t.data.cost,
   message: t.data.message,
   authorInitial: t.data.authorInitial,
@@ -183,6 +196,23 @@ const relatedServices = currentCategoryServices
     imageSrc: relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
     imageAlt: relatedServiceImages[s.slug]?.alt ?? `${s.label}サービス`,
   }));
+
+const categorySliderSlides = currentCategoryServices.map((s) => ({
+  slug: s.slug,
+  label: s.label,
+  href: s.href,
+  description: s.description,
+  startingPrice: s.startingPrice,
+  imageSrc: relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
+  imageAlt: relatedServiceImages[s.slug]?.alt ?? s.label,
+}));
+
+const categorySliderConfig: Record<string, { heading: string; subheading: string; englishLabel: string; bgColor: string }> = {
+  electricity: { heading: '電気まわりの修理サービス', subheading: 'ブレーカー・コンセント・照明などの電気まわりトラブル解消。安心の事前見積りと24時間即対応', englishLabel: 'Electricity', bgColor: '#fbc101' },
+  water: { heading: '水まわりの修理サービス', subheading: 'トイレ・キッチン・お風呂などの水まわりトラブル解消。安心の事前見積りと24時間即対応', englishLabel: 'Sanitary', bgColor: '#3ea6ff' },
+  'pest-control': { heading: '害虫駆除サービス', subheading: '害虫駆除のトラブル解消。安心の事前見積りと24時間即対応', englishLabel: 'Pest Control', bgColor: '#4CAF50' },
+};
+const sliderConfig = categorySliderConfig[category] ?? categorySliderConfig.electricity;
 
 const pageTitle = `${serviceLongName}なら${SITE_CONFIG.companyName}【年中無休・即対応】`;
 const pageDescription = serviceData.description;
@@ -375,7 +405,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
   </section>
 
   <!-- Testimonials -->
-  <section id="voice" class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px] bg-section-gray">
+  <section id="voice" class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
         <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
@@ -422,7 +452,6 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
   <!-- Blog/Column Section -->
   <section class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
-      <div class="relative bg-[#fbc101] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] px-3 sm:px-6 md:px-[45px] pb-6 sm:pb-10 md:pb-[80px] pt-8 sm:pt-10 md:pt-12">
       <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
         <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
         <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Column</span>
@@ -457,84 +486,54 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
           お役立ち情報一覧
         </a>
       </div>
-      </div>
     </div>
   </section>
 
-  <!-- All Category Services with Tabs + Swiper -->
-  <section class="py-12 md:py-16 lg:py-20 bg-[#0044f2]">
-    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
-      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold text-white text-center mb-2 sm:mb-3 md:mb-4">
-        {serviceCategory}サービス<span class="block font-[Roboto] text-[14px] sm:text-[18px] md:text-[24px] font-semibold mt-1 opacity-80">{category === 'electricity' ? 'Electricity' : category === 'water' ? 'Sanitary' : 'Pest'}</span>
-      </h2>
-      <p class="text-[11px] sm:text-[12px] md:text-[14px] text-white/80 text-center mb-4 sm:mb-6 md:mb-8">
-        {category === 'electricity' ? 'ブレーカー・コンセント・照明などの電気まわりトラブル解消 安心の事前見積りと24時間即対応' : category === 'water' ? 'トイレ・キッチン・お風呂などの水まわりトラブル解消 安心の事前見積りと24時間即対応' : '害虫駆除のトラブル解消 安心の事前見積りと24時間即対応'}
-      </p>
-      <!-- Tab navigation -->
-      <div class="flex justify-center mb-4 sm:mb-6 md:mb-8">
-        <ul id="serviceTabList" class="flex gap-1 sm:gap-2 bg-white rounded-full px-2 sm:px-3 py-1.5 sm:py-2 flex-wrap justify-center">
-          {currentCategoryServices.map((s, i) => (
-            <li>
-              <button
-                class={`service-tab px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] md:text-[13px] font-bold transition-colors duration-200 ${s.slug === serviceData.slug ? 'bg-[#f6f6f6] text-[#0044f2]' : 'text-[#333] hover:bg-gray-100'}`}
-                data-index={i}
-              >{s.label}</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <!-- Swiper -->
-      <div class="swiper serviceSwiper overflow-hidden">
-        <div class="swiper-wrapper items-stretch">
-          {currentCategoryServices.map((rs, i) => {
-            const img = relatedServiceImages[rs.slug] ?? { src: categoryKvFallback[category], alt: rs.label };
-            return (
-              <div class="swiper-slide !h-auto">
-                <a href={rs.href} class={`flex flex-col items-center text-white rounded-[20px] sm:rounded-[24px] md:rounded-[30px] p-3 sm:p-4 md:p-5 transition-transform duration-200 hover:-translate-y-1 ${i % 2 === 1 ? 'mt-6 sm:mt-8 md:mt-12' : ''}`}>
-                  <figure class="w-full aspect-square overflow-hidden rounded-[30px] sm:rounded-[40px] md:rounded-[60px] drop-shadow-[0_0.8rem_0_#b2b2b2]">
-                    <img src={img.src} alt={img.alt} width="300" height="300" loading="lazy" decoding="async" class="w-full h-full object-cover" />
-                  </figure>
-                  <p class="text-[13px] sm:text-[14px] md:text-[18px] font-extrabold leading-snug mt-3 sm:mt-4 md:mt-5 text-center">{rs.label}トラブル</p>
-                  <p class="text-[10px] sm:text-[11px] md:text-[12px] text-white/70 mt-1 text-center">{rs.description}</p>
-                  <p class="font-[Roboto] text-[22px] sm:text-[26px] md:text-[32px] font-bold text-[#ff4176] mt-2 leading-none">
-                    {rs.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-white ml-0.5">円[税込]〜</span>
-                  </p>
-                </a>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- All Category Services -->
+  <ServiceSlider
+    client:load
+    slides={categorySliderSlides}
+    heading={sliderConfig.heading}
+    subheading={sliderConfig.subheading}
+    englishLabel={sliderConfig.englishLabel}
+    bgColor={sliderConfig.bgColor}
+  />
 
   <!-- Final CTA -->
   <CTABlock variant="full-width" />
 
-  <style>
-    @import 'swiper/css';
-  </style>
-
   <script>
+    import 'swiper/css';
     import Swiper from 'swiper';
+    import { Autoplay } from 'swiper/modules';
 
     const caseSwiper = new Swiper('.caseSwiper', {
-      slidesPerView: 1.15,
-      spaceBetween: 16,
+      modules: [Autoplay],
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      speed: 1000,
+      autoplay: { delay: 2500, disableOnInteraction: false },
       breakpoints: {
-        640: { slidesPerView: 1.5, spaceBetween: 20 },
-        768: { slidesPerView: 2, spaceBetween: 24 },
-        1024: { slidesPerView: 2, spaceBetween: 30 },
+        650: { slidesPerView: 1.5, spaceBetween: 30 },
+        901: { slidesPerView: 3, spaceBetween: 30 },
+        1240: { slidesPerView: 3, spaceBetween: 45 },
       },
     });
 
     const voiceSwiper = new Swiper('.voiceSwiper', {
-      slidesPerView: 1.15,
-      spaceBetween: 16,
+      modules: [Autoplay],
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      speed: 1000,
+      autoplay: { delay: 2500, disableOnInteraction: false },
       breakpoints: {
-        640: { slidesPerView: 1.5, spaceBetween: 20 },
-        768: { slidesPerView: 2, spaceBetween: 24 },
-        1024: { slidesPerView: 2, spaceBetween: 30 },
+        650: { slidesPerView: 1.5, spaceBetween: 30 },
+        901: { slidesPerView: 3, spaceBetween: 30 },
+        1240: { slidesPerView: 3, spaceBetween: 45 },
       },
     });
 
@@ -547,34 +546,5 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
       },
     });
 
-    const serviceSwiper = new Swiper('.serviceSwiper', {
-      slidesPerView: 2,
-      spaceBetween: 16,
-      centeredSlides: false,
-      breakpoints: {
-        640: { slidesPerView: 3, spaceBetween: 20 },
-        1024: { slidesPerView: 5, spaceBetween: 24 },
-      },
-    });
-
-    // Tab click → go to slide
-    const tabs = document.querySelectorAll<HTMLButtonElement>('.service-tab');
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const idx = Number(tab.dataset.index);
-        serviceSwiper.slideTo(idx);
-        tabs.forEach((t) => t.classList.remove('bg-[#f6f6f6]', 'text-[#0044f2]'));
-        tab.classList.add('bg-[#f6f6f6]', 'text-[#0044f2]');
-      });
-    });
-
-    // Sync active tab on slide change
-    serviceSwiper.on('slideChange', () => {
-      const idx = serviceSwiper.activeIndex;
-      tabs.forEach((t, i) => {
-        t.classList.toggle('bg-[#f6f6f6]', i === idx);
-        t.classList.toggle('text-[#0044f2]', i === idx);
-      });
-    });
   </script>
 </BaseLayout>

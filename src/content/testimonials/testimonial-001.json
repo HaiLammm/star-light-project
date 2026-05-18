@@ -1,6 +1,8 @@
 {
   "serviceType": "トイレ修理",
   "serviceCategory": "water",
+  "title": "トイレ修理をご依頼いただいたお客様の声",
+  "duration": "30",
   "cost": 8800,
   "message": "夜間のトラブルにもすぐ来てくれて、作業前の説明も丁寧で安心してお願いできました。",
   "authorInitial": "T.K.様",

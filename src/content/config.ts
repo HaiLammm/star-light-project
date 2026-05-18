@@ -12,6 +12,21 @@ const faqEntrySchema = z.object({
   answer: z.string(),
 });
 
+const testimonialsCollection = defineCollection({
+  type: 'data',
+  schema: z.object({
+    serviceType: z.string(),
+    serviceCategory: z.enum(['electricity', 'water', 'pest-control']),
+    title: z.string().optional(),
+    duration: z.string().optional(),
+    cost: z.number(),
+    message: z.string(),
+    authorInitial: z.string(),
+    location: z.string().optional(),
+    rating: z.number().optional(),
+  }).passthrough(),
+});
+
 const servicesCollection = defineCollection({
   type: 'data',
   schema: z.object({
@@ -36,4 +51,5 @@ const servicesCollection = defineCollection({
 
 export const collections = {
   services: servicesCollection,
+  testimonials: testimonialsCollection,
 };
