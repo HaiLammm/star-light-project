@@ -1,42 +1,67 @@
 ---
-import { REGIONAL_OFFICES } from '../utils/siteConfig';
+interface Props {
+  serviceSlug?: string;
+  category?: string;
+}
+
+const { serviceSlug = '', category = 'electricity' } = Astro.props;
+
+const regions = [
+  {
+    name: '関西エリア',
+    prefectures: ['大阪府', '京都府', '兵庫県'],
+  },
+  {
+    name: '東海エリア',
+    prefectures: ['三重県', '岐阜県', '静岡県', '愛知県'],
+  },
+  {
+    name: '中国エリア',
+    prefectures: ['広島県'],
+  },
+  {
+    name: '関東エリア',
+    prefectures: ['東京都', '埼玉県', '神奈川県'],
+  },
+];
 ---
 
-<section class="py-16 md:py-20">
-  <div class="max-w-[1200px] mx-auto px-4">
-    <h2 class="text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center mb-2">
-      <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
-      <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Area</span>
+<section class="py-12 md:py-16 lg:py-20">
+  <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+    <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+      <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+      <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Area</span>
       対応エリア
     </h2>
-    <p class="text-center text-gray-600 mb-8 md:mb-12">
-      年中無休で稼働しております。電気まわりや水まわりのトラブルお任せください。急な故障にもすぐに駆けつけ、最短10分・年中無休で安心サポートいたします。
+    <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#555] mt-4 sm:mt-6 mb-6 sm:mb-8 md:mb-10">
+      年中無休で稼働しております。
     </p>
-    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-      <div class="w-full lg:w-1/2">
+
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
+      <div class="w-full lg:w-[55%]">
         <img
           src="/images/map/area_2026.png"
-          alt="設備人のサービス対応エリア：東京・名古屋・大阪・兵庫を中心に全国対応"
+          alt="設備人のサービス対応エリアマップ"
           width="600"
           height="450"
           decoding="auto"
-          class="w-full h-auto rounded-lg"
+          class="w-full h-auto"
         />
       </div>
-      <div class="w-full lg:w-1/2">
-        <h3 class="text-xl font-bold mb-6">営業所</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {REGIONAL_OFFICES.map((office) => (
+      <div class="w-full lg:w-[45%]">
+        <div class="flex flex-col gap-5 sm:gap-6">
+          {regions.map((region) => (
             <div>
-              <h4 class="font-bold text-lg mb-2">{office.shortName}</h4>
-              <p class="text-sm text-gray-600 mb-2">{office.formattedAddress}</p>
-              <div class="mb-1">
-                <p class="text-xs font-bold text-gray-500 mb-1">対応エリア</p>
-                <p class="text-sm text-gray-700">{office.prefecturesServed.join('・')}</p>
-              </div>
-              <div>
-                <p class="text-xs font-bold text-gray-500 mb-1">主な対応都市</p>
-                <p class="text-sm text-gray-700">{office.areaServed.join('・')}</p>
+              <p class="text-[13px] sm:text-[14px] md:text-[16px] font-bold text-[#1c1c1c] mb-2 sm:mb-3">{region.name}</p>
+              <div class="flex flex-wrap gap-2">
+                {region.prefectures.map((pref) => (
+                  <a
+                    href={`/${category}/${serviceSlug}/${pref.replace('都', '').replace('道', '').replace('府', '').replace('県', '').toLowerCase()}/`}
+                    class="text-[11px] sm:text-[12px] md:text-[13px] text-[#0044f2] hover:underline"
+                  >
+                    {pref}
+                  </a>
+                ))}
               </div>
             </div>
           ))}
