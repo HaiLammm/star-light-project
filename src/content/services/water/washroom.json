@@ -9,6 +9,8 @@
   "webDiscountAmount": 3300,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "洗面台の点検を行う水道修理スタッフ",
+  "kvImageDesktop": "/images/services/water/washroom/kv.png",
+  "kvImageMobile": "/images/services/water/washroom/kv_sp.png",
   "isEmergency": true,
   "hasFreeEstimate": true,
   "pricingTiers": [
