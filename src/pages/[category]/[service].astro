@@ -45,8 +45,6 @@ const categoryServices = {
   'pest-control': PEST_CONTROL_SERVICES,
 } as const;
 
-const kvImageDesktop = serviceData.kvImageDesktop
-  ?? `${categoryLabels[category] ? '' : ''}`; // fallback below
 const categoryKvFallback: Record<string, string> = {
   electricity: '/images/services/electricity_01.jpg',
   water: '/images/services/sanitary_01.jpg',

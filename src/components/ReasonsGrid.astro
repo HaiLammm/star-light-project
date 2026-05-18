@@ -7,7 +7,11 @@ interface Reason {
   description: string;
 }
 
-const reasons: Reason[] = [
+interface Props {
+  reasons?: Reason[];
+}
+
+const defaultReasons: Reason[] = [
   {
     icon: '/images/icons/reason_01.svg',
     number: '01',
@@ -37,6 +41,9 @@ const reasons: Reason[] = [
     description: '設備人には、電気・水回りのトラブル対応に豊富な経験を持つ有資格スタッフが多数在籍。日々の社内研修でスキルを磨いております。安心してお任せいただけるよう、常に技術力の向上を目指します。',
   },
 ];
+
+const { reasons: customReasons } = Astro.props;
+const reasons = customReasons ?? defaultReasons;
 ---
 
 <section class="py-12 md:py-16 lg:py-20">

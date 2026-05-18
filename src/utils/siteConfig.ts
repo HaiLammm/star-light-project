@@ -80,7 +80,7 @@ const SITE_PHONE: PhoneConfig = {
   ariaLabel: '無料電話 0120-219-695',
 };
 
-const ELECTRICITY_SERVICES: ServiceItem[] = [
+export const ELECTRICITY_SERVICES: ServiceItem[] = [
   {
     slug: 'breaker',
     label: 'ブレーカー',
@@ -118,7 +118,7 @@ const ELECTRICITY_SERVICES: ServiceItem[] = [
   },
 ];
 
-const WATER_SERVICES: ServiceItem[] = [
+export const WATER_SERVICES: ServiceItem[] = [
   {
     slug: 'toilet',
     label: 'トイレ',
@@ -149,7 +149,7 @@ const WATER_SERVICES: ServiceItem[] = [
   },
 ];
 
-const PEST_CONTROL_SERVICES: ServiceItem[] = [
+export const PEST_CONTROL_SERVICES: ServiceItem[] = [
   {
     slug: 'cockroach',
     label: 'ゴキブリ駆除',

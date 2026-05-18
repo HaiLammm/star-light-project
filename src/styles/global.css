@@ -30,7 +30,7 @@ html {
 }
 
 #price, #reason, #compare, #area, #flow, #case, #voice, #faq {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 140px;
 }
 
 input, select, textarea {
