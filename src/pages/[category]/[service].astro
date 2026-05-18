@@ -340,7 +340,7 @@ const pageDescription = serviceData.description;
           <div class="flex flex-col gap-2 mt-5 sm:mt-6 md:mt-7 w-fit mx-auto">
             {qualifications.items.map((item) => (
               <div class="flex items-center">
-                <p class="w-[180px] sm:w-[190px] md:w-[240px] h-[24px] sm:h-[25px] md:h-[27px] bg-white rounded-[13px] text-[11px] sm:text-[11px] md:text-[12px] font-bold text-[#333] flex items-center justify-center">{item}</p>
+                <p class="w-[180px] sm:w-[190px] md:w-[204px] h-[24px] sm:h-[25px] md:h-[27px] bg-white rounded-[13px] text-[11px] sm:text-[11px] md:text-[12px] font-bold text-[#333] flex items-center justify-center">{item}</p>
               </div>
             ))}
           </div>
@@ -383,7 +383,7 @@ const pageDescription = serviceData.description;
   </section>
 
   <!-- Case Studies -->
-  <section id="case" class="py-12 md:py-16 lg:py-20">
+  <section id="case" class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
         <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
@@ -401,7 +401,7 @@ const pageDescription = serviceData.description;
         </div>
       </div>
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
-        <a href="/case" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+        <a href="/case" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.30)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
           修理実績一覧
         </a>
       </div>
@@ -409,7 +409,7 @@ const pageDescription = serviceData.description;
   </section>
 
   <!-- Testimonials -->
-  <section id="voice" class="py-12 md:py-16 lg:py-20 bg-section-gray">
+  <section id="voice" class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px] bg-section-gray">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
         <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
@@ -427,7 +427,7 @@ const pageDescription = serviceData.description;
         </div>
       </div>
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
-        <a href="/voice" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+        <a href="/voice" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.30)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
           お客様の声一覧
         </a>
       </div>
@@ -449,7 +449,7 @@ const pageDescription = serviceData.description;
   </section>
 
   <!-- Blog/Column Section -->
-  <section class="py-12 md:py-16 lg:py-20">
+  <section class="py-12 md:py-16 lg:pt-[80px] lg:pb-[120px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
         <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
@@ -466,14 +466,14 @@ const pageDescription = serviceData.description;
             { title: 'エアコンの電源が入らない原因と対処法｜今すぐ確認すべきポイント', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_04.jpg', href: '/columns/' },
           ].map((article) => (
             <div class="swiper-slide !h-auto">
-              <a href={article.href} class="flex flex-col h-full rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.10)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.16)] transition-shadow duration-200 bg-white">
-                <figure class="w-full aspect-video overflow-hidden">
-                  <img src={article.image} alt={article.title} width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+              <a href={article.href} class="flex flex-col h-full rounded-[20px] sm:rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white">
+                <figure class="w-full overflow-hidden" style="aspect-ratio: 350/196;">
+                  <img src={article.image} alt={article.title} width="350" height="196" loading="lazy" decoding="async" class="w-full h-full object-cover" />
                 </figure>
-                <div class="p-3 sm:p-4">
-                  <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-[4px] mb-2">{article.category}</span>
-                  <p class="text-[12px] sm:text-[13px] md:text-[14px] font-bold leading-snug line-clamp-2">{article.title}</p>
-                  <p class="text-[10px] sm:text-[11px] text-[#888] mt-2">{article.date}</p>
+                <div class="px-[16px] pt-[16px] pb-[18px] sm:px-[24px] sm:pt-[20px] sm:pb-[24px] md:px-[30px] md:pt-[23px] md:pb-[28px]">
+                  <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[10px] sm:text-[12px] md:text-[14px] font-bold px-3 py-1 rounded-b-[12px] sm:rounded-b-[16px] md:rounded-b-[20px] mb-2 sm:mb-3">{article.category}</span>
+                  <p class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug line-clamp-2">{article.title}</p>
+                  <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#888] mt-2">{article.date}</p>
                 </div>
               </a>
             </div>
@@ -481,7 +481,7 @@ const pageDescription = serviceData.description;
         </div>
       </div>
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
-        <a href="/columns" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+        <a href="/columns" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.30)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
           お役立ち情報一覧
         </a>
       </div>
