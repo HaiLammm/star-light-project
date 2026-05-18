@@ -15,40 +15,82 @@
   "hasFreeEstimate": true,
   "pricingTiers": [
     {
-      "name": "コンセント交換",
-      "price": 5500,
-      "imageUrl": "/images/services/electricity_01.jpg",
-      "imageAlt": "コンセント交換サービス"
+      "name": "スイッチ修理・交換",
+      "price": 12000,
+      "imageUrl": "/images/services/electricity/outlet/price_01.jpg",
+      "imageAlt": "スイッチ修理・交換サービス"
     },
     {
-      "name": "コンセント増設工事",
-      "price": 12100,
-      "imageUrl": "/images/services/electricity_02.jpg",
-      "imageAlt": "コンセント増設工事サービス"
+      "name": "スイッチ移設（配線作業込み）",
+      "price": 16500,
+      "imageUrl": "/images/services/electricity/outlet/price_02.jpg",
+      "imageAlt": "スイッチ移設サービス"
     },
     {
-      "name": "コンセント修理・点検",
-      "price": 4400,
-      "imageUrl": "/images/services/electricity_03.jpg",
-      "imageAlt": "コンセント修理・点検サービス"
+      "name": "スイッチ増設（配線作業込み）",
+      "price": 16500,
+      "imageUrl": "/images/services/electricity/outlet/price_03.jpg",
+      "imageAlt": "スイッチ増設サービス"
+    },
+    {
+      "name": "センサースイッチ変更",
+      "price": 9900,
+      "imageUrl": "/images/services/electricity/outlet/price_04.jpg",
+      "imageAlt": "センサースイッチ変更サービス"
+    },
+    {
+      "name": "コンセント修理・交換",
+      "price": 12000,
+      "imageUrl": "/images/services/electricity/outlet/price_05.jpg",
+      "imageAlt": "コンセント修理・交換サービス"
+    },
+    {
+      "name": "コンセント移設（配線作業込み）",
+      "price": 12000,
+      "imageUrl": "/images/services/electricity/outlet/price_06.jpg",
+      "imageAlt": "コンセント移設サービス"
+    },
+    {
+      "name": "コンセント増設（配線作業込み）",
+      "price": 16500,
+      "imageUrl": "/images/services/electricity/outlet/price_07.jpg",
+      "imageAlt": "コンセント増設サービス"
+    },
+    {
+      "name": "200Vコンセント変更",
+      "price": 11000,
+      "imageUrl": "/images/services/electricity/outlet/price_08.jpg",
+      "imageAlt": "200Vコンセント変更サービス"
+    },
+    {
+      "name": "野外コンセント新設（配線作業込み）",
+      "price": 26000,
+      "imageUrl": "/images/services/electricity/outlet/price_09.jpg",
+      "imageAlt": "野外コンセント新設サービス"
+    },
+    {
+      "name": "専用電源新設（配線作業込み）",
+      "price": 26000,
+      "imageUrl": "/images/services/electricity/outlet/price_10.jpg",
+      "imageAlt": "専用電源新設サービス"
     }
   ],
   "faqEntries": [
     {
-      "question": "コンセントから焦げ臭いにおいがします。どうすればよいですか？",
-      "answer": "すぐに使用を中止し、コンセントに差し込んでいる機器を外してください。焦げ臭いにおいは漏電や過熱のサインです。速やかにご連絡ください。"
+      "question": "頻繁にブレーカーが落ちるのは漏電が原因ですか？",
+      "answer": "ブレーカーが落ちる主な原因は、電気の使いすぎ(過電流)と漏電、コンセント破損や電化製品の内部損傷によるショートであることがほとんどです。頻繁にブレーカーが落ちる場合は漏電を疑った方が良いかもしれません。"
     },
     {
-      "question": "コンセントの増設にはどれくらい時間がかかりますか？",
-      "answer": "1箇所あたり1〜2時間程度が目安です。配線の引き回し状況により異なりますので、現地確認後にご案内します。"
+      "question": "急に照明(電気)がつかなくなりました",
+      "answer": "電球の寿命や接触不良、照明器具自体の故障、スイッチの故障、ブレーカーが落ちたなど様々な要因が考えられます。原因を特定し落ち着いて対処するようにしてください。不安な場合は専門業者にご相談ください。"
     },
     {
-      "question": "古いコンセントをアース付きに交換できますか？",
-      "answer": "はい、対応可能です。洗濯機・冷蔵庫など水回り家電の近くはアース付きへの交換をおすすめします。"
+      "question": "電気代が急に高くなったのですが漏電を疑った方が良いですか？",
+      "answer": "漏電＝電気代高騰というわけではなく、漏電を止めるための分電盤が故障していると、ブレーカーを落として漏電を止める仕組みが機能しなくなるため電気使用量が増え、電気代が高騰します。"
     },
     {
-      "question": "見積り後にキャンセルしても費用はかかりますか？",
-      "answer": "いいえ、キャンセル料は一切いただきません。見積り後でもお断りいただいて構いません。"
+      "question": "照明の取り付けもお願いできますか？",
+      "answer": "取り付けや届かない等のご依頼は基本お電話のみの対応となりますがお気軽にご相談ください。"
     }
   ]
 }

@@ -15,40 +15,70 @@
   "hasFreeEstimate": true,
   "pricingTiers": [
     {
-      "name": "照明器具交換",
-      "price": 6600,
-      "imageUrl": "/images/services/electricity_01.jpg",
-      "imageAlt": "照明器具交換サービス"
+      "name": "シーリング照明取付 3.5m未満",
+      "price": 8000,
+      "imageUrl": "/images/services/electricity/lighting/price_01.jpg",
+      "imageAlt": "シーリング照明取付サービス"
     },
     {
-      "name": "シーリングライト取付",
-      "price": 8800,
-      "imageUrl": "/images/services/electricity_02.jpg",
-      "imageAlt": "シーリングライト取付サービス"
+      "name": "照明器具交換（ダウンライト）",
+      "price": 9900,
+      "imageUrl": "/images/services/electricity/lighting/price_02.jpg",
+      "imageAlt": "ダウンライト交換サービス"
     },
     {
-      "name": "ダウンライト新設工事",
-      "price": 15400,
-      "imageUrl": "/images/services/electricity_03.jpg",
-      "imageAlt": "ダウンライト新設工事サービス"
+      "name": "照明器具交換（ブランケットライト）",
+      "price": 14000,
+      "imageUrl": "/images/services/electricity/lighting/price_03.jpg",
+      "imageAlt": "ブランケットライト交換サービス"
+    },
+    {
+      "name": "照明器具交換（キッチン・洗面台照明）",
+      "price": 12000,
+      "imageUrl": "/images/services/electricity/lighting/price_04.jpg",
+      "imageAlt": "キッチン・洗面台照明交換サービス"
+    },
+    {
+      "name": "照明器具増設3.5m未満",
+      "price": 8000,
+      "imageUrl": "/images/services/electricity/lighting/price_05.jpg",
+      "imageAlt": "照明器具増設サービス"
+    },
+    {
+      "name": "照明器具電球交換（ダウンライト）",
+      "price": 8000,
+      "imageUrl": "/images/services/electricity/lighting/price_06.jpg",
+      "imageAlt": "ダウンライト電球交換サービス"
+    },
+    {
+      "name": "照明器具電球交換（ブランケットライト）",
+      "price": 8000,
+      "imageUrl": "/images/services/electricity/lighting/price_07.jpg",
+      "imageAlt": "ブランケットライト電球交換サービス"
+    },
+    {
+      "name": "照明器具電球交換（キッチン・洗面台照明）",
+      "price": 9900,
+      "imageUrl": "/images/services/electricity/lighting/price_08.jpg",
+      "imageAlt": "キッチン・洗面台電球交換サービス"
     }
   ],
   "faqEntries": [
     {
-      "question": "電球を交換しても照明がつきません。どうすればよいですか？",
-      "answer": "電球以外の器具内部（安定器・スイッチ）の故障や、配線系統の問題が考えられます。専門スタッフによる点検をおすすめします。"
+      "question": "頻繁にブレーカーが落ちるのは漏電が原因ですか？",
+      "answer": "ブレーカーが落ちる主な原因は、電気の使いすぎ(過電流)と漏電、コンセント破損や電化製品の内部損傷によるショートであることがほとんどです。頻繁にブレーカーが落ちる場合は漏電を疑った方が良いかもしれません。"
     },
     {
-      "question": "LED照明への切り替えはどのくらいの費用がかかりますか？",
-      "answer": "器具の種類や数、配線状況によって異なります。現地確認後にお見積りをご提示しますので、お気軽にご相談ください。"
+      "question": "急に照明(電気)がつかなくなりました",
+      "answer": "電球の寿命や接触不良、照明器具自体の故障、スイッチの故障、ブレーカーが落ちたなど様々な要因が考えられます。原因を特定し落ち着いて対処するようにしてください。不安な場合は専門業者にご相談ください。"
     },
     {
-      "question": "高い位置の照明器具も交換してもらえますか？",
-      "answer": "はい、吹き抜けや天井の高い場所の照明交換にも対応しています。安全に作業できる環境を整えて対応いたします。"
+      "question": "電気代が急に高くなったのですが漏電を疑った方が良いですか？",
+      "answer": "漏電＝電気代高騰というわけではなく、漏電を止めるための分電盤が故障していると、ブレーカーを落として漏電を止める仕組みが機能しなくなるため電気使用量が増え、電気代が高騰します。"
     },
     {
-      "question": "夜間でも照明工事を依頼できますか？",
-      "answer": "はい、24時間365日対応しております。急な照明トラブルでも夜間・早朝問わずご対応します。"
+      "question": "照明の取り付けもお願いできますか？",
+      "answer": "取り付けや届かない等のご依頼は基本お電話のみの対応となりますがお気軽にご相談ください。"
     }
   ]
 }

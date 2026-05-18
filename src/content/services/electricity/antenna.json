@@ -15,40 +15,46 @@
   "hasFreeEstimate": true,
   "pricingTiers": [
     {
-      "name": "アンテナ設置工事",
-      "price": 22000,
-      "imageUrl": "/images/services/electricity_04.jpg",
-      "imageAlt": "アンテナ設置工事サービス"
-    },
-    {
-      "name": "アンテナ交換工事",
+      "name": "UHFアンテナ工事",
       "price": 16500,
-      "imageUrl": "/images/services/electricity_05.jpg",
-      "imageAlt": "アンテナ交換工事サービス"
+      "imageUrl": "/images/services/electricity/antenna/price_01.jpg",
+      "imageAlt": "UHFアンテナ工事サービス"
     },
     {
-      "name": "受信状態調査・調整",
-      "price": 8800,
-      "imageUrl": "/images/services/electricity_01.jpg",
-      "imageAlt": "アンテナ受信状態調査サービス"
+      "name": "デザインアンテナ工事",
+      "price": 22000,
+      "imageUrl": "/images/services/electricity/antenna/price_02.jpg",
+      "imageAlt": "デザインアンテナ工事サービス"
+    },
+    {
+      "name": "BS・CSアンテナ工事（4K8K対応）",
+      "price": 33000,
+      "imageUrl": "/images/services/electricity/antenna/price_03.jpg",
+      "imageAlt": "BS・CSアンテナ工事サービス"
+    },
+    {
+      "name": "ブースター工事",
+      "price": 16500,
+      "imageUrl": "/images/services/electricity/antenna/price_04.jpg",
+      "imageAlt": "ブースター工事サービス"
     }
   ],
   "faqEntries": [
     {
-      "question": "テレビが突然映らなくなりました。アンテナが原因ですか？",
-      "answer": "アンテナの向きズレ・劣化・断線のほか、ブースターや分配器の故障が原因の場合もあります。現地で機器をチェックしてから最適な対応をご提案します。"
+      "question": "頻繁にブレーカーが落ちるのは漏電が原因ですか？",
+      "answer": "ブレーカーが落ちる主な原因は、電気の使いすぎ(過電流)と漏電、コンセント破損や電化製品の内部損傷によるショートであることがほとんどです。頻繁にブレーカーが落ちる場合は漏電を疑った方が良いかもしれません。"
     },
     {
-      "question": "アンテナ設置工事はどのくらいの時間がかかりますか？",
-      "answer": "通常2〜4時間程度です。屋根の形状や配線の引き回し状況によって異なりますので、現地確認後にご案内します。"
+      "question": "急に照明(電気)がつかなくなりました",
+      "answer": "電球の寿命や接触不良、照明器具自体の故障、スイッチの故障、ブレーカーが落ちたなど様々な要因が考えられます。原因を特定し落ち着いて対処するようにしてください。不安な場合は専門業者にご相談ください。"
     },
     {
-      "question": "4K・8K放送に対応したアンテナに交換できますか？",
-      "answer": "はい、BS/CS 4K・8K対応アンテナへの交換・設置にも対応しています。機器の相性も含めてご提案します。"
+      "question": "電気代が急に高くなったのですが漏電を疑った方が良いですか？",
+      "answer": "漏電＝電気代高騰というわけではなく、漏電を止めるための分電盤が故障していると、ブレーカーを落として漏電を止める仕組みが機能しなくなるため電気使用量が増え、電気代が高騰します。"
     },
     {
-      "question": "悪天候の際の修理依頼も対応してもらえますか？",
-      "answer": "はい、強風後のアンテナ倒壊・向きズレなどの緊急修理にも対応しています。まずはご連絡ください。"
+      "question": "照明の取り付けもお願いできますか？",
+      "answer": "取り付けや届かない等のご依頼は基本お電話のみの対応となりますがお気軽にご相談ください。"
     }
   ]
 }
