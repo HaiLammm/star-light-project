@@ -9,6 +9,8 @@
   "webDiscountAmount": 1500,
   "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
   "imageAlt": "コンセント修理を行う作業スタッフ",
+  "kvImageDesktop": "/images/services/electricity/outlet/kv.png",
+  "kvImageMobile": "/images/services/electricity/outlet/kv_sp.png",
   "isEmergency": true,
   "hasFreeEstimate": true,
   "pricingTiers": [

@@ -9,6 +9,8 @@
   "webDiscountAmount": 1500,
   "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
   "imageAlt": "照明器具の取付を行う作業スタッフ",
+  "kvImageDesktop": "/images/services/electricity/lighting/kv.png",
+  "kvImageMobile": "/images/services/electricity/lighting/kv_sp.png",
   "isEmergency": true,
   "hasFreeEstimate": true,
   "pricingTiers": [
