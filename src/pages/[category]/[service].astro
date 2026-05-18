@@ -224,6 +224,8 @@ const relatedServices = currentCategoryServices
 
 const pageTitle = `${serviceLongName}なら${SITE_CONFIG.companyName}【年中無休・即対応】`;
 const pageDescription = serviceData.description;
+const kvBgColor: Record<string, string> = { electricity: '#fbc101', water: '#3ea6ff', 'pest-control': '#4CAF50' };
+const kvBg = kvBgColor[category] ?? '#fbc101';
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -233,7 +235,7 @@ const pageDescription = serviceData.description;
   </div>
 
   <!-- Section 2: KV (Key Visual) -->
-  <div class="relative overflow-hidden py-[2rem] sm:py-[2.5rem] md:py-[3.9rem]">
+  <div class="relative overflow-hidden py-[2rem] sm:py-[2.5rem] md:py-[3.9rem]" style={`background-color: ${kvBg};`}>
     <!-- blurred background -->
     <div class="absolute inset-0 -z-10">
       <picture>
