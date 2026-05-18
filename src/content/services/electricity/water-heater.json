@@ -17,19 +17,19 @@
     {
       "name": "ガス給湯専用16〜20号",
       "price": 19800,
-      "imageUrl": "/images/services/electricity/water-heater/price_01.jpg",
+      "imageUrl": "/images/services/electricity/water-heater/price_1.jpg",
       "imageAlt": "ガス給湯専用16〜20号交換サービス"
     },
     {
       "name": "追いだき付 20〜24号",
       "price": 29800,
-      "imageUrl": "/images/services/electricity/water-heater/price_02.jpg",
+      "imageUrl": "/images/services/electricity/water-heater/price_2.jpg",
       "imageAlt": "追いだき付給湯器交換サービス"
     },
     {
       "name": "エコジョーズ高効率",
       "price": 34800,
-      "imageUrl": "/images/services/electricity/water-heater/price_03.jpg",
+      "imageUrl": "/images/services/electricity/water-heater/price_3.jpg",
       "imageAlt": "エコジョーズ高効率給湯器交換サービス"
     }
   ],

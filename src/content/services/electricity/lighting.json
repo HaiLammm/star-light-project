@@ -17,49 +17,49 @@
     {
       "name": "シーリング照明取付 3.5m未満",
       "price": 8000,
-      "imageUrl": "/images/services/electricity/lighting/price_01.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_1.jpg",
       "imageAlt": "シーリング照明取付サービス"
     },
     {
       "name": "照明器具交換（ダウンライト）",
       "price": 9900,
-      "imageUrl": "/images/services/electricity/lighting/price_02.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_2.jpg",
       "imageAlt": "ダウンライト交換サービス"
     },
     {
       "name": "照明器具交換（ブランケットライト）",
       "price": 14000,
-      "imageUrl": "/images/services/electricity/lighting/price_03.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_3.jpg",
       "imageAlt": "ブランケットライト交換サービス"
     },
     {
       "name": "照明器具交換（キッチン・洗面台照明）",
       "price": 12000,
-      "imageUrl": "/images/services/electricity/lighting/price_04.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_4.jpg",
       "imageAlt": "キッチン・洗面台照明交換サービス"
     },
     {
       "name": "照明器具増設3.5m未満",
       "price": 8000,
-      "imageUrl": "/images/services/electricity/lighting/price_05.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_5.jpg",
       "imageAlt": "照明器具増設サービス"
     },
     {
       "name": "照明器具電球交換（ダウンライト）",
       "price": 8000,
-      "imageUrl": "/images/services/electricity/lighting/price_06.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_6.jpg",
       "imageAlt": "ダウンライト電球交換サービス"
     },
     {
       "name": "照明器具電球交換（ブランケットライト）",
       "price": 8000,
-      "imageUrl": "/images/services/electricity/lighting/price_07.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_7.jpg",
       "imageAlt": "ブランケットライト電球交換サービス"
     },
     {
       "name": "照明器具電球交換（キッチン・洗面台照明）",
       "price": 9900,
-      "imageUrl": "/images/services/electricity/lighting/price_08.jpg",
+      "imageUrl": "/images/services/electricity/lighting/price_8.jpg",
       "imageAlt": "キッチン・洗面台電球交換サービス"
     }
   ],

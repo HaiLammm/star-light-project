@@ -17,25 +17,25 @@
     {
       "name": "UHFアンテナ工事",
       "price": 16500,
-      "imageUrl": "/images/services/electricity/antenna/price_01.jpg",
+      "imageUrl": "/images/services/electricity/antenna/price_1.jpg",
       "imageAlt": "UHFアンテナ工事サービス"
     },
     {
       "name": "デザインアンテナ工事",
       "price": 22000,
-      "imageUrl": "/images/services/electricity/antenna/price_02.jpg",
+      "imageUrl": "/images/services/electricity/antenna/price_2.jpg",
       "imageAlt": "デザインアンテナ工事サービス"
     },
     {
       "name": "BS・CSアンテナ工事（4K8K対応）",
       "price": 33000,
-      "imageUrl": "/images/services/electricity/antenna/price_03.jpg",
+      "imageUrl": "/images/services/electricity/antenna/price_3.jpg",
       "imageAlt": "BS・CSアンテナ工事サービス"
     },
     {
       "name": "ブースター工事",
       "price": 16500,
-      "imageUrl": "/images/services/electricity/antenna/price_04.jpg",
+      "imageUrl": "/images/services/electricity/antenna/price_4.jpg",
       "imageAlt": "ブースター工事サービス"
     }
   ],
