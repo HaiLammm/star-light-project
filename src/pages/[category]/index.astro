@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import FAQAccordion from '../../components/FAQAccordion.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, PEST_CONTROL_SERVICES } from '../../utils/siteConfig';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return [
+    { params: { category: 'electricity' } },
+    { params: { category: 'water' } },
+    { params: { category: 'pest-control' } },
+  ];
+}
+
+const { category } = Astro.params;
+
+const categoryLabels: Record<string, string> = {
+  electricity: '電気まわり',
+  water: '水まわり',
+  'pest-control': '害虫駆除',
+};
+
+const categoryIntro: Record<string, { heading: string; text: string }> = {
+  electricity: {
+    heading: '電気まわりのトラブルなら\n設備人におまかせ',
+    text: 'ブレーカーが頻繁に落ちる・照明がつかない・コンセントから異臭がするなど、電気まわりのトラブルは生活に大きな支障をきたします。放置すると感電・発煙・火災など重大事故につながるおそれがあります。\n\n24時間年中無休の設備人なら、第1種・第2種電気工事士の有資格者が最短10分で駆けつけ、現場で安全確認と復旧作業を行います。お見積もり・キャンセル料は一切いただいておりません。',
+  },
+  water: {
+    heading: '水まわりのトラブルなら\n設備人におまかせ',
+    text: 'トイレのつまり・水漏れ、キッチンの排水トラブル、お風呂の故障など、水まわりのトラブルは日常生活に直結する問題です。\n\n設備人なら24時間年中無休で、経験豊富なスタッフが迅速に駆けつけます。お見積もり・キャンセル料は一切いただいておりません。',
+  },
+  'pest-control': {
+    heading: '害虫駆除のトラブルなら\n設備人におまかせ',
+    text: 'ゴキブリ・シロアリ・ネズミなどの害虫害獣は、衛生面だけでなく建物への被害も引き起こします。\n\n設備人なら専門の資格を持ったスタッフが迅速に対応。お見積もり・キャンセル料は一切いただいておりません。',
+  },
+};
+
+const categoryServices = {
+  electricity: ELECTRICITY_SERVICES,
+  water: WATER_SERVICES,
+  'pest-control': PEST_CONTROL_SERVICES,
+} as const;
+
+const categoryKvDesktop: Record<string, string> = {
+  electricity: '/images/services/electricity/breaker/kv.png',
+  water: '/images/services/water/toilet/kv.png',
+  'pest-control': '/images/services/pest_01.jpg',
+};
+const categoryKvMobile: Record<string, string> = {
+  electricity: '/images/services/electricity/breaker/kv_sp.png',
+  water: '/images/services/water/toilet/kv_sp.png',
+  'pest-control': '/images/services/pest_01.jpg',
+};
+
+const categoryPricing: Record<string, { original: number; discounted: number; discount: number }> = {
+  electricity: { original: 2600, discounted: 1100, discount: 1500 },
+  water: { original: 8800, discounted: 5500, discount: 3300 },
+  'pest-control': { original: 8800, discounted: 5500, discount: 3300 },
+};
+
+const categoryColors: Record<string, { kv: string; consultation: string; accent: string }> = {
+  electricity: { kv: '#fbc101', consultation: '#fbc101', accent: '#fbc102' },
+  water: { kv: '#3ea6ff', consultation: '#3ea6ff', accent: '#3ea6ff' },
+  'pest-control': { kv: '#4CAF50', consultation: '#4CAF50', accent: '#4CAF50' },
+};
+
+const serviceImages: Record<string, Record<string, { src: string; alt: string }>> = {
+  electricity: {
+    breaker: { src: '/images/services/electricity_01.jpg', alt: 'ブレーカー修理・交換' },
+    outlet: { src: '/images/services/electricity_02.jpg', alt: 'コンセント修理・交換' },
+    lighting: { src: '/images/services/electricity_03.jpg', alt: '照明修理・交換' },
+    antenna: { src: '/images/services/electricity_04.jpg', alt: 'アンテナ工事' },
+    'water-heater': { src: '/images/services/electricity_05.jpg', alt: '給湯器交換' },
+  },
+  water: {
+    toilet: { src: '/images/services/sanitary_01.jpg', alt: 'トイレ修理' },
+    kitchen: { src: '/images/services/sanitary_02.jpg', alt: 'キッチン修理' },
+    bath: { src: '/images/services/sanitary_03.jpg', alt: 'お風呂修理' },
+    washroom: { src: '/images/services/sanitary_04.jpg', alt: '洗面所修理' },
+  },
+  'pest-control': {
+    cockroach: { src: '/images/services/pest_01.jpg', alt: 'ゴキブリ駆除' },
+    termite: { src: '/images/services/pest_02.jpg', alt: 'シロアリ駆除' },
+    rodent: { src: '/images/services/pest_03.jpg', alt: 'ネズミ駆除' },
+    'general-pest': { src: '/images/services/pest_04.jpg', alt: '一般害虫駆除' },
+  },
+};
+
+const serviceLabel = categoryLabels[category] ?? category;
+const services = categoryServices[category as keyof typeof categoryServices] ?? [];
+const kvDesktop = categoryKvDesktop[category] ?? categoryKvDesktop.electricity;
+const kvMobile = categoryKvMobile[category] ?? categoryKvMobile.electricity;
+const pricing = categoryPricing[category] ?? categoryPricing.electricity;
+const colors = categoryColors[category] ?? categoryColors.electricity;
+const intro = categoryIntro[category] ?? categoryIntro.electricity;
+const images = serviceImages[category] ?? {};
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: `${serviceLabel}サービス`, href: '#' },
+];
+
+const allFaq = await getCollection('faq');
+const categoryFaqMap: Record<string, string[]> = {
+  electricity: ['electricity', 'pricing', 'general'],
+  water: ['water', 'pricing', 'general'],
+  'pest-control': ['pest-control', 'pricing', 'general'],
+};
+const relevantCategories = categoryFaqMap[category] ?? ['general', 'pricing'];
+const faqItems = allFaq
+  .filter((f) => relevantCategories.includes(f.data.category))
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .map((f) => ({ question: f.data.question, answer: f.data.answer }));
+
+const pageTitle = `${serviceLabel}のトラブルなら${SITE_CONFIG.companyName}【年中無休・即対応】`;
+const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.companyName}。24時間365日、最短10分で駆けつけ。見積り・キャンセル料無料。`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- Breadcrumb -->
+  <div class="max-w-[1200px] mx-auto px-3 sm:px-4 py-3 sm:py-4">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV (Key Visual) -->
+  <div class="relative overflow-hidden py-[10px] md:py-[39px]">
+    <div class="absolute inset-0 -z-[1]">
+      <picture>
+        <source media="(max-width: 900px)" srcset={kvMobile} />
+        <source media="(min-width: 901px)" srcset={kvDesktop} />
+        <img src={kvDesktop} alt="" aria-hidden="true" class="w-full h-full object-cover" style="filter: blur(30px) brightness(1.5); opacity: 0.5;" loading="eager" decoding="async" />
+      </picture>
+    </div>
+    <figure class="w-[94.7%] md:w-[87.85vw] mx-auto">
+      <picture>
+        <source media="(max-width: 900px)" srcset={kvMobile} />
+        <source media="(min-width: 901px)" srcset={kvDesktop} />
+        <img
+          src={kvDesktop}
+          alt={`${serviceLabel}サービス`}
+          width="1200"
+          height="500"
+          class="w-full h-auto"
+          loading="eager"
+          decoding="async"
+        />
+      </picture>
+    </figure>
+  </div>
+
+  <!-- Price Bar -->
+  <div class="bg-[#0044f2]">
+    <div class="max-w-[1240px] mx-auto px-3 sm:px-4 h-[60px] md:h-[100px] flex items-center justify-center">
+      <div class="flex items-center gap-2 sm:gap-4 md:gap-6">
+        <div class="bg-white rounded-[16px] sm:rounded-[20px] md:rounded-[22px] px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-3">
+          <span class="bg-black text-white text-[9px] sm:text-[11px] md:text-[14px] font-bold leading-tight px-2 sm:px-3 py-1 sm:py-1.5 rounded-[5px] flex items-center justify-center">WEB割引</span>
+          <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[29px] font-bold flex items-center">
+            {pricing.discount.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[11px] sm:text-[14px] md:text-[19px] font-extrabold ml-0.5">円割引！</span>
+          </span>
+        </div>
+        <div class="text-white text-center">
+          <span class="block text-[10px] sm:text-[12px] md:text-[15px] font-extrabold">作業料金</span>
+          <span class="text-[14px] sm:text-[18px] md:text-[23px] font-bold line-through decoration-white/60">{pricing.original.toLocaleString('ja-JP')}円</span>
+        </div>
+        <div class="w-[10px] sm:w-[14px] md:w-[17px] h-auto aspect-[17/41] bg-[#fbc102] flex-shrink-0" style="clip-path: polygon(100% 50%, 0% 0%, 0% 100%);"></div>
+        <p class="font-[Roboto] text-[28px] sm:text-[46px] md:text-[68px] font-black text-[#fbfb00] leading-none">
+          {pricing.discounted.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[12px] sm:text-[16px] md:text-[21px] font-semibold text-white">円[税込]〜</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intro Section -->
+  <section class="py-10 sm:py-14 md:py-20">
+    <div class="max-w-[920px] mx-auto px-3 sm:px-4">
+      <h1 class="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold text-center pb-4 relative">
+        {intro.heading.split('\n').map((line, i) => (
+          <Fragment>
+            {i > 0 && <br />}
+            {line}
+          </Fragment>
+        ))}
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[30px] sm:w-[35px] md:w-[40px] h-[2px] bg-[#fbc102]"></span>
+      </h1>
+      <div class="text-[13px] sm:text-[14px] md:text-[16px] leading-[1.75] mt-6 sm:mt-8 md:mt-10 text-text-primary" style="word-break: keep-all; overflow-wrap: anywhere;">
+        {intro.text.split('\n\n').map((paragraph) => (
+          <p class="mb-4 last:mb-0">{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Consultation Section -->
+  <section class="pb-4 sm:pb-6 md:pb-8">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class={`rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-5 sm:p-8 md:p-12`} style={`background-color: ${colors.consultation};`}>
+        <h2 class="text-[18px] sm:text-[24px] md:text-[32px] font-extrabold text-center underline decoration-[#feff00] decoration-4 underline-offset-[13px]">
+          <span class="text-[#ff4176]">ご相談無料！</span>必ず事前にお見積り
+        </h2>
+        <p class="text-[11px] sm:text-[12px] md:text-[14px] leading-relaxed mt-4 sm:mt-6 md:mt-8 text-center max-w-[800px] mx-auto">
+          作業費+材料費部品代+処分費(※)で作業料金を算出いたします。<br />
+          それ以外にかかる見積り費や出張費、早朝・深夜料金、キャンセル料は一切いただきません。
+        </p>
+        <figure class="mt-4 sm:mt-6 md:mt-8 max-w-[600px] mx-auto">
+          <picture>
+            <source media="(max-width: 900px)" srcset="/images/cta/cta_feature_sp.svg" />
+            <source media="(min-width: 901px)" srcset="/images/cta/cta_feature.svg" />
+            <img src="/images/cta/cta_feature.svg" alt="見積り無料・出張費無料・キャンセル料無料" loading="lazy" decoding="async" class="w-full h-auto" />
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-10 sm:py-14 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Service</span>
+        {serviceLabel}サービス一覧
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-5 mt-[20px] sm:mt-[30px] md:mt-[50px]">
+        {services.map((s) => {
+          const img = images[s.slug] ?? { src: '/images/services/electricity_01.jpg', alt: s.label };
+          return (
+            <a
+              href={s.href}
+              class="flex flex-col rounded-[20px] sm:rounded-[24px] md:rounded-[30px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white"
+            >
+              <figure class="w-full overflow-hidden" style="aspect-ratio: 1/1;">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  width="300"
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                />
+              </figure>
+              <div class="px-3 sm:px-4 py-3 sm:py-4 text-center">
+                <p class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug">{s.label}トラブル</p>
+                <p class="text-[10px] sm:text-[11px] md:text-[12px] text-[#666] mt-1">{s.description}</p>
+                <p class="font-[Roboto] text-[18px] sm:text-[22px] md:text-[26px] font-bold text-[#ff4176] mt-2 leading-none">
+                  {s.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-[#333] ml-0.5">円[税込]〜</span>
+                </p>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p class="text-[10px] sm:text-[11px] md:text-[12px] text-[#888] mt-4 sm:mt-6 md:mt-8 text-center leading-relaxed">
+        ※作業料金以外に、部品・部材費用、処分費用など別途費用が発生する場合がございます。<br />
+        必ず作業前にお見積りいたします。
+      </p>
+    </div>
+  </section>
+
+  <CTABlock variant="full-width" />
+
+  <!-- FAQ Section -->
+  <section class="py-12 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Faq</span>
+        よくいただくご質問
+      </h2>
+      <FAQAccordion items={faqItems} />
+      <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
+        <a href="/question" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.30)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
+          もっと見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Locations -->
+  <section class="pb-10 sm:pb-12 md:pb-16">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <h3 class="text-[14px] sm:text-[16px] md:text-[20px] font-bold text-center mb-4 sm:mb-5 md:mb-6">営業所</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        {[
+          { name: '関東営業所', address: '準備中' },
+          { name: '東海営業所', address: '愛知県北名古屋市井瀬木1068-205' },
+          { name: '中国営業所', address: '広島県広島市西区 中広2丁目19-33' },
+        ].map((office) => (
+          <div class="bg-[#f7f7f7] rounded-[12px] sm:rounded-[16px] p-4 sm:p-5">
+            <p class="text-[12px] sm:text-[13px] md:text-[15px] font-bold text-[#1c1c1c] mb-1">{office.name}</p>
+            <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#555]">{office.address}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock variant="full-width" />
+</BaseLayout>
