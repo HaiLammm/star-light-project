@@ -233,20 +233,31 @@ const pageDescription = serviceData.description;
   </div>
 
   <!-- Section 2: KV (Key Visual) -->
-  <div class="w-full">
-    <picture>
-      <source media="(max-width: 900px)" srcset={kvMobile} />
-      <source media="(min-width: 901px)" srcset={kvDesktop} />
-      <img
-        src={kvDesktop}
-        alt={`${serviceLongName}サービス`}
-        width="1200"
-        height="500"
-        class="w-full h-auto object-cover"
-        loading="eager"
-        decoding="async"
-      />
-    </picture>
+  <div class="relative overflow-hidden py-[2rem] sm:py-[2.5rem] md:py-[3.9rem]">
+    <!-- blurred background -->
+    <div class="absolute inset-0 -z-10">
+      <picture>
+        <source media="(max-width: 900px)" srcset={kvMobile} />
+        <source media="(min-width: 901px)" srcset={kvDesktop} />
+        <img src={kvDesktop} alt="" aria-hidden="true" class="w-full h-full object-cover" style="filter: blur(3rem) brightness(1.5); opacity: 0.5;" loading="eager" decoding="async" />
+      </picture>
+    </div>
+    <!-- centered sharp banner -->
+    <figure class="w-[87.85vw] mx-auto">
+      <picture>
+        <source media="(max-width: 900px)" srcset={kvMobile} />
+        <source media="(min-width: 901px)" srcset={kvDesktop} />
+        <img
+          src={kvDesktop}
+          alt={`${serviceLongName}サービス`}
+          width="1200"
+          height="500"
+          class="w-full h-auto"
+          loading="eager"
+          decoding="async"
+        />
+      </picture>
+    </figure>
   </div>
 
   <!-- KV Bottom: Price bar -->
@@ -318,23 +329,6 @@ const pageDescription = serviceData.description;
   <!-- Reasons Section -->
   <div id="reason">
     <ReasonsGrid reasons={serviceReasons} />
-
-    <!-- Satisfaction Guarantee -->
-    <div class="max-w-[1200px] mx-auto px-3 sm:px-4 pb-10 sm:pb-12 md:pb-16">
-      <div class="bg-[#fffbe6] border-2 border-[#fbc102] rounded-[16px] sm:rounded-[24px] md:rounded-[32px] p-5 sm:p-7 md:p-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-5 md:gap-8">
-        <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 bg-[#fbc102] rounded-full flex items-center justify-center">
-          <span class="text-white text-[20px] sm:text-[24px] md:text-[36px] font-black leading-none">✓</span>
-        </div>
-        <div class="text-center sm:text-left">
-          <p class="text-[14px] sm:text-[16px] md:text-[20px] font-extrabold text-[#1c1c1c] mb-1 sm:mb-2">
-            <span class="text-[#ff4176]">ご満足いただけない場合は料金をいただきません</span>
-          </p>
-          <p class="text-[11px] sm:text-[13px] md:text-[15px] text-[#555] leading-relaxed">
-            作業後にご満足いただけなかった場合、料金は一切いただきません。お客様の安心・満足を最優先に、責任を持って対応いたします。
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Staff Qualifications -->
@@ -397,10 +391,14 @@ const pageDescription = serviceData.description;
         修理実績のご紹介
       </h2>
       <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#333] mt-[20px] sm:mt-[30px] md:mt-[50px]">ご好評頂いたお客様の修理実績をご紹介</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-[15px] sm:gap-[20px] md:gap-[30px] mt-[15px] sm:mt-[20px] md:mt-[50px]">
-        {realCaseStudies.map((cs) => (
-          <CaseStudyCard {...cs} />
-        ))}
+      <div class="swiper caseSwiper mt-[15px] sm:mt-[20px] md:mt-[50px] overflow-hidden pb-3">
+        <div class="swiper-wrapper items-stretch">
+          {realCaseStudies.map((cs) => (
+            <div class="swiper-slide !h-auto">
+              <CaseStudyCard {...cs} />
+            </div>
+          ))}
+        </div>
       </div>
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
         <a href="/case" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
@@ -419,10 +417,14 @@ const pageDescription = serviceData.description;
         お客様の声のご紹介
       </h2>
       <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#333] mt-[20px] sm:mt-[30px] md:mt-[50px]">お客様の声のご紹介</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-[15px] sm:gap-[20px] md:gap-[30px] mt-[15px] sm:mt-[20px] md:mt-[50px]">
-        {realTestimonials.map((t) => (
-          <TestimonialCard {...t} />
-        ))}
+      <div class="swiper voiceSwiper mt-[15px] sm:mt-[20px] md:mt-[50px] overflow-hidden pb-3">
+        <div class="swiper-wrapper items-stretch">
+          {realTestimonials.map((t) => (
+            <div class="swiper-slide !h-auto">
+              <TestimonialCard {...t} />
+            </div>
+          ))}
+        </div>
       </div>
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
         <a href="/voice" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
@@ -454,25 +456,29 @@ const pageDescription = serviceData.description;
         <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Column</span>
         <span><span class="font-[Roboto] mr-2">Column</span>お役立ち情報</span>
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-[20px] sm:mt-[30px] md:mt-[50px]">
-        {[
-          { title: 'トイレ修理の費用相場はいくら？症状別の料金と業者選びのポイント！', date: '2026.5.18', category: 'トイレ', image: '/images/column/col_06.jpg', href: '/columns/' },
-          { title: 'エアコンのガス入れは必要？補充の判断基準と注意点を解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_01.jpg', href: '/columns/' },
-          { title: 'エアコンのガス漏れ修理｜原因・費用・対処法を完全解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_02.jpg', href: '/columns/' },
-          { title: 'エアコンのガス漏れ症状｜見分け方と危険サインを徹底解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_03.jpg', href: '/columns/' },
-          { title: 'エアコンの電源が入らない原因と対処法｜今すぐ確認すべきポイント', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_04.jpg', href: '/columns/' },
-        ].map((article) => (
-          <a href={article.href} class="flex flex-col rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.10)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.16)] transition-shadow duration-200 bg-white">
-            <figure class="w-full aspect-video overflow-hidden">
-              <img src={article.image} alt={article.title} width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover" />
-            </figure>
-            <div class="p-3 sm:p-4">
-              <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-[4px] mb-2">{article.category}</span>
-              <p class="text-[12px] sm:text-[13px] md:text-[14px] font-bold leading-snug line-clamp-2">{article.title}</p>
-              <p class="text-[10px] sm:text-[11px] text-[#888] mt-2">{article.date}</p>
+      <div class="swiper columnSwiper mt-[20px] sm:mt-[30px] md:mt-[50px] overflow-hidden pb-3">
+        <div class="swiper-wrapper items-stretch">
+          {[
+            { title: 'トイレ修理の費用相場はいくら？症状別の料金と業者選びのポイント！', date: '2026.5.18', category: 'トイレ', image: '/images/column/col_06.jpg', href: '/columns/' },
+            { title: 'エアコンのガス入れは必要？補充の判断基準と注意点を解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_01.jpg', href: '/columns/' },
+            { title: 'エアコンのガス漏れ修理｜原因・費用・対処法を完全解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_02.jpg', href: '/columns/' },
+            { title: 'エアコンのガス漏れ症状｜見分け方と危険サインを徹底解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_03.jpg', href: '/columns/' },
+            { title: 'エアコンの電源が入らない原因と対処法｜今すぐ確認すべきポイント', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_04.jpg', href: '/columns/' },
+          ].map((article) => (
+            <div class="swiper-slide !h-auto">
+              <a href={article.href} class="flex flex-col h-full rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.10)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.16)] transition-shadow duration-200 bg-white">
+                <figure class="w-full aspect-video overflow-hidden">
+                  <img src={article.image} alt={article.title} width="400" height="225" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+                </figure>
+                <div class="p-3 sm:p-4">
+                  <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-[4px] mb-2">{article.category}</span>
+                  <p class="text-[12px] sm:text-[13px] md:text-[14px] font-bold leading-snug line-clamp-2">{article.title}</p>
+                  <p class="text-[10px] sm:text-[11px] text-[#888] mt-2">{article.date}</p>
+                </div>
+              </a>
             </div>
-          </a>
-        ))}
+          ))}
+        </div>
       </div>
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
         <a href="/columns" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-[20px] sm:rounded-[25px] md:rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200">
@@ -482,41 +488,117 @@ const pageDescription = serviceData.description;
     </div>
   </section>
 
-  <!-- Related Services (same category) -->
-  <section class="py-12 md:py-16 lg:py-20">
+  <!-- All Category Services with Tabs + Swiper -->
+  <section class="py-12 md:py-16 lg:py-20 bg-[#0044f2]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
-      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold relative flex flex-col items-center text-center pt-8 sm:pt-10 md:pt-12 mb-6 sm:mb-8 md:mb-12">
-        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
-        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Service</span>
-        関連サービス
+      <h2 class="text-[18px] sm:text-[22px] md:text-[42px] font-bold text-white text-center mb-4 sm:mb-6 md:mb-8">
+        {serviceCategory}サービス<span class="block font-[Roboto] text-[14px] sm:text-[18px] md:text-[24px] font-semibold mt-1 opacity-80">{category === 'electricity' ? 'Electricity' : category === 'water' ? 'Sanitary' : 'Pest'}</span>
       </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        {relatedServices.map((rs) => (
-          <a href={rs.href} class="flex flex-col rounded-[16px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.12)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.18)] transition-shadow duration-200 ease bg-white">
-            <figure class="w-full aspect-video overflow-hidden">
-              <img
-                src={rs.imageSrc}
-                alt={rs.imageAlt}
-                width="400"
-                height="225"
-                loading="lazy"
-                decoding="async"
-                class="w-full h-full object-cover"
-              />
-            </figure>
-            <div class="p-3 sm:p-4 md:p-5">
-              <h3 class="text-[13px] sm:text-[14px] md:text-[16px] font-bold leading-snug">{rs.label}</h3>
-              <p class="text-[10px] sm:text-[11px] md:text-[12px] text-[#666] mt-1">{rs.description}</p>
-              <p class="font-[Roboto] text-[18px] sm:text-[20px] md:text-[24px] font-bold text-[#ff4176] mt-2">
-                {rs.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-[#333]">円[税込]〜</span>
-              </p>
-            </div>
-          </a>
-        ))}
+      <!-- Tab navigation -->
+      <div class="flex justify-center mb-4 sm:mb-6 md:mb-8">
+        <ul id="serviceTabList" class="flex gap-1 sm:gap-2 bg-white rounded-full px-2 sm:px-3 py-1.5 sm:py-2 flex-wrap justify-center">
+          {currentCategoryServices.map((s, i) => (
+            <li>
+              <button
+                class={`service-tab px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] md:text-[13px] font-bold transition-colors duration-200 ${s.slug === serviceData.slug ? 'bg-[#f6f6f6] text-[#0044f2]' : 'text-[#333] hover:bg-gray-100'}`}
+                data-index={i}
+              >{s.label}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <!-- Swiper -->
+      <div class="swiper serviceSwiper overflow-hidden">
+        <div class="swiper-wrapper items-stretch">
+          {currentCategoryServices.map((rs, i) => {
+            const img = relatedServiceImages[rs.slug] ?? { src: categoryKvFallback[category], alt: rs.label };
+            return (
+              <div class="swiper-slide !h-auto">
+                <a href={rs.href} class={`flex flex-col items-center text-white rounded-[20px] sm:rounded-[24px] md:rounded-[30px] p-3 sm:p-4 md:p-5 transition-transform duration-200 hover:-translate-y-1 ${i % 2 === 1 ? 'mt-6 sm:mt-8 md:mt-12' : ''}`}>
+                  <figure class="w-full aspect-square overflow-hidden rounded-[16px] sm:rounded-[20px] md:rounded-[24px] drop-shadow-[0_0.8rem_0_#b2b2b2]">
+                    <img src={img.src} alt={img.alt} width="300" height="300" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+                  </figure>
+                  <p class="text-[13px] sm:text-[14px] md:text-[18px] font-extrabold leading-snug mt-3 sm:mt-4 md:mt-5 text-center">{rs.label}トラブル</p>
+                  <p class="text-[10px] sm:text-[11px] md:text-[12px] text-white/70 mt-1 text-center">{rs.description}</p>
+                  <p class="font-[Roboto] text-[22px] sm:text-[26px] md:text-[32px] font-bold text-[#ff4176] mt-2 leading-none">
+                    {rs.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-white ml-0.5">円[税込]〜</span>
+                  </p>
+                </a>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Final CTA -->
   <CTABlock variant="full-width" />
+
+  <style>
+    @import 'swiper/css';
+  </style>
+
+  <script>
+    import Swiper from 'swiper';
+
+    const caseSwiper = new Swiper('.caseSwiper', {
+      slidesPerView: 1.15,
+      spaceBetween: 16,
+      breakpoints: {
+        640: { slidesPerView: 1.5, spaceBetween: 20 },
+        768: { slidesPerView: 2, spaceBetween: 24 },
+        1024: { slidesPerView: 2, spaceBetween: 30 },
+      },
+    });
+
+    const voiceSwiper = new Swiper('.voiceSwiper', {
+      slidesPerView: 1.15,
+      spaceBetween: 16,
+      breakpoints: {
+        640: { slidesPerView: 1.5, spaceBetween: 20 },
+        768: { slidesPerView: 2, spaceBetween: 24 },
+        1024: { slidesPerView: 2, spaceBetween: 30 },
+      },
+    });
+
+    const columnSwiper = new Swiper('.columnSwiper', {
+      slidesPerView: 1.2,
+      spaceBetween: 16,
+      breakpoints: {
+        640: { slidesPerView: 2.1, spaceBetween: 20 },
+        1024: { slidesPerView: 3, spaceBetween: 24 },
+      },
+    });
+
+    const serviceSwiper = new Swiper('.serviceSwiper', {
+      slidesPerView: 2,
+      spaceBetween: 16,
+      centeredSlides: false,
+      breakpoints: {
+        640: { slidesPerView: 3, spaceBetween: 20 },
+        1024: { slidesPerView: 5, spaceBetween: 24 },
+      },
+    });
+
+    // Tab click → go to slide
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.service-tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const idx = Number(tab.dataset.index);
+        serviceSwiper.slideTo(idx);
+        tabs.forEach((t) => t.classList.remove('bg-[#f6f6f6]', 'text-[#0044f2]'));
+        tab.classList.add('bg-[#f6f6f6]', 'text-[#0044f2]');
+      });
+    });
+
+    // Sync active tab on slide change
+    serviceSwiper.on('slideChange', () => {
+      const idx = serviceSwiper.activeIndex;
+      tabs.forEach((t, i) => {
+        t.classList.toggle('bg-[#f6f6f6]', i === idx);
+        t.classList.toggle('text-[#0044f2]', i === idx);
+      });
+    });
+  </script>
 </BaseLayout>
