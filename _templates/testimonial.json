@@ -1,0 +1,11 @@
+{
+  "serviceType": "トイレ修理",
+  "serviceCategory": "water",
+  "cost": 8800,
+  "message": "お客様の声をここに記入してください。",
+  "authorInitial": "T.K.様",
+  "title": "トイレ修理をご依頼いただいたお客様の声",
+  "duration": "30",
+  "location": "大阪市北区",
+  "rating": 5
+}
