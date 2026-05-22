@@ -1,6 +1,6 @@
 export const BLOG_CATEGORY_COLOR_MAP: Record<string, string> = {
-  electricity: 'bg-[#fb7502]',
-  water: 'bg-[#2f76eb]',
+  electricity: 'bg-[#fbc101]',
+  water: 'bg-[#3ea6ff]',
 };
 
 export const BLOG_CATEGORY_LABEL_MAP: Record<string, string> = {

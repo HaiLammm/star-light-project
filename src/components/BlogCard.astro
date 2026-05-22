@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { BLOG_CATEGORY_COLOR_MAP } from '../data/blogData';
 
 interface Props {
   title: string;
@@ -16,23 +15,28 @@ interface Props {
 
 const { title, date, category, subcategory, excerpt, image, imageAlt, href } = Astro.props;
 
-const badgeBg = BLOG_CATEGORY_COLOR_MAP[category] ?? 'bg-[#717070]';
+const categoryColor = category === 'electricity' ? '#fbc101' : '#3ea6ff';
 ---
 
-<article class="h-full">
-  <a href={href} class="flex flex-col h-full rounded-[20px] sm:rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white">
-    <figure class="w-full overflow-hidden" style="aspect-ratio: 350/196;">
+<article>
+  <a href={href} class="flex items-start gap-[16px] sm:gap-[20px] group">
+    <figure class="relative shrink-0 w-[120px] sm:w-[150px] md:w-[190px] rounded-[12px] sm:rounded-[15px] md:rounded-[20px] overflow-hidden" style="aspect-ratio: 190/106;">
       {typeof image === 'string' ? (
-        <img src={image} alt={imageAlt} width="350" height="196" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+        <img src={image} alt={imageAlt} width="350" height="196" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" />
       ) : (
-        <Image src={image} alt={imageAlt} width={350} height={196} format="webp" quality={80} loading="lazy" decoding="async" class="w-full h-full object-cover" />
+        <Image src={image} alt={imageAlt} width={350} height={196} format="webp" quality={80} loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" />
       )}
+      <span
+        class="absolute top-0 left-0 flex items-center justify-center text-white text-[10px] sm:text-[11px] md:text-[12px] font-bold px-[6px] sm:px-[8px] min-w-[56px] sm:min-w-[70px] md:min-w-[90px] h-[20px] sm:h-[24px] md:h-[30px]"
+        style={`background-color: ${categoryColor}; border-radius: 0 0 12px 0; border-bottom-right-radius: clamp(12px, 2vw, 20px);`}
+      >
+        {subcategory}
+      </span>
     </figure>
-    <div class="px-[16px] pt-[16px] pb-[18px] sm:px-[24px] sm:pt-[20px] sm:pb-[24px] md:px-[30px] md:pt-[23px] md:pb-[28px] flex flex-col grow">
-      <span class={`inline-block self-start ${badgeBg} text-white text-[10px] sm:text-[11px] md:text-[12px] font-bold px-[8px] py-[2px] rounded-[4px] sm:rounded-[5px] mb-2 sm:mb-3`}>{subcategory}</span>
-      <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#888] mb-1">{date}</p>
-      <h3 class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug line-clamp-2 mb-2 sm:mb-3">{title}</h3>
-      <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#555] leading-relaxed line-clamp-2 mt-auto">{excerpt}</p>
+    <div class="grow min-w-0">
+      <time class="text-[10px] sm:text-[11px] md:text-[12px] text-[#999] leading-none">{date}</time>
+      <h3 class="text-[13px] sm:text-[14px] md:text-[18px] font-bold leading-snug mt-[4px] sm:mt-[5px] line-clamp-2 group-hover:opacity-50 transition-opacity duration-200">{title}</h3>
+      <p class="text-[11px] sm:text-[12px] md:text-[13px] text-[#555] leading-relaxed mt-[6px] sm:mt-[8px] line-clamp-2">{excerpt}</p>
     </div>
   </a>
 </article>

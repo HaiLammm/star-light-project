@@ -275,7 +275,7 @@ export const NAVIGATION: NavigationItem[] = [
   },
   {
     label: 'コラム',
-    href: '/column',
+    href: '/columns',
   },
   {
     label: 'よくある質問',
