@@ -1,16 +1,18 @@
 ---
+import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
 import CTABlock from '../../components/CTABlock.astro';
-import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, PEST_CONTROL_SERVICES } from '../../utils/siteConfig';
+import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, REGIONAL_OFFICES } from '../../utils/siteConfig';
 import { getCollection } from 'astro:content';
+import { generateLocalBusiness, generateFAQ } from '../../utils/schema';
+import { resolveImage } from '../../utils/imageImports';
 
 export async function getStaticPaths() {
   return [
     { params: { category: 'electricity' } },
     { params: { category: 'water' } },
-    { params: { category: 'pest-control' } },
   ];
 }
 
@@ -19,7 +21,6 @@ const { category } = Astro.params;
 const categoryLabels: Record<string, string> = {
   electricity: '電気まわり',
   water: '水まわり',
-  'pest-control': '害虫駆除',
 };
 
 const categoryIntro: Record<string, { heading: string; text: string }> = {
@@ -31,39 +32,30 @@ const categoryIntro: Record<string, { heading: string; text: string }> = {
     heading: '水まわりのトラブルなら\n設備人におまかせ',
     text: 'トイレのつまり・水漏れ、キッチンの排水トラブル、お風呂の故障など、水まわりのトラブルは日常生活に直結する問題です。\n\n設備人なら24時間年中無休で、経験豊富なスタッフが迅速に駆けつけます。お見積もり・キャンセル料は一切いただいておりません。',
   },
-  'pest-control': {
-    heading: '害虫駆除のトラブルなら\n設備人におまかせ',
-    text: 'ゴキブリ・シロアリ・ネズミなどの害虫害獣は、衛生面だけでなく建物への被害も引き起こします。\n\n設備人なら専門の資格を持ったスタッフが迅速に対応。お見積もり・キャンセル料は一切いただいておりません。',
-  },
 };
 
 const categoryServices = {
   electricity: ELECTRICITY_SERVICES,
   water: WATER_SERVICES,
-  'pest-control': PEST_CONTROL_SERVICES,
 } as const;
 
 const categoryKvDesktop: Record<string, string> = {
-  electricity: '/images/services/electricity/breaker/kv.png',
-  water: '/images/services/water/toilet/kv.png',
-  'pest-control': '/images/services/pest_01.jpg',
+  electricity: '/images/hero/hero-01.jpeg',
+  water: '/images/hero/hero-02.jpeg',
 };
 const categoryKvMobile: Record<string, string> = {
-  electricity: '/images/services/electricity/breaker/kv_sp.png',
-  water: '/images/services/water/toilet/kv_sp.png',
-  'pest-control': '/images/services/pest_01.jpg',
+  electricity: '/images/hero/hero-01.jpeg',
+  water: '/images/hero/hero-02.jpeg',
 };
 
 const categoryPricing: Record<string, { original: number; discounted: number; discount: number }> = {
   electricity: { original: 2600, discounted: 1100, discount: 1500 },
   water: { original: 8800, discounted: 5500, discount: 3300 },
-  'pest-control': { original: 8800, discounted: 5500, discount: 3300 },
 };
 
 const categoryColors: Record<string, { kv: string; consultation: string; accent: string }> = {
   electricity: { kv: '#fbc101', consultation: '#fbc101', accent: '#fbc102' },
   water: { kv: '#3ea6ff', consultation: '#3ea6ff', accent: '#3ea6ff' },
-  'pest-control': { kv: '#4CAF50', consultation: '#4CAF50', accent: '#4CAF50' },
 };
 
 const serviceImages: Record<string, Record<string, { src: string; alt: string }>> = {
@@ -80,18 +72,28 @@ const serviceImages: Record<string, Record<string, { src: string; alt: string }>
     bath: { src: '/images/services/sanitary_03.jpg', alt: 'お風呂修理' },
     washroom: { src: '/images/services/sanitary_04.jpg', alt: '洗面所修理' },
   },
-  'pest-control': {
-    cockroach: { src: '/images/services/pest_01.jpg', alt: 'ゴキブリ駆除' },
-    termite: { src: '/images/services/pest_02.jpg', alt: 'シロアリ駆除' },
-    rodent: { src: '/images/services/pest_03.jpg', alt: 'ネズミ駆除' },
-    'general-pest': { src: '/images/services/pest_04.jpg', alt: '一般害虫駆除' },
-  },
 };
 
 const serviceLabel = categoryLabels[category] ?? category;
 const services = categoryServices[category as keyof typeof categoryServices] ?? [];
-const kvDesktop = categoryKvDesktop[category] ?? categoryKvDesktop.electricity;
-const kvMobile = categoryKvMobile[category] ?? categoryKvMobile.electricity;
+
+const serviceImageOptMap: Record<string, string> = {};
+for (const [slug, imgData] of Object.entries(serviceImages[category] ?? {})) {
+  const meta = await resolveImage(imgData.src);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 300, height: 300, format: 'webp', quality: 80 });
+    serviceImageOptMap[slug] = opt.src;
+  }
+}
+const kvDesktopPath = categoryKvDesktop[category] ?? categoryKvDesktop.electricity;
+const kvMobilePath = categoryKvMobile[category] ?? categoryKvMobile.electricity;
+
+const kvDesktopMeta = await resolveImage(kvDesktopPath);
+const kvMobileMeta = await resolveImage(kvMobilePath);
+const kvDesktopOpt = kvDesktopMeta ? await getImage({ src: kvDesktopMeta, format: 'webp', quality: 80 }) : null;
+const kvMobileOpt = kvMobileMeta ? await getImage({ src: kvMobileMeta, format: 'webp', quality: 80 }) : null;
+const kvDesktop = kvDesktopOpt?.src ?? kvDesktopPath;
+const kvMobile = kvMobileOpt?.src ?? kvMobilePath;
 const pricing = categoryPricing[category] ?? categoryPricing.electricity;
 const colors = categoryColors[category] ?? categoryColors.electricity;
 const intro = categoryIntro[category] ?? categoryIntro.electricity;
@@ -106,7 +108,6 @@ const allFaq = await getCollection('faq');
 const categoryFaqMap: Record<string, string[]> = {
   electricity: ['electricity', 'pricing', 'general'],
   water: ['water', 'pricing', 'general'],
-  'pest-control': ['pest-control', 'pricing', 'general'],
 };
 const relevantCategories = categoryFaqMap[category] ?? ['general', 'pricing'];
 const faqItems = allFaq
@@ -114,11 +115,21 @@ const faqItems = allFaq
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
   .map((f) => ({ question: f.data.question, answer: f.data.answer }));
 
-const pageTitle = `${serviceLabel}のトラブルなら${SITE_CONFIG.companyName}【年中無休・即対応】`;
-const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.companyName}。24時間365日、最短10分で駆けつけ。見積り・キャンセル料無料。`;
+const pageTitle = `${serviceLabel}のトラブルなら${SITE_CONFIG.companyName}｜東京・名古屋・広島【年中無休・即対応】`;
+const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.companyName}。東京・名古屋・広島エリア対応。24時間365日、最短10分で駆けつけ。見積り・キャンセル料無料。`;
+
+const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
+  generateLocalBusiness({ ...office, url: SITE_CONFIG.siteUrl })
+);
+const hubFaqSchema = faqItems.length > 0 ? generateFAQ(faqItems) : null;
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}/${category}/`}>
+  {localBusinessSchemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+  {hubFaqSchema && <script type="application/ld+json" set:html={JSON.stringify(hubFaqSchema)} />}
+
   <!-- Breadcrumb -->
   <div class="max-w-[1200px] mx-auto px-3 sm:px-4 py-3 sm:py-4">
     <Breadcrumb items={breadcrumbItems} />
@@ -148,6 +159,14 @@ const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.compa
         />
       </picture>
     </figure>
+  </div>
+
+  <!-- 24/7 Availability -->
+  <div class="bg-[#1B2A4A] text-white text-center py-2 sm:py-3">
+    <p class="text-[12px] sm:text-[14px] md:text-[16px] font-bold tracking-wide">
+      <span class="inline-block bg-[#FF6B00] text-white text-[10px] sm:text-[11px] md:text-[13px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full mr-2 align-middle">24時間</span>
+      <span class="align-middle">365日年中無休で対応 ｜ 電話相談無料</span>
+    </p>
   </div>
 
   <!-- Price Bar -->
@@ -222,7 +241,7 @@ const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.compa
         <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Service</span>
         {serviceLabel}サービス一覧
       </h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-5 mt-[20px] sm:mt-[30px] md:mt-[50px]">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 mt-[20px] sm:mt-[30px] md:mt-[50px]">
         {services.map((s) => {
           const img = images[s.slug] ?? { src: '/images/services/electricity_01.jpg', alt: s.label };
           return (
@@ -232,7 +251,7 @@ const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.compa
             >
               <figure class="w-full overflow-hidden" style="aspect-ratio: 1/1;">
                 <img
-                  src={img.src}
+                  src={serviceImageOptMap[s.slug] ?? img.src}
                   alt={img.alt}
                   width="300"
                   height="300"
@@ -244,9 +263,12 @@ const pageDescription = `${serviceLabel}のトラブルなら${SITE_CONFIG.compa
               <div class="px-3 sm:px-4 py-3 sm:py-4 text-center">
                 <p class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug">{s.label}トラブル</p>
                 <p class="text-[10px] sm:text-[11px] md:text-[12px] text-[#666] mt-1">{s.description}</p>
-                <p class="font-[Roboto] text-[18px] sm:text-[22px] md:text-[26px] font-bold text-[#ff4176] mt-2 leading-none">
-                  {s.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-[#333] ml-0.5">円[税込]〜</span>
-                </p>
+                <div class="flex items-center justify-center gap-1.5 mt-2">
+                  <span class="bg-[#E53935] text-white text-[8px] sm:text-[9px] md:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-[4px] leading-tight whitespace-nowrap">WEB割引</span>
+                  <p class="font-[Roboto] text-[18px] sm:text-[22px] md:text-[26px] font-bold text-[#ff4176] leading-none">
+                    {s.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-medium text-[#333] ml-0.5">円[税込]〜</span>
+                  </p>
+                </div>
               </div>
             </a>
           );

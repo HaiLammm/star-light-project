@@ -1,0 +1,127 @@
+---
+interface SidebarCategory {
+  key: string;
+  label: string;
+  href?: string;
+  subcategories: { key: string; label: string }[];
+}
+
+interface Props {
+  categories: SidebarCategory[];
+  filterBasePath: string;
+  activeFilter?: string;
+}
+
+const { categories, filterBasePath, activeFilter } = Astro.props;
+---
+
+<aside class="sidebar">
+  {categories.map((cat) => (
+    <div class="sidebar__block">
+      <a href={cat.href ?? `${filterBasePath}${cat.key}/`} class="sidebar__title">
+        {cat.label}
+      </a>
+      <ul class="sidebar__cat">
+        {cat.subcategories.map((sub) => (
+          <li>
+            <a
+              href={`${filterBasePath}${sub.key}/`}
+              class:list={['sidebar__link', { 'sidebar__link--active': activeFilter === sub.key }]}
+              {...(activeFilter === sub.key ? { 'aria-current': 'page' } : {})}
+            >
+              {sub.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</aside>
+
+<style>
+  .sidebar {
+    width: 285px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .sidebar__block:not(:first-child) {
+    margin-top: 50px;
+  }
+  .sidebar__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1c1c1c;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 9.5px;
+    padding-right: 10px;
+    border-bottom: 1px solid #0044f2;
+    margin-bottom: 5px;
+    text-decoration: none;
+  }
+  .sidebar__title::before {
+    content: "";
+    display: block;
+    background-color: #fbc101;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sidebar__title::after {
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-top: 2px solid #0044f2;
+    border-right: 2px solid #0044f2;
+    transform: rotate(45deg);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .sidebar__cat {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar__link {
+    font-size: 14px;
+    color: #333;
+    padding: 14.5px 10px 14.5px 14.5px;
+    border-bottom: 1px dotted #979af3;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: padding-right 0.2s ease;
+  }
+  .sidebar__link::after {
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-top: 2px solid #0044f2;
+    border-right: 2px solid #0044f2;
+    transform: rotate(45deg);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .sidebar__link:hover {
+    padding-right: 5px;
+  }
+  .sidebar__link--active {
+    font-weight: 700;
+    color: #0044f2;
+  }
+
+  @media (max-width: 900px) {
+    .sidebar {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 40px;
+    }
+    .sidebar__block:not(:first-child) {
+      margin-top: 30px;
+    }
+  }
+</style>

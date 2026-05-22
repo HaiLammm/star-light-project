@@ -1,25 +1,27 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 
-const HERO_SLIDES = [
+interface HeroSlide {
+  image: string;
+  imageSp: string;
+  alt: string;
+}
+
+const DEFAULT_SLIDES: HeroSlide[] = [
   {
-    image: '/images/hero/hero-1.png',
-    imageSp: '/images/hero/hero-1-sp.png',
+    image: '/images/hero/hero-01.jpeg',
+    imageSp: '/images/hero/hero-01.jpeg',
     alt: '緊急の電気トラブル 設備人の電気工事士が年中無休・即対応',
   },
   {
-    image: '/images/hero/hero-2.png',
-    imageSp: '/images/hero/hero-2-sp.png',
+    image: '/images/hero/hero-02.jpeg',
+    imageSp: '/images/hero/hero-02.jpeg',
     alt: '水道修理のプロが即駆けつけます。水漏れ・つまりを設備人の職人が24時間スピード解決',
-  },
-  {
-    image: '/images/hero/hero-3.png',
-    imageSp: '/images/hero/hero-3-sp.png',
-    alt: '電気まわり水まわりのお困りごとはすべて設備人におまかせ',
   },
 ];
 
-export default function HeroCarousel() {
+export default function HeroCarousel({ slides }: { slides?: HeroSlide[] } = {}) {
+  const HERO_SLIDES = slides ?? DEFAULT_SLIDES;
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const isHovered = useRef(false);

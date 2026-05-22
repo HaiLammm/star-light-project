@@ -1,0 +1,93 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { formatDateDot } from '../../utils/formatters';
+import { BLOG_CATEGORY_COLOR_MAP } from '../../data/blogData';
+import { generateArticle } from '../../utils/schema';
+import { SITE_CONFIG } from '../../utils/siteConfig';
+import { resolveImage } from '../../utils/imageImports';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  return allPosts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const heroMeta = await resolveImage(post.data.image);
+const heroOpt = heroMeta ? await getImage({ src: heroMeta, width: 800, height: 450, format: 'webp', quality: 80 }) : null;
+const heroImageSrc = heroOpt?.src ?? post.data.image;
+
+const badgeBg = BLOG_CATEGORY_COLOR_MAP[post.data.category] ?? 'bg-[#717070]';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: 'お役立ち情報', href: '/columns/' },
+  { label: post.data.title, href: `/columns/${post.id}/` },
+];
+
+const articleSchema = generateArticle({
+  title: post.data.title,
+  publishedDate: post.data.publishedDate.toISOString(),
+  author: SITE_CONFIG.companyName,
+  description: post.data.description,
+  url: `${SITE_CONFIG.siteUrl}/columns/${post.id}/`,
+  image: post.data.image,
+  modifiedDate: post.data.updatedDate?.toISOString(),
+});
+---
+
+<BaseLayout title={`${post.data.title} | 設備人`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="py-[30px] sm:py-[40px] md:py-[60px]">
+    <div class="max-w-[800px] mx-auto px-3 sm:px-4">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <div class="mt-[20px] sm:mt-[30px] md:mt-[40px]">
+        <div class="flex items-center gap-[10px] mb-[10px] sm:mb-[15px]">
+          <span class={`inline-block ${badgeBg} text-white text-[10px] sm:text-[11px] md:text-[12px] font-bold px-[8px] py-[2px] rounded-[4px] sm:rounded-[5px]`}>{post.data.subcategory}</span>
+          <time class="text-[12px] sm:text-[13px] md:text-[14px] text-[#888]" datetime={post.data.publishedDate.toISOString()}>
+            {formatDateDot(post.data.publishedDate)}
+          </time>
+        </div>
+
+        <h1 class="text-[20px] sm:text-[26px] md:text-[36px] font-bold leading-tight mb-[20px] sm:mb-[25px] md:mb-[30px]">
+          {post.data.title}
+        </h1>
+
+        <figure class="w-full rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden mb-[25px] sm:mb-[30px] md:mb-[40px]">
+          <img
+            src={heroImageSrc}
+            alt={post.data.imageAlt}
+            width="800"
+            height="450"
+            loading="eager"
+            decoding="async"
+            class="w-full h-auto object-cover"
+          />
+        </figure>
+
+        <div class="prose prose-lg max-w-none
+          [&_h2]:text-[18px] [&_h2]:sm:text-[22px] [&_h2]:md:text-[28px] [&_h2]:font-bold [&_h2]:mt-[30px] [&_h2]:mb-[15px] [&_h2]:border-l-[4px] [&_h2]:border-[#fbc102] [&_h2]:pl-[12px]
+          [&_h3]:text-[16px] [&_h3]:sm:text-[18px] [&_h3]:md:text-[22px] [&_h3]:font-bold [&_h3]:mt-[20px] [&_h3]:mb-[10px]
+          [&_p]:text-[14px] [&_p]:sm:text-[15px] [&_p]:md:text-[16px] [&_p]:leading-[1.8] [&_p]:mb-[16px] [&_p]:text-[#333]
+          [&_ul]:list-disc [&_ul]:pl-[20px] [&_ul]:mb-[16px]
+          [&_ol]:list-decimal [&_ol]:pl-[20px] [&_ol]:mb-[16px]
+          [&_li]:text-[14px] [&_li]:sm:text-[15px] [&_li]:md:text-[16px] [&_li]:leading-[1.8] [&_li]:text-[#333] [&_li]:mb-[4px]
+        ">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <CTABlock variant="full-width" />
+</BaseLayout>

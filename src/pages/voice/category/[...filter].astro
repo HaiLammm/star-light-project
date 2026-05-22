@@ -1,0 +1,159 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import TestimonialCard from '../../../components/TestimonialCard.astro';
+import CategorySidebar from '../../../components/CategorySidebar.astro';
+import CTABlock from '../../../components/CTABlock.astro';
+import { VOICE_FILTER_CATEGORIES, VOICE_CATEGORY_LABEL_MAP, CASE_SLUG_LABEL_MAP, getTestimonialImageSrc } from '../../../data/caseVoiceData';
+import { SITE_CONFIG } from '../../../utils/siteConfig';
+import { resolveImage } from '../../../utils/imageImports';
+
+const ELECTRICITY_SLUGS = ['breaker', 'outlet', 'lighting', 'antenna', 'water-heater'];
+const WATER_SLUGS = ['toilet', 'kitchen', 'bath', 'washroom'];
+
+export async function getStaticPaths() {
+  const allTestimonials = await getCollection('testimonials');
+  const paths: any[] = [];
+
+  const broadCategories = ['electricity', 'water'] as const;
+  for (const cat of broadCategories) {
+    const filtered = allTestimonials.filter((t) => t.data.serviceCategory === cat);
+    if (filtered.length > 0) {
+      paths.push({
+        params: { filter: cat },
+        props: { testimonials: filtered, activeFilter: cat },
+      });
+    }
+  }
+
+  const subcategorySlugs = [
+    ...['breaker', 'outlet', 'lighting', 'antenna', 'water-heater'].map(s => ({ slug: s, cat: 'electricity' })),
+    ...['toilet', 'kitchen', 'bath', 'washroom'].map(s => ({ slug: s, cat: 'water' })),
+  ];
+  for (const { slug, cat } of subcategorySlugs) {
+    const filtered = allTestimonials.filter((t) => t.data.serviceCategory === cat);
+    if (filtered.length > 0) {
+      paths.push({
+        params: { filter: slug },
+        props: { testimonials: filtered, activeFilter: slug },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { testimonials, activeFilter } = Astro.props;
+
+const optimizedImages: Record<string, string> = {};
+for (const item of testimonials) {
+  const imgPath = getTestimonialImageSrc(item.id, item.data.serviceCategory);
+  const meta = await resolveImage(imgPath);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 300, height: 300, format: 'webp', quality: 80 });
+    optimizedImages[item.id] = opt.src;
+  }
+}
+
+const labelMap: Record<string, string> = { ...VOICE_CATEGORY_LABEL_MAP, ...CASE_SLUG_LABEL_MAP };
+const filterLabel = labelMap[activeFilter] ?? activeFilter;
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: 'お客様の声', href: '/voice/' },
+  { label: filterLabel, href: `/voice/category/${activeFilter}/` },
+];
+---
+
+<BaseLayout title={`${filterLabel}のお客様の声 | 設備人`} description={`${filterLabel}に関するお客様の声をご紹介します。`} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
+  <section class="py-[30px] sm:py-[40px] md:py-[60px]">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center mt-[20px] sm:mt-[30px] md:mt-[40px]">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Voice</span>
+        <span><span class="font-[Roboto] mr-2">Voice</span>{filterLabel}</span>
+      </h1>
+    </div>
+  </section>
+
+  <h2 class="under-heading">{filterLabel}のお客様の声一覧</h2>
+
+  <section class="py-[20px] sm:py-[30px] md:py-[40px]">
+    <div class="archive-inner max-w-[1150px] mx-auto px-3 sm:px-4">
+      <div class="archive-main">
+        {testimonials.length > 0 ? (
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] sm:gap-[24px] md:gap-[33px_38px]">
+            {testimonials.map((item: any) => (
+              <TestimonialCard
+                serviceType={item.data.serviceType}
+                serviceCategory={item.data.serviceCategory}
+                title={item.data.title}
+                duration={item.data.duration}
+                cost={item.data.cost}
+                message={item.data.message}
+                authorInitial={item.data.authorInitial}
+                location={item.data.location}
+                imageSrc={optimizedImages[item.id] ?? getTestimonialImageSrc(item.id, item.data.serviceCategory)}
+                imageAlt={`${item.data.serviceType}のお客様の声`}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="text-center text-[14px] sm:text-[16px] text-[#888] py-[40px]">該当するお客様の声がありません。</p>
+        )}
+      </div>
+
+      <CategorySidebar
+        categories={VOICE_FILTER_CATEGORIES as any}
+        filterBasePath="/voice/category/"
+        activeFilter={activeFilter}
+      />
+    </div>
+  </section>
+  <CTABlock />
+</BaseLayout>
+
+<style>
+  .under-heading {
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    padding-bottom: 15px;
+    position: relative;
+    margin-top: 40px;
+  }
+  .under-heading::after {
+    content: "";
+    display: block;
+    background-color: #fbc102;
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .archive-inner {
+    display: flex;
+    gap: 52px;
+  }
+  .archive-main {
+    flex-grow: 1;
+    min-width: 0;
+  }
+  @media (min-width: 901px) {
+    .under-heading {
+      font-size: 32px;
+    }
+  }
+  @media (max-width: 900px) {
+    .archive-inner {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+</style>

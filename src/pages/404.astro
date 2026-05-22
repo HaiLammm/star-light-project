@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { SITE_CONFIG } from '../utils/siteConfig';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: 'ページが見つかりません', href: '/404' },
+];
+---
+
+<BaseLayout
+  title="ページが見つかりません｜設備人"
+  description="お探しのページが見つかりません。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/404`}
+>
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[48px] font-black text-white ml-[45px]">ページが見つかりません</h1>
+      <p class="font-[Roboto] text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize">404</p>
+    </div>
+  </section>
+
+  <section class="py-[80px] md:py-[120px]">
+    <div class="max-w-[600px] mx-auto px-4 text-center">
+      <p class="text-[14px] md:text-[16px] text-gray-600 mb-8 leading-relaxed">
+        ページが移動または削除された可能性があります。<br />
+        URLをご確認のうえ、再度お試しください。
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center bg-[#0044f2] text-white font-bold py-3 px-8 rounded-lg hover:opacity-80 transition-opacity text-[14px] md:text-[16px]"
+        >
+          トップページへ戻る
+        </a>
+        <a
+          href={SITE_CONFIG.phone.href}
+          aria-label={SITE_CONFIG.phone.ariaLabel}
+          class="inline-flex flex-col items-center justify-center border-2 border-[#0044f2] text-[#0044f2] font-bold py-2 px-8 rounded-lg hover:bg-[#0044f2] hover:text-white transition-colors"
+        >
+          <span class="text-[11px] md:text-[12px]">お電話でのお問い合わせ</span>
+          <span class="text-[16px] md:text-[18px] font-bold">{SITE_CONFIG.phone.display}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock variant="full-width" />
+</BaseLayout>

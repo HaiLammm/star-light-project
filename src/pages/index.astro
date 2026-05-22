@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCarousel from '../components/HeroCarousel.tsx';
 import ServiceSlider from '../components/ServiceSlider.tsx';
@@ -13,6 +14,7 @@ import ContactFormSection from '../components/ContactFormSection.astro';
 import { SERVICE_CATEGORIES, REGIONAL_OFFICES, SITE_CONFIG } from '../utils/siteConfig';
 import { generateLocalBusiness, generateFAQ } from '../utils/schema';
 import { getCollection } from 'astro:content';
+import { resolveImage } from '../utils/imageImports';
 
 const allCases = await getCollection('cases');
 const featuredCases = allCases
@@ -28,10 +30,9 @@ const sortedFaq = allFaq.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 const categoryLabelMap = {
   water: '水まわり',
   electricity: '電気まわり',
-  'pest-control': '害虫駆除',
-} satisfies Record<'water' | 'electricity' | 'pest-control', string>;
+} satisfies Record<'water' | 'electricity', string>;
 
-const caseImageMap: Record<string, string> = {
+const caseImagePaths: Record<string, string> = {
   'case-001': '/images/cases/case_01.jpg',
   'case-002': '/images/cases/case_02.jpg',
   'case-003': '/images/cases/case_03.jpg',
@@ -39,18 +40,33 @@ const caseImageMap: Record<string, string> = {
   'case-005': '/images/cases/case_05.jpg',
 };
 
-const testimonialImageMap: Record<string, string> = {
+const testimonialImagePaths: Record<string, string> = {
   'testimonial-001': '/images/cases/case_01.jpg',
   'testimonial-002': '/images/cases/case_05.jpg',
   'testimonial-003': '/images/cases/case_03.jpg',
   'testimonial-004': '/images/cases/case_02.jpg',
 };
 
+async function optimizeImageMap(map: Record<string, string>, w: number, h: number) {
+  const result: Record<string, string> = {};
+  for (const [key, path] of Object.entries(map)) {
+    const meta = await resolveImage(path);
+    if (meta) {
+      const opt = await getImage({ src: meta, width: w, height: h, format: 'webp', quality: 80 });
+      result[key] = opt.src;
+    } else {
+      result[key] = path;
+    }
+  }
+  return result;
+}
+
+const caseImageMap = await optimizeImageMap(caseImagePaths, 300, 300);
+const testimonialImageMap = await optimizeImageMap(testimonialImagePaths, 300, 300);
+
 const electricity = SERVICE_CATEGORIES.find((c) => c.slug === 'electricity');
 const water = SERVICE_CATEGORIES.find((c) => c.slug === 'water');
-const pestControl = SERVICE_CATEGORIES.find((c) => c.slug === 'pest-control');
-
-if (!electricity || !water || !pestControl) {
+if (!electricity || !water) {
   throw new Error('Missing required service category in SERVICE_CATEGORIES');
 }
 
@@ -68,12 +84,6 @@ const imageMap: Record<string, Record<string, string>> = {
     bath: '/images/services/sanitary_03.jpg',
     washroom: '/images/services/sanitary_04.jpg',
   },
-  'pest-control': {
-    cockroach: '/images/services/pest_01.jpg',
-    termite: '/images/services/pest_02.jpg',
-    rodent: '/images/services/pest_03.jpg',
-    'general-pest': '/images/services/pest_04.jpg',
-  },
 };
 
 const altMap: Record<string, Record<string, string>> = {
@@ -90,13 +100,16 @@ const altMap: Record<string, Record<string, string>> = {
     bath: 'お風呂修理サービス',
     washroom: '洗面所修理サービス',
   },
-  'pest-control': {
-    cockroach: 'ゴキブリ駆除サービス',
-    termite: 'シロアリ駆除サービス',
-    rodent: 'ネズミ駆除サービス',
-    'general-pest': '一般害虫駆除サービス',
-  },
 };
+
+const sliderImageOptMap = await optimizeImageMap(
+  Object.fromEntries(
+    Object.entries(imageMap).flatMap(([cat, slugs]) =>
+      Object.entries(slugs).map(([slug, src]) => [`${cat}/${slug}`, src])
+    )
+  ),
+  300, 300
+);
 
 const buildSlides = (category: typeof electricity) => {
   return category.subServices.map((s) => ({
@@ -105,14 +118,13 @@ const buildSlides = (category: typeof electricity) => {
     href: s.href,
     description: s.description,
     startingPrice: s.startingPrice,
-    imageSrc: imageMap[category.slug]?.[s.slug] ?? '/images/services/electricity_01.jpg',
+    imageSrc: sliderImageOptMap[`${category.slug}/${s.slug}`] ?? imageMap[category.slug]?.[s.slug] ?? '/images/services/electricity_01.jpg',
     imageAlt: altMap[category.slug]?.[s.slug] ?? s.label,
   }));
 };
 
 const electricitySlides = buildSlides(electricity);
 const waterSlides = buildSlides(water);
-const pestControlSlides = buildSlides(pestControl);
 
 if (!REGIONAL_OFFICES.length) throw new Error('REGIONAL_OFFICES must not be empty');
 const localBusinessSchema = generateLocalBusiness({
@@ -124,16 +136,34 @@ const localBusinessSchema = generateLocalBusiness({
 const faqSchema = sortedFaq.length > 0
   ? generateFAQ(sortedFaq.map((e) => ({ question: e.data.question, answer: e.data.answer })))
   : null;
+
+const heroSlideData = [
+  { image: '/images/hero/hero-01.jpeg', imageSp: '/images/hero/hero-01.jpeg', alt: '緊急の電気トラブル 設備人の電気工事士が年中無休・即対応' },
+  { image: '/images/hero/hero-02.jpeg', imageSp: '/images/hero/hero-02.jpeg', alt: '水道修理のプロが即駆けつけます。水漏れ・つまりを設備人の職人が24時間スピード解決' },
+];
+const optimizedHeroSlides = await Promise.all(
+  heroSlideData.map(async (slide) => {
+    const desktopMeta = await resolveImage(slide.image);
+    const mobileMeta = await resolveImage(slide.imageSp);
+    const desktopOpt = desktopMeta ? await getImage({ src: desktopMeta, format: 'webp', quality: 80 }) : null;
+    const mobileOpt = mobileMeta ? await getImage({ src: mobileMeta, format: 'webp', quality: 80 }) : null;
+    return {
+      image: desktopOpt?.src ?? slide.image,
+      imageSp: mobileOpt?.src ?? slide.imageSp,
+      alt: slide.alt,
+    };
+  })
+);
 ---
 
 <BaseLayout
-  title="設備人｜水漏れ・電気修理・害虫駆除｜24時間対応"
-  description="水漏れ・電気トラブル・害虫駆除なら設備人。24時間365日、全国対応。まずはお気軽にお電話ください。"
+  title="設備人｜水漏れ・電気修理｜24時間対応"
+  description="水漏れ・電気トラブルなら設備人。24時間365日、全国対応。まずはお気軽にお電話ください。"
   canonicalUrl={SITE_CONFIG.siteUrl}
 >
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
-  <HeroCarousel client:load />
+  <HeroCarousel client:load slides={optimizedHeroSlides} />
   <ServiceSlider
     client:load
     slides={electricitySlides}
@@ -144,20 +174,12 @@ const faqSchema = sortedFaq.length > 0
     aboveFold
   />
   <ServiceSlider
-    client:load
+    client:visible
     slides={waterSlides}
     heading="水まわりの修理サービス"
     subheading="トイレ・お風呂・キッチンなどの水回りのつまり・水漏れ修理。安心の事前見積りと24時間即対応"
     englishLabel="Sanitary"
     bgColor="#3ea6ff"
-  />
-  <ServiceSlider
-    client:load
-    slides={pestControlSlides}
-    heading="害虫駆除サービス"
-    subheading="ゴキブリ・シロアリ・ネズミなどの害虫害獣トラブルに対応"
-    englishLabel="Pest Control"
-    bgColor="#4CAF50"
   />
   <ReasonsGrid />
   <ProcessFlow />

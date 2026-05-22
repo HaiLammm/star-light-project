@@ -1,0 +1,75 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import BlogCategorySidebar from '../../components/BlogCategorySidebar.astro';
+import Pagination from '../../components/Pagination.astro';
+import { formatDateDot } from '../../utils/formatters';
+import { SITE_CONFIG } from '../../utils/siteConfig';
+import { resolveImage } from '../../utils/imageImports';
+
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+  const allPosts = await getCollection('blog');
+  const sorted = allPosts.sort(
+    (a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime()
+  );
+  return paginate(sorted, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+
+const blogImageMap: Record<string, any> = {};
+for (const post of page.data) {
+  const meta = await resolveImage(post.data.image);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 80 });
+    blogImageMap[post.id] = opt.src;
+  }
+}
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: 'お役立ち情報', href: '/columns/' },
+];
+---
+
+<BaseLayout title={`お役立ち情報${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備人`} description="電気・水まわりの修理やメンテナンスに役立つ情報をお届けします。エアコン、ブレーカー、トイレ、お風呂など幅広いカテゴリーの記事を掲載。" canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
+  <section class="py-[30px] sm:py-[40px] md:py-[60px]">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center mt-[20px] sm:mt-[30px] md:mt-[40px]">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Column</span>
+        <span><span class="font-[Roboto] mr-2">Column</span>お役立ち情報</span>
+      </h1>
+
+      <div class="flex flex-col lg:flex-row gap-[30px] sm:gap-[40px] md:gap-[50px] mt-[30px] sm:mt-[40px] md:mt-[60px]">
+        <div class="grow min-w-0">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] sm:gap-[24px] md:gap-[30px]">
+            {page.data.map((post: any) => (
+              <BlogCard
+                title={post.data.title}
+                date={formatDateDot(post.data.publishedDate)}
+                category={post.data.category}
+                subcategory={post.data.subcategory}
+                excerpt={post.data.excerpt}
+                image={blogImageMap[post.id] ?? post.data.image}
+                imageAlt={post.data.imageAlt}
+                href={`/columns/${post.id}/`}
+              />
+            ))}
+          </div>
+          <Pagination
+            currentPage={page.currentPage}
+            totalPages={page.lastPage}
+            baseUrl="/columns"
+          />
+        </div>
+        <BlogCategorySidebar />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+import { BLOG_CATEGORIES } from '../data/blogData';
+
+interface Props {
+  activeCategory?: string;
+  activeSubcategory?: string;
+}
+
+const { activeCategory, activeSubcategory } = Astro.props;
+
+const categories = BLOG_CATEGORIES;
+
+function getCategoryUrl(catKey: string): string {
+  return `/columns/category/${catKey}/`;
+}
+
+function getSubcategoryUrl(catKey: string, sub: string): string {
+  return `/columns/category/${catKey}/${sub}/`;
+}
+---
+
+<aside class="w-full lg:w-[280px] shrink-0">
+  <div class="rounded-[20px] sm:rounded-[30px] md:rounded-[40px] bg-[#f7f7f7] p-[20px] sm:p-[25px] md:p-[30px]">
+    <h3 class="text-[16px] sm:text-[18px] md:text-[20px] font-bold mb-[15px] sm:mb-[18px] md:mb-[20px]">カテゴリー</h3>
+    <ul class="space-y-[8px] sm:space-y-[10px] md:space-y-[12px]">
+      <li>
+        <a
+          href="/columns/"
+          class:list={[
+            'block text-[13px] sm:text-[14px] md:text-[15px] font-bold py-[6px] px-[10px] rounded-[8px] transition-colors',
+            !activeCategory ? 'bg-[#0044f2] text-white' : 'hover:bg-[#e8e8e8]',
+          ]}
+        >
+          すべて
+        </a>
+      </li>
+      {categories.map((cat) => (
+        <li>
+          <a
+            href={getCategoryUrl(cat.key)}
+            class:list={[
+              'block text-[13px] sm:text-[14px] md:text-[15px] font-bold py-[6px] px-[10px] rounded-[8px] transition-colors',
+              activeCategory === cat.key && !activeSubcategory ? 'bg-[#0044f2] text-white' : 'hover:bg-[#e8e8e8]',
+            ]}
+          >
+            {cat.label}
+          </a>
+          <ul class="ml-[16px] mt-[4px] space-y-[4px]">
+            {cat.subcategories.map((sub) => (
+              <li>
+                <a
+                  href={getSubcategoryUrl(cat.key, sub)}
+                  class:list={[
+                    'block text-[12px] sm:text-[13px] md:text-[14px] py-[4px] px-[8px] rounded-[6px] transition-colors',
+                    activeCategory === cat.key && activeSubcategory === sub ? 'bg-[#0044f2] text-white font-bold' : 'text-[#555] hover:bg-[#e8e8e8]',
+                  ]}
+                >
+                  {sub}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </div>
+</aside>

@@ -26,7 +26,7 @@ export interface RegionalOffice {
   prefecturesServed: string[];
 }
 
-export type ServiceCategoryKey = 'electricity' | 'water' | 'pest-control';
+export type ServiceCategoryKey = 'electricity' | 'water';
 
 export interface ServiceItem {
   slug: string;
@@ -149,37 +149,6 @@ export const WATER_SERVICES: ServiceItem[] = [
   },
 ];
 
-export const PEST_CONTROL_SERVICES: ServiceItem[] = [
-  {
-    slug: 'cockroach',
-    label: 'ゴキブリ駆除',
-    href: '/pest-control/cockroach',
-    description: '室内の発生調査・駆除・再発防止対応',
-    startingPrice: 5500,
-  },
-  {
-    slug: 'termite',
-    label: 'シロアリ駆除',
-    href: '/pest-control/termite',
-    description: '床下調査・薬剤処理・被害拡大防止対応',
-    startingPrice: 5500,
-  },
-  {
-    slug: 'rodent',
-    label: 'ネズミ駆除',
-    href: '/pest-control/rodent',
-    description: '侵入口調査・捕獲・再侵入防止対応',
-    startingPrice: 5500,
-  },
-  {
-    slug: 'general-pest',
-    label: '一般害虫駆除',
-    href: '/pest-control/general-pest',
-    description: '害虫の種類に応じた調査・駆除・予防施工',
-    startingPrice: 5500,
-  },
-];
-
 const toNavigationChildren = (services: ServiceItem[]): NavigationChild[] => {
   return services.map(({ slug, label, href }) => ({ slug, label, href }));
 };
@@ -273,13 +242,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     description: 'トイレ・キッチン・お風呂・洗面所の水まわりトラブルに対応します。',
     subServices: WATER_SERVICES,
   },
-  {
-    slug: 'pest-control',
-    label: '害虫駆除',
-    href: '/pest-control',
-    description: 'ゴキブリ・シロアリ・ネズミなどの害虫害獣トラブルに対応します。',
-    subServices: PEST_CONTROL_SERVICES,
-  },
 ];
 
 export const NAVIGATION: NavigationItem[] = [
@@ -294,12 +256,6 @@ export const NAVIGATION: NavigationItem[] = [
     href: '/water',
     icon: 'M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2C20 10.48 17.33 6.55 12 2z',
     children: toNavigationChildren(WATER_SERVICES),
-  },
-  {
-    label: '害虫駆除',
-    href: '/pest-control',
-    icon: 'M14 12h-4l-1.5-3H5v2h2.2l1.1 2.2L7 17H5v2h3l2-4 2 4h3v-2h-2l-1.3-3.8L13.2 11H15v-2h-2.5L14 12zM20 5h-3.2L15 2l-1.4 1.4L15.2 5H8.8l1.6-1.6L9 2 7.2 5H4v2h1.1l.9 1.8H4v2h3l.3-.6L8.5 12h7l1.2-1.8.3.6h3V9h-2l.9-1.8H20V5z',
-    children: toNavigationChildren(PEST_CONTROL_SERVICES),
   },
   {
     label: '会社案内',

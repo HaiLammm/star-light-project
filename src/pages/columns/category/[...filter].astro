@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../../../utils/imageImports';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import BlogCategorySidebar from '../../../components/BlogCategorySidebar.astro';
+import { formatDateDot } from '../../../utils/formatters';
+import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP } from '../../../data/blogData';
+import { SITE_CONFIG } from '../../../utils/siteConfig';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const categories = ['electricity', 'water'] as const;
+  const paths: any[] = [];
+
+  for (const cat of categories) {
+    const catPosts = allPosts
+      .filter((p) => p.data.category === cat)
+      .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime());
+
+    paths.push({
+      params: { filter: cat },
+      props: { posts: catPosts, activeCategory: cat, activeSubcategory: undefined },
+    });
+
+    for (const sub of BLOG_SUBCATEGORY_MAP[cat] ?? []) {
+      const subPosts = catPosts.filter((p) => p.data.subcategory === sub);
+      if (subPosts.length > 0) {
+        paths.push({
+          params: { filter: `${cat}/${sub}` },
+          props: { posts: subPosts, activeCategory: cat, activeSubcategory: sub },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { posts, activeCategory, activeSubcategory } = Astro.props;
+
+const optimizedImages: Record<string, string> = {};
+for (const post of posts) {
+  if (post.data.image) {
+    const meta = await resolveImage(post.data.image);
+    if (meta) {
+      const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 80 });
+      optimizedImages[post.id] = opt.src;
+    }
+  }
+}
+
+const PAGE_SIZE = 10;
+const currentPage = 1;
+const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+const visiblePosts = posts.slice(0, PAGE_SIZE);
+
+const filterLabel = activeSubcategory ?? BLOG_CATEGORY_LABEL_MAP[activeCategory] ?? activeCategory;
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: 'お役立ち情報', href: '/columns/' },
+  { label: filterLabel, href: Astro.url.pathname },
+];
+---
+
+<BaseLayout title={`${filterLabel}の記事一覧 | お役立ち情報 | 設備人`} description={`${filterLabel}に関する修理・メンテナンスのお役立ち情報をお届けします。`} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
+  <section class="py-[30px] sm:py-[40px] md:py-[60px]">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center mt-[20px] sm:mt-[30px] md:mt-[40px]">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Column</span>
+        <span><span class="font-[Roboto] mr-2">Column</span>{filterLabel}</span>
+      </h1>
+
+      <div class="flex flex-col lg:flex-row gap-[30px] sm:gap-[40px] md:gap-[50px] mt-[30px] sm:mt-[40px] md:mt-[60px]">
+        <div class="grow min-w-0">
+          {posts.length > 0 ? (
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] sm:gap-[24px] md:gap-[30px]">
+              {visiblePosts.map((post: any) => (
+                <BlogCard
+                  title={post.data.title}
+                  date={formatDateDot(post.data.publishedDate)}
+                  category={post.data.category}
+                  subcategory={post.data.subcategory}
+                  excerpt={post.data.excerpt}
+                  image={optimizedImages[post.id] ?? post.data.image}
+                  imageAlt={post.data.imageAlt}
+                  href={`/columns/${post.id}/`}
+                />
+              ))}
+            </div>
+          ) : (
+            <p class="text-center text-[14px] sm:text-[16px] text-[#888] py-[40px]">該当する記事がありません。</p>
+          )}
+        </div>
+        <BlogCategorySidebar activeCategory={activeCategory} activeSubcategory={activeSubcategory} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

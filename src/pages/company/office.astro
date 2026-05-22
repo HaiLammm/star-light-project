@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { SITE_CONFIG, REGIONAL_OFFICES } from '../../utils/siteConfig';
+import { generateLocalBusiness } from '../../utils/schema';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '会社案内', href: '/company' },
+  { label: '営業所一覧', href: '/company/office' },
+];
+
+const officeSchemas = REGIONAL_OFFICES.map((office) =>
+  generateLocalBusiness({
+    ...office,
+    url: `${SITE_CONFIG.siteUrl}/company/office`,
+    openingHours: ['Mo-Su 00:00-23:59'],
+    priceRange: '¥¥',
+  })
+);
+---
+
+<BaseLayout
+  title="営業所一覧・対応エリア｜設備人"
+  description="設備人の営業所一覧と対応エリア。東京・名古屋・大阪・兵庫の4拠点から24時間365日対応いたします。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/company/office`}
+>
+  <!-- Breadcrumb -->
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[28px] md:text-[48px] font-black text-white ml-0 md:ml-[45px]">営業所一覧</h1>
+      <p class="font-[Roboto] text-[60px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize whitespace-nowrap">office</p>
+    </div>
+  </section>
+
+  <!-- Office Listings -->
+  <section class="py-[80px] md:py-[120px]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[32px] font-extrabold text-center mb-10 md:mb-14">
+        全国{REGIONAL_OFFICES.length}拠点で対応
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {REGIONAL_OFFICES.map((office) => (
+          <div class="bg-white border border-[#e0e0e0] rounded-2xl p-6 md:p-8">
+            <h3 class="text-[20px] md:text-[24px] font-bold mb-4">{office.name}</h3>
+            <dl class="space-y-3 text-[14px] md:text-[16px]">
+              <div class="flex">
+                <dt class="w-[80px] shrink-0 font-bold text-[#666]">住所</dt>
+                <dd>{office.formattedAddress}</dd>
+              </div>
+              <div class="flex">
+                <dt class="w-[80px] shrink-0 font-bold text-[#666]">電話</dt>
+                <dd>
+                  <a href={office.phone.href} class="text-[#0044f2] hover:underline">
+                    {office.phone.display}
+                  </a>
+                  <span class="text-[12px] text-[#999] ml-1">（通話無料）</span>
+                </dd>
+              </div>
+              <div class="flex">
+                <dt class="w-[80px] shrink-0 font-bold text-[#666]">営業</dt>
+                <dd>{SITE_CONFIG.businessHours}</dd>
+              </div>
+              <div class="flex flex-wrap">
+                <dt class="w-[80px] shrink-0 font-bold text-[#666]">対応</dt>
+                <dd class="flex flex-wrap gap-2">
+                  {office.prefecturesServed.map((pref) => (
+                    <span class="inline-block bg-[#f0f4ff] text-[#0044f2] text-[12px] md:text-[13px] font-bold px-3 py-1 rounded-full">
+                      {pref}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Block -->
+  <CTABlock variant="full-width" />
+
+  <!-- Schema.org LocalBusiness JSON-LD for each office -->
+  {officeSchemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+</BaseLayout>

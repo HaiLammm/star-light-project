@@ -10,8 +10,8 @@
   "webDiscountAmount": 1500,
   "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
   "imageAlt": "アンテナ工事を行う作業スタッフ",
-  "kvImageDesktop": "/images/services/electricity/antenna/kv.png",
-  "kvImageMobile": "/images/services/electricity/antenna/kv_sp.png",
+  "kvImageDesktop": "/images/hero/hero-01.jpeg",
+  "kvImageMobile": "/images/hero/hero-01.jpeg",
   "isEmergency": false,
   "hasFreeEstimate": true,
   "pricingTiers": [

@@ -9,8 +9,8 @@
   "webDiscountAmount": 3300,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "浴室排水の点検を行う水道修理スタッフ",
-  "kvImageDesktop": "/images/services/water/bath/kv.png",
-  "kvImageMobile": "/images/services/water/bath/kv_sp.png",
+  "kvImageDesktop": "/images/hero/hero-02.jpeg",
+  "kvImageMobile": "/images/hero/hero-02.jpeg",
   "isEmergency": true,
   "hasFreeEstimate": true,
   "pricingTiers": [

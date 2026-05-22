@@ -1,9 +1,11 @@
 ---
 title: ブレーカーが落ちる原因と安全に確認するポイント
 description: 頻繁にブレーカーが落ちるときに考えられる原因と、依頼前に確認したい安全ポイントを解説します。
+excerpt: 頻繁にブレーカーが落ちるときに考えられる原因と、依頼前に確認したい安全ポイントを解説します。
 publishedDate: 2026-05-08
-updatedDate: 2026-05-08
-category: ブレーカー
+category: electricity
+subcategory: ブレーカー
+image: /images/column/col_03.jpg
 imageAlt: 分電盤を確認する作業スタッフ
 ---
 

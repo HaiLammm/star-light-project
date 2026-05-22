@@ -1,5 +1,7 @@
 ---
+import { getImage } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { resolveImage } from '../../utils/imageImports';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnchorMenu from '../../components/AnchorMenu.astro';
@@ -13,7 +15,9 @@ import FAQAccordion from '../../components/FAQAccordion.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import ServiceSlider from '../../components/ServiceSlider.tsx';
-import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, PEST_CONTROL_SERVICES } from '../../utils/siteConfig';
+import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES } from '../../utils/siteConfig';
+import { formatDateDot } from '../../utils/formatters';
+import { generateService, generateFAQ, type FAQItem } from '../../utils/schema';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -28,6 +32,19 @@ const { category } = Astro.params;
 
 const allCases = await getCollection('cases');
 const allTestimonials = await getCollection('testimonials');
+const allBlogPosts = await getCollection('blog');
+const recentColumns = allBlogPosts
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 5);
+
+const columnImageMap: Record<string, string> = {};
+for (const article of recentColumns) {
+  const meta = await resolveImage(article.data.image);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 80 });
+    columnImageMap[article.id] = opt.src;
+  }
+}
 
 const serviceName = serviceData.serviceNameShort;
 const serviceLongName = serviceData.serviceName;
@@ -35,7 +52,6 @@ const serviceLongName = serviceData.serviceName;
 const categoryLabels: Record<string, string> = {
   electricity: '電気まわり',
   water: '水まわり',
-  'pest-control': '害虫駆除',
 };
 const serviceCategory = categoryLabels[category] ?? category;
 
@@ -46,16 +62,21 @@ const webDiscountAmount = serviceData.webDiscountAmount;
 const categoryServices = {
   electricity: ELECTRICITY_SERVICES,
   water: WATER_SERVICES,
-  'pest-control': PEST_CONTROL_SERVICES,
 } as const;
 
 const categoryKvFallback: Record<string, string> = {
-  electricity: '/images/services/electricity_01.jpg',
-  water: '/images/services/sanitary_01.jpg',
-  'pest-control': '/images/services/pest_01.jpg',
+  electricity: '/images/hero/hero-01.jpeg',
+  water: '/images/hero/hero-02.jpeg',
 };
-const kvDesktop = serviceData.kvImageDesktop ?? categoryKvFallback[category];
-const kvMobile = serviceData.kvImageMobile ?? categoryKvFallback[category];
+const kvDesktopPath = serviceData.kvImageDesktop ?? categoryKvFallback[category];
+const kvMobilePath = serviceData.kvImageMobile ?? categoryKvFallback[category];
+
+const kvDesktopMeta = await resolveImage(kvDesktopPath);
+const kvMobileMeta = await resolveImage(kvMobilePath);
+const kvDesktopOpt = kvDesktopMeta ? await getImage({ src: kvDesktopMeta, format: 'webp', quality: 80 }) : null;
+const kvMobileOpt = kvMobileMeta ? await getImage({ src: kvMobileMeta, format: 'webp', quality: 80 }) : null;
+const kvDesktop = kvDesktopOpt?.src ?? kvDesktopPath;
+const kvMobile = kvMobileOpt?.src ?? kvMobilePath;
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -73,8 +94,39 @@ const anchorSections = [
   { id: 'faq', label: 'FAQ', icon: '/images/icons/anchor_icon_07.svg' },
 ];
 
-const pricingTiers = serviceData.pricingTiers;
+const rawPricingTiers = serviceData.pricingTiers;
+const pricingTiers = await Promise.all(
+  rawPricingTiers.map(async (tier: any) => {
+    const meta = await resolveImage(tier.imageUrl);
+    if (meta) {
+      const opt = await getImage({ src: meta, width: 200, height: 160, format: 'webp', quality: 80 });
+      return { ...tier, imageUrl: opt.src };
+    }
+    return tier;
+  })
+);
 const faqItems = serviceData.faqEntries;
+
+const relatedServiceImages: Record<string, { src: string; alt: string }> = {
+  'breaker':      { src: '/images/services/electricity_01.jpg', alt: 'ブレーカー修理・交換サービス' },
+  'outlet':       { src: '/images/services/electricity_02.jpg', alt: 'コンセント修理・交換サービス' },
+  'lighting':     { src: '/images/services/electricity_03.jpg', alt: '照明修理・交換サービス' },
+  'antenna':      { src: '/images/services/electricity_04.jpg', alt: 'アンテナ工事サービス' },
+  'water-heater': { src: '/images/services/electricity_05.jpg', alt: '給湯器交換サービス' },
+  'toilet':       { src: '/images/services/sanitary_01.jpg', alt: 'トイレ修理サービス' },
+  'kitchen':      { src: '/images/services/sanitary_02.jpg', alt: 'キッチン修理サービス' },
+  'bath':         { src: '/images/services/sanitary_03.jpg', alt: 'お風呂修理サービス' },
+  'washroom':     { src: '/images/services/sanitary_04.jpg', alt: '洗面所修理サービス' },
+};
+
+const serviceImgOptMap: Record<string, string> = {};
+for (const [slug, imgData] of Object.entries(relatedServiceImages)) {
+  const meta = await resolveImage(imgData.src);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 300, height: 300, format: 'webp', quality: 80 });
+    serviceImgOptMap[slug] = opt.src;
+  }
+}
 
 const caseImageMap: Record<string, string> = {
   'toilet':       '/images/services/sanitary_01.jpg',
@@ -88,19 +140,28 @@ const caseImageMap: Record<string, string> = {
   'water-heater': '/images/services/electricity_05.jpg',
 };
 
+const caseImgOptMap: Record<string, string> = {};
+for (const [slug, path] of Object.entries(caseImageMap)) {
+  const meta = await resolveImage(path);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 300, height: 300, format: 'webp', quality: 80 });
+    caseImgOptMap[slug] = opt.src;
+  }
+}
+
 const realCaseStudies = allCases
   .filter((c) => c.data.serviceCategory === category)
   .sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime())
   .slice(0, 5)
   .map((c) => ({
     title: c.data.title,
-    serviceCategory: c.data.serviceCategory as 'electricity' | 'water' | 'pest-control',
+    serviceCategory: c.data.serviceCategory as 'electricity' | 'water',
     categoryLabel: categoryLabels[c.data.serviceCategory] ?? c.data.serviceCategory,
     location: c.data.location,
     duration: c.data.duration,
     cost: c.data.cost,
     description: c.body ?? '',
-    imageSrc: caseImageMap[c.data.serviceSlug] ?? categoryKvFallback[c.data.serviceCategory],
+    imageSrc: caseImgOptMap[c.data.serviceSlug] ?? caseImageMap[c.data.serviceSlug] ?? categoryKvFallback[c.data.serviceCategory],
     imageAlt: c.data.imageAlt,
     slug: c.id,
   }));
@@ -119,14 +180,14 @@ const realTestimonials = allTestimonials
   .filter((t) => t.data.serviceCategory === category)
   .map((t) => ({
   serviceType: t.data.serviceType,
-  serviceCategory: t.data.serviceCategory as 'electricity' | 'water' | 'pest-control',
+  serviceCategory: t.data.serviceCategory as 'electricity' | 'water',
   title: testimonialDetailMap[t.id]?.title ?? `${t.data.serviceType}をご依頼いただいたお客様の声`,
   duration: testimonialDetailMap[t.id]?.duration,
   cost: t.data.cost,
   message: t.data.message,
   authorInitial: t.data.authorInitial,
   location: t.data.location,
-  imageSrc: categoryKvFallback[t.data.serviceCategory] ?? categoryKvFallback['electricity'],
+  imageSrc: serviceImgOptMap[t.data.serviceCategory === 'electricity' ? 'breaker' : t.data.serviceCategory === 'water' ? 'toilet' : 'cockroach'] ?? categoryKvFallback[t.data.serviceCategory] ?? categoryKvFallback['electricity'],
   imageAlt: `${t.data.serviceType}のお客様の声`,
 }));
 
@@ -164,28 +225,8 @@ const categoryQualifications: Record<string, { title: string; items: string[] }>
     title: '水道関連有資格',
     items: ['給水装置工事主任技術者', '管工事施工管理技士', '排水設備工事責任技術者'],
   },
-  'pest-control': {
-    title: '防除関連有資格',
-    items: ['防除施工士', '日本ペストコントロール協会会員', '消毒業登録業者'],
-  },
 };
 const qualifications = categoryQualifications[category] ?? { title: '有資格者', items: [] };
-
-const relatedServiceImages: Record<string, { src: string; alt: string }> = {
-  'breaker':      { src: '/images/services/electricity_01.jpg', alt: 'ブレーカー修理・交換サービス' },
-  'outlet':       { src: '/images/services/electricity_02.jpg', alt: 'コンセント修理・交換サービス' },
-  'lighting':     { src: '/images/services/electricity_03.jpg', alt: '照明修理・交換サービス' },
-  'antenna':      { src: '/images/services/electricity_04.jpg', alt: 'アンテナ工事サービス' },
-  'water-heater': { src: '/images/services/electricity_05.jpg', alt: '給湯器交換サービス' },
-  'toilet':       { src: '/images/services/sanitary_01.jpg', alt: 'トイレ修理サービス' },
-  'kitchen':      { src: '/images/services/sanitary_02.jpg', alt: 'キッチン修理サービス' },
-  'bath':         { src: '/images/services/sanitary_03.jpg', alt: 'お風呂修理サービス' },
-  'washroom':     { src: '/images/services/sanitary_04.jpg', alt: '洗面所修理サービス' },
-  'cockroach':    { src: '/images/services/pest_01.jpg', alt: 'ゴキブリ駆除サービス' },
-  'termite':      { src: '/images/services/pest_02.jpg', alt: 'シロアリ駆除サービス' },
-  'rodent':       { src: '/images/services/pest_03.jpg', alt: 'ネズミ駆除サービス' },
-  'general-pest': { src: '/images/services/pest_01.jpg', alt: '一般害虫駆除サービス' },
-};
 
 const currentCategoryServices = categoryServices[category as keyof typeof categoryServices] ?? [];
 const relatedServices = currentCategoryServices
@@ -193,7 +234,7 @@ const relatedServices = currentCategoryServices
   .slice(0, 4)
   .map((s) => ({
     ...s,
-    imageSrc: relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
+    imageSrc: serviceImgOptMap[s.slug] ?? relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
     imageAlt: relatedServiceImages[s.slug]?.alt ?? `${s.label}サービス`,
   }));
 
@@ -203,24 +244,41 @@ const categorySliderSlides = currentCategoryServices.map((s) => ({
   href: s.href,
   description: s.description,
   startingPrice: s.startingPrice,
-  imageSrc: relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
+  imageSrc: serviceImgOptMap[s.slug] ?? relatedServiceImages[s.slug]?.src ?? categoryKvFallback[category],
   imageAlt: relatedServiceImages[s.slug]?.alt ?? s.label,
 }));
 
 const categorySliderConfig: Record<string, { heading: string; subheading: string; englishLabel: string; bgColor: string }> = {
   electricity: { heading: '電気まわりの修理サービス', subheading: 'ブレーカー・コンセント・照明などの電気まわりトラブル解消。安心の事前見積りと24時間即対応', englishLabel: 'Electricity', bgColor: '#fbc101' },
   water: { heading: '水まわりの修理サービス', subheading: 'トイレ・キッチン・お風呂などの水まわりトラブル解消。安心の事前見積りと24時間即対応', englishLabel: 'Sanitary', bgColor: '#3ea6ff' },
-  'pest-control': { heading: '害虫駆除サービス', subheading: '害虫駆除のトラブル解消。安心の事前見積りと24時間即対応', englishLabel: 'Pest Control', bgColor: '#4CAF50' },
 };
 const sliderConfig = categorySliderConfig[category] ?? categorySliderConfig.electricity;
 
 const pageTitle = `${serviceLongName}なら${SITE_CONFIG.companyName}【年中無休・即対応】`;
 const pageDescription = serviceData.description;
-const kvBgColor: Record<string, string> = { electricity: '#fbc101', water: '#3ea6ff', 'pest-control': '#4CAF50' };
+const kvBgColor: Record<string, string> = { electricity: '#fbc101', water: '#3ea6ff' };
 const kvBg = kvBgColor[category] ?? '#fbc101';
+
+const serviceSchema = generateService({
+  serviceName: serviceLongName,
+  description: serviceData.description,
+  startingPrice: serviceData.startingPrice,
+  serviceArea: serviceData.serviceArea ?? [],
+  url: `${SITE_CONFIG.siteUrl}/${category}/${serviceData.slug}`,
+  serviceType: serviceLongName,
+});
+
+const faqSchemaItems: FAQItem[] = (faqItems ?? []).map((item: { question: string; answer: string }) => ({
+  question: item.question,
+  answer: item.answer,
+}));
+const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null;
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}/${category}/${serviceData.slug}/`}>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
   <!-- Section 1: Breadcrumb -->
   <div class="max-w-[1200px] mx-auto px-3 sm:px-4 py-3 sm:py-4">
     <Breadcrumb items={breadcrumbItems} />
@@ -459,22 +517,16 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
       </h2>
       <div class="swiper columnSwiper mt-[20px] sm:mt-[30px] md:mt-[50px] overflow-hidden pb-3">
         <div class="swiper-wrapper items-stretch">
-          {[
-            { title: 'お風呂のお湯がでない！シャワーや給湯器の故障原因と対処法', date: '2026.5.18', category: 'お風呂', image: '/images/column/col_05.jpg', href: '/columns/' },
-            { title: '洗面台の交換費用の相場はいくら？工事費込みで安く抑えるコツ', date: '2026.5.18', category: '洗面所', image: '/images/column/col_04.jpg', href: '/columns/' },
-            { title: 'トイレ修理の費用相場はいくら？症状別の料金と業者選びのポイント！', date: '2026.5.18', category: 'トイレ', image: '/images/column/col_06.jpg', href: '/columns/' },
-            { title: 'エアコンのガス入れは必要？補充の判断基準と注意点を解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_01.jpg', href: '/columns/' },
-            { title: 'エアコンのガス漏れ修理｜原因・費用・対処法を完全解説', date: '2026.5.13', category: 'エアコン', image: '/images/column/col_02.jpg', href: '/columns/' },
-          ].map((article) => (
+          {recentColumns.map((article) => (
             <div class="swiper-slide !h-auto">
-              <a href={article.href} class="flex flex-col h-full rounded-[20px] sm:rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white">
+              <a href={`/columns/${article.id}/`} class="flex flex-col h-full rounded-[20px] sm:rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white">
                 <figure class="w-full overflow-hidden" style="aspect-ratio: 350/196;">
-                  <img src={article.image} alt={article.title} width="350" height="196" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+                  <img src={columnImageMap[article.id] ?? article.data.image} alt={article.data.imageAlt} width="350" height="196" loading="lazy" decoding="async" class="w-full h-full object-cover" />
                 </figure>
                 <div class="px-[16px] pt-[16px] pb-[18px] sm:px-[24px] sm:pt-[20px] sm:pb-[24px] md:px-[30px] md:pt-[23px] md:pb-[28px]">
-                  <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[10px] sm:text-[12px] md:text-[14px] font-bold px-3 py-1 rounded-b-[12px] sm:rounded-b-[16px] md:rounded-b-[20px] mb-2 sm:mb-3">{article.category}</span>
-                  <p class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug line-clamp-2">{article.title}</p>
-                  <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#888] mt-2">{article.date}</p>
+                  <span class="inline-block bg-[#eef2ff] text-[#0044f2] text-[10px] sm:text-[12px] md:text-[14px] font-bold px-3 py-1 rounded-b-[12px] sm:rounded-b-[16px] md:rounded-b-[20px] mb-2 sm:mb-3">{article.data.subcategory}</span>
+                  <p class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug line-clamp-2">{article.data.title}</p>
+                  <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#888] mt-2">{formatDateDot(article.data.publishedDate)}</p>
                 </div>
               </a>
             </div>
@@ -491,7 +543,7 @@ const kvBg = kvBgColor[category] ?? '#fbc101';
 
   <!-- All Category Services -->
   <ServiceSlider
-    client:load
+    client:visible
     slides={categorySliderSlides}
     heading={sliderConfig.heading}
     subheading={sliderConfig.subheading}

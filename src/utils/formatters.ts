@@ -15,3 +15,11 @@ export function formatDate(date: string | Date): string {
 
   return `${resolvedDate.getFullYear()}年${resolvedDate.getMonth() + 1}月${resolvedDate.getDate()}日`;
 }
+
+export function formatDateDot(date: string | Date): string {
+  const d = typeof date === 'string' ? new Date(date) : new Date(date);
+  if (Number.isNaN(d.getTime())) {
+    throw new TypeError('Invalid date value');
+  }
+  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+}

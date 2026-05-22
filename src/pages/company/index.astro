@@ -1,0 +1,172 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { SITE_CONFIG, REGIONAL_OFFICES } from '../../utils/siteConfig';
+import { COMPANY_CARDS } from '../../data/companyData';
+import { generateLocalBusiness } from '../../utils/schema';
+import { resolveImage } from '../../utils/imageImports';
+
+const companyImgMap: Record<string, string> = {};
+for (const card of COMPANY_CARDS) {
+  const meta = await resolveImage(card.image);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 200, height: 160, format: 'webp', quality: 80 });
+    companyImgMap[card.image] = opt.src;
+  }
+}
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '会社案内', href: '/company' },
+];
+
+const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
+  generateLocalBusiness({ ...office, url: SITE_CONFIG.siteUrl })
+);
+---
+
+<BaseLayout
+  title="会社案内｜設備人"
+  description="設備人の会社概要、企業理念、対応エリアについてご案内します。電気・水まわりトラブルに24時間365日対応。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/company`}
+>
+  {localBusinessSchemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+
+  <!-- Breadcrumb -->
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[28px] md:text-[48px] font-black text-white ml-0 md:ml-[45px]">会社案内</h1>
+      <p class="font-[Roboto] text-[60px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize whitespace-nowrap">company</p>
+    </div>
+  </section>
+
+  <!-- Company Cards Grid -->
+  <section class="py-[60px] md:py-[100px]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <div class="company-cards-container">
+        <div class="company-cards-grid">
+          {COMPANY_CARDS.map((card) => (
+            <a href={card.href} class="company-card group">
+              <div class="company-card-image">
+                <img
+                  src={companyImgMap[card.image] ?? card.image}
+                  alt={card.imageAlt}
+                  width={200}
+                  height={160}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="company-card-content">
+                <span class="company-card-title">{card.title}</span>
+                <svg class="company-card-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Block -->
+  <CTABlock variant="full-width" />
+</BaseLayout>
+
+<style>
+  .company-cards-container {
+    background: #f7f7f7;
+    border-radius: 40px;
+    padding: 60px 45px 69px;
+  }
+
+  .company-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .company-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 40px;
+    box-shadow: 0 8px 0 0 rgba(0, 0, 0, 0.16);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+
+  .company-card:hover {
+    opacity: 0.8;
+  }
+
+  .company-card-image {
+    flex-shrink: 0;
+    width: 200px;
+    aspect-ratio: 200 / 160;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .company-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .company-card-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .company-card-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #222;
+  }
+
+  .company-card-arrow {
+    flex-shrink: 0;
+    color: #222;
+  }
+
+  @media (max-width: 900px) {
+    .company-cards-container {
+      padding: 30px 20px 40px;
+      border-radius: 20px;
+    }
+
+    .company-cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .company-card {
+      padding: 20px;
+      border-radius: 20px;
+    }
+
+    .company-card-image {
+      width: 120px;
+    }
+
+    .company-card-title {
+      font-size: 18px;
+    }
+  }
+</style>

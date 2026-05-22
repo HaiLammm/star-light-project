@@ -32,3 +32,26 @@
 - Grid missing 3-column breakpoint (2→4/5 jump) — production site uses Swiper slider not grid, acceptable for static grid alternative
 - imageMap/altMap duplication — production site uses entirely different structure (Swiper), refactor not urgent until architecture stabilizes
 - Raw `<img>` instead of Astro `<Image>` — images in public/ dir, Astro Image cannot optimize public assets; migrating all images to src/ is cross-cutting concern
+
+## Deferred from: code review of story-4.3 (2026-05-21)
+
+- W1: KV banner markup duplicate across 3 company pages — extract to shared component
+- W2: Schema.org JSON-LD for office page placed in body, should be in `<head>`
+- W3: Tokyo and Hyogo offices lack real street addresses in REGIONAL_OFFICES data
+- W4: Company pages missing OG image metadata for social sharing
+- W5: Terminology mismatch: card says "対応可能エリア" but office page says "営業所一覧"
+
+## Deferred from: code review of story-4.4 (2026-05-21)
+
+- Privacy page hardcoded 154 lines of legal content in .astro file instead of data file — inconsistent with project's content collection pattern
+- KV banner h1 text-[48px] ml-[45px] and decorative text-[120px] overflow on mobile viewports under ~420px — pre-existing pattern from company pages
+- ProcessFlow padding (pt-12 pb-8 → lg:pt-[100px]) doesn't match spec py-[80px] md:py-[120px] — pre-existing, used on homepage
+- FAQ sortOrder defaults to 0 for all entries causing non-deterministic display order — pre-existing schema design
+
+## Deferred from: code review of story-5.1 (2026-05-21)
+
+- Swiper columnSwiper in service detail page renders with 0 slides if no blog posts exist — pre-existing pattern, no guard needed until blog content could be empty in production
+
+## Deferred from: code review of story-5.2 (2026-05-22)
+
+- `entry: any` type annotations bypass TypeScript safety in all 4 listing pages (.map() calls) — low risk for static site with Zod validation at build time, but reduces IDE/compiler assistance

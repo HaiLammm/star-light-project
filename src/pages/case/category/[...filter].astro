@@ -1,0 +1,143 @@
+---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../../../utils/imageImports';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import CaseStudyCard from '../../../components/CaseStudyCard.astro';
+import CategorySidebar from '../../../components/CategorySidebar.astro';
+import CTABlock from '../../../components/CTABlock.astro';
+import { CASE_FILTER_CATEGORIES, CASE_SLUG_LABEL_MAP, CATEGORY_LABEL_MAP, getCaseImageSrc } from '../../../data/caseVoiceData';
+import { SITE_CONFIG } from '../../../utils/siteConfig';
+
+export async function getStaticPaths() {
+  const allCases = await getCollection('cases');
+  const slugs = [...new Set(allCases.map((c) => c.data.serviceSlug))];
+  const paths: any[] = [];
+
+  for (const slug of slugs) {
+    const filtered = allCases
+      .filter((c) => c.data.serviceSlug === slug)
+      .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime());
+    if (filtered.length > 0) {
+      paths.push({
+        params: { filter: slug },
+        props: { cases: filtered, activeFilter: slug },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { cases, activeFilter } = Astro.props;
+
+const optimizedImages: Record<string, string> = {};
+for (const caseItem of cases) {
+  const src = getCaseImageSrc(caseItem.id);
+  const meta = await resolveImage(src);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 300, height: 300, format: 'webp', quality: 80 });
+    optimizedImages[caseItem.id] = opt.src;
+  }
+}
+
+const filterLabel = CASE_SLUG_LABEL_MAP[activeFilter] ?? activeFilter;
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '施工事例', href: '/case/' },
+  { label: filterLabel, href: `/case/category/${activeFilter}/` },
+];
+---
+
+<BaseLayout title={`${filterLabel}の施工事例 | 設備人`} description={`${filterLabel}に関する修理・施工事例をご紹介します。`} canonicalUrl={`${SITE_CONFIG.siteUrl}/case/category/${activeFilter}/`}>
+  <section class="py-[30px] sm:py-[40px] md:py-[60px]">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center mt-[20px] sm:mt-[30px] md:mt-[40px]">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Case</span>
+        <span><span class="font-[Roboto] mr-2">Case</span>{filterLabel}</span>
+      </h1>
+    </div>
+  </section>
+
+  <h2 class="under-heading">{filterLabel}の施工事例一覧</h2>
+
+  <section class="py-[20px] sm:py-[30px] md:py-[40px]">
+    <div class="archive-inner max-w-[1150px] mx-auto px-3 sm:px-4">
+      <div class="archive-main">
+        {cases.length > 0 ? (
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] sm:gap-[24px] md:gap-[33px_38px]">
+            {cases.map((caseItem: any) => (
+              <CaseStudyCard
+                title={caseItem.data.title}
+                serviceCategory={caseItem.data.serviceCategory}
+                categoryLabel={CATEGORY_LABEL_MAP[caseItem.data.serviceCategory] ?? caseItem.data.serviceCategory}
+                location={caseItem.data.location}
+                duration={caseItem.data.duration}
+                cost={caseItem.data.cost}
+                description={caseItem.body ?? ''}
+                imageSrc={optimizedImages[caseItem.id] ?? getCaseImageSrc(caseItem.id)}
+                imageAlt={caseItem.data.imageAlt}
+                slug={caseItem.id}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="text-center text-[14px] sm:text-[16px] text-[#888] py-[40px]">該当する施工事例がありません。</p>
+        )}
+      </div>
+
+      <CategorySidebar
+        categories={CASE_FILTER_CATEGORIES as any}
+        filterBasePath="/case/category/"
+        activeFilter={activeFilter}
+      />
+    </div>
+  </section>
+  <CTABlock />
+</BaseLayout>
+
+<style>
+  .under-heading {
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    padding-bottom: 15px;
+    position: relative;
+    margin-top: 40px;
+  }
+  .under-heading::after {
+    content: "";
+    display: block;
+    background-color: #fbc102;
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .archive-inner {
+    display: flex;
+    gap: 52px;
+  }
+  .archive-main {
+    flex-grow: 1;
+    min-width: 0;
+  }
+  @media (min-width: 901px) {
+    .under-heading {
+      font-size: 32px;
+    }
+  }
+  @media (max-width: 900px) {
+    .archive-inner {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+</style>

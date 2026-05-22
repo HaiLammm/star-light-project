@@ -35,7 +35,21 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-08
-last_updated: 2026-05-14
+last_updated: 2026-05-22
+# Story 6-3 review: 2026-05-22
+# Story 6-3 created: 2026-05-22
+# Story 6-2 review: 2026-05-22
+# Story 6-2 created: 2026-05-22
+# Story 6-1 created: 2026-05-22
+# Story 5-3 created: 2026-05-22
+# Story 5-2 created: 2026-05-22
+# Story 3-5 created: 2026-05-21
+# Story 4-4 done: 2026-05-21
+# Story 5-1 created: 2026-05-21
+# Story 4-4 created: 2026-05-21
+# Story 4-3 done: 2026-05-21
+# Story 4-3 review: 2026-05-21
+# Story 4-3 created: 2026-05-21
 # Story 3-4 created: 2026-05-14
 # Story 3-3 review: 2026-05-14
 # Story 3-3 created: 2026-05-14
@@ -93,29 +107,29 @@ development_status:
   3-2-build-comparison-table-reasons-grid-and-trust-signals-for-service-pages: review
   3-3-build-service-area-process-flow-case-studies-testimonials-and-faq-sections-for-service-pages: review
   3-4-create-service-content-data-and-dynamic-route-generation: review
-  3-5-build-service-hub-pages: backlog
+  3-5-build-service-hub-pages: review
   epic-3-retrospective: optional
 
   # Epic 4: Contact, Company & Supporting Pages
   epic-4: in-progress
   4-1-build-contact-form-page: done
   4-2-implement-contact-form-submission-and-feedback: done
-  4-3-build-company-pages: backlog
-  4-4-build-process-flow-faq-privacy-sitemap-and-404-pages: backlog
+  4-3-build-company-pages: done
+  4-4-build-process-flow-faq-privacy-sitemap-and-404-pages: done
   epic-4-retrospective: optional
 
   # Epic 5: Blog/Column & Content Management
-  epic-5: backlog
-  5-1-build-blog-column-listing-and-detail-pages: backlog
-  5-2-build-paginated-case-studies-and-testimonials-listing-pages: backlog
-  5-3-document-content-management-workflow: backlog
+  epic-5: in-progress
+  5-1-build-blog-column-listing-and-detail-pages: done
+  5-2-build-paginated-case-studies-and-testimonials-listing-pages: done
+  5-3-document-content-management-workflow: review
   epic-5-retrospective: optional
 
   # Epic 6: SEO, Performance & Accessibility Polish
-  epic-6: backlog
-  6-1-implement-schema-org-structured-data-on-all-pages: backlog
-  6-2-implement-technical-seo-sitemap-robots-meta-tags-canonical-urls: backlog
-  6-3-performance-optimization-and-core-web-vitals: backlog
+  epic-6: in-progress
+  6-1-implement-schema-org-structured-data-on-all-pages: review
+  6-2-implement-technical-seo-sitemap-robots-meta-tags-canonical-urls: review
+  6-3-performance-optimization-and-core-web-vitals: review
   6-4-security-headers-and-cloudflare-pages-production-deployment: backlog
   6-5-wcag-2-1-aa-accessibility-audit-and-fixes: backlog
   epic-6-retrospective: optional

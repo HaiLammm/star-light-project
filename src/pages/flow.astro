@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ProcessFlow from '../components/ProcessFlow.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { SITE_CONFIG } from '../utils/siteConfig';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '作業の流れ', href: '/flow' },
+];
+---
+
+<BaseLayout
+  title="作業の流れ｜設備人"
+  description="設備人のご相談からお支払いまでの作業の流れをご案内。お見積り無料・出張費無料・キャンセル料無料で安心してご依頼いただけます。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/flow`}
+>
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[48px] font-black text-white ml-[45px]">作業の流れ</h1>
+      <p class="font-[Roboto] text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize">Flow</p>
+    </div>
+  </section>
+
+  <!-- Process Flow (5 steps with payment) -->
+  <ProcessFlow />
+
+  <!-- CTA Block -->
+  <CTABlock variant="full-width" />
+
+  <!-- Cost Breakdown -->
+  <section class="py-[80px] md:py-[120px] bg-[#f7f7f7]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold text-center mb-8 md:mb-12">
+        ご相談無料！必ず事前にお見積り
+      </h2>
+      <div class="bg-white rounded-[20px] md:rounded-[40px] p-6 sm:p-8 md:p-12 max-w-[800px] mx-auto">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
+          <div class="bg-[#0044f2] text-white rounded-lg px-4 py-3 font-bold text-[14px] sm:text-[16px] md:text-[18px]">
+            作業費
+          </div>
+          <span class="text-[24px] font-bold text-[#0044f2]">+</span>
+          <div class="bg-[#0044f2] text-white rounded-lg px-4 py-3 font-bold text-[14px] sm:text-[16px] md:text-[18px]">
+            材料費・部品代
+          </div>
+          <span class="text-[24px] font-bold text-[#0044f2]">+</span>
+          <div class="bg-[#0044f2] text-white rounded-lg px-4 py-3 font-bold text-[14px] sm:text-[16px] md:text-[18px]">
+            処分費<span class="text-[12px]">（※）</span>
+          </div>
+        </div>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          {['お見積り', '出張費', '早朝・深夜料金', 'キャンセル料'].map((item) => (
+            <div class="flex flex-col items-center gap-2">
+              <span class="text-[14px] sm:text-[16px] font-bold">{item}</span>
+              <span class="text-[#e74c3c] text-[20px] sm:text-[24px] font-black">¥0</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Block -->
+  <CTABlock variant="full-width" />
+</BaseLayout>

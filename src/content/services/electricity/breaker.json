@@ -12,8 +12,8 @@
   "imageAlt": "ブレーカー点検を行う作業スタッフ",
   "isEmergency": true,
   "hasFreeEstimate": true,
-  "kvImageDesktop": "/images/services/electricity/breaker/kv.png",
-  "kvImageMobile": "/images/services/electricity/breaker/kv_sp.png",
+  "kvImageDesktop": "/images/hero/hero-01.jpeg",
+  "kvImageMobile": "/images/hero/hero-01.jpeg",
   "pricingTiers": [
     {
       "name": "漏電調査・応急処置",

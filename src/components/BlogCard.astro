@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { BLOG_CATEGORY_COLOR_MAP } from '../data/blogData';
+
+interface Props {
+  title: string;
+  date: string;
+  category: string;
+  subcategory: string;
+  excerpt: string;
+  image: ImageMetadata | string;
+  imageAlt: string;
+  href: string;
+}
+
+const { title, date, category, subcategory, excerpt, image, imageAlt, href } = Astro.props;
+
+const badgeBg = BLOG_CATEGORY_COLOR_MAP[category] ?? 'bg-[#717070]';
+---
+
+<article class="h-full">
+  <a href={href} class="flex flex-col h-full rounded-[20px] sm:rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.16)] hover:shadow-[0_10px_0_0_rgba(0,0,0,0.20)] transition-shadow duration-200 bg-white">
+    <figure class="w-full overflow-hidden" style="aspect-ratio: 350/196;">
+      {typeof image === 'string' ? (
+        <img src={image} alt={imageAlt} width="350" height="196" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+      ) : (
+        <Image src={image} alt={imageAlt} width={350} height={196} format="webp" quality={80} loading="lazy" decoding="async" class="w-full h-full object-cover" />
+      )}
+    </figure>
+    <div class="px-[16px] pt-[16px] pb-[18px] sm:px-[24px] sm:pt-[20px] sm:pb-[24px] md:px-[30px] md:pt-[23px] md:pb-[28px] flex flex-col grow">
+      <span class={`inline-block self-start ${badgeBg} text-white text-[10px] sm:text-[11px] md:text-[12px] font-bold px-[8px] py-[2px] rounded-[4px] sm:rounded-[5px] mb-2 sm:mb-3`}>{subcategory}</span>
+      <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#888] mb-1">{date}</p>
+      <h3 class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug line-clamp-2 mb-2 sm:mb-3">{title}</h3>
+      <p class="text-[11px] sm:text-[12px] md:text-[14px] text-[#555] leading-relaxed line-clamp-2 mt-auto">{excerpt}</p>
+    </div>
+  </a>
+</article>

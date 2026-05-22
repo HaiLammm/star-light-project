@@ -1,0 +1,155 @@
+---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../../utils/imageImports';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import CategorySidebar from '../../components/CategorySidebar.astro';
+import Pagination from '../../components/Pagination.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { CASE_FILTER_CATEGORIES, CATEGORY_LABEL_MAP, getCaseImageSrc } from '../../data/caseVoiceData';
+import { SITE_CONFIG } from '../../utils/siteConfig';
+
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+  const allCases = await getCollection('cases');
+  const sorted = allCases.sort(
+    (a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime()
+  );
+  return paginate(sorted, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+
+const optimizedImages: Record<string, string> = {};
+for (const caseItem of page.data) {
+  const src = getCaseImageSrc(caseItem.id);
+  const meta = await resolveImage(src);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 300, height: 300, format: 'webp', quality: 80 });
+    optimizedImages[caseItem.id] = opt.src;
+  }
+}
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '施工事例', href: '/case/' },
+];
+---
+
+<BaseLayout title={`施工事例${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備人`} description="水まわりや電気のトラブルに迅速に対応した施工事例をご紹介します。トイレ、お風呂、照明、アンテナ工事など幅広い実績を掲載。" canonicalUrl={`${SITE_CONFIG.siteUrl}/case/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
+  <section class="py-[30px] sm:py-[40px] md:py-[60px]">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1 class="text-[18px] sm:text-[24px] md:text-[42px] font-bold relative flex flex-col items-center text-center mt-[20px] sm:mt-[30px] md:mt-[40px]">
+        <span class="block w-[2px] h-[25px] sm:h-[40px] md:h-[70px] bg-[#fbc102]"></span>
+        <span class="absolute top-[25px] sm:top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[40px] sm:text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Case</span>
+        <span><span class="font-[Roboto] mr-2">Case</span>施工事例</span>
+      </h1>
+    </div>
+  </section>
+
+  <section class="archive-lead">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <p class="text-[12px] sm:text-[14px] md:text-[16px] leading-[1.8] text-center font-bold text-shadow-[2px_1px_0_#fff]">
+        設備人は、水まわりや電気のトラブルに迅速に対応し、<br class="hidden sm:inline">
+        お客様の快適な暮らしをサポートしております。<br>
+        お客様からの率直なご意見は、私たちにとって大きな励みであり、<br class="hidden sm:inline">
+        より良いサービスを提供への糧とさせていただいております。
+      </p>
+    </div>
+  </section>
+
+  <h2 class="under-heading">施工事例一覧</h2>
+
+  <section class="py-[20px] sm:py-[30px] md:py-[40px]">
+    <div class="archive-inner max-w-[1150px] mx-auto px-3 sm:px-4">
+      <div class="archive-main">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] sm:gap-[24px] md:gap-[33px_38px]">
+          {page.data.map((caseItem: any) => (
+            <CaseStudyCard
+              title={caseItem.data.title}
+              serviceCategory={caseItem.data.serviceCategory}
+              categoryLabel={CATEGORY_LABEL_MAP[caseItem.data.serviceCategory] ?? caseItem.data.serviceCategory}
+              location={caseItem.data.location}
+              duration={caseItem.data.duration}
+              cost={caseItem.data.cost}
+              description={caseItem.body ?? ''}
+              imageSrc={optimizedImages[caseItem.id] ?? getCaseImageSrc(caseItem.id)}
+              imageAlt={caseItem.data.imageAlt}
+              slug={caseItem.id}
+            />
+          ))}
+        </div>
+
+        <Pagination
+          currentPage={page.currentPage}
+          totalPages={page.lastPage}
+          baseUrl="/case"
+        />
+      </div>
+
+      <CategorySidebar
+        categories={CASE_FILTER_CATEGORIES as any}
+        filterBasePath="/case/category/"
+      />
+    </div>
+  </section>
+  <CTABlock />
+</BaseLayout>
+
+<style>
+  .archive-lead {
+    padding: 40px 0;
+    border-radius: 40px;
+    background: #f7f7f7;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  .under-heading {
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    padding-bottom: 15px;
+    position: relative;
+    margin-top: 40px;
+  }
+  .under-heading::after {
+    content: "";
+    display: block;
+    background-color: #fbc102;
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .archive-inner {
+    display: flex;
+    gap: 52px;
+  }
+  .archive-main {
+    flex-grow: 1;
+    min-width: 0;
+  }
+  @media (min-width: 901px) {
+    .under-heading {
+      font-size: 32px;
+    }
+    .archive-lead {
+      padding: 66px;
+    }
+  }
+  @media (max-width: 900px) {
+    .archive-inner {
+      flex-direction: column;
+      gap: 0;
+    }
+    .archive-lead {
+      padding: 30px 16px;
+      border-radius: 20px;
+    }
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { SITE_CONFIG } from '../../utils/siteConfig';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '会社案内', href: '/company' },
+  { label: '会社概要', href: '/company/about' },
+];
+
+const companyInfo = [
+  { label: '社名', value: '合同会社スターライト' },
+  { label: '住所', value: '大阪府豊中市東豊中町六丁目３番１０号' },
+  { label: '電話番号', value: '0120-219-695', isPhone: true },
+  { label: '設立日', value: '令和７年１０月１４日' },
+  { label: '代表名', value: '赤嶺美奈' },
+  { label: '事業内容', value: '電気工事事業、水道施設工事業' },
+];
+---
+
+<BaseLayout
+  title="会社概要｜設備人"
+  description="合同会社スターライトの会社概要。社名・住所・代表名・事業内容などの基本情報をご案内します。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/company/about`}
+>
+  <!-- Breadcrumb -->
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[28px] md:text-[48px] font-black text-white ml-0 md:ml-[45px]">会社概要</h1>
+      <p class="font-[Roboto] text-[60px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize whitespace-nowrap">about</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-[80px] md:py-[120px]">
+    <div class="max-w-[800px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[32px] font-extrabold text-center mb-8 md:mb-12">
+        設備人について
+      </h2>
+      <p class="text-[14px] md:text-[16px] leading-relaxed text-[#333] mb-6">
+        私たち合同会社スターライトは、「設備人」のブランド名で電気・水まわりのトラブル解決サービスを提供しております。大阪を拠点に、お客様の暮らしの安心を支えるため、迅速かつ丁寧な対応を心がけております。
+      </p>
+      <p class="text-[14px] md:text-[16px] leading-relaxed text-[#333]">
+        電気工事や水道施設工事を中心に、24時間365日体制でお客様のお困りごとに対応。確かな技術力と誠実なサービスで、地域の皆さまから信頼される企業を目指しています。
+      </p>
+    </div>
+  </section>
+
+  <!-- Company Info Table -->
+  <section class="pb-[80px] md:pb-[120px]">
+    <div class="max-w-[800px] mx-auto px-4">
+      <table class="w-full border-collapse">
+        {companyInfo.map((row, i) => (
+          <tr class={i % 2 === 0 ? 'bg-[#f7f7f7]' : 'bg-white'}>
+            <th class="text-left text-[14px] md:text-[16px] font-bold text-[#333] py-4 px-4 md:px-6 w-[120px] md:w-[160px] align-top border-b border-[#e0e0e0]">
+              {row.label}
+            </th>
+            <td class="text-[14px] md:text-[16px] text-[#333] py-4 px-4 md:px-6 border-b border-[#e0e0e0]">
+              {row.isPhone ? (
+                <a href="tel:0120219695" class="text-[#0044f2] hover:underline">{row.value}</a>
+              ) : (
+                row.value
+              )}
+            </td>
+          </tr>
+        ))}
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA Block -->
+  <CTABlock variant="full-width" />
+</BaseLayout>

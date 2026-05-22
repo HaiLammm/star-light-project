@@ -1,5 +1,12 @@
 ---
+import { Image, getImage } from 'astro:assets';
 import { SITE_CONFIG } from '../utils/siteConfig';
+import ctaDecoImg from '../assets/images/cta/cta_deco.png';
+import ctaSanitaryImg from '../assets/images/cta/cta_sanitary_button_2026.png';
+import ctaSanitarySpImg from '../assets/images/cta/cta_sanitary_button_sp_2026.png';
+
+const sanitaryDesktop = await getImage({ src: ctaSanitaryImg, format: 'webp', quality: 80 });
+const sanitaryMobile = await getImage({ src: ctaSanitarySpImg, format: 'webp', quality: 80 });
 
 interface Props {
   variant: 'full-width' | 'compact' | 'sticky';
@@ -39,7 +46,7 @@ const phone = SITE_CONFIG.phone;
 
         <!-- cta_deco: overflows top-right, absolute -->
         <div class="pointer-events-none absolute right-0 z-10 w-[123px] -top-[26px] md:w-[277px] md:-top-[50px] md:right-[23px]">
-          <img src="/images/cta/cta_deco.png" alt="" loading="lazy" decoding="async" class="w-full h-auto object-contain" />
+          <Image src={ctaDecoImg} alt="" format="webp" quality={80} loading="lazy" decoding="async" class="w-full h-auto object-contain" />
         </div>
 
         <!-- Lead text -->
@@ -49,7 +56,7 @@ const phone = SITE_CONFIG.phone;
 
         <!-- Heading: Logo + に修理相談 -->
         <p class="relative z-20 flex flex-wrap items-center justify-center gap-x-1 mt-5 md:mt-1 font-extrabold text-[29px] md:text-[40px]">
-          <img src="/images/site_logo.svg" alt="設備人" loading="lazy" decoding="async" class="w-[177px] md:w-[230px] h-auto object-contain mr-0.5" />
+          <img src="/images/site_logo_no-mark.jpeg" alt="設備人" loading="lazy" decoding="async" class="w-[177px] md:w-[230px] h-auto object-contain mr-0.5" />
           <span class="text-[21px] md:text-[28px]">に</span>修理相談
         </p>
 
@@ -116,9 +123,9 @@ const phone = SITE_CONFIG.phone;
         <div class="w-full flex-1">
           <a href="/sanitary" class="block transition-opacity hover:opacity-90">
             <picture>
-              <source media="(max-width: 900px)" srcset="/images/cta/cta_sanitary_button_sp_2026.png" />
-              <source media="(min-width: 901px)" srcset="/images/cta/cta_sanitary_button_2026.png" />
-              <img src="/images/cta/cta_sanitary_button_2026.png" alt="水まわりのトラブル" loading="lazy" decoding="async" class="w-full h-auto object-contain" />
+              <source media="(max-width: 900px)" srcset={sanitaryMobile.src} />
+              <source media="(min-width: 901px)" srcset={sanitaryDesktop.src} />
+              <img src={sanitaryDesktop.src} alt="水まわりのトラブル" width={sanitaryDesktop.attributes.width} height={sanitaryDesktop.attributes.height} loading="lazy" decoding="async" class="w-full h-auto object-contain" />
             </picture>
           </a>
         </div>

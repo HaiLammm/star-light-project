@@ -2,8 +2,8 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const serviceCategoryValues = ['electricity', 'water', 'pest-control'] as const;
-const faqCategoryValues = ['general', 'electricity', 'water', 'pest-control', 'pricing', 'process'] as const;
+const serviceCategoryValues = ['electricity', 'water'] as const;
+const faqCategoryValues = ['general', 'electricity', 'water', 'pricing', 'process'] as const;
 
 const pricingTierSchema = z.object({
   name: z.string(),
@@ -59,6 +59,8 @@ const testimonials = defineCollection({
   schema: z.object({
     serviceType: z.string(),
     serviceCategory: z.enum(serviceCategoryValues),
+    title: z.string().optional(),
+    duration: z.string().optional(),
     cost: z.number(),
     message: z.string(),
     authorInitial: z.string(),
@@ -77,16 +79,26 @@ const faq = defineCollection({
   }),
 });
 
+const blogCategoryValues = ['electricity', 'water'] as const;
+
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    excerpt: z.string(),
     publishedDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    category: z.string(),
-    imageAlt: z.string().optional(),
+    category: z.enum(blogCategoryValues),
+    subcategory: z.string(),
+    image: z.string(),
+    imageAlt: z.string(),
   }),
+});
+
+const philosophyPromiseSchema = z.object({
+  number: z.string(),
+  text: z.string(),
 });
 
 const company = defineCollection({
@@ -97,6 +109,10 @@ const company = defineCollection({
     address: z.string().optional(),
     region: z.string().optional(),
     areaServed: z.array(z.string()).optional(),
+    heroSubheading: z.string().optional(),
+    sectionTitle: z.string().optional(),
+    sectionBody: z.array(z.string()).optional(),
+    promises: z.array(philosophyPromiseSchema).optional(),
   }),
 });
 

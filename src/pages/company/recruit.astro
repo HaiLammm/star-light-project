@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { SITE_CONFIG } from '../../utils/siteConfig';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: '会社案内', href: '/company' },
+  { label: '採用情報', href: '/company/recruit' },
+];
+
+const features = [
+  {
+    number: 1,
+    title: '20～30代の男性が活躍中！',
+    description: '若手スタッフが中心となって活躍しています。同世代の仲間と切磋琢磨しながら、スキルアップできる環境です。',
+  },
+  {
+    number: 2,
+    title: '毎日が給料日でモチベーションもUP',
+    description: '完全出来高制だから、頑張った分だけすぐに報酬に反映。日々のやる気につながります。',
+  },
+  {
+    number: 3,
+    title: 'しっかり稼げる環境！',
+    description: '案件数が豊富で、やる気次第でしっかり稼ぐことができます。独立を目指す方にも最適な環境です。',
+  },
+];
+
+const recruitInfo = [
+  { label: '職種', value: '設備工事スタッフ' },
+  { label: '雇用形態', value: '業務委託' },
+  { label: '勤務地', value: '大阪府・京都府・奈良県・和歌山県' },
+  { label: '給与', value: '完全出来高制' },
+  { label: '応募条件', value: '普通自動車免許（AT限定可）' },
+];
+---
+
+<BaseLayout
+  title="採用情報｜設備人"
+  description="設備人の採用情報。20～30代が活躍中の設備工事スタッフを募集しています。完全出来高制でしっかり稼げる環境です。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/company/recruit`}
+>
+  <!-- Breadcrumb -->
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[28px] md:text-[48px] font-black text-white ml-0 md:ml-[45px]">採用情報</h1>
+      <p class="font-[Roboto] text-[60px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize whitespace-nowrap">recruit</p>
+    </div>
+  </section>
+
+  <!-- 3 Points Section -->
+  <section class="py-[80px] md:py-[120px]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[32px] font-extrabold text-center mb-10 md:mb-14">
+        設備人の3つのポイント
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {features.map((feature) => (
+          <div class="bg-white rounded-2xl p-8 text-center shadow-sm border border-[#e0e0e0]">
+            <div class="inline-flex items-center justify-center w-[60px] h-[60px] rounded-full bg-[#0044f2] text-white font-[Roboto] font-bold text-[20px] mb-6">
+              {feature.number}
+            </div>
+            <h3 class="text-[16px] md:text-[18px] font-bold mb-4">
+              {feature.title}
+            </h3>
+            <p class="text-[14px] md:text-[15px] leading-relaxed text-[#666]">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruit Info Table -->
+  <section class="py-[80px] md:py-[120px] bg-[#f5f5f5]">
+    <div class="max-w-[800px] mx-auto px-4">
+      <h2 class="text-[24px] md:text-[32px] font-extrabold text-center mb-10 md:mb-14">
+        募集要項
+      </h2>
+      <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden">
+        {recruitInfo.map((row, i) => (
+          <tr class={i % 2 === 0 ? 'bg-[#f7f7f7]' : 'bg-white'}>
+            <th class="text-left text-[14px] md:text-[16px] font-bold text-[#333] py-4 px-4 md:px-6 w-[120px] md:w-[160px] align-top border-b border-[#e0e0e0]">
+              {row.label}
+            </th>
+            <td class="text-[14px] md:text-[16px] text-[#333] py-4 px-4 md:px-6 border-b border-[#e0e0e0]">
+              {row.value}
+            </td>
+          </tr>
+        ))}
+      </table>
+    </div>
+  </section>
+
+  <!-- Entry Form Section -->
+  <section class="py-[80px] md:py-[120px]">
+    <div class="max-w-[800px] mx-auto px-4 text-center">
+      <h2 class="text-[24px] md:text-[32px] font-extrabold mb-6 md:mb-8">
+        エントリーフォーム
+      </h2>
+      <p class="text-[14px] md:text-[16px] leading-relaxed text-[#333] mb-8">
+        ご応募・お問い合わせは下記のフォームよりお気軽にご連絡ください。
+      </p>
+      <a
+        href="/contact"
+        class="inline-block bg-[#0044f2] text-white text-[16px] md:text-[18px] font-bold py-4 px-10 md:px-12 rounded-full hover:opacity-90 transition-opacity"
+      >
+        応募フォームへ
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA Block -->
+  <CTABlock variant="full-width" />
+</BaseLayout>

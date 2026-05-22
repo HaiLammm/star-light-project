@@ -1,11 +1,8 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import creditImg from '../assets/images/icons/credit.png';
 import { SITE_CONFIG } from '../utils/siteConfig';
-
-interface Props {
-  serviceName?: string;
-}
-
-const { serviceName } = Astro.props;
+import { resolveImage } from '../utils/imageImports';
 
 interface Step {
   number: number;
@@ -15,7 +12,15 @@ interface Step {
   description: string;
 }
 
-const steps: Step[] = [
+interface Props {
+  serviceName?: string;
+  steps?: Step[];
+  showPayment?: boolean;
+}
+
+const { serviceName, steps: customSteps, showPayment = true } = Astro.props;
+
+const DEFAULT_STEPS: Step[] = [
   {
     number: 1,
     image: '/images/process/flow_01.jpg',
@@ -44,7 +49,28 @@ const steps: Step[] = [
     heading: '資格を有した専門スタッフが安心・安全を第一に迅速に作業を行います',
     description: 'お見積り内容に同意いただいた上で作業開始となります。安心・安全を第一に迅速に作業いたします。早いものであれば最短15分程度で作業完了いたします。',
   },
+  {
+    number: 5,
+    image: '/images/process/flow_05.jpg',
+    title: 'お支払',
+    heading: '作業完了後、料金をお支払いいただき完了となります',
+    description: '現金、各種クレジットカード、銀行振込など豊富な決済方法をご用意しております。お支払い方法は作業前にご案内いたしますので、ご安心ください。',
+  },
 ];
+
+const rawSteps = (customSteps ?? DEFAULT_STEPS).filter(
+  (s) => showPayment || s.number !== 5
+);
+
+const stepImageOptMap: Record<string, string> = {};
+for (const step of rawSteps) {
+  const meta = await resolveImage(step.image);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 400, height: 240, format: 'webp', quality: 80 });
+    stepImageOptMap[step.image] = opt.src;
+  }
+}
+const steps = rawSteps.map((s) => ({ ...s, image: stepImageOptMap[s.image] ?? s.image }));
 ---
 
 <section class="pt-12 pb-8 md:pt-16 md:pb-6 lg:pt-[100px] lg:pb-[20px]">
@@ -101,8 +127,7 @@ const steps: Step[] = [
       </ol>
     </div>
 
-    <!-- Payment methods section -->
-    <div class="mt-8 sm:mt-10 md:mt-[60px]">
+    {Boolean(showPayment) && <div class="mt-8 sm:mt-10 md:mt-[60px]">
       <h3 class="text-[14px] sm:text-[16px] md:text-[20px] font-bold text-center mb-5 sm:mb-6 md:mb-8">豊富な決済方法を<wbr />ご用意しております</h3>
       <div class="flex flex-col sm:flex-row justify-center items-stretch gap-4 sm:gap-6 md:gap-8">
         <div class="flex flex-col items-center gap-2 sm:gap-3">
@@ -115,7 +140,7 @@ const steps: Step[] = [
         <div class="flex flex-col items-center gap-2 sm:gap-3">
           <p class="text-[13px] sm:text-[14px] md:text-[16px] font-bold">クレジット/デビット決済</p>
           <figure class="w-[100px] sm:w-[120px] md:w-[140px]">
-            <img src="/images/icons/credit.png" alt="クレジット・デビット決済" width="140" height="60" loading="lazy" decoding="async" class="w-full h-auto" />
+            <Image src={creditImg} alt="クレジット・デビット決済" width={140} height={60} format="webp" quality={80} loading="lazy" decoding="async" class="w-full h-auto" />
           </figure>
         </div>
         <div class="hidden sm:block w-px bg-gray-200 self-stretch"></div>
@@ -124,6 +149,6 @@ const steps: Step[] = [
           <p class="text-[12px] sm:text-[13px] md:text-[15px] text-center text-gray-600">お近くの<span class="font-bold text-[14px] sm:text-[16px] md:text-[18px]">銀行</span>または<span class="font-bold text-[14px] sm:text-[16px] md:text-[18px]">郵便局</span></p>
         </div>
       </div>
-    </div>
+    </div>}
   </div>
 </section>

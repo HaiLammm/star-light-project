@@ -10,8 +10,8 @@
   "webDiscountAmount": 1500,
   "serviceArea": ["東京都", "神奈川県", "埼玉県", "千葉県"],
   "imageAlt": "給湯器の点検を行う作業スタッフ",
-  "kvImageDesktop": "/images/services/electricity/water-heater/kv.png",
-  "kvImageMobile": "/images/services/electricity/water-heater/kv_sp.png",
+  "kvImageDesktop": "/images/hero/hero-01.jpeg",
+  "kvImageMobile": "/images/hero/hero-01.jpeg",
   "isEmergency": true,
   "hasFreeEstimate": true,
   "pricingTiers": [

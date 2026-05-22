@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { SITE_CONFIG } from '../utils/siteConfig';
+import { getCollection } from 'astro:content';
+import { generateFAQ } from '../utils/schema';
+
+const breadcrumbItems = [
+  { label: 'TOP', href: '/' },
+  { label: 'よくある質問', href: '/faq' },
+];
+
+const allFaq = await getCollection('faq');
+const sortedFaq = allFaq.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
+
+const categories = [
+  { id: 'electricity', label: '電気まわり' },
+  { id: 'water', label: '水まわり' },
+  { id: 'general', label: '当社について' },
+  { id: 'process', label: '作業について' },
+  { id: 'pricing', label: 'お支払いについて' },
+] as const;
+
+const faqByCategory = categories.map((cat) => ({
+  ...cat,
+  items: sortedFaq
+    .filter((f) => f.data.category === cat.id)
+    .map((f) => ({ question: f.data.question, answer: f.data.answer })),
+})).filter((cat) => cat.items.length > 0);
+
+const allFaqItems = faqByCategory.flatMap((cat) => cat.items);
+const faqSchema = allFaqItems.length > 0 ? generateFAQ(allFaqItems) : null;
+---
+
+<BaseLayout
+  title="よくある質問｜設備人"
+  description="設備人に寄せられるよくある質問をまとめました。電気トラブル・水まわりトラブル・料金・作業の流れについてお答えします。"
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/faq`}
+>
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
+    <Breadcrumb items={breadcrumbItems} />
+  </div>
+
+  <!-- KV Banner -->
+  <section class="bg-[#0044f2] h-[240px] relative flex items-center overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
+      <h1 class="text-[48px] font-black text-white ml-[45px]">よくある質問</h1>
+      <p class="font-[Roboto] text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[20px] -translate-y-1/2 capitalize">Question</p>
+    </div>
+  </section>
+
+  <!-- Category Navigation -->
+  <nav class="max-w-[1200px] mx-auto px-4 py-6 md:py-10">
+    <ul class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
+      {faqByCategory.map((cat) => (
+        <li>
+          <a
+            href={`#faq-${cat.id}`}
+            class="inline-block bg-[#0044f2] text-white text-[12px] sm:text-[14px] md:text-[16px] font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:opacity-80 transition-opacity"
+          >
+            {cat.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <!-- FAQ Sections by Category -->
+  <section class="py-[80px] md:py-[120px]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      {faqByCategory.map((cat) => (
+        <div id={`faq-${cat.id}`} class="mb-12 md:mb-16 scroll-mt-24">
+          <h2 class="text-[18px] sm:text-[22px] md:text-[32px] font-bold text-center mb-4 md:mb-8">
+            {cat.label}
+          </h2>
+          <FAQAccordion items={cat.items} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTABlock variant="full-width" />
+</BaseLayout>

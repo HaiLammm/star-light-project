@@ -16,7 +16,7 @@ const testimonialsCollection = defineCollection({
   type: 'data',
   schema: z.object({
     serviceType: z.string(),
-    serviceCategory: z.enum(['electricity', 'water', 'pest-control']),
+    serviceCategory: z.enum(['electricity', 'water']),
     title: z.string().optional(),
     duration: z.string().optional(),
     cost: z.number(),
@@ -32,7 +32,7 @@ const servicesCollection = defineCollection({
   schema: z.object({
     serviceName: z.string(),
     serviceNameShort: z.string(),
-    category: z.enum(['electricity', 'water', 'pest-control']),
+    category: z.enum(['electricity', 'water']),
     slug: z.string(),
     description: z.string(),
     startingPrice: z.number(),

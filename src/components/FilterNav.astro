@@ -1,0 +1,48 @@
+---
+interface FilterCategory {
+  key: string;
+  label: string;
+  subcategories: { key: string; label: string }[];
+}
+
+interface Props {
+  baseUrl: string;
+  filterBasePath: string;
+  activeFilter?: string;
+  categories: FilterCategory[];
+}
+
+const { baseUrl, filterBasePath, activeFilter, categories } = Astro.props;
+---
+
+<nav aria-label="カテゴリーフィルター" class="mt-[20px] sm:mt-[30px] md:mt-[40px]">
+  <div class="flex flex-wrap gap-[6px] sm:gap-[8px] md:gap-[10px]">
+    <a
+      href={baseUrl}
+      class:list={[
+        'inline-block text-[11px] sm:text-[12px] md:text-[14px] font-bold py-[6px] sm:py-[7px] md:py-[8px] px-[12px] sm:px-[14px] md:px-[18px] rounded-full border transition-colors',
+        !activeFilter ? 'bg-[#0044f2] text-white border-[#0044f2]' : 'bg-white text-[#333] border-[#ccc] hover:bg-[#f0f0f0]',
+      ]}
+      {...(!activeFilter ? { 'aria-current': 'page' } : {})}
+    >
+      すべて
+    </a>
+    {categories.map((cat) => (
+      <>
+        <span class="hidden sm:flex items-center text-[12px] text-[#999] ml-[4px]">{cat.label}</span>
+        {cat.subcategories.map((sub) => (
+          <a
+            href={`${filterBasePath}${sub.key}/`}
+            class:list={[
+              'inline-block text-[11px] sm:text-[12px] md:text-[14px] font-bold py-[6px] sm:py-[7px] md:py-[8px] px-[12px] sm:px-[14px] md:px-[18px] rounded-full border transition-colors',
+              activeFilter === sub.key ? 'bg-[#0044f2] text-white border-[#0044f2]' : 'bg-white text-[#333] border-[#ccc] hover:bg-[#f0f0f0]',
+            ]}
+            {...(activeFilter === sub.key ? { 'aria-current': 'page' } : {})}
+          >
+            {sub.label}
+          </a>
+        ))}
+      </>
+    ))}
+  </div>
+</nav>

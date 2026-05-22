@@ -1,0 +1,52 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+function getPageUrl(page: number): string {
+  if (page === 1) return baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+  return `${baseUrl}/${page}/`;
+}
+
+function getVisiblePages(current: number, total: number): (number | '...')[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages: (number | '...')[] = [1];
+  if (current > 3) pages.push('...');
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+  for (let i = start; i <= end; i++) pages.push(i);
+  if (current < total - 2) pages.push('...');
+  pages.push(total);
+  return pages;
+}
+
+const visiblePages = getVisiblePages(currentPage, totalPages);
+---
+
+{totalPages > 1 && (
+  <nav aria-label="ページナビゲーション" class="flex justify-center items-center gap-[6px] sm:gap-[8px] md:gap-[10px] mt-[30px] sm:mt-[40px] md:mt-[50px]">
+    {currentPage > 1 && (
+      <a href={getPageUrl(currentPage - 1)} class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full border border-[#ccc] text-[14px] sm:text-[16px] hover:bg-[#f0f0f0] transition-colors" aria-label="前のページ">
+        &lt;
+      </a>
+    )}
+    {visiblePages.map((page) => (
+      page === '...' ? (
+        <span class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] text-[14px] sm:text-[16px] text-[#888]">…</span>
+      ) : page === currentPage ? (
+        <span aria-current="page" class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full bg-[#0044f2] text-white text-[14px] sm:text-[16px] font-bold">{page}</span>
+      ) : (
+        <a href={getPageUrl(page)} class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full border border-[#ccc] text-[14px] sm:text-[16px] hover:bg-[#f0f0f0] transition-colors">{page}</a>
+      )
+    ))}
+    {currentPage < totalPages && (
+      <a href={getPageUrl(currentPage + 1)} class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full border border-[#ccc] text-[14px] sm:text-[16px] hover:bg-[#f0f0f0] transition-colors" aria-label="次のページ">
+        &gt;
+      </a>
+    )}
+  </nav>
+)}
