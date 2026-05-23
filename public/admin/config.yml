@@ -3,7 +3,7 @@ backend:
   repo: HaiLammm/star-light-project
   branch: main
   pkce: true
-  app_id: 3824582
+  app_id: Iv23liZiodOxXXvqLcKs
 
 publish_mode: editorial_workflow
 
