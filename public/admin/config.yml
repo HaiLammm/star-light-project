@@ -87,7 +87,8 @@ collections:
     extension: json
     format: json
     create: true
-    slug: "{{slug}}"
+    slug: "faq-{{sortOrder}}"
+    identifier_field: question
     fields:
       - { label: Question, name: question, widget: string }
       - { label: Answer, name: answer, widget: text }
