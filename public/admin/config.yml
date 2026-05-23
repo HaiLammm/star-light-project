@@ -2,7 +2,7 @@ backend:
   name: github
   repo: HaiLammm/star-light-project
   branch: main
-  base_url: https://cms-auth.luonghaimal.workers.dev
+  base_url: https://cms-auth.setsubi-pro.net
   auth_endpoint: /auth
 
 publish_mode: editorial_workflow
