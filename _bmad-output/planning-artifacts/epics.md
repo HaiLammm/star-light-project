@@ -178,6 +178,10 @@ FR42: Epic 5 - Add/edit FAQ entries
 FR43: Epic 5 - Publish blog articles
 FR44: Epic 5 - Preview changes locally
 FR45: Epic 5 - Deploy with auto build
+FR46: Epic 7 - Admin dashboard access with GitHub OAuth
+FR47: Epic 7 - CMS interface for all content types
+FR48: Epic 7 - Embedded GA4 analytics dashboard
+FR49: Epic 7 - Google Search Console links
 
 ## Epic List
 
@@ -204,6 +208,10 @@ Visitor có thể browse blog/column articles. Content manager có thể thêm/s
 ### Epic 6: SEO, Performance & Accessibility Polish
 Search engines có thể crawl, index, và đọc structured data (Schema.org JSON-LD). Site đạt Lighthouse ≥ 95, WCAG 2.1 AA compliance, Core Web Vitals pass, CSP headers, và Cloudflare Pages production deployment.
 **FRs covered:** FR35, FR36, FR37, FR38
+
+### Epic 7: Admin Dashboard & CMS Integration
+Content manager có thể quản lý toàn bộ nội dung website qua web UI (Decap CMS) và xem thống kê truy cập qua embedded Google Analytics dashboard. Không cần biết Git hoặc code. Authentication qua GitHub OAuth.
+**FRs covered:** FR46, FR47, FR48, FR49
 
 ## Epic 1: Project Foundation & Shared Shell
 
@@ -856,3 +864,75 @@ So that I can access emergency repair services regardless of my abilities.
 
 **Given** a user with motion sensitivity
 **Then** `prefers-reduced-motion` disables carousel autoplay and smooth scroll transitions (NFR21)
+
+## Epic 7: Admin Dashboard & CMS Integration
+
+Content manager có thể quản lý toàn bộ nội dung website qua web UI (Decap CMS) và xem thống kê truy cập qua embedded Google Analytics dashboard. Không cần biết Git hoặc code. Authentication qua GitHub OAuth.
+
+### Story 7.1: Setup Decap CMS with GitHub Authentication
+
+As a content manager,
+I want to access a web-based admin interface at /admin,
+So that I can manage website content without using Git or code editors.
+
+**Acceptance Criteria:**
+
+**Given** a content manager navigates to `/admin`
+**When** the page loads
+**Then** Decap CMS login page renders with GitHub sign-in button
+**And** after GitHub OAuth, CMS dashboard shows all 6 content types in sidebar navigation
+**And** `public/admin/index.html` loads Decap CMS from CDN
+**And** `public/admin/config.yml` defines backend (github), repo, branch, and media folder settings
+**And** GitHub OAuth application is configured with correct callback URL
+
+### Story 7.2: Configure CMS Collections for All Content Types
+
+As a content manager,
+I want form-based editors for all content types,
+So that I can add/edit/remove services, cases, testimonials, FAQ, blog, and company info via UI.
+
+**Acceptance Criteria:**
+
+**Given** a content manager is logged into CMS
+**When** they select a content type from the sidebar
+**Then** the editor displays appropriate form fields:
+- **Services:** serviceName, startingPrice, pricing tiers (list widget), FAQ entries, imageAlt, isEmergency, serviceArea
+- **Cases:** photo (image widget), category (select), location, duration, cost, description (Markdown editor)
+- **Testimonials:** service type (select), cost, customer message (text)
+- **FAQ:** question, answer (Markdown), category (select)
+- **Blog:** title, date, excerpt, category, body (Markdown editor), featured image
+- **Company:** office data (list widget), philosophy content (Markdown)
+**And** image uploads save to `public/images/` in correct subdirectories
+**And** CMS editorial workflow is enabled (draft → review → ready → publish)
+**And** content saved by CMS passes Zod schema validation at build time
+
+### Story 7.3: Build Analytics Dashboard Page
+
+As a content manager,
+I want to view website traffic and search performance from the admin area,
+So that I can understand content performance without switching between multiple tools.
+
+**Acceptance Criteria:**
+
+**Given** a content manager accesses the analytics page
+**When** the page renders
+**Then** embedded Google Analytics 4 dashboard shows: page views, top pages, traffic sources, user demographics
+**And** direct link to Google Search Console property opens in new tab
+**And** page is not publicly accessible (requires authentication or is listed in CMS custom pages)
+**And** setup instructions for GA4 property ID configuration are provided
+**And** `robots.txt` excludes `/admin/` from crawling
+
+### Story 7.4: Admin Deployment and Documentation
+
+As a content manager,
+I want clear documentation on using the admin dashboard,
+So that I can onboard quickly and manage content independently.
+
+**Acceptance Criteria:**
+
+**Given** a new content manager needs to start using the admin
+**When** they read the admin guide
+**Then** it covers: admin URL, GitHub OAuth login steps, content editing walkthrough per type, image upload guidelines, publishing workflow, and analytics access
+**And** troubleshooting section addresses: login failures, build errors after publish, image size limits
+**And** Cloudflare Pages environment variables for Decap CMS backend are documented
+**And** content workflow diagram is included: Edit in CMS → Auto-commit → Auto-deploy (~2 min)

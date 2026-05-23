@@ -35,7 +35,8 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-08
-last_updated: 2026-05-22
+last_updated: 2026-05-23
+# Epic 7 added via Correct Course: 2026-05-23
 # Story 6-3 review: 2026-05-22
 # Story 6-3 created: 2026-05-22
 # Story 6-2 review: 2026-05-22
@@ -133,3 +134,11 @@ development_status:
   6-4-security-headers-and-cloudflare-pages-production-deployment: backlog
   6-5-wcag-2-1-aa-accessibility-audit-and-fixes: backlog
   epic-6-retrospective: optional
+
+  # Epic 7: Admin Dashboard & CMS Integration
+  epic-7: backlog
+  7-1-setup-decap-cms-with-github-authentication: backlog
+  7-2-configure-cms-collections-for-all-content-types: backlog
+  7-3-build-analytics-dashboard-page: backlog
+  7-4-admin-deployment-and-documentation: backlog
+  epic-7-retrospective: optional

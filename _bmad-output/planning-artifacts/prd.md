@@ -101,7 +101,7 @@ Same content, same design, superior technical foundation. By rebuilding star-lig
 
 ### Growth Features (Post-MVP)
 
-- Blog CMS integration (headless CMS for content updates)
+- ~~Blog CMS integration~~ → MOVED TO MVP as full Decap CMS integration (Epic 7)
 - Google Business Profile optimization and linking
 - Call tracking integration (measure phone call conversions)
 - A/B testing for CTA placements
@@ -386,6 +386,13 @@ WCAG 2.1 AA compliance required. See Non-Functional Requirements > Accessibility
 - FR43: Content manager can publish new blog/column articles
 - FR44: Content manager can preview changes locally before deployment
 - FR45: Content manager can deploy content updates with automatic build and publish
+
+### Admin Dashboard & CMS
+
+- FR46: Content manager can access admin dashboard via /admin URL with GitHub OAuth authentication
+- FR47: Content manager can add/edit/remove all content types (services, cases, testimonials, FAQ, blog, company) via web-based CMS interface (Decap CMS)
+- FR48: Content manager can view website traffic statistics via embedded Google Analytics 4 dashboard
+- FR49: Content manager can view search indexing status via Google Search Console links
 
 ## Non-Functional Requirements
 
