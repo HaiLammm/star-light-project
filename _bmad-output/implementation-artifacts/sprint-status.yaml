@@ -36,6 +36,9 @@
 
 generated: 2026-05-08
 last_updated: 2026-05-23
+# Story 7-4 review: 2026-05-23
+# Story 7-4 in-progress: 2026-05-23
+# Story 7-4 created: 2026-05-23
 # Story 7-3 review: 2026-05-23
 # Story 7-3 in-progress: 2026-05-23
 # Story 7-3 created: 2026-05-23
@@ -148,5 +151,5 @@ development_status:
   7-1-setup-decap-cms-with-github-authentication: review
   7-2-configure-cms-collections-for-all-content-types: review
   7-3-build-analytics-dashboard-page: review
-  7-4-admin-deployment-and-documentation: backlog
+  7-4-admin-deployment-and-documentation: review
   epic-7-retrospective: optional

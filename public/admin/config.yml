@@ -2,8 +2,7 @@ backend:
   name: github
   repo: HaiLammm/star-light-project
   branch: main
-  pkce: true
-  app_id: Iv23liZiodOxXXvqLcKs
+  base_url: https://cms-auth.luonghaimal.workers.dev
 
 publish_mode: editorial_workflow
 
