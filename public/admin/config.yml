@@ -92,7 +92,7 @@ collections:
     fields:
       - { label: Question, name: question, widget: string }
       - { label: Answer, name: answer, widget: text }
-      - { label: Category, name: category, widget: string }
+      - { label: Category, name: category, widget: select, options: [electricity, water, general, process, pricing] }
       - { label: Sort Order, name: sortOrder, widget: number, value_type: int }
 
   - name: blog
