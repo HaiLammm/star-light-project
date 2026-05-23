@@ -1,0 +1,360 @@
+---
+/**
+ * GA4 Analytics Dashboard — Setup Instructions
+ *
+ * OPTION A: Google Analytics Embed API (interactive charts)
+ * 1. Go to https://console.cloud.google.com/
+ * 2. Create or select a project
+ * 3. Enable "Google Analytics Data API" (APIs & Services > Library)
+ * 4. Create OAuth 2.0 Client ID (APIs & Services > Credentials > Create Credentials > OAuth client ID)
+ *    - Application type: Web application
+ *    - Authorized JavaScript origins: https://star-light15.net
+ *    - Authorized redirect URIs: https://star-light15.net/admin/analytics
+ * 5. Copy the Client ID and replace GA_CLIENT_ID below
+ * 6. Go to Google Analytics > Admin > Property Settings
+ * 7. Copy the Property ID (numeric, e.g. 123456789) and replace GA_PROPERTY_ID below
+ *
+ * OPTION B: Looker Studio Embed (simpler, no OAuth setup)
+ * 1. Go to https://lookerstudio.google.com/
+ * 2. Create a report connected to your GA4 property
+ * 3. File > Embed report > Copy the embed URL
+ * 4. Set USE_LOOKER_STUDIO = true and paste URL in LOOKER_STUDIO_URL below
+ */
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Analytics Dashboard — 設備プロ Admin</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+    .admin-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-header h1 { font-size: 20px; font-weight: 600; }
+    .admin-nav { display: flex; gap: 16px; align-items: center; }
+    .admin-nav a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .admin-nav a:hover { background: rgba(255,255,255,0.1); }
+    .admin-nav a.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+    .dashboard { max-width: 1200px; margin: 24px auto; padding: 0 24px; }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .card h2 { font-size: 18px; margin-bottom: 16px; color: #1a1a2e; }
+    .card p { color: #666; font-size: 14px; line-height: 1.6; }
+
+    .link-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .link-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: box-shadow 0.2s, transform 0.1s;
+    }
+    .link-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); transform: translateY(-1px); }
+    .link-card .icon {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+    .link-card .icon.ga { background: #fff3e0; }
+    .link-card .icon.gsc { background: #e8f5e9; }
+    .link-card .icon.cms { background: #e3f2fd; }
+    .link-card .label { font-weight: 600; font-size: 15px; }
+    .link-card .desc { font-size: 13px; color: #666; margin-top: 2px; }
+
+    .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
+    .chart-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      min-height: 300px;
+    }
+    .chart-card h3 { font-size: 16px; margin-bottom: 16px; color: #333; }
+    .chart-container { width: 100%; min-height: 250px; }
+
+    #auth-section {
+      text-align: center;
+      padding: 40px 24px;
+    }
+    #auth-button {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #4285f4;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #auth-button:hover { background: #3367d6; }
+
+    .setup-notice {
+      background: #fff8e1;
+      border: 1px solid #ffecb3;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: #5d4037;
+    }
+    .setup-notice code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .looker-frame { width: 100%; height: 800px; border: 0; border-radius: 8px; }
+
+    @media (max-width: 768px) {
+      .admin-header { flex-direction: column; gap: 12px; text-align: center; }
+      .charts-grid { grid-template-columns: 1fr; }
+      .link-cards { grid-template-columns: 1fr; }
+      .dashboard { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <h1>📊 Analytics Dashboard</h1>
+    <nav class="admin-nav">
+      <a href="/admin/">CMS管理</a>
+      <a href="/admin/analytics" class="active">アナリティクス</a>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+
+    <!-- Quick Links -->
+    <div class="link-cards">
+      <a href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer" class="link-card">
+        <div class="icon ga">📈</div>
+        <div>
+          <div class="label">Google Analytics 4</div>
+          <div class="desc">フル GA4 ダッシュボードを開く</div>
+        </div>
+      </a>
+      <a href="https://search.google.com/search-console?resource_id=sc-domain:star-light15.net" target="_blank" rel="noopener noreferrer" class="link-card">
+        <div class="icon gsc">🔍</div>
+        <div>
+          <div class="label">Google Search Console</div>
+          <div class="desc">検索パフォーマンスを確認</div>
+        </div>
+      </a>
+      <a href="/admin/" class="link-card">
+        <div class="icon cms">📝</div>
+        <div>
+          <div class="label">コンテンツ管理</div>
+          <div class="desc">Decap CMS に戻る</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- GA4 Dashboard Section -->
+    <div id="analytics-dashboard">
+
+      <!-- Looker Studio Embed (Option B — default if configured) -->
+      <div id="looker-section" style="display:none;">
+        <div class="card">
+          <h2>サイト分析レポート</h2>
+          <iframe id="looker-frame" class="looker-frame" allowfullscreen
+            sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- GA Embed API (Option A) -->
+      <div id="gapi-section" style="display:none;">
+        <div id="auth-section" class="card">
+          <p style="margin-bottom:16px;">Googleアカウントでログインして、アナリティクスデータを表示します。</p>
+          <div id="auth-button-container"></div>
+        </div>
+
+        <div id="charts-wrapper" style="display:none;">
+          <div class="charts-grid">
+            <div class="chart-card">
+              <h3>📊 ページビュー（過去30日間）</h3>
+              <div id="chart-pageviews" class="chart-container"></div>
+            </div>
+            <div class="chart-card">
+              <h3>👥 アクティブユーザー</h3>
+              <div id="chart-users" class="chart-container"></div>
+            </div>
+            <div class="chart-card">
+              <h3>📄 人気ページ（トップ10）</h3>
+              <div id="chart-top-pages" class="chart-container"></div>
+            </div>
+            <div class="chart-card">
+              <h3>🌐 トラフィックソース</h3>
+              <div id="chart-sources" class="chart-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Setup Notice (shown when neither option is configured) -->
+      <div id="setup-section" class="card" style="display:none;">
+        <h2>⚙️ セットアップが必要です</h2>
+        <div class="setup-notice">
+          <p><strong>アナリティクスダッシュボードを使用するには、以下の設定が必要です：</strong></p>
+          <br/>
+          <p><strong>オプション A: GA4 Embed API（インタラクティブチャート）</strong></p>
+          <ol style="margin:8px 0 16px 20px;">
+            <li>Google Cloud Console でプロジェクトを作成</li>
+            <li>Google Analytics Data API を有効化</li>
+            <li>OAuth 2.0 クライアント ID を作成</li>
+            <li>このファイルの <code>GA_CLIENT_ID</code> と <code>GA_PROPERTY_ID</code> を設定</li>
+          </ol>
+          <p><strong>オプション B: Looker Studio 埋め込み（推奨・簡単）</strong></p>
+          <ol style="margin:8px 0 0 20px;">
+            <li>Looker Studio でGA4接続レポートを作成</li>
+            <li>レポートの埋め込みURLを取得</li>
+            <li>このファイルの <code>USE_LOOKER_STUDIO = true</code> と <code>LOOKER_STUDIO_URL</code> を設定</li>
+          </ol>
+        </div>
+        <p>詳細な手順はこのページのソースコード先頭のコメントを参照してください。</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script is:inline>
+    // ============================================================
+    // CONFIGURATION — Edit these values for your GA4 property
+    // ============================================================
+    const GA_CLIENT_ID = '194206511360-lpm910a206tdjkkpgd23ccc0i3lium6n.apps.googleusercontent.com';
+    const GA_PROPERTY_ID = '469731512';
+
+    const USE_LOOKER_STUDIO = false;
+    const LOOKER_STUDIO_URL = '';  // e.g. 'https://lookerstudio.google.com/embed/reporting/REPORT_ID/page/PAGE_ID'
+    // ============================================================
+
+    (function() {
+      if (USE_LOOKER_STUDIO && LOOKER_STUDIO_URL) {
+        document.getElementById('looker-section').style.display = 'block';
+        document.getElementById('looker-frame').src = LOOKER_STUDIO_URL;
+        return;
+      }
+
+      if (GA_CLIENT_ID && GA_PROPERTY_ID) {
+        document.getElementById('gapi-section').style.display = 'block';
+        loadGapiAnalytics();
+        return;
+      }
+
+      document.getElementById('setup-section').style.display = 'block';
+    })();
+
+    function loadGapiAnalytics() {
+      var script = document.createElement('script');
+      script.src = 'https://apis.google.com/js/api.js';
+      script.onload = function() {
+        gapi.load('analytics', function() {
+          gapi.analytics.ready(function() {
+            gapi.analytics.auth.authorize({
+              container: 'auth-button-container',
+              clientid: GA_CLIENT_ID,
+            });
+
+            gapi.analytics.auth.on('signIn', function() {
+              document.getElementById('auth-section').style.display = 'none';
+              document.getElementById('charts-wrapper').style.display = 'block';
+              renderCharts();
+            });
+          });
+        });
+      };
+      document.head.appendChild(script);
+    }
+
+    function renderCharts() {
+      var viewId = 'ga:' + GA_PROPERTY_ID;
+
+      new gapi.analytics.googleCharts.DataChart({
+        query: {
+          ids: viewId,
+          metrics: 'ga:pageviews',
+          dimensions: 'ga:date',
+          'start-date': '30daysAgo',
+          'end-date': 'yesterday',
+        },
+        chart: { container: 'chart-pageviews', type: 'LINE', options: { height: 250 } }
+      }).execute();
+
+      new gapi.analytics.googleCharts.DataChart({
+        query: {
+          ids: viewId,
+          metrics: 'ga:users',
+          dimensions: 'ga:date',
+          'start-date': '30daysAgo',
+          'end-date': 'yesterday',
+        },
+        chart: { container: 'chart-users', type: 'LINE', options: { height: 250 } }
+      }).execute();
+
+      new gapi.analytics.googleCharts.DataChart({
+        query: {
+          ids: viewId,
+          metrics: 'ga:pageviews',
+          dimensions: 'ga:pagePath',
+          'start-date': '30daysAgo',
+          'end-date': 'yesterday',
+          'max-results': 10,
+          sort: '-ga:pageviews',
+        },
+        chart: { container: 'chart-top-pages', type: 'TABLE', options: { height: 250 } }
+      }).execute();
+
+      new gapi.analytics.googleCharts.DataChart({
+        query: {
+          ids: viewId,
+          metrics: 'ga:sessions',
+          dimensions: 'ga:source',
+          'start-date': '30daysAgo',
+          'end-date': 'yesterday',
+          'max-results': 8,
+          sort: '-ga:sessions',
+        },
+        chart: { container: 'chart-sources', type: 'PIE', options: { height: 250 } }
+      }).execute();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+backend:
+  name: github
+  repo: HaiLammm/star-light-project
+  branch: main
+
+publish_mode: editorial_workflow
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: services
+    label: Services
+    folder: src/content/services
+    extension: json
+    format: json
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Service Name, name: serviceName, widget: string }
+      - { label: Service Name Short, name: serviceNameShort, widget: string }
+      - { label: Category, name: category, widget: select, options: [electricity, water] }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Starting Price, name: startingPrice, widget: number, value_type: int }
+      - { label: Original Price, name: originalPrice, widget: number, value_type: int }
+      - { label: Web Discount Amount, name: webDiscountAmount, widget: number, value_type: int }
+      - { label: Service Area, name: serviceArea, widget: list, field: { label: Area, name: area, widget: string } }
+      - { label: Image Alt, name: imageAlt, widget: string }
+      - { label: Is Emergency, name: isEmergency, widget: boolean, default: false }
+      - { label: Has Free Estimate, name: hasFreeEstimate, widget: boolean, default: true }
+      - { label: KV Image Desktop, name: kvImageDesktop, widget: string, required: false }
+      - { label: KV Image Mobile, name: kvImageMobile, widget: string, required: false }
+      - name: pricingTiers
+        label: Pricing Tiers
+        widget: list
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Price, name: price, widget: number, value_type: int }
+          - { label: Image URL, name: imageUrl, widget: string }
+          - { label: Image Alt, name: imageAlt, widget: string }
+      - name: faqEntries
+        label: FAQ Entries
+        widget: list
+        fields:
+          - { label: Question, name: question, widget: string }
+          - { label: Answer, name: answer, widget: text }
+
+  - name: cases
+    label: Cases
+    folder: src/content/cases
+    create: true
+    slug: "case-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Service Category, name: serviceCategory, widget: select, options: [electricity, water] }
+      - { label: Service Slug, name: serviceSlug, widget: string }
+      - { label: Location, name: location, widget: string }
+      - { label: Duration, name: duration, widget: string }
+      - { label: Cost, name: cost, widget: number, value_type: int }
+      - { label: Image Alt, name: imageAlt, widget: string }
+      - { label: Published Date, name: publishedDate, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: testimonials
+    label: Testimonials
+    folder: src/content/testimonials
+    extension: json
+    format: json
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Service Type, name: serviceType, widget: string }
+      - { label: Service Category, name: serviceCategory, widget: select, options: [electricity, water] }
+      - { label: Title, name: title, widget: string, required: false }
+      - { label: Duration, name: duration, widget: string, required: false }
+      - { label: Cost, name: cost, widget: number, value_type: int }
+      - { label: Message, name: message, widget: text }
+      - { label: Author Initial, name: authorInitial, widget: string }
+      - { label: Location, name: location, widget: string, required: false }
+      - { label: Rating, name: rating, widget: number, value_type: int, required: false }
+
+  - name: faq
+    label: FAQ
+    folder: src/content/faq
+    extension: json
+    format: json
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Question, name: question, widget: string }
+      - { label: Answer, name: answer, widget: text }
+      - { label: Category, name: category, widget: string }
+      - { label: Sort Order, name: sortOrder, widget: number, value_type: int }
+
+  - name: blog
+    label: Blog
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Published Date, name: publishedDate, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: Category, name: category, widget: select, options: [electricity, water] }
+      - { label: Subcategory, name: subcategory, widget: string, required: false }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Image Alt, name: imageAlt, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: company
+    label: Company
+    files:
+      - name: offices
+        label: Offices
+        file: src/content/company/offices.json
+        fields:
+          - { label: Type, name: type, widget: hidden, default: office }
+          - { label: Office Name, name: officeName, widget: string }
+          - { label: Address, name: address, widget: string }
+          - { label: Region, name: region, widget: string }
+          - { label: Area Served, name: areaServed, widget: list, field: { label: Area, name: area, widget: string } }
+      - name: philosophy
+        label: Philosophy
+        file: src/content/company/philosophy.json
+        fields:
+          - { label: Type, name: type, widget: hidden, default: philosophy }
+          - { label: Hero Subheading, name: heroSubheading, widget: string }
+          - { label: Section Title, name: sectionTitle, widget: string }
+          - { label: Section Body, name: sectionBody, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+          - name: promises
+            label: Promises
+            widget: list
+            fields:
+              - { label: Number, name: number, widget: string }
+              - { label: Text, name: text, widget: string }

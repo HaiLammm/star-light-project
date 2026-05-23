@@ -36,6 +36,14 @@
 
 generated: 2026-05-08
 last_updated: 2026-05-23
+# Story 7-3 review: 2026-05-23
+# Story 7-3 in-progress: 2026-05-23
+# Story 7-3 created: 2026-05-23
+# Story 7-2 review: 2026-05-23
+# Story 7-2 in-progress: 2026-05-23
+# Story 7-2 created: 2026-05-23
+# Story 7-1 review: 2026-05-23
+# Story 7-1 created: 2026-05-23
 # Epic 7 added via Correct Course: 2026-05-23
 # Story 6-3 review: 2026-05-22
 # Story 6-3 created: 2026-05-22
@@ -136,9 +144,9 @@ development_status:
   epic-6-retrospective: optional
 
   # Epic 7: Admin Dashboard & CMS Integration
-  epic-7: backlog
-  7-1-setup-decap-cms-with-github-authentication: backlog
-  7-2-configure-cms-collections-for-all-content-types: backlog
-  7-3-build-analytics-dashboard-page: backlog
+  epic-7: in-progress
+  7-1-setup-decap-cms-with-github-authentication: review
+  7-2-configure-cms-collections-for-all-content-types: review
+  7-3-build-analytics-dashboard-page: review
   7-4-admin-deployment-and-documentation: backlog
   epic-7-retrospective: optional
