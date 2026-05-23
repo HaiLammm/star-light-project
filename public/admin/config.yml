@@ -4,7 +4,7 @@ backend:
   branch: main
   base_url: https://cms-auth.luonghaimal.workers.dev
 
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow
 
 media_folder: public/images
 public_folder: /images
