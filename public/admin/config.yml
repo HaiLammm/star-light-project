@@ -2,8 +2,8 @@ backend:
   name: github
   repo: HaiLammm/star-light-project
   branch: main
-  base_url: https://cms-auth.setsubi-pro.net
-  auth_endpoint: /auth
+  pkce: true
+  app_id: 3824582
 
 publish_mode: editorial_workflow
 
