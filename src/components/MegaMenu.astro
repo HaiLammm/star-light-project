@@ -11,7 +11,7 @@ import { NAVIGATION } from '../utils/siteConfig';
         aria-haspopup="true"
         aria-controls={`menu-panel-${index}`}
         data-menu-trigger
-        class="relative text-[15px] font-medium text-text-primary hover:text-orange transition-colors flex items-center gap-1 py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#fbc102] after:scale-x-0 after:origin-right after:transition-transform after:duration-200 hover:after:scale-x-100 hover:after:origin-left"
+        class="relative text-[13px] xl:text-[15px] font-medium text-text-primary hover:text-orange transition-colors flex items-center gap-1 py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#fbc102] after:scale-x-0 after:origin-right after:transition-transform after:duration-200 hover:after:scale-x-100 hover:after:origin-left whitespace-nowrap"
       >
         {item.icon && (
           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -42,7 +42,7 @@ import { NAVIGATION } from '../utils/siteConfig';
       </div>
     </div>
   ) : (
-    <a href={item.href} class="relative text-[15px] font-medium text-text-primary hover:text-orange transition-colors py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#fbc102] after:scale-x-0 after:origin-right after:transition-transform after:duration-200 hover:after:scale-x-100 hover:after:origin-left">
+    <a href={item.href} class="relative text-[13px] xl:text-[15px] font-medium text-text-primary hover:text-orange transition-colors py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#fbc102] after:scale-x-0 after:origin-right after:transition-transform after:duration-200 hover:after:scale-x-100 hover:after:origin-left whitespace-nowrap">
       {item.label}
     </a>
   )

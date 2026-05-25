@@ -5,26 +5,26 @@ import MobileMenu from './MobileMenu.tsx';
 ---
 
 <header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
-  <div class="w-full flex items-center justify-between h-[60px] lg:h-[100px] pl-[10px] pr-[60px] lg:pl-[20px] lg:pr-0">
+  <div class="w-full flex items-center justify-between h-[60px] lg:h-[100px] pl-[10px] pr-[60px] lg:pl-[10px] xl:pl-[20px] lg:pr-0">
     <h1 class="shrink-0 relative z-10 m-0 leading-none">
       <a href="/">
-        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[153px] lg:w-[230px] object-contain" />
+        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[153px] lg:w-[180px] xl:w-[230px] object-contain" />
       </a>
     </h1>
 
     <nav aria-label="メインナビゲーション" class="hidden lg:flex items-center justify-end h-full">
-      <div class="flex items-center gap-5 xl:gap-8">
+      <div class="flex items-center gap-3 xl:gap-5 2xl:gap-8 header-nav-items">
         <MegaMenu />
       </div>
 
-      <div class="ml-5 xl:ml-7 flex flex-col items-center">
-        <span class="inline-flex items-center justify-center w-[186px] h-[20px] rounded-[10px] border border-[#2856cb] text-[11px] font-bold text-[#2856cb] whitespace-nowrap leading-none">
+      <div class="ml-3 xl:ml-5 2xl:ml-7 flex flex-col items-center shrink-0">
+        <span class="inline-flex items-center justify-center w-[160px] xl:w-[186px] h-[18px] xl:h-[20px] rounded-[10px] border border-[#2856cb] text-[10px] xl:text-[11px] font-bold text-[#2856cb] whitespace-nowrap leading-none">
           電話相談無料！年中無休で対応
         </span>
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="flex items-center justify-center gap-[3px] font-['Roboto',sans-serif] text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity mb-[15px]"
+          class="flex items-center justify-center gap-[3px] font-['Roboto',sans-serif] text-[22px] xl:text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity mb-[15px] whitespace-nowrap"
         >
           <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[14px] h-auto" style="filter:brightness(0) saturate(100%) invert(18%) sepia(89%) saturate(3642%) hue-rotate(224deg) brightness(95%) contrast(107%);" />
           {SITE_CONFIG.phone.display}
@@ -33,9 +33,9 @@ import MobileMenu from './MobileMenu.tsx';
 
       <a
         href="/contact"
-        class="ml-[9px] self-start w-[160px] h-[80px] xl:h-[100px] flex items-center justify-center gap-[7px] rounded-bl-[20px] bg-[#fc4076] hover:opacity-90 text-white text-[18px] font-bold leading-[1.2] text-center transition-opacity"
+        class="ml-[9px] self-start w-[120px] xl:w-[160px] h-[80px] xl:h-[100px] flex items-center justify-center gap-[5px] xl:gap-[7px] rounded-bl-[20px] bg-[#fc4076] hover:opacity-90 text-white text-[15px] xl:text-[18px] font-bold leading-[1.2] text-center transition-opacity shrink-0"
       >
-        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[40px] h-[40px]" />
+        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[30px] xl:w-[40px] h-auto" />
         <span>メールで<br />無料相談</span>
       </a>
     </nav>
