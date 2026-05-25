@@ -129,19 +129,19 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
                     className="w-full h-full object-cover rounded-[40px] md:rounded-[60px]"
                   />
                 </figure>
-                <div className="px-[14px] md:px-[19px] mt-2 md:mt-[14px]">
-                  <h3 className="text-sm md:text-[clamp(16px,1.77vw,22px)] font-extrabold text-gray-900 leading-snug group-hover:text-[#ff4176] transition-colors duration-200 line-clamp-2">
+                <div className="px-[14px] md:px-[19px] mt-2 md:mt-[14px] overflow-hidden">
+                  <h3 className="text-sm md:text-[clamp(16px,1.77vw,22px)] font-extrabold text-gray-900 leading-snug group-hover:text-[#ff4176] transition-colors duration-200 line-clamp-2 overflow-wrap-anywhere">
                     {slide.label}
                   </h3>
-                  <p className="text-[9px] md:text-[clamp(10px,0.97vw,12px)] text-gray-600 mt-0.5 line-clamp-2">{slide.description}</p>
+                  <p className="text-[9px] md:text-[clamp(10px,0.97vw,12px)] text-gray-600 mt-0.5 line-clamp-2 overflow-wrap-anywhere">{slide.description}</p>
                   <div className="mt-1 md:mt-2">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="text-[9px] md:text-[clamp(10px,0.97vw,12px)]">作業料金</span>
                       <span className="inline-block bg-black text-white text-[8px] md:text-[clamp(9px,0.97vw,12px)] font-medium px-2 md:px-[14px] py-px rounded-[3px] md:rounded-[5px]">
                         WEB割引
                       </span>
                     </div>
-                    <p className="font-[Roboto] text-xl md:text-[clamp(24px,2.58vw,32px)] font-bold text-[#ff4176] flex items-center gap-0.5 md:gap-1 mt-0.5">
+                    <p className="font-[Roboto] text-xl md:text-[clamp(24px,2.58vw,32px)] font-bold text-[#ff4176] flex items-center gap-0.5 md:gap-1 mt-0.5 flex-wrap">
                       {slide.startingPrice.toLocaleString()}
                       <span className="text-[9px] md:text-[clamp(10px,1.13vw,14px)] font-medium text-gray-900 translate-y-[2px]" style={{ fontFamily: 'Noto Sans JP, sans-serif' }}>
                         円[税込]〜

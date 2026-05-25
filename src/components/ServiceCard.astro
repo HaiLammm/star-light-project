@@ -24,15 +24,15 @@ const { service, imageSrc, imageAlt, loading = 'lazy' } = Astro.props;
       class="w-full h-full object-cover"
     />
   </figure>
-  <div class="px-2 md:px-4 mt-4 md:mt-6 flex flex-col flex-grow">
-    <h3 class="text-base md:text-lg font-extrabold text-gray-900 leading-snug group-hover:text-[#ff4176] transition-colors duration-200 ease">{service.label}</h3>
-    <p class="text-xs text-gray-600 mt-1">{service.description}</p>
+  <div class="px-2 md:px-4 mt-4 md:mt-6 flex flex-col flex-grow overflow-hidden">
+    <h3 class="text-base md:text-lg font-extrabold text-gray-900 leading-snug group-hover:text-[#ff4176] transition-colors duration-200 ease line-clamp-2">{service.label}</h3>
+    <p class="text-xs text-gray-600 mt-1 line-clamp-2">{service.description}</p>
     <div class="mt-auto pt-3">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
         <span class="text-xs">作業料金</span>
         <span class="inline-block bg-black text-white text-[10px] md:text-xs font-medium px-3 py-0.5 rounded-md">WEB割引</span>
       </div>
-      <p class="font-[Roboto] text-2xl md:text-3xl font-bold text-[#ff4176] flex items-center gap-1 mt-1">
+      <p class="font-[Roboto] text-2xl md:text-3xl font-bold text-[#ff4176] flex items-center gap-1 mt-1 flex-wrap">
         {service.startingPrice.toLocaleString()}<span class="font-[Noto_Sans_JP] text-sm font-medium text-gray-900">円[税込]〜</span>
       </p>
     </div>
