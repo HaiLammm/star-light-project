@@ -34,7 +34,7 @@ const DEFAULT_STEPS: Step[] = [
     title: 'ご訪問',
     heading: 'お問い合わせから最短10分で最寄りの事業所から専門スタッフが現場に駆けつけます',
     description: '最寄りの事業所から最短10分で作業スタッフが急行いたします。マナー研修を実施。安心・安全・丁寧を徹底しておりますので安心してご依頼ください。',
-  },
+    },
   {
     number: 3,
     image: '/images/process/flow_03.jpg',
@@ -102,7 +102,7 @@ const steps = rawSteps.map((s) => ({ ...s, image: stepImageOptMap[s.image] ?? s.
             </figure>
             <div class="flex-grow min-w-0 w-full overflow-hidden">
               <p class="text-[12px] sm:text-base md:text-xl font-bold leading-snug mb-2 sm:mb-3 break-words overflow-wrap-anywhere">{step.heading}</p>
-              <p class="text-[10px] sm:text-sm md:text-base text-gray-600 leading-snug break-words overflow-wrap-anywhere">{step.description}</p>
+              <p class="text-[9px] sm:text-sm md:text-base text-gray-600 leading-snug break-words overflow-wrap-anywhere">{step.description}</p>
               {step.number === 1 && (
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2 sm:mt-4 w-full">
                   <a
