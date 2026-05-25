@@ -17,27 +17,38 @@ const phone = SITE_CONFIG.phone;
 ---
 
 {variant === 'sticky' && (
-  <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden backdrop-blur-[30px] bg-white/60 pb-[env(safe-area-inset-bottom)]">
-    <div class="flex items-center justify-center gap-2 px-4 py-[10px]">
+  <div
+    class="fixed bottom-0 left-0 right-0 z-40 md:hidden pb-[env(safe-area-inset-bottom)]"
+    style="--u:min(2.6667vw,11px);backdrop-filter:blur(calc(var(--u)*3));background:rgba(255,255,255,0.6);"
+  >
+    <div class="flex items-center justify-center" style="padding:var(--u);gap:calc(var(--u)*0.5);">
       <a
         href={phone.href}
         aria-label={phone.ariaLabel}
-        class="flex flex-col items-center justify-center w-[290px] border-2 border-[#ff4176] rounded-2xl bg-white py-1.5"
+        class="flex flex-col items-center justify-center bg-white"
+        style="width:calc(var(--u)*29);border:calc(var(--u)*0.2) solid #ff4176;border-radius:calc(var(--u)*1.6);"
       >
-        <span class="flex items-center justify-center w-[180px] h-[16.5px] rounded-full border border-[#ff4176] text-[10px] font-bold text-[#ff4176]">
+        <span
+          class="flex items-center justify-center font-bold text-[#ff4176]"
+          style="width:calc(var(--u)*18);height:calc(var(--u)*1.65);border-radius:calc(var(--u)*0.8);border:calc(var(--u)*0.1) solid #ff4176;font-size:var(--u);"
+        >
           電話相談無料！年中無休で対応
         </span>
-        <span class="mt-0.5 flex items-center justify-center gap-[5px] font-['Roboto',sans-serif] text-[24px] font-bold text-[#ff4176]">
-          <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[13px] h-auto shrink-0" />
+        <span
+          class="flex items-center justify-center font-bold text-[#ff4176]"
+          style="font-family:'Roboto',sans-serif;font-size:calc(var(--u)*2.4);gap:calc(var(--u)*0.5);"
+        >
+          <img src="/images/cta/cta_tel_icon.svg" alt="" style="width:calc(var(--u)*1.33);height:auto;flex-shrink:0;" />
           {phone.display}
         </span>
       </a>
       <a
         href="/contact"
-        class="flex flex-col items-center justify-center w-[60px] h-[60px] gap-[3px] rounded-2xl bg-[#ff4176]"
+        class="flex flex-col items-center justify-center bg-[#ff4176]"
+        style="width:calc(var(--u)*6);height:calc(var(--u)*6);gap:calc(var(--u)*0.3);border-radius:calc(var(--u)*1.6);"
       >
-        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] h-[24px]" />
-        <span class="text-[10px] font-bold leading-tight text-white text-center">無料相談</span>
+        <img src="/images/cta/cta_contact_icon.svg" alt="" style="width:calc(var(--u)*2.4);height:auto;aspect-ratio:1/1;" />
+        <span class="font-bold text-white text-center" style="font-size:var(--u);line-height:1.2;">無料相談</span>
       </a>
     </div>
   </div>
