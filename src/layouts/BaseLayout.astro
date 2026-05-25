@@ -28,7 +28,7 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     <link rel="alternate" hreflang="ja" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
     <meta property="og:locale" content="ja_JP" />
-    <meta property="og:site_name" content={SITE_CONFIG.companyName} />
+    <meta property="og:site_name" content={`${SITE_CONFIG.companyName}（セツビプロ）`} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
