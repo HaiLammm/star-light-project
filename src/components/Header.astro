@@ -40,28 +40,28 @@ import MobileMenu from './MobileMenu.tsx';
       </a>
     </nav>
 
-    <!-- Mobile: contact button + hamburger -->
-    <div class="flex items-center lg:hidden absolute top-0 right-0 h-[60px]">
-      <a
-        href="/contact"
-        class="w-[60px] h-[60px] flex flex-col items-center justify-center gap-[3px] bg-[#fc4076]"
-      >
-        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] h-[24px]" />
-        <span class="text-[10px] font-bold text-white leading-tight text-center">無料相談</span>
-      </a>
-      <button
-        type="button"
-        id="mobile-menu-trigger"
-        aria-label="メニューを開く"
-        aria-controls="mobile-menu"
-        aria-expanded="false"
-        class="hamburger relative w-[60px] h-[60px] cursor-pointer transition-all duration-300"
-      >
-        <span class="hamburger__line"></span>
-      </button>
-    </div>
+    <!-- Mobile: contact button -->
+    <a
+      href="/contact"
+      class="lg:hidden absolute top-0 right-[60px] w-[60px] h-[60px] flex flex-col items-center justify-center gap-[3px] bg-[#fc4076]"
+    >
+      <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] h-[24px]" />
+      <span class="text-[10px] font-bold text-white leading-tight text-center">無料相談</span>
+    </a>
   </div>
 </header>
+
+<!-- Mobile hamburger: fixed, z-[999] so it stays above the menu overlay -->
+<button
+  type="button"
+  id="mobile-menu-trigger"
+  aria-label="メニューを開く"
+  aria-controls="mobile-menu"
+  aria-expanded="false"
+  class="hamburger lg:hidden fixed top-0 right-0 z-[999] w-[60px] h-[60px] cursor-pointer transition-all duration-300"
+>
+  <span class="hamburger__line"></span>
+</button>
 
 <div class="h-[60px] lg:h-[100px]"></div>
 
