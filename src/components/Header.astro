@@ -24,7 +24,7 @@ import MobileMenu from './MobileMenu.tsx';
   <!-- Desktop header: uses vw-based unit for proportional scaling -->
   <div
     class="hidden lg:flex w-full items-center justify-between"
-    style="--h:max(0.8065vw,8px);height:calc(var(--h)*10);padding-left:calc(var(--h)*2);"
+    style="--h:clamp(8px,0.8065vw,10px);height:calc(var(--h)*10);padding-left:calc(var(--h)*2);"
   >
     <h1 class="shrink-0 relative z-10 m-0 leading-none">
       <a href="/">
@@ -80,7 +80,7 @@ import MobileMenu from './MobileMenu.tsx';
 </button>
 
 <div class="h-[60px] lg:hidden"></div>
-<div class="hidden lg:block" style="height:calc(max(0.8065vw,8px)*10);"></div>
+<div class="hidden lg:block" style="height:calc(clamp(8px,0.8065vw,10px)*10);"></div>
 
 <MobileMenu client:load navigation={NAVIGATION} phone={SITE_CONFIG.phone} />
 
