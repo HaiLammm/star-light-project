@@ -112,7 +112,7 @@ export default function HeroCarousel({ slides }: { slides?: HeroSlide[] } = {}) 
         ))}
 
         <div className="relative w-[94.7%] md:w-[87.8%] mx-auto">
-          <div className="overflow-hidden rounded-[5rem]" ref={emblaRef}>
+          <div className="overflow-hidden rounded-[7rem]" ref={emblaRef}>
             <div className="flex">
               {HERO_SLIDES.map((slide, index) => (
                 <div
