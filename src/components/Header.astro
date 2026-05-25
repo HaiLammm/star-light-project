@@ -21,46 +21,38 @@ import MobileMenu from './MobileMenu.tsx';
     </a>
   </div>
 
-  <!-- Desktop header: uses vw-based unit for proportional scaling -->
-  <div
-    class="hidden lg:flex w-full items-center justify-between"
-    style="--h:clamp(8px,0.8065vw,10px);height:calc(var(--h)*10);padding-left:calc(var(--h)*2);"
-  >
+  <!-- Desktop header -->
+  <div class="hidden lg:flex w-full items-center justify-between h-[100px] pl-[10px] xl:pl-[20px]">
     <h1 class="shrink-0 relative z-10 m-0 leading-none">
       <a href="/">
-        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} style="width:calc(var(--h)*23);" class="object-contain" />
+        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[150px] xl:w-[230px] object-contain" />
       </a>
     </h1>
 
     <nav aria-label="メインナビゲーション" class="flex items-center justify-end h-full">
-      <div class="flex items-center" style="gap:calc(var(--h)*2);">
+      <div class="flex items-center gap-[12px] xl:gap-[20px]">
         <MegaMenu />
       </div>
 
-      <div class="flex flex-col items-center shrink-0" style="margin-left:calc(var(--h)*1.8);">
-        <span
-          class="inline-flex items-center justify-center rounded-[10px] border border-[#2856cb] font-bold text-[#2856cb] whitespace-nowrap leading-none"
-          style="width:calc(var(--h)*18.6);height:calc(var(--h)*2);font-size:calc(var(--h)*1.1);"
-        >
+      <div class="ml-[12px] xl:ml-[18px] flex flex-col items-center shrink-0">
+        <span class="inline-flex items-center justify-center w-[130px] xl:w-[186px] h-[16px] xl:h-[20px] rounded-[10px] border border-[#2856cb] text-[9px] xl:text-[11px] font-bold text-[#2856cb] whitespace-nowrap leading-none">
           電話相談無料！年中無休で対応
         </span>
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="flex items-center justify-center font-['Roboto',sans-serif] font-bold text-[#0044f2] hover:opacity-70 transition-opacity whitespace-nowrap"
-          style="font-size:calc(var(--h)*2.6);gap:calc(var(--h)*0.3);margin-bottom:calc(var(--h)*1.5);"
+          class="flex items-center justify-center gap-[3px] font-['Roboto',sans-serif] text-[18px] xl:text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity mb-[12px] xl:mb-[15px] whitespace-nowrap"
         >
-          <img src="/images/cta/cta_tel_icon.svg" alt="" style="width:calc(var(--h)*1.38);height:auto;filter:brightness(0) saturate(100%) invert(18%) sepia(89%) saturate(3642%) hue-rotate(224deg) brightness(95%) contrast(107%);" />
+          <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[11px] xl:w-[14px] h-auto" style="filter:brightness(0) saturate(100%) invert(18%) sepia(89%) saturate(3642%) hue-rotate(224deg) brightness(95%) contrast(107%);" />
           {SITE_CONFIG.phone.display}
         </a>
       </div>
 
       <a
         href="/contact"
-        class="self-start flex items-center justify-center rounded-bl-[20px] bg-[#fc4076] hover:opacity-90 text-white font-bold leading-[1.2] text-center transition-opacity shrink-0"
-        style="width:calc(var(--h)*16);height:calc(var(--h)*10);font-size:calc(var(--h)*1.8);gap:calc(var(--h)*0.7);margin-left:calc(var(--h)*0.9);"
+        class="ml-[7px] xl:ml-[9px] self-start w-[100px] xl:w-[160px] h-[100px] flex items-center justify-center gap-[5px] xl:gap-[7px] rounded-bl-[20px] bg-[#fc4076] hover:opacity-90 text-white text-[12px] xl:text-[18px] font-bold leading-[1.2] text-center transition-opacity shrink-0"
       >
-        <img src="/images/cta/cta_contact_icon.svg" alt="" style="width:calc(var(--h)*4);height:auto;" />
+        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] xl:w-[40px] h-auto" />
         <span>メールで<br />無料相談</span>
       </a>
     </nav>
@@ -79,8 +71,7 @@ import MobileMenu from './MobileMenu.tsx';
   <span class="hamburger__line"></span>
 </button>
 
-<div class="h-[60px] lg:hidden"></div>
-<div class="hidden lg:block" style="height:calc(clamp(8px,0.8065vw,10px)*10);"></div>
+<div class="h-[60px] lg:h-[100px]"></div>
 
 <MobileMenu client:load navigation={NAVIGATION} phone={SITE_CONFIG.phone} />
 
