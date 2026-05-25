@@ -154,7 +154,7 @@ const toNavigationChildren = (services: ServiceItem[]): NavigationChild[] => {
 };
 
 export const SITE_CONFIG: SiteConfig = {
-  companyName: '設備人',
+  companyName: '設備プロ',
   companyNameEn: 'Setsubit',
   legalName: '合同会社スターライト',
   siteUrl: 'https://star-light15.net',
@@ -170,7 +170,7 @@ export const SITE_CONFIG: SiteConfig = {
 export const REGIONAL_OFFICES: RegionalOffice[] = [
   {
     key: 'tokyo',
-    name: '設備人 東京営業所',
+    name: '設備プロ 東京営業所',
     shortName: '東京営業所',
     address: {
       addressRegion: '東京都',
@@ -183,7 +183,7 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
   },
   {
     key: 'nagoya',
-    name: '設備人 名古屋営業所',
+    name: '設備プロ 名古屋営業所',
     shortName: '名古屋営業所',
     address: {
       streetAddress: '井瀬木1068-205',
@@ -198,7 +198,7 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
   },
   {
     key: 'osaka',
-    name: '設備人 大阪営業所',
+    name: '設備プロ 大阪営業所',
     shortName: '大阪営業所',
     address: {
       streetAddress: '東豊中町六丁目3番10号',
@@ -213,7 +213,7 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
   },
   {
     key: 'hyogo',
-    name: '設備人 兵庫営業所',
+    name: '設備プロ 兵庫営業所',
     shortName: '兵庫営業所',
     address: {
       addressLocality: '神戸市',

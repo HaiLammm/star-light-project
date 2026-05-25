@@ -11,12 +11,12 @@ const DEFAULT_SLIDES: HeroSlide[] = [
   {
     image: '/images/hero/hero-01.jpeg',
     imageSp: '/images/hero/hero-01.jpeg',
-    alt: '緊急の電気トラブル 設備人の電気工事士が年中無休・即対応',
+    alt: '緊急の電気トラブル 設備プロの電気工事士が年中無休・即対応',
   },
   {
     image: '/images/hero/hero-02.jpeg',
     imageSp: '/images/hero/hero-02.jpeg',
-    alt: '水道修理のプロが即駆けつけます。水漏れ・つまりを設備人の職人が24時間スピード解決',
+    alt: '水道修理のプロが即駆けつけます。水漏れ・つまりを設備プロの職人が24時間スピード解決',
   },
 ];
 

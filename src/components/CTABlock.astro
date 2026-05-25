@@ -17,22 +17,28 @@ const phone = SITE_CONFIG.phone;
 ---
 
 {variant === 'sticky' && (
-  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-border-light shadow-[0_-2px_8px_rgba(0,0,0,0.1)] md:hidden pb-[env(safe-area-inset-bottom)]">
-    <div class="flex items-center justify-center gap-3 px-4 py-2">
+  <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden backdrop-blur-[30px] bg-white/60 pb-[env(safe-area-inset-bottom)]">
+    <div class="flex items-center justify-center gap-2 px-4 py-[10px]">
       <a
         href={phone.href}
         aria-label={phone.ariaLabel}
-        class="flex items-center gap-2 min-w-[44px] min-h-[44px]"
+        class="flex flex-col items-center justify-center w-[290px] border-2 border-[#ff4176] rounded-2xl bg-white py-1.5"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange shrink-0" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-        </svg>
-        <span class="text-xs text-text-secondary">通話無料</span>
-        <span class="text-orange font-bold text-lg">{phone.display}</span>
+        <span class="flex items-center justify-center w-[180px] h-[16.5px] rounded-full border border-[#ff4176] text-[10px] font-bold text-[#ff4176]">
+          電話相談無料！年中無休で対応
+        </span>
+        <span class="mt-0.5 flex items-center justify-center gap-[5px] font-['Roboto',sans-serif] text-[24px] font-bold text-[#ff4176]">
+          <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[13px] h-auto shrink-0" />
+          {phone.display}
+        </span>
       </a>
-      <span class="bg-red text-white text-xs font-bold px-2 py-1 rounded -rotate-[5deg] shrink-0">
-        WEB割引
-      </span>
+      <a
+        href="/contact"
+        class="flex flex-col items-center justify-center w-[60px] h-[60px] gap-[3px] rounded-2xl bg-[#ff4176]"
+      >
+        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] h-[24px]" />
+        <span class="text-[10px] font-bold leading-tight text-white text-center">無料相談</span>
+      </a>
     </div>
   </div>
 )}
@@ -56,7 +62,7 @@ const phone = SITE_CONFIG.phone;
 
         <!-- Heading: Logo + に修理相談 -->
         <p class="relative z-20 flex flex-wrap items-center justify-center gap-x-1 mt-5 md:mt-1 font-extrabold text-[29px] md:text-[40px]">
-          <img src="/images/site_logo_no-mark.jpeg" alt="設備人" loading="lazy" decoding="async" class="w-[177px] md:w-[230px] h-auto object-contain mr-0.5" />
+          <img src="/images/site_logo_no-mark.jpeg" alt="設備プロ" loading="lazy" decoding="async" class="w-[177px] md:w-[230px] h-auto object-contain mr-0.5" />
           <span class="text-[21px] md:text-[28px]">に</span>修理相談
         </p>
 
