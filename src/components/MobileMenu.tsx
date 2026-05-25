@@ -31,10 +31,13 @@ export default function MobileMenu({ navigation, phone }: MobileMenuProps) {
   useEffect(() => {
     const trigger = document.getElementById('mobile-menu-trigger');
     if (!trigger) return;
-    const handler = () => open();
+    const handler = () => {
+      if (isOpen) close();
+      else open();
+    };
     trigger.addEventListener('click', handler);
     return () => trigger.removeEventListener('click', handler);
-  }, [open]);
+  }, [open, close, isOpen]);
 
   useEffect(() => {
     if (isOpen) {
