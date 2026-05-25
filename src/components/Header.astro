@@ -5,10 +5,10 @@ import MobileMenu from './MobileMenu.tsx';
 ---
 
 <header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
-  <div class="w-full flex items-center justify-between h-[60px] sm:h-[80px] lg:h-[100px] px-2 sm:px-3">
+  <div class="w-full flex items-center justify-between h-[60px] lg:h-[100px] pl-[10px] pr-[60px] lg:pl-[20px] lg:pr-0">
     <h1 class="shrink-0 relative z-10 m-0 leading-none">
       <a href="/">
-        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[100px] sm:w-[140px] lg:w-[230px] object-contain" />
+        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[153px] lg:w-[230px] object-contain" />
       </a>
     </h1>
 
@@ -18,52 +18,52 @@ import MobileMenu from './MobileMenu.tsx';
       </div>
 
       <div class="ml-5 xl:ml-7 flex flex-col items-center">
-        <span class="inline-flex items-center justify-center px-[20px] py-[10px] rounded-full border-2 border-[#2856cb] text-[10px] font-bold text-[#2856cb] whitespace-nowrap leading-none">
+        <span class="inline-flex items-center justify-center w-[186px] h-[20px] rounded-[10px] border border-[#2856cb] text-[11px] font-bold text-[#2856cb] whitespace-nowrap leading-none">
           電話相談無料！年中無休で対応
         </span>
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="font-['Roboto',sans-serif] text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity max-w-[200px] text-center break-words"
+          class="flex items-center justify-center gap-[3px] font-['Roboto',sans-serif] text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity mb-[15px]"
         >
+          <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[14px] h-auto" style="filter:brightness(0) saturate(100%) invert(18%) sepia(89%) saturate(3642%) hue-rotate(224deg) brightness(95%) contrast(107%);" />
           {SITE_CONFIG.phone.display}
         </a>
       </div>
 
       <a
         href="/contact"
-        class="ml-3 self-start w-[160px] h-[80px] flex items-center justify-center rounded-bl-[20px] bg-[#fc4076] hover:bg-[#d32a5a] text-white text-lg font-bold leading-tight text-center transition-colors"
+        class="ml-[9px] self-start w-[160px] h-[80px] xl:h-[100px] flex items-center justify-center gap-[7px] rounded-bl-[20px] bg-[#fc4076] hover:opacity-90 text-white text-[18px] font-bold leading-[1.2] text-center transition-opacity"
       >
+        <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[40px] h-[40px]" />
         <span>メールで<br />無料相談</span>
       </a>
     </nav>
 
-    <div class="flex items-center gap-2 sm:gap-4 lg:hidden">
-      <a
-        href={SITE_CONFIG.phone.href}
-        aria-label={SITE_CONFIG.phone.ariaLabel}
-        class="text-orange font-bold text-[12px] sm:text-sm min-w-[40px] min-h-[40px] flex items-center justify-center"
-      >
-        {SITE_CONFIG.phone.display}
-      </a>
-
-      <button
-        type="button"
-        id="mobile-menu-trigger"
-        aria-label="メニューを開く"
-        aria-controls="mobile-menu"
-        aria-expanded="false"
-        class="min-w-[44px] min-h-[44px] flex items-center justify-center"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
+    <!-- Mobile: contact button -->
+    <a
+      href="/contact"
+      class="lg:hidden absolute top-0 right-[60px] w-[60px] h-[60px] flex flex-col items-center justify-center gap-[3px] bg-[#fc4076]"
+    >
+      <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] h-[24px]" />
+      <span class="text-[10px] font-bold text-white leading-tight text-center">無料相談</span>
+    </a>
   </div>
 </header>
 
-<div class="h-[60px] sm:h-[80px] lg:h-[100px]"></div>
+<!-- Mobile hamburger -->
+<button
+  type="button"
+  id="mobile-menu-trigger"
+  aria-label="メニューを開く"
+  aria-controls="mobile-menu"
+  aria-expanded="false"
+  class="lg:hidden fixed top-0 right-0 z-[999] w-[60px] h-[60px] flex items-center justify-center cursor-pointer"
+>
+  <span class="relative w-[24px] h-[2px] bg-[#0044f2] before:content-[''] before:absolute before:w-full before:h-[2px] before:bg-[#0044f2] before:top-[7px] after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-[#0044f2] after:-top-[7px]"></span>
+</button>
+
+<div class="h-[60px] lg:h-[100px]"></div>
 
 <MobileMenu client:load navigation={NAVIGATION} phone={SITE_CONFIG.phone} />
 
