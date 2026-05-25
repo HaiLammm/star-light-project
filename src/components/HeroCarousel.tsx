@@ -111,51 +111,53 @@ export default function HeroCarousel({ slides }: { slides?: HeroSlide[] } = {}) 
           </div>
         ))}
 
-        <div className="w-[94.7%] md:w-[87.8%] mx-auto overflow-hidden rounded-[3rem]" ref={emblaRef}>
-          <div className="flex">
-            {HERO_SLIDES.map((slide, index) => (
-              <div
+        <div className="relative w-[94.7%] md:w-[87.8%] mx-auto">
+          <div className="overflow-hidden rounded-[3rem]" ref={emblaRef}>
+            <div className="flex">
+              {HERO_SLIDES.map((slide, index) => (
+                <div
+                  key={index}
+                  className="min-w-0 flex-[0_0_100%]"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${index + 1} / ${HERO_SLIDES.length}: ${slide.alt}`}
+                >
+                  <picture>
+                    <source media="(max-width: 900px)" srcSet={slide.imageSp} width={1065} height={1113} />
+                    <source media="(min-width: 901px)" srcSet={slide.image} width={2400} height={1016} />
+                    <img
+                      src={slide.image}
+                      alt={slide.alt}
+                      width={2400}
+                      height={1016}
+                      className="w-full h-auto object-cover block"
+                      fetchPriority={index === 0 ? 'high' : undefined}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      decoding="auto"
+                    />
+                  </picture>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center gap-1.5 z-10">
+            {HERO_SLIDES.map((_, index) => (
+              <button
                 key={index}
-                className="min-w-0 flex-[0_0_100%]"
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`${index + 1} / ${HERO_SLIDES.length}: ${slide.alt}`}
+                onClick={() => emblaApi?.scrollTo(index)}
+                aria-current={selectedIndex === index ? 'true' : undefined}
+                aria-label={`スライド ${index + 1} を表示`}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
-                <picture>
-                  <source media="(max-width: 900px)" srcSet={slide.imageSp} width={1065} height={1113} />
-                  <source media="(min-width: 901px)" srcSet={slide.image} width={2400} height={1016} />
-                  <img
-                    src={slide.image}
-                    alt={slide.alt}
-                    width={2400}
-                    height={1016}
-                    className="w-full h-auto object-cover block"
-                    fetchPriority={index === 0 ? 'high' : undefined}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    decoding="auto"
-                  />
-                </picture>
-              </div>
+                <span
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    selectedIndex === index ? 'bg-[#fbc101]' : 'bg-[#e0e0e0]'
+                  }`}
+                />
+              </button>
             ))}
           </div>
-        </div>
-
-        <div className="flex justify-center gap-1.5 mt-3">
-          {HERO_SLIDES.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => emblaApi?.scrollTo(index)}
-              aria-current={selectedIndex === index ? 'true' : undefined}
-              aria-label={`スライド ${index + 1} を表示`}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center"
-            >
-              <span
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  selectedIndex === index ? 'bg-[#fbc101]' : 'bg-[#e0e0e0]'
-                }`}
-              />
-            </button>
-          ))}
         </div>
       </section>
 
