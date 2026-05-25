@@ -83,7 +83,7 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
             {englishLabel}
           </span>
         </h2>
-        <p className="mt-2 md:mt-4 text-[11px] md:text-[clamp(11px,1.1vw,14px)] font-medium text-[#1c1c1c] text-center">{subheading}</p>
+        <p className="mt-2 md:mt-4 text-[11px] md:text-[clamp(11px,1.1vw,14px)] font-medium text-[#1c1c1c] text-center max-w-[calc(100%-3rem)] md:max-w-none mx-auto" style={{ wordBreak: 'normal' }}>{subheading}</p>
       </div>
 
       <div className="flex justify-center mt-2.5 md:mt-[30px]">
