@@ -104,7 +104,7 @@ export default function HeroCarousel({ slides }: { slides?: HeroSlide[] } = {}) 
             <img
               src={slide.image}
               alt=""
-              className="w-full h-full object-cover blur-[9rem] brightness-125 opacity-90 scale-110"
+              className="w-full h-full object-cover blur-[9rem] brightness-150 opacity-70"
               loading="lazy"
               decoding="async"
             />
@@ -112,7 +112,7 @@ export default function HeroCarousel({ slides }: { slides?: HeroSlide[] } = {}) 
         ))}
 
         <div className="relative w-[94.7%] md:w-[87.8%] mx-auto">
-          <div className="overflow-hidden rounded-[3rem]" ref={emblaRef}>
+          <div className="overflow-hidden rounded-[5rem]" ref={emblaRef}>
             <div className="flex">
               {HERO_SLIDES.map((slide, index) => (
                 <div
