@@ -26,35 +26,35 @@ const DEFAULT_STEPS: Step[] = [
     image: '/images/process/flow_01.jpg',
     title: 'ご相談',
     heading: '間違いでも構いません。少しでも不調を感じたらいつでもお気軽にご相談下さい',
-    description: '少しでも異変や不調を感じたらお気軽にご相談ください。早朝深夜も営業しておりますので、急なトラブルでも安心してご連絡ください。',
+    description: '少しでも異変や不調を感じたらお気軽にご相談ください。<br>早朝深夜も営業しておりますので、急なトラブルでも安心してご連絡ください。',
   },
   {
     number: 2,
     image: '/images/process/flow_02.jpg',
     title: 'ご訪問',
     heading: 'お問い合わせから最短10分で最寄りの事業所から専門スタッフが現場に駆けつけます',
-    description: '最寄りの事業所から最短10分で作業スタッフが急行いたします。マナー研修を実施。安心・安全・丁寧を徹底しておりますので安心してご依頼ください。',
+    description: '最寄りの事業所から最短10分で作業スタッフが急行いたします。<br>お客様の中には作業スタッフに一定数「怖い」イメージを持っている方もおられますが、当スタッフはマナー研修を実施。<br><br>安心・安全・丁寧を徹底しておりますので安心してご依頼ください。',
     },
   {
     number: 3,
     image: '/images/process/flow_03.jpg',
     title: 'お見積り',
     heading: 'トラブル内容を確認させていただき、事前にお見積りを提示。ご納得いただけなければキャンセルいただいて構いません',
-    description: '現場の状況を確認させていただき、しっかりと作業前に事前に見積りを提示させていただきます。お見積りは無料、出張費、早朝・深夜料金、キャンセル料もいただきません。',
+    description: '現場の状況を確認させていただき、しっかりと作業前に事前に見積りを提示させていただきます。<br>お見積りは無料、それ以外の出張費、早朝・深夜料金、キャンセル料もいただきません。',
   },
   {
     number: 4,
     image: '/images/process/flow_04.jpg',
     title: '作業',
     heading: '資格を有した専門スタッフが安心・安全を第一に迅速に作業を行います',
-    description: 'お見積り内容に同意いただいた上で作業開始となります。安心・安全を第一に迅速に作業いたします。早いものであれば最短15分程度で作業完了いたします。',
+    description: 'お見積り内容に同意いただいた上で作業開始となります。<br>安心・安全を第一に迅速に作業いたします。<br>早いものであれば最短15分程度で作業完了いたします。',
   },
   {
     number: 5,
     image: '/images/process/flow_05.jpg',
     title: 'お支払',
     heading: '作業完了後、料金をお支払いいただき完了となります',
-    description: '現金、各種クレジットカード、銀行振込など豊富な決済方法をご用意しております。お支払い方法は作業前にご案内いたしますので、ご安心ください。',
+    description: 'お支払いいただき作業完了となります。クレジットやキャッシュレスにも対応しておりますので、急なトラブルなどで現金のお手持ちがない場合でも問題ございません。',
   },
 ];
 
@@ -94,15 +94,15 @@ const steps = rawSteps.map((s) => ({ ...s, image: stepImageOptMap[s.image] ?? s.
                 width="400"
                 height="240"
                 decoding="auto"
-                class="w-full h-auto object-cover aspect-[400/240]"
+                class="w-full h-auto object-cover aspect-[315/160] md:aspect-[400/240]"
               />
               <p class="absolute top-0 left-0 bg-white rounded-br-[12px] sm:rounded-br-[15px] md:rounded-br-[20px] px-2 sm:px-4 md:px-6 py-1 sm:py-2 text-[#0044f2] font-extrabold text-[18px] sm:text-[20px] md:text-[22px] flex items-center leading-[1.64]">
                 <span class="font-[Roboto_Condensed] text-[32px] sm:text-[36px] md:text-[40px] font-semibold -tracking-wider mr-0.5 sm:mr-1 whitespace-nowrap">{step.number}.</span><span class="whitespace-nowrap">{step.title}</span>
               </p>
             </figure>
-            <div class="flex-grow min-w-0 w-full overflow-hidden text-center md:text-left">
+            <div class="flex-grow min-w-0 w-full overflow-hidden text-left">
               <p class="text-[16px] sm:text-[18px] md:text-[20px] font-bold leading-[1.56] mb-2 sm:mb-3 break-words overflow-wrap-anywhere">{step.heading}</p>
-              <p class="text-[14px] sm:text-[15px] md:text-base text-gray-600 leading-snug break-words overflow-wrap-anywhere">{step.description}</p>
+              <p class="text-[13px] sm:text-[14px] md:text-base text-[#333] leading-[1.67] break-words overflow-wrap-anywhere" set:html={step.description} />
               {step.number === 1 && (
                 <div class="flex flex-col items-center md:flex-row md:items-start flex-wrap gap-[20px] mt-[16px] md:mt-[20px]">
                   <a
