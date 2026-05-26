@@ -1,40 +1,88 @@
 ---
-import { SITE_CONFIG, NAVIGATION, REGIONAL_OFFICES } from '../utils/siteConfig';
+import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
+
+const FOOTER_NAV = [
+  {
+    label: '電気まわりサービス',
+    href: '/electricity',
+    children: [
+      { label: 'ブレーカーサービス', href: '/electricity/breaker' },
+      { label: 'コンセントサービス', href: '/electricity/outlet' },
+      { label: '照明サービス', href: '/electricity/illumination' },
+      { label: 'アンテナ工事サービス', href: '/electricity/antenna' },
+      { label: '給湯器交換サービス', href: '/electricity/waterheater' },
+      { label: 'エアコンサービス', href: '/electricity/air-conditioner' },
+    ],
+  },
+  {
+    label: '水まわりサービス',
+    href: '/sanitary',
+    children: [
+      { label: 'トイレサービス', href: '/sanitary/toilet' },
+      { label: 'キッチンサービス', href: '/sanitary/kitchen' },
+      { label: 'お風呂サービス', href: '/sanitary/bath' },
+      { label: '洗面所サービス', href: '/sanitary/washroom' },
+    ],
+  },
+  {
+    label: '会社案内',
+    href: '/company',
+    children: [
+      { label: '会社概要', href: '/company/about' },
+      { label: '企業理念', href: '/company/philosophy' },
+      { label: '採用ページ', href: '/company/recruit' },
+      { label: '対応エリア', href: '/company/office' },
+    ],
+  },
+  {
+    label: 'はじめてご利用の方へ',
+    children: [
+      { label: '作業の流れ', href: '/flow' },
+      { label: '施工事例', href: '/case' },
+      { label: 'お客さまの声', href: '/voice' },
+      { label: 'コラム', href: '/columns' },
+      { label: 'よくある質問', href: '/faq' },
+    ],
+  },
+  {
+    label: 'サイト情報',
+    children: [
+      { label: '無料相談フォーム', href: '/contact' },
+      { label: 'カスタマーフォーム', href: '/customer' },
+      { label: 'プライバシーポリシー', href: '/privacy' },
+      { label: 'サイトマップ', href: '/sitemap' },
+    ],
+  },
+];
 ---
 
-<footer class="bg-navy text-white">
-  <div class="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-10">
-    <div class="py-10 text-center border-b border-white/20">
-      <p class="text-sm mb-2">お困りごとはお気軽にご相談ください</p>
-      <a
-        href={SITE_CONFIG.phone.href}
-        aria-label={SITE_CONFIG.phone.ariaLabel}
-        class="text-3xl md:text-4xl font-bold text-orange hover:opacity-80 transition-opacity"
-      >
-        {SITE_CONFIG.phone.display}
-      </a>
-      <p class="text-sm mt-2 text-white/70">{SITE_CONFIG.businessHours}受付</p>
-      <a
-        href={SITE_CONFIG.email.href}
-        aria-label={SITE_CONFIG.email.ariaLabel}
-        class="inline-block mt-3 text-sm text-white/70 hover:text-orange transition-colors"
-      >
-        ✉ {SITE_CONFIG.email.display}
-      </a>
-    </div>
+<footer class="mb-[80px] md:mb-0">
+  <div class="max-w-[1200px] mx-auto pt-[30px] pb-[16px] md:pt-[50px] md:pb-[45px] px-[12px] md:px-[45px]">
+    <figure class="w-[153px] md:w-[230px] mx-auto">
+      <img src="/images/site_logo.svg" alt={SITE_CONFIG.siteName} width="230" height="60" loading="lazy" decoding="async" class="w-full h-auto" />
+    </figure>
 
-    <nav aria-label="フッターナビゲーション" class="py-10 border-b border-white/20">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {NAVIGATION.map((item) => (
-          <div>
-            <a href={item.href} class="font-bold text-sm hover:text-orange transition-colors">
-              {item.label}
-            </a>
-            {item.children && (
-              <ul class="mt-3 space-y-2">
-                {item.children.map((child) => (
+    <nav aria-label="フッターナビゲーション" class="mt-[10px] md:mt-[50px] px-[12px] md:px-[45px]">
+      <div class="flex flex-col md:flex-row md:gap-[9px]">
+        {FOOTER_NAV.map((section) => (
+          <div class="flex-1 py-[20px] md:py-0 border-b border-[#ccc] md:border-b-0 last:border-b-0">
+            {section.href ? (
+              <a href={section.href} class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px] hover:text-[#fbc101] transition-colors">
+                <span class="w-[8px] h-[8px] rounded-full bg-[#fbc101] shrink-0"></span>
+                {section.label}
+              </a>
+            ) : (
+              <p class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px]">
+                <span class="w-[8px] h-[8px] rounded-full bg-[#fbc101] shrink-0"></span>
+                {section.label}
+              </p>
+            )}
+            {section.children && (
+              <ul class="mt-[10px] md:mt-[20px] grid grid-cols-2 md:flex md:flex-col gap-[10px] md:gap-[15px]">
+                {section.children.map((child) => (
                   <li>
-                    <a href={child.href} class="text-sm text-white/70 hover:text-orange transition-colors">
+                    <a href={child.href} class="text-[12px] md:text-[14px] text-[#333] flex items-center gap-[7px] md:gap-[7px] hover:text-[#fbc101] transition-colors">
+                      <span class="w-[6px] h-[2px] bg-[#fbc101] shrink-0"></span>
                       {child.label}
                     </a>
                   </li>
@@ -45,22 +93,6 @@ import { SITE_CONFIG, NAVIGATION, REGIONAL_OFFICES } from '../utils/siteConfig';
         ))}
       </div>
     </nav>
-
-    <div class="py-8 border-b border-white/20">
-      <p class="font-bold text-sm mb-4">{SITE_CONFIG.legalName}</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {REGIONAL_OFFICES.map((office) => (
-          <div class="text-sm text-white/70">
-            <p class="font-medium text-white">{office.shortName}</p>
-            <p>{office.formattedAddress}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/70">
-      <p>&copy; {new Date().getFullYear()} {SITE_CONFIG.legalName}</p>
-      <a href="/privacy" class="hover:text-orange transition-colors">プライバシーポリシー</a>
-    </div>
   </div>
+  <p class="bg-[#0044f2] text-white text-center text-[12px] py-[11px] md:py-[12px]">Copyright &copy; {SITE_CONFIG.companyNameEn.toUpperCase()}.</p>
 </footer>
