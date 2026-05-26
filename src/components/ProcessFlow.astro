@@ -85,7 +85,7 @@ const steps = rawSteps.map((s) => ({ ...s, image: stepImageOptMap[s.image] ?? s.
         {steps.map((step, index) => (
           <li class="flex flex-col md:flex-row items-start gap-3 sm:gap-4 md:gap-8 relative">
             {index > 0 && (
-              <div class="hidden md:block absolute left-[200px] -top-10 md:-top-12 w-0.5 h-10 md:h-12 bg-[#979bf3]"></div>
+              <div class="absolute left-1/2 -translate-x-1/2 md:left-[200px] md:translate-x-0 top-0 -translate-y-full w-[2px] h-[30px] md:h-[100px] bg-[#979bf3]"></div>
             )}
             <figure class="flex-shrink-0 w-full md:w-[400px] relative rounded-[12px] sm:rounded-[15px] md:rounded-[20px] overflow-hidden">
               <img
@@ -96,29 +96,34 @@ const steps = rawSteps.map((s) => ({ ...s, image: stepImageOptMap[s.image] ?? s.
                 decoding="auto"
                 class="w-full h-auto object-cover aspect-[400/240]"
               />
-              <p class="absolute top-0 left-0 bg-white rounded-br-[12px] sm:rounded-br-[15px] md:rounded-br-[20px] px-2 sm:px-4 md:px-6 py-1 sm:py-2 text-[#0044f2] font-bold text-[11px] sm:text-sm md:text-xl flex items-center">
-                <span class="font-[Roboto_Condensed] text-[18px] sm:text-3xl md:text-4xl font-semibold -tracking-wider mr-0.5 sm:mr-1 whitespace-nowrap">{step.number}.</span><span class="whitespace-nowrap">{step.title}</span>
+              <p class="absolute top-0 left-0 bg-white rounded-br-[12px] sm:rounded-br-[15px] md:rounded-br-[20px] px-2 sm:px-4 md:px-6 py-1 sm:py-2 text-[#0044f2] font-extrabold text-[18px] sm:text-[20px] md:text-[22px] flex items-center leading-[1.64]">
+                <span class="font-[Roboto_Condensed] text-[32px] sm:text-[36px] md:text-[40px] font-semibold -tracking-wider mr-0.5 sm:mr-1 whitespace-nowrap">{step.number}.</span><span class="whitespace-nowrap">{step.title}</span>
               </p>
             </figure>
-            <div class="flex-grow min-w-0 w-full overflow-hidden">
-              <p class="text-[12px] sm:text-base md:text-xl font-bold leading-snug mb-2 sm:mb-3 break-words overflow-wrap-anywhere">{step.heading}</p>
-              <p class="text-[9px] sm:text-sm md:text-base text-gray-600 leading-snug break-words overflow-wrap-anywhere">{step.description}</p>
+            <div class="flex-grow min-w-0 w-full overflow-hidden text-center md:text-left">
+              <p class="text-[16px] sm:text-[18px] md:text-[20px] font-bold leading-[1.56] mb-2 sm:mb-3 break-words overflow-wrap-anywhere">{step.heading}</p>
+              <p class="text-[14px] sm:text-[15px] md:text-base text-gray-600 leading-snug break-words overflow-wrap-anywhere">{step.description}</p>
               {step.number === 1 && (
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2 sm:mt-4 w-full">
+                <div class="flex flex-col items-center md:flex-row md:items-start flex-wrap gap-[20px] mt-[16px] md:mt-[20px]">
                   <a
                     href="/contact"
-                    class="inline-flex items-center justify-center bg-[#E8B341] text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:shadow-lg transition-shadow text-[11px] sm:text-sm"
+                    class="inline-flex items-center justify-center gap-[6px] bg-[#ff4176] text-white font-bold w-[240px] h-[50px] rounded-[25px] shadow-[0_5px_0_0_rgba(0,0,0,0.3)] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_rgba(0,0,0,0.3)] transition-all text-[18px]"
                   >
+                    <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[30px] h-auto" />
                     メールで無料相談
                   </a>
                   <a
                     href={SITE_CONFIG.phone.href}
                     aria-label={SITE_CONFIG.phone.ariaLabel}
-                    class="inline-flex flex-col items-center justify-center border-2 border-[#E8B341] text-[#E8B341] font-bold py-1 sm:py-2 px-4 sm:px-6 rounded-lg hover:shadow-lg transition-shadow"
+                    class="inline-flex flex-col items-center justify-center border-[2px] border-[#ff4176] bg-white w-[240px] h-[50px] rounded-[25px] shadow-[0_5px_0_0_rgba(0,0,0,0.3)] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_rgba(0,0,0,0.3)] transition-all"
                   >
-                    <span class="text-[9px] sm:text-xs">電話相談無料！年中無休で対応</span>
-                    <span class="text-base sm:text-lg font-bold">{SITE_CONFIG.phone.display}</span>
+                    <span class="text-[10px] font-bold text-[#ff4176] border border-[#ff4176] rounded-[8px] px-3 py-0 leading-[14px]">電話相談無料！年中無休で対応</span>
+                    <span class="text-[20px] font-bold font-[Roboto] text-[#ff4176] flex items-center gap-[3px]">
+                      <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[13px] h-auto" style="filter:brightness(0) saturate(100%) invert(33%) sepia(92%) saturate(3026%) hue-rotate(330deg) brightness(97%) contrast(105%);" />
+                      {SITE_CONFIG.phone.display}
+                    </span>
                   </a>
+                  <p class="text-[14px] sm:text-base w-full text-center md:text-left">既存のお客様はこちら：<a href="/customer" class="text-blue-600 underline hover:opacity-70 transition-opacity">カスタマーフォーム</a></p>
                 </div>
               )}
             </div>
