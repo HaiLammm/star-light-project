@@ -1,5 +1,9 @@
+export function formatPriceNumber(amount: number): string {
+  return amount.toLocaleString('ja-JP');
+}
+
 export function formatPrice(amount: number): string {
-  return `¥${amount.toLocaleString('ja-JP')}`;
+  return `¥${formatPriceNumber(amount)}`;
 }
 
 export function formatPriceRange(amount: number): string {
