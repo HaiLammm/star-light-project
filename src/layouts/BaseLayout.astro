@@ -13,6 +13,9 @@ interface Props {
 }
 
 const { title, description, canonicalUrl, ogImage } = Astro.props;
+
+const DEFAULT_OG_IMAGE = '/images/staff_bg.jpg';
+const ogImageUrl = new URL(ogImage ?? DEFAULT_OG_IMAGE, Astro.site).href;
 ---
 
 <html lang="ja">
@@ -33,7 +36,11 @@ const { title, description, canonicalUrl, ogImage } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <link rel="preconnect" href="https://maps.googleapis.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
