@@ -90,12 +90,12 @@ export default function ServiceSlider({ slides, heading, subheading, eyebrow, ac
           <p className="text-[13px] md:text-[15px] text-text-secondary mt-2 max-w-[680px] mx-auto" style={{ wordBreak: 'normal' }}>{subheading}</p>
         </div>
 
-        <div className="flex justify-center gap-2.5 flex-wrap mb-8">
+        <div className="flex justify-start md:justify-center gap-2.5 md:flex-wrap mb-8 overflow-x-auto md:overflow-visible -mx-5 px-5 md:mx-0 md:px-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {slides.map((slide, index) => (
             <button
               key={slide.slug}
               onClick={() => scrollTo(index)}
-              className="rounded-full px-5 py-2 text-[14px] font-bold transition-colors border-[1.5px]"
+              className="shrink-0 whitespace-nowrap rounded-full px-5 py-2 text-[14px] font-bold transition-colors border-[1.5px]"
               style={
                 selectedIndex === index
                   ? { background: a.color, borderColor: a.color, color: '#fff' }
