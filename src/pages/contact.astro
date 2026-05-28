@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import CTABlock from '../components/CTABlock.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import { SITE_CONFIG } from '../utils/siteConfig';
 
@@ -52,6 +51,18 @@ const breadcrumbItems = [
     </div>
   </section>
 
-  <!-- CTA Block -->
-  <CTABlock variant="full-width" />
+  <!-- FAQ link (merged from former nav item) -->
+  <section class="pb-[80px] md:pb-[120px]">
+    <div class="max-w-[1200px] mx-auto px-4 text-center">
+      <p class="text-[15px] md:text-[17px] text-[#333]">
+        お問い合わせの前に、よくいただくご質問もあわせてご確認ください。
+      </p>
+      <a
+        href="/faq"
+        class="inline-flex items-center justify-center gap-[8px] mt-[20px] min-w-[240px] md:min-w-[280px] min-h-[56px] px-[24px] bg-[#0277BD] text-white text-[15px] md:text-[18px] font-bold rounded-[30px] shadow-[0_5px_0_0_rgba(0,0,0,0.25)] hover:translate-y-[3px] hover:shadow-none transition-all duration-200"
+      >
+        よくある質問を見る
+      </a>
+    </div>
+  </section>
 </BaseLayout>

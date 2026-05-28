@@ -8,6 +8,13 @@
   --color-text-primary: #333333;
   --color-text-secondary: #666666;
   --color-border-light: #E0E0E0;
+  --color-base: #FAF8EF;
+  --color-water: #0277BD;
+  --color-electric: #FBC02D;
+}
+
+body {
+  background-color: var(--color-base);
 }
 
 :focus-visible {
@@ -40,4 +47,52 @@ input, select, textarea {
 .overflow-wrap-anywhere {
   overflow-wrap: anywhere;
   word-break: auto-phrase;
+}
+
+/* Auto-numbered article headings (blog/column) */
+.article-numbered {
+  counter-reset: article-h2;
+  /* Ghi đè html{word-break:keep-all} để văn bản tiếng Nhật trong bài tự xuống dòng, tránh tràn ngang trên mobile */
+  word-break: normal;
+  overflow-wrap: anywhere;
+  line-break: auto;
+}
+.article-numbered h2 {
+  counter-reset: article-h3;
+}
+.article-numbered h2::before {
+  counter-increment: article-h2;
+  content: counter(article-h2) ". ";
+}
+.article-numbered h3::before {
+  counter-increment: article-h3;
+  content: counter(article-h2) "-" counter(article-h3) ". ";
+}
+.article-numbered h2,
+.article-numbered h3 {
+  scroll-margin-top: 120px;
+}
+
+/* Bảng trong bài: cuộn ngang trong khung, không kéo giãn cả trang trên mobile */
+.article-numbered table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 16px 0;
+  border-collapse: collapse;
+  font-size: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+.article-numbered th,
+.article-numbered td {
+  border: 1px solid #e0e0e0;
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.article-numbered th {
+  background: #f5f5f5;
+  font-weight: 700;
+  white-space: nowrap;
 }

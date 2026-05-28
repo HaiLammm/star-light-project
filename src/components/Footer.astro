@@ -8,20 +8,19 @@ const FOOTER_NAV = [
     children: [
       { label: 'ブレーカーサービス', href: '/electricity/breaker' },
       { label: 'コンセントサービス', href: '/electricity/outlet' },
-      { label: '照明サービス', href: '/electricity/illumination' },
+      { label: '照明サービス', href: '/electricity/lighting' },
       { label: 'アンテナ工事サービス', href: '/electricity/antenna' },
-      { label: '給湯器交換サービス', href: '/electricity/waterheater' },
-      { label: 'エアコンサービス', href: '/electricity/air-conditioner' },
+      { label: '給湯器交換サービス', href: '/electricity/water-heater' },
     ],
   },
   {
     label: '水まわりサービス',
-    href: '/sanitary',
+    href: '/water',
     children: [
-      { label: 'トイレサービス', href: '/sanitary/toilet' },
-      { label: 'キッチンサービス', href: '/sanitary/kitchen' },
-      { label: 'お風呂サービス', href: '/sanitary/bath' },
-      { label: '洗面所サービス', href: '/sanitary/washroom' },
+      { label: 'トイレサービス', href: '/water/toilet' },
+      { label: 'キッチンサービス', href: '/water/kitchen' },
+      { label: 'お風呂サービス', href: '/water/bath' },
+      { label: '洗面所サービス', href: '/water/washroom' },
     ],
   },
   {
@@ -48,7 +47,6 @@ const FOOTER_NAV = [
     label: 'サイト情報',
     children: [
       { label: '無料相談フォーム', href: '/contact' },
-      { label: 'カスタマーフォーム', href: '/customer' },
       { label: 'プライバシーポリシー', href: '/privacy' },
       { label: 'サイトマップ', href: '/sitemap' },
     ],
@@ -93,6 +91,25 @@ const FOOTER_NAV = [
         ))}
       </div>
     </nav>
+
+    <!-- Company contact info -->
+    <div class="mt-[24px] md:mt-[40px] px-[12px] md:px-[45px]">
+      <div class="border-t border-[#ccc] pt-[20px] md:pt-[30px] flex flex-col items-center gap-[10px] text-center">
+        <p class="text-[14px] md:text-[16px] font-bold text-[#333]">{SITE_CONFIG.legalName}（{SITE_CONFIG.companyName}）</p>
+        <a
+          href={SITE_CONFIG.phone.href}
+          aria-label={SITE_CONFIG.phone.ariaLabel}
+          class="font-['Roboto',sans-serif] text-[22px] md:text-[28px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity"
+        >
+          {SITE_CONFIG.phone.display}
+        </a>
+        <p class="text-[12px] md:text-[13px] text-[#666]">電話相談無料！{SITE_CONFIG.businessHours}対応</p>
+        <ul class="mt-[6px] flex flex-col gap-[4px] text-[12px] md:text-[13px] text-[#555]">
+          <li>東海営業所：愛知県北名古屋市井瀬木1068-205</li>
+          <li>中国営業所：広島県広島市西区中広2丁目19-33</li>
+        </ul>
+      </div>
+    </div>
   </div>
   <p class="bg-[#0044f2] text-white text-center text-[12px] py-[11px] md:py-[12px]">Copyright &copy; SETSUBI-PRO.</p>
 </footer>

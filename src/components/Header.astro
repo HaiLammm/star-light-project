@@ -7,11 +7,11 @@ import MobileMenu from './MobileMenu.tsx';
 <header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
   <!-- Mobile header -->
   <div class="lg:hidden w-full flex items-center justify-between h-[60px] pl-[10px] pr-[120px]">
-    <h1 class="shrink-0 m-0 leading-none">
-      <a href="/">
+    <div class="shrink-0 m-0 leading-none">
+      <a href="/" aria-label={SITE_CONFIG.companyName}>
         <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[153px] object-contain" />
       </a>
-    </h1>
+    </div>
     <a
       href="/contact"
       class="absolute top-0 right-[60px] w-[60px] h-[60px] flex flex-col items-center justify-center gap-[3px] bg-[#fc4076]"
@@ -23,11 +23,11 @@ import MobileMenu from './MobileMenu.tsx';
 
   <!-- Desktop header -->
   <div class="hidden lg:flex w-full items-center justify-between h-[100px] pl-[10px] xl:pl-[20px]">
-    <h1 class="shrink-0 relative z-10 m-0 leading-none">
-      <a href="/">
+    <div class="shrink-0 relative z-10 m-0 leading-none">
+      <a href="/" aria-label={SITE_CONFIG.companyName}>
         <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[150px] xl:w-[230px] object-contain" />
       </a>
-    </h1>
+    </div>
 
     <nav aria-label="メインナビゲーション" class="flex items-center justify-end h-full">
       <div class="flex items-center gap-[8px] xl:gap-[15px]">

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://star-light15.net/sitemap-index.xml
+Sitemap: https://www.setsubi-pro.net/sitemap-index.xml

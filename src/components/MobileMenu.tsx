@@ -120,6 +120,37 @@ export default function MobileMenu({ navigation, phone }: MobileMenuProps) {
                     ))}
                   </ul>
                 )}
+                {item.columns && (
+                  <div className="mt-[12px] flex flex-col gap-[16px]">
+                    {item.columns.map((col) => {
+                      const accent = col.accent === 'electric' ? '#FBC02D' : '#0277BD';
+                      return (
+                        <div key={col.key}>
+                          <a
+                            href={col.href}
+                            className="flex items-center gap-[8px] text-[13px] font-bold text-white min-h-[40px]"
+                          >
+                            <span className="shrink-0 w-[9px] h-[9px] rounded-full" style={{ background: accent }} />
+                            {col.label}
+                          </a>
+                          <ul className="grid grid-cols-2 gap-[10px] mt-[6px] pl-[17px]">
+                            {col.children.map((child) => (
+                              <li key={child.href}>
+                                <a
+                                  href={child.href}
+                                  className="flex items-center gap-[8px] text-[12px] text-white min-h-[40px]"
+                                >
+                                  <span className="shrink-0 w-[6px] h-[2px]" style={{ background: accent }} />
+                                  {child.label}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </li>
             ))}
           </ul>

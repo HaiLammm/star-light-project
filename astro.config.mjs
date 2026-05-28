@@ -7,7 +7,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://star-light15.net',
+  site: 'https://www.setsubi-pro.net',
   output: 'static',
   compressHTML: true,
   image: {

@@ -50,11 +50,22 @@ export interface NavigationChild {
   href: string;
 }
 
+export type NavAccent = 'electric' | 'water';
+
+export interface NavigationColumn {
+  key: ServiceCategoryKey;
+  label: string;
+  href: string;
+  accent: NavAccent;
+  children: NavigationChild[];
+}
+
 export interface NavigationItem {
   label: string;
   href: string;
   icon?: string;
   children?: NavigationChild[];
+  columns?: NavigationColumn[];
 }
 
 export interface EmailConfig {
@@ -157,12 +168,12 @@ export const SITE_CONFIG: SiteConfig = {
   companyName: '設備プロ',
   companyNameEn: 'Setsubit',
   legalName: '合同会社スターライト',
-  siteUrl: 'https://star-light15.net',
+  siteUrl: 'https://www.setsubi-pro.net',
   phone: SITE_PHONE,
   email: {
-    display: 'info@star-light15.net',
-    href: 'mailto:info@star-light15.net',
-    ariaLabel: 'メールでお問い合わせ info@star-light15.net',
+    display: 'setsubi-pro@gmail.com',
+    href: 'mailto:setsubi-pro@gmail.com',
+    ariaLabel: 'メールでお問い合わせ setsubi-pro@gmail.com',
   },
   businessHours: '24時間365日',
 };
@@ -246,16 +257,31 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
 
 export const NAVIGATION: NavigationItem[] = [
   {
-    label: '電気工事',
+    label: 'サービス',
     href: '/electricity',
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
-    children: toNavigationChildren(ELECTRICITY_SERVICES),
-  },
-  {
-    label: '水道工事',
-    href: '/water',
-    icon: 'M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2C20 10.48 17.33 6.55 12 2z',
-    children: toNavigationChildren(WATER_SERVICES),
+    columns: [
+      {
+        key: 'electricity',
+        label: '電気工事',
+        href: '/electricity',
+        accent: 'electric',
+        children: [
+          ...toNavigationChildren(ELECTRICITY_SERVICES),
+          { slug: 'electricity-case', label: '施工事例', href: '/case' },
+        ],
+      },
+      {
+        key: 'water',
+        label: '水道工事',
+        href: '/water',
+        accent: 'water',
+        children: [
+          ...toNavigationChildren(WATER_SERVICES),
+          { slug: 'water-case', label: '施工事例', href: '/case' },
+        ],
+      },
+    ],
   },
   {
     label: '会社案内',
@@ -266,20 +292,12 @@ export const NAVIGATION: NavigationItem[] = [
     href: '/flow',
   },
   {
-    label: '施工事例',
-    href: '/case',
-  },
-  {
     label: 'お客さまの声',
     href: '/voice',
   },
   {
     label: 'コラム',
     href: '/columns',
-  },
-  {
-    label: 'よくある質問',
-    href: '/faq',
   },
   {
     label: 'お問い合わせ',

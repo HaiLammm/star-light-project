@@ -9,19 +9,10 @@ const { variant = 'homepage' } = Astro.props;
 const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID ?? '';
 const formAction = formspreeId ? `https://formspree.io/f/${formspreeId}` : '/contact';
 
-const ELECTRICITY_OPTIONS = [
-  'ブレーカートラブル', 'コンセントトラブル', '照明トラブル', 'アンテナ工事', '給湯器交換',
-];
-
-const WATER_OPTIONS = [
-  'トイレトラブル', 'キッチントラブル', 'お風呂トラブル', '洗面所トラブル',
-];
-
 const FIELDS = [
-  { name: 'name', label: 'お名前', type: 'text', placeholder: '例：山田 花子', autocomplete: 'name' },
-  { name: 'address', label: 'ご住所', type: 'text', placeholder: '例：大阪府大阪市中央区大阪城1-1', autocomplete: 'street-address' },
-  { name: 'phone', label: '電話番号', type: 'text', placeholder: '例：0000-000-000', autocomplete: 'tel' },
-  { name: 'email', label: 'メールアドレス', type: 'email', placeholder: '例：example@setsubit.jp', autocomplete: 'email' },
+  { name: 'name', label: 'お名前', type: 'text', placeholder: '例：山田 花子', autocomplete: 'name', required: true },
+  { name: 'phone', label: '電話番号', type: 'text', placeholder: '例：0000-000-000', autocomplete: 'tel', required: true },
+  { name: 'address', label: 'ご住所', type: 'text', placeholder: '例：大阪府大阪市中央区大阪城1-1', autocomplete: 'street-address', required: false },
 ];
 
 const headingColorClass = variant === 'page' ? 'text-[#979af3]' : 'text-[#b3b3b3]';
@@ -49,13 +40,19 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
           <!-- Honeypot -->
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
-          {FIELDS.map(({ name, label, type, placeholder, autocomplete }) => (
+          {FIELDS.map(({ name, label, type, placeholder, autocomplete, required }) => (
             <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] md:gap-[45px] gap-[8px] items-center">
-              <label for={`contact-${name}`} class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px] max-w-full">
-                <span class="break-words max-w-[calc(100%-50px)] sm:max-w-[150px] md:max-w-none">{label}</span>
-                <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px] flex-shrink-0">
-                  必須
-                </span>
+              <label for={`contact-${name}`} class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center gap-[8px] md:gap-0 md:justify-between md:pr-[37px] max-w-full">
+                <span class="break-words max-w-[calc(100%-60px)] md:max-w-none">{label}</span>
+                {required ? (
+                  <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] md:ml-auto mt-[2px] flex-shrink-0">
+                    必須
+                  </span>
+                ) : (
+                  <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#999] text-[10px] sm:text-[12px] leading-[1.17] text-[#999] md:ml-auto mt-[2px] flex-shrink-0">
+                    任意
+                  </span>
+                )}
               </label>
               <div>
                 <input
@@ -65,59 +62,18 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
                   maxlength={400}
                   autocomplete={autocomplete}
                   placeholder={placeholder}
-                  required
-                  aria-required="true"
+                  required={required}
+                  aria-required={required ? 'true' : 'false'}
                   class="w-full h-[40px] sm:h-[48px] px-[10px] sm:px-[14px] py-[10px] sm:py-[12px] rounded-[4px] sm:rounded-[5px] border border-[#e0e0e0] bg-white text-[14px] sm:text-[16px] placeholder:text-[#aaa] outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A] focus:border-[#1B2A4A] transition-colors duration-200"
                 />
               </div>
             </div>
           ))}
 
-          <!-- Service checkboxes -->
-          <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] md:gap-[45px] gap-[8px] items-start">
-            <p class="text-[14px] sm:text-[16px] md:text-[18px] leading-[1.56] flex items-center justify-between md:pr-[37px] max-w-full">
-              <span class="break-words max-w-[calc(100%-50px)] sm:max-w-[150px] md:max-w-none">修理・交換の内容</span>
-              <span class="px-[6px] sm:px-[8px] py-[1px] rounded-[4px] sm:rounded-[5px] border border-[#fc4076] text-[10px] sm:text-[12px] leading-[1.17] text-[#fc4076] ml-auto mt-[2px] flex-shrink-0">
-                必須
-              </span>
-            </p>
-            <div>
-              <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px]">電気まわりのトラブル</p>
-              <div class="flex flex-wrap gap-[4px_12px] sm:gap-[5px_16px] md:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
-                {ELECTRICITY_OPTIONS.map((opt) => (
-                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px] max-w-[calc(50%-8px)] sm:max-w-none">
-                    <input
-                      type="checkbox"
-                      name="service-kinds-electricity[]"
-                      value={opt}
-                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076] flex-shrink-0"
-                    />
-                    <span class="break-words text-[12px] sm:text-[14px]">{opt}</span>
-                  </label>
-                ))}
-              </div>
-
-              <p class="text-[13px] sm:text-[15px] md:text-[17px] leading-[1.65] mb-[8px] sm:mb-[10px] mt-[20px] sm:mt-[30px] break-words max-w-[90vw]">水まわりのトラブル</p>
-              <div class="flex flex-wrap gap-[4px_12px] sm:gap-[5px_16px] md:gap-[5px_26px] text-[13px] sm:text-[14px] md:text-[16px] leading-[1.88] text-[#3b4043]">
-                {WATER_OPTIONS.map((opt) => (
-                  <label class="flex items-center gap-[4px] sm:gap-[6px] cursor-pointer min-h-[40px] sm:min-h-[44px] max-w-[calc(50%-8px)] sm:max-w-none">
-                    <input
-                      type="checkbox"
-                      name="service-kinds-sanitary[]"
-                      value={opt}
-                      class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] accent-[#fc4076] flex-shrink-0"
-                    />
-                    <span class="break-words text-[12px] sm:text-[14px]">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-
           <!-- Privacy policy inline -->
           <div class="mt-[30px] sm:mt-[50px] max-w-full overflow-hidden">
             <h3 class="text-[16px] sm:text-[18px] md:text-[22px] font-bold text-center break-words">プライバシーポリシー</h3>
-            <div class="mt-[15px] sm:mt-[20px] p-[15px_18px_15px_15px] sm:p-[30px_43px_23px_30px] rounded-[4px] sm:rounded-[5px] bg-white text-[11px] sm:text-[13px] md:text-[14px] leading-[1.75] text-[#333] max-w-full overflow-x-hidden">
+            <div class="mt-[15px] sm:mt-[20px] max-h-[180px] sm:max-h-[220px] overflow-y-auto p-[15px_18px_15px_15px] sm:p-[24px_28px] rounded-[4px] sm:rounded-[5px] border border-[#e0e0e0] bg-white text-[11px] sm:text-[13px] md:text-[14px] leading-[1.75] text-[#333] max-w-full overflow-x-hidden">
               <p class="font-bold break-words max-w-full">1.法令・規範の遵守</p>
               <p class="break-words max-w-full word-break">株式会社設備プロ（以下「当社」と言います）は個人情報保護に関して適用される法令、国が定める指針その他の規範を遵守し、当社が保有する個人情報の保護に努めます。</p>
               <div class="mt-[12px] sm:mt-[16px]">
@@ -128,6 +84,21 @@ const lineColorClass = variant === 'page' ? 'bg-white' : 'bg-[#fbc102]';
                 <p class="font-bold break-words max-w-full">3.個人情報の管理</p>
                 <p class="break-words max-w-full word-break">当社が保有する個人情報の漏えい、滅失又はき損等の防止に努め、厳正管理のもとで安全に蓄積、保管します。また、万一の発生時には速やかな是正措置を講じます。</p>
               </div>
+            </div>
+
+            <!-- Agreement checkbox -->
+            <div class="mt-[20px] sm:mt-[24px] flex flex-col items-center">
+              <label for="contact-agree" class="flex items-center gap-[10px] sm:gap-[12px] cursor-pointer">
+                <input
+                  id="contact-agree"
+                  type="checkbox"
+                  name="agree"
+                  required
+                  aria-required="true"
+                  class="w-[24px] h-[24px] sm:w-[28px] sm:h-[28px] accent-[#0277BD] shrink-0 cursor-pointer"
+                />
+                <span class="text-[14px] sm:text-[16px] md:text-[17px] font-bold">プライバシーポリシーに同意する</span>
+              </label>
             </div>
           </div>
 
