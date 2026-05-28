@@ -162,22 +162,22 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
   />
   <ServiceSlider
     client:load
-    slides={electricitySlides}
-    heading="電気まわりの修理サービス"
-    subheading="ブレーカー・コンセント・照明などの電気まわりトラブル解消。安心の事前見積りと24時間即対応"
-    eyebrow="電気まわりの修理"
-    accent="electricity"
-    anchorId="electricity"
-    aboveFold
-  />
-  <ServiceSlider
-    client:visible
     slides={waterSlides}
     heading="水まわりの修理サービス"
     subheading="トイレ・お風呂・キッチンなどの水回りのつまり・水漏れ修理。安心の事前見積りと24時間即対応"
     eyebrow="水まわりの修理"
     accent="water"
     anchorId="water"
+    aboveFold
+  />
+  <ServiceSlider
+    client:visible
+    slides={electricitySlides}
+    heading="電気まわりの修理サービス"
+    subheading="ブレーカー・コンセント・照明などの電気まわりトラブル解消。安心の事前見積りと24時間即対応"
+    eyebrow="電気まわりの修理"
+    accent="electricity"
+    anchorId="electricity"
   />
   <ReasonsGrid />
 

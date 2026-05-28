@@ -10,14 +10,14 @@ export const BLOG_CATEGORY_LABEL_MAP: Record<string, string> = {
 
 export const BLOG_CATEGORIES = [
   {
-    key: 'electricity',
-    label: '電気まわり全般',
-    subcategories: ['エアコン', 'アンテナ工事', 'コンセント', 'ブレーカー', '照明', '給湯器交換'],
-  },
-  {
     key: 'water',
     label: '水まわり全般',
     subcategories: ['お風呂', 'キッチン', 'トイレ', '洗面所'],
+  },
+  {
+    key: 'electricity',
+    label: '電気まわり全般',
+    subcategories: ['エアコン', 'アンテナ工事', 'コンセント', 'ブレーカー', '照明', '給湯器交換'],
   },
 ] as const;
 

@@ -13,28 +13,32 @@ interface Props {
 
 const defaultReasons: Reason[] = [
   {
-    icon: '/images/icons/reson_01.webp',
+    // stopwatch — 即日10分
+    icon: '<circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M12 13.5l3 2"/><path d="M9.5 3h5"/><path d="M12 3v2.5"/>',
     number: '01',
     headingHighlight: '最短10分',
     heading: '即日駆けつけ即日工事',
     description: '最寄りのサービス拠点より、迅速にスタッフを派遣します（最短10分）。早朝・深夜を問わず営業、突発的なトラブルにも即対応',
   },
   {
-    icon: '/images/icons/reson_02.webp',
+    // document + yen — 見積り無料
+    icon: '<path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1z"/><path d="M14 3.5v4h4"/><path d="M9.5 12.5h5M9.5 15h5M12 11.5v5"/>',
     number: '02',
     headingHighlight: 'ご相談無料',
     heading: '必ず事前にお見積り',
     description: '作業料金は、作業費・材料費（部品代）・廃材処分費の合計で算出いたします。お見積り費用や出張費、早朝・深夜の追加料金、キャンセル料などは一切不要です。作業に入る前には必ずお見積りをご提示いたしますので、安心してご相談・ご依頼ください。',
   },
   {
-    icon: '/images/icons/reson_03.webp',
+    // 24h refresh — 24時間365日
+    icon: '<path d="M3.5 12a8.5 8.5 0 0 1 14.2-6.3L20.5 8"/><path d="M20.5 4v4h-4"/><path d="M20.5 12a8.5 8.5 0 0 1-14.2 6.3L3.5 16"/><path d="M3.5 20v-4h4"/>',
     number: '03',
     headingHighlight: '24時間365日',
     heading: '対応',
     description: '設備プロでは24時間365日、経験豊富なスタッフが常時対応しております。礼儀・対応マナーの研修を実施し、お客様に安心してご利用いただける接客と丁寧な作業を徹底しております。',
   },
   {
-    icon: '/images/icons/reson_04.webp',
+    // shield-check — 国家資格
+    icon: '<path d="M12 3l7 2.8v5.2c0 4.5-3 7.8-7 9.5-4-1.7-7-5-7-9.5V5.8z"/><path d="M9 12l2.2 2.2L15.5 10"/>',
     number: '04',
     headingHighlight: '国の資格を保有',
     heading: 'した工事士が作業担当',
@@ -61,16 +65,18 @@ const reasons = customReasons ?? defaultReasons;
       {reasons.map((reason) => (
         <div class="bg-white border border-border-warm rounded-[16px] sm:rounded-[20px] md:rounded-[40px] shadow-[0_6px_24px_rgba(27,42,74,0.08)] flex items-start gap-3 sm:gap-4 md:gap-6 p-4 sm:p-5 md:p-8">
           <div class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-[140px] md:h-[140px] relative">
-            <img
-              src={reason.icon}
-              alt=""
+            <svg
+              class="absolute bottom-0 right-0 w-[72%] h-[72%] text-water"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               aria-hidden="true"
-              width="140"
-              height="140"
-              decoding="auto"
-              class="w-full h-full object-contain"
+              set:html={reason.icon}
             />
-            <p class="absolute -top-1 left-0 flex flex-col items-center text-navy font-semibold leading-none">
+            <p class="absolute -top-1 left-0 flex flex-col items-center text-navy font-semibold leading-none z-10">
               <span class="text-[8px] sm:text-[9px] md:text-xs font-bold uppercase tracking-normal font-[Roboto]">reason</span>
               <span class="text-2xl sm:text-3xl md:text-5xl font-semibold font-[Roboto_Condensed] -tracking-wider">{reason.number}</span>
             </p>

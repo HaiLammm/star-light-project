@@ -4,9 +4,9 @@
   "category": "water",
   "slug": "washroom",
   "description": "洗面台の排水が遅い・蛇口から水が止まらない・洗面台下の配管から水漏れしているなど、洗面所まわりの水トラブルに24時間対応。排水つまりの解消から洗面台・水栓器具の交換まで、迅速に対応します。",
-  "startingPrice": 5500,
+  "startingPrice": 5000,
   "originalPrice": 8800,
-  "webDiscountAmount": 3300,
+  "webDiscountAmount": 3800,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "洗面台の点検を行う水道修理スタッフ",
   "kvImageDesktop": "/images/hero/hero-02.jpeg",
@@ -16,7 +16,7 @@
   "pricingTiers": [
     {
       "name": "排水つまり除去",
-      "price": 5500,
+      "price": 5000,
       "imageUrl": "/images/services/sanitary_04.jpg",
       "imageAlt": "洗面所排水つまり除去作業イメージ"
     },

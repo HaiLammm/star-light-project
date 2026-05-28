@@ -3,6 +3,16 @@ import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
 
 const FOOTER_NAV = [
   {
+    label: '水まわりサービス',
+    href: '/water',
+    children: [
+      { label: 'トイレサービス', href: '/water/toilet' },
+      { label: 'キッチンサービス', href: '/water/kitchen' },
+      { label: 'お風呂サービス', href: '/water/bath' },
+      { label: '洗面所サービス', href: '/water/washroom' },
+    ],
+  },
+  {
     label: '電気まわりサービス',
     href: '/electricity',
     children: [
@@ -11,16 +21,6 @@ const FOOTER_NAV = [
       { label: '照明サービス', href: '/electricity/lighting' },
       { label: 'アンテナ工事サービス', href: '/electricity/antenna' },
       { label: '給湯器交換サービス', href: '/electricity/water-heater' },
-    ],
-  },
-  {
-    label: '水まわりサービス',
-    href: '/water',
-    children: [
-      { label: 'トイレサービス', href: '/water/toilet' },
-      { label: 'キッチンサービス', href: '/water/kitchen' },
-      { label: 'お風呂サービス', href: '/water/bath' },
-      { label: '洗面所サービス', href: '/water/washroom' },
     ],
   },
   {

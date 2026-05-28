@@ -4,9 +4,9 @@
   "category": "water",
   "slug": "bath",
   "description": "お風呂の排水がつまった・浴槽から水漏れする・シャワーの水圧が弱いなど、浴室まわりの水トラブルに24時間対応。排水口のつまり解消からシャワーヘッド・混合水栓の交換まで、豊富な経験を持つスタッフが迅速に対応します。",
-  "startingPrice": 5500,
+  "startingPrice": 5000,
   "originalPrice": 8800,
-  "webDiscountAmount": 3300,
+  "webDiscountAmount": 3800,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "浴室排水の点検を行う水道修理スタッフ",
   "kvImageDesktop": "/images/hero/hero-02.jpeg",
@@ -16,7 +16,7 @@
   "pricingTiers": [
     {
       "name": "排水口つまり除去",
-      "price": 5500,
+      "price": 5000,
       "imageUrl": "/images/services/sanitary_03.jpg",
       "imageAlt": "浴室排水口つまり除去作業イメージ"
     },

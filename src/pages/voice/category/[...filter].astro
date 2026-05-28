@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   const allTestimonials = await getCollection('testimonials');
   const paths: any[] = [];
 
-  const broadCategories = ['electricity', 'water'] as const;
+  const broadCategories = ['water', 'electricity'] as const;
   for (const cat of broadCategories) {
     const filtered = allTestimonials.filter((t) => t.data.serviceCategory === cat);
     if (filtered.length > 0) {
@@ -29,8 +29,8 @@ export async function getStaticPaths() {
   }
 
   const subcategorySlugs = [
-    ...['breaker', 'outlet', 'lighting', 'antenna', 'water-heater'].map(s => ({ slug: s, cat: 'electricity' })),
     ...['toilet', 'kitchen', 'bath', 'washroom'].map(s => ({ slug: s, cat: 'water' })),
+    ...['breaker', 'outlet', 'lighting', 'antenna', 'water-heater'].map(s => ({ slug: s, cat: 'electricity' })),
   ];
   for (const { slug, cat } of subcategorySlugs) {
     const filtered = allTestimonials.filter((t) => t.data.serviceCategory === cat);

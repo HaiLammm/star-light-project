@@ -4,9 +4,9 @@
   "category": "water",
   "slug": "kitchen",
   "description": "キッチンの排水がつまった・蛇口から水漏れしている・シンク下の配管から水が出るなど、キッチンまわりの水トラブルに24時間対応。油汚れによるつまりから蛇口・混合水栓の交換まで、迅速かつ丁寧に対応します。",
-  "startingPrice": 5500,
+  "startingPrice": 5000,
   "originalPrice": 8800,
-  "webDiscountAmount": 3300,
+  "webDiscountAmount": 3800,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "キッチン排水の点検を行う水道修理スタッフ",
   "kvImageDesktop": "/images/hero/hero-02.jpeg",
@@ -16,7 +16,7 @@
   "pricingTiers": [
     {
       "name": "排水つまり除去",
-      "price": 5500,
+      "price": 5000,
       "imageUrl": "/images/services/sanitary_02.jpg",
       "imageAlt": "キッチン排水つまり除去作業イメージ"
     },

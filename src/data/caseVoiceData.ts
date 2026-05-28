@@ -1,5 +1,15 @@
 export const CASE_FILTER_CATEGORIES = [
   {
+    key: 'water',
+    label: '水まわり全般',
+    subcategories: [
+      { key: 'toilet', label: 'トイレ' },
+      { key: 'kitchen', label: 'キッチン' },
+      { key: 'bath', label: 'お風呂' },
+      { key: 'washroom', label: '洗面所' },
+    ],
+  },
+  {
     key: 'electricity',
     label: '電気まわり全般',
     subcategories: [
@@ -8,22 +18,22 @@ export const CASE_FILTER_CATEGORIES = [
       { key: 'lighting', label: '照明' },
       { key: 'antenna', label: 'アンテナ工事' },
       { key: 'water-heater', label: '給湯器交換' },
-    ],
-  },
-  {
-    key: 'water',
-    label: '水まわり全般',
-    subcategories: [
-      { key: 'toilet', label: 'トイレ' },
-      { key: 'kitchen', label: 'キッチン' },
-      { key: 'bath', label: 'お風呂' },
-      { key: 'washroom', label: '洗面所' },
     ],
   },
 ] as const;
 
 export const VOICE_FILTER_CATEGORIES = [
   {
+    key: 'water',
+    label: '水まわり全般',
+    subcategories: [
+      { key: 'toilet', label: 'トイレ' },
+      { key: 'kitchen', label: 'キッチン' },
+      { key: 'bath', label: 'お風呂' },
+      { key: 'washroom', label: '洗面所' },
+    ],
+  },
+  {
     key: 'electricity',
     label: '電気まわり全般',
     subcategories: [
@@ -32,16 +42,6 @@ export const VOICE_FILTER_CATEGORIES = [
       { key: 'lighting', label: '照明' },
       { key: 'antenna', label: 'アンテナ工事' },
       { key: 'water-heater', label: '給湯器交換' },
-    ],
-  },
-  {
-    key: 'water',
-    label: '水まわり全般',
-    subcategories: [
-      { key: 'toilet', label: 'トイレ' },
-      { key: 'kitchen', label: 'キッチン' },
-      { key: 'bath', label: 'お風呂' },
-      { key: 'washroom', label: '洗面所' },
     ],
   },
 ] as const;

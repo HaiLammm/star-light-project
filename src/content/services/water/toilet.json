@@ -4,9 +4,9 @@
   "category": "water",
   "slug": "toilet",
   "description": "トイレがつまった・水が止まらない・タンクから水漏れしているなど、トイレまわりのトラブルに24時間即日対応。専用機材と豊富な経験を持つスタッフが原因を素早く特定し、確実に修理・パーツ交換を行います。",
-  "startingPrice": 5500,
+  "startingPrice": 5000,
   "originalPrice": 8800,
-  "webDiscountAmount": 3300,
+  "webDiscountAmount": 3800,
   "serviceArea": ["大阪府", "京都府", "奈良県", "和歌山県"],
   "imageAlt": "トイレの点検を行う水道修理スタッフ",
   "kvImageDesktop": "/images/hero/hero-02.jpeg",
@@ -16,7 +16,7 @@
   "pricingTiers": [
     {
       "name": "トイレつまり除去",
-      "price": 5500,
+      "price": 5000,
       "imageUrl": "/images/services/sanitary_01.jpg",
       "imageAlt": "トイレつまり除去作業イメージ"
     },
@@ -48,7 +48,7 @@
     },
     {
       "question": "修理費用の目安を教えてください。",
-      "answer": "軽度のつまりであれば5,500円〜対応可能です。状況により異なりますので、現地確認後に正確なお見積りをご案内します。"
+      "answer": "軽度のつまりであれば5,000円〜対応可能です。状況により異なりますので、現地確認後に正確なお見積りをご案内します。"
     }
   ]
 }
