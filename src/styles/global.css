@@ -10,7 +10,14 @@
   --color-border-light: #E0E0E0;
   --color-cream: #FAF8EF;
   --color-water: #0277BD;
+  --color-water-deep: #015A8C;
+  --color-water-tint: #EAF4FA;
   --color-electric: #FBC02D;
+  --color-electric-deep: #F1A104;
+  --color-electric-tint: #FFF7E0;
+  --color-cta: #FF6B00;
+  --color-cta-deep: #E85D00;
+  --color-border-warm: #ECE6D6;
 }
 
 body {
@@ -36,7 +43,7 @@ html {
   }
 }
 
-#price, #reason, #compare, #area, #flow, #case, #voice, #faq {
+#price, #reason, #compare, #area, #flow, #case, #voice, #faq, #water, #electricity {
   scroll-margin-top: 140px;
 }
 

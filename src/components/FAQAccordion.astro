@@ -13,21 +13,21 @@ const { items } = Astro.props;
 
 <div class="max-w-[920px] mx-auto mt-[8px] sm:mt-[10px] md:mt-[20px] px-3 sm:px-0">
   {items.map((item) => (
-    <details class="group border-b border-dotted border-[#979af3] py-[10px] sm:py-[14px] md:py-[20px]">
+    <details class="group border-b border-dotted border-border-warm py-[10px] sm:py-[14px] md:py-[20px]">
       <summary class="flex items-start gap-[8px] sm:gap-[10px] md:gap-[15px] cursor-pointer list-none [&::-webkit-details-marker]:hidden min-h-[40px] sm:min-h-[44px]">
-        <span class="shrink-0 w-[30px] sm:w-[36px] md:w-[50px] aspect-square rounded-full bg-[#fbc101] text-white font-[Roboto_Condensed] text-[16px] sm:text-[22px] md:text-[32px] font-semibold flex items-center justify-center flex-shrink-0">
+        <span class="shrink-0 w-[30px] sm:w-[36px] md:w-[50px] aspect-square rounded-full bg-water text-white font-[Roboto_Condensed] text-[16px] sm:text-[22px] md:text-[32px] font-semibold flex items-center justify-center flex-shrink-0">
           Q
         </span>
         <p class="grow text-[13px] sm:text-[15px] md:text-[22px] font-bold mt-[2px] sm:mt-[4px] md:mt-[8px] min-w-0 overflow-wrap-anywhere">
           {item.question}
         </p>
         <span class="shrink-0 w-[16px] sm:w-[20px] md:w-[24px] aspect-square relative mt-[6px] sm:mt-[10px] md:mt-[14px] flex-shrink-0">
-          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1.5px] sm:h-[2px] md:h-[3px] bg-[#979af3]" />
-          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1.5px] sm:h-[2px] md:h-[3px] bg-[#979af3] rotate-90 group-open:rotate-180" />
+          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1.5px] sm:h-[2px] md:h-[3px] bg-navy" />
+          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1.5px] sm:h-[2px] md:h-[3px] bg-navy rotate-90 group-open:rotate-180" />
         </span>
       </summary>
       <div class="flex items-start gap-[8px] sm:gap-[10px] md:gap-[15px] mt-[10px] sm:mt-[14px] md:mt-[20px] pb-[10px] sm:pb-[14px] md:pb-[20px]">
-        <span class="shrink-0 w-[30px] sm:w-[36px] md:w-[50px] aspect-square flex items-center justify-center font-[Roboto_Condensed] text-[18px] sm:text-[26px] md:text-[36px] font-semibold text-[#fbc101] flex-shrink-0">
+        <span class="shrink-0 w-[30px] sm:w-[36px] md:w-[50px] aspect-square flex items-center justify-center font-[Roboto_Condensed] text-[18px] sm:text-[26px] md:text-[36px] font-semibold text-water flex-shrink-0">
           A
         </span>
         <p class="text-[11px] sm:text-[12px] md:text-[14px] leading-[1.57] mt-[2px] sm:mt-[4px] md:mt-[8px] break-words">

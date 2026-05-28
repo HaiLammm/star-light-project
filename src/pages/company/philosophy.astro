@@ -36,17 +36,16 @@ const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
   </div>
 
   <!-- KV Banner -->
-  <section class="bg-[#0044f2] h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
+  <section class="bg-navy h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
     <div class="max-w-[1200px] mx-auto px-4 w-full relative">
       <h1 class="text-[24px] sm:text-[36px] md:text-[48px] font-black text-white ml-[16px] sm:ml-[30px] md:ml-[45px]">企業理念</h1>
-      <p class="font-[Roboto] text-[60px] sm:text-[90px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[10px] sm:left-[15px] md:left-[20px] -translate-y-1/2 capitalize whitespace-nowrap">philosophy</p>
     </div>
   </section>
 
   <!-- Hero Subheading -->
-  <section class="py-[60px] md:py-[80px] bg-[#fbc102]">
+  <section class="py-[60px] md:py-[80px] bg-white border border-border-warm">
     <div class="max-w-[1200px] mx-auto px-4 text-center">
-      <p class="text-[24px] md:text-[36px] font-extrabold">{data.heroSubheading}</p>
+      <p class="text-[24px] md:text-[36px] font-extrabold text-navy">{data.heroSubheading}</p>
     </div>
   </section>
 
@@ -73,7 +72,7 @@ const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {data.promises?.map((promise) => (
           <div class="bg-white rounded-2xl p-8 text-center shadow-sm">
-            <div class="inline-flex items-center justify-center w-[60px] h-[60px] rounded-full bg-[#0044f2] text-white font-[Roboto] font-bold text-[20px] mb-6">
+            <div class="inline-flex items-center justify-center w-[60px] h-[60px] rounded-full bg-navy text-white font-[Roboto] font-bold text-[20px] mb-6">
               {promise.number}
             </div>
             <p class="text-[16px] md:text-[18px] font-bold leading-relaxed">

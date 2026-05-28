@@ -24,12 +24,12 @@ function getSubcategoryUrl(catKey: string, sub: string): string {
         href={getCategoryUrl(cat.key)}
         class:list={[
           'flex items-center gap-[7px] text-[14px] sm:text-[15px] md:text-[16px] font-bold pb-[10px] border-b border-[#ccc]',
-          activeCategory === cat.key && !activeSubcategory ? 'text-[#0044f2]' : 'text-[#1c1c1c]',
+          activeCategory === cat.key && !activeSubcategory ? 'text-navy' : 'text-[#1c1c1c]',
         ]}
       >
-        <span class="block w-[8px] h-[8px] rounded-full bg-[#fbc101]"></span>
+        <span class="block w-[8px] h-[8px] rounded-full bg-navy"></span>
         {cat.label}
-        <span class="ml-auto block w-[9px] h-[9px] border-t-[2px] border-r-[2px] border-[#0044f2] rotate-45"></span>
+        <span class="ml-auto block w-[9px] h-[9px] border-t-[2px] border-r-[2px] border-navy rotate-45"></span>
       </a>
       <ul>
         {cat.subcategories.map((sub) => (
@@ -37,12 +37,12 @@ function getSubcategoryUrl(catKey: string, sub: string): string {
             <a
               href={getSubcategoryUrl(cat.key, sub)}
               class:list={[
-                'flex items-center text-[12px] sm:text-[13px] md:text-[14px] py-[12px] sm:py-[14px] px-[10px] sm:px-[14px] border-b border-dotted border-[#979af3] transition-[padding-right] duration-200 hover:pr-[20px]',
-                activeCategory === cat.key && activeSubcategory === sub ? 'text-[#0044f2] font-bold' : 'text-[#333]',
+                'flex items-center text-[12px] sm:text-[13px] md:text-[14px] py-[12px] sm:py-[14px] px-[10px] sm:px-[14px] border-b border-dotted border-border-warm transition-[padding-right] duration-200 hover:pr-[20px]',
+                activeCategory === cat.key && activeSubcategory === sub ? 'text-navy font-bold' : 'text-[#333]',
               ]}
             >
               {sub}
-              <span class="ml-auto block w-[9px] h-[9px] border-t-[2px] border-r-[2px] border-[#0044f2] rotate-45"></span>
+              <span class="ml-auto block w-[9px] h-[9px] border-t-[2px] border-r-[2px] border-navy rotate-45"></span>
             </a>
           </li>
         ))}

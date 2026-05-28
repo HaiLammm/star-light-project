@@ -1,179 +1,119 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-
-interface HeroSlide {
+interface HeroProps {
   image: string;
-  imageSp: string;
-  alt: string;
+  imageSp?: string;
+  alt?: string;
+  phoneDisplay?: string;
+  phoneHref?: string;
 }
 
-const DEFAULT_SLIDES: HeroSlide[] = [
-  {
-    image: '/images/hero/hero-01.jpeg',
-    imageSp: '/images/hero/hero-01.jpeg',
-    alt: '緊急の電気トラブル 設備プロの電気工事士が年中無休・即対応',
-  },
-  {
-    image: '/images/hero/hero-02.jpeg',
-    imageSp: '/images/hero/hero-02.jpeg',
-    alt: '水道修理のプロが即駆けつけます。水漏れ・つまりを設備プロの職人が24時間スピード解決',
-  },
+const BADGES = [
+  { label: '見積り0円', color: 'var(--color-water)' },
+  { label: '最短10分で到着', color: 'var(--color-electric-deep)' },
+  { label: '相談無料', color: 'var(--color-cta)' },
+  { label: '24時間365日', color: 'var(--color-navy)' },
 ];
 
-export default function HeroCarousel({ slides }: { slides?: HeroSlide[] } = {}) {
-  const HERO_SLIDES = slides ?? DEFAULT_SLIDES;
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const isHovered = useRef(false);
-  const isFocused = useRef(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mql.addEventListener('change', handler);
-    return () => mql.removeEventListener('change', handler);
-  }, []);
-
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    duration: prefersReducedMotion ? 0 : 20,
-  });
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on('select', onSelect);
-    onSelect();
-    return () => {
-      emblaApi.off('select', onSelect);
-      emblaApi.destroy();
-    };
-  }, [emblaApi, onSelect]);
-
-  useEffect(() => {
-    if (!emblaApi || prefersReducedMotion || isHovered.current || isFocused.current) return;
-    const interval = setInterval(() => emblaApi.scrollNext(), 5000);
-    return () => clearInterval(interval);
-  }, [emblaApi, prefersReducedMotion, selectedIndex]);
-
-  const pauseFromHover = useCallback(() => {
-    isHovered.current = true;
-    setSelectedIndex((i) => i);
-  }, []);
-
-  const resumeFromHover = useCallback(() => {
-    isHovered.current = false;
-    if (!isFocused.current) setSelectedIndex((i) => i);
-  }, []);
-
-  const handleFocusIn = useCallback(() => {
-    isFocused.current = true;
-    setSelectedIndex((i) => i);
-  }, []);
-
-  const handleFocusOut = useCallback((e: React.FocusEvent) => {
-    const section = e.currentTarget;
-    if (e.relatedTarget && section.contains(e.relatedTarget as Node)) return;
-    isFocused.current = false;
-    if (!isHovered.current) setSelectedIndex((i) => i);
-  }, []);
-
+export default function HeroCarousel({
+  image,
+  imageSp,
+  alt = '設備プロの職人',
+  phoneDisplay = '0120-219-695',
+  phoneHref = 'tel:0120219695',
+}: HeroProps) {
   return (
-    <div>
-      <section
-        aria-roledescription="carousel"
-        aria-label="サービス紹介"
-        className="relative py-4 md:py-[3.9rem] overflow-hidden"
-        onMouseEnter={pauseFromHover}
-        onMouseLeave={resumeFromHover}
-        onFocus={handleFocusIn}
-        onBlur={handleFocusOut}
-      >
-        {HERO_SLIDES.map((slide, index) => (
-          <div
-            key={index}
-            aria-hidden="true"
-            className="absolute inset-0 -z-10 transition-opacity duration-[1.5s]"
-            style={{ opacity: selectedIndex === index ? 1 : 0 }}
-          >
-            <img
-              src={slide.image}
-              alt=""
-              className="w-full h-full object-cover blur-[9rem] brightness-150 opacity-70"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-        ))}
+    <section className="pt-8 pb-2 md:pt-12 md:pb-3" aria-label="メインビジュアル">
+      <div className="max-w-[1120px] mx-auto px-5">
+        <div className="grid grid-cols-1 md:grid-cols-[1.05fr_.95fr] gap-7 md:gap-12 items-center">
+          {/* Text column */}
+          <div className="md:order-1 order-2">
+            <span className="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em] text-water before:content-[''] before:w-7 before:h-[3px] before:rounded-sm before:bg-water">
+              電気・水道の修理プロ
+            </span>
+            <h2 className="text-[27px] md:text-[40px] leading-[1.5] md:leading-[1.45] font-black text-navy mt-3.5 mb-3 overflow-wrap-anywhere">
+              水まわり・電気のトラブル、<br className="hidden md:block" />
+              <span className="text-water">最短10分</span>でプロが駆けつけます。
+            </h2>
+            <p className="text-[15px] md:text-base text-text-secondary leading-[1.9] mb-6 overflow-wrap-anywhere">
+              トイレのつまり、水漏れ、ブレーカー、給湯器まで。設備プロの有資格の職人が、年中無休・24時間スピード対応。まずはお気軽にご相談ください。
+            </p>
 
-        <div className="relative w-[94.7%] md:w-[87.8%] mx-auto">
-          <div className="overflow-hidden rounded-[3rem] md:rounded-[5.8vw]" ref={emblaRef}>
-            <div className="flex">
-              {HERO_SLIDES.map((slide, index) => (
-                <div
-                  key={index}
-                  className="min-w-0 flex-[0_0_100%]"
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`${index + 1} / ${HERO_SLIDES.length}: ${slide.alt}`}
+            <ul className="flex flex-wrap gap-2.5 mb-6">
+              {BADGES.map((b) => (
+                <li
+                  key={b.label}
+                  className="flex items-center gap-2 bg-white border border-border-warm rounded-full px-4 py-2 text-[13px] font-bold text-navy shadow-[0_6px_24px_rgba(27,42,74,0.08)]"
                 >
-                  <picture>
-                    <source media="(max-width: 900px)" srcSet={slide.imageSp} width={1065} height={1113} />
-                    <source media="(min-width: 901px)" srcSet={slide.image} width={2400} height={1016} />
-                    <img
-                      src={slide.image}
-                      alt={slide.alt}
-                      width={2400}
-                      height={1016}
-                      className="w-full h-auto object-cover block"
-                      fetchPriority={index === 0 ? 'high' : undefined}
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                      decoding="auto"
-                    />
-                  </picture>
-                </div>
+                  <span className="w-2 h-2 rounded-full" style={{ background: b.color }} />
+                  {b.label}
+                </li>
               ))}
+            </ul>
+
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-3.5 items-stretch">
+              <a
+                href={phoneHref}
+                className="bg-cta hover:bg-cta-deep transition-colors text-white rounded-2xl px-6 py-3.5 w-full sm:w-auto sm:flex-none text-center sm:text-left shadow-[0_8px_20px_rgba(255,107,0,0.28)]"
+              >
+                <span className="block text-[11px] font-medium opacity-95">お電話でのご相談（通話無料）</span>
+                <span className="block text-[26px] font-black leading-tight tracking-wide whitespace-nowrap">{phoneDisplay}</span>
+              </a>
+              <a
+                href="/contact"
+                className="flex items-center justify-center gap-2 bg-white border-2 border-navy text-navy font-bold rounded-2xl px-6 py-3.5 sm:py-3 w-full sm:w-auto text-[15px] hover:bg-navy hover:text-white transition-colors"
+              >
+                <span aria-hidden="true">✉</span>メールで無料相談
+              </a>
             </div>
           </div>
 
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center gap-1.5 z-10">
-            {HERO_SLIDES.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => emblaApi?.scrollTo(index)}
-                aria-current={selectedIndex === index ? 'true' : undefined}
-                aria-label={`スライド ${index + 1} を表示`}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center"
-              >
-                <span
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    selectedIndex === index ? 'bg-[#fbc101]' : 'bg-[#e0e0e0]'
-                  }`}
-                />
-              </button>
-            ))}
+          {/* Media column */}
+          <div className="relative md:order-2 order-1">
+            <picture>
+              {imageSp && <source media="(max-width: 767px)" srcSet={imageSp} />}
+              <img
+                src={image}
+                alt={alt}
+                width={900}
+                height={840}
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className="w-full h-[240px] md:h-[420px] object-cover rounded-3xl shadow-[0_6px_24px_rgba(27,42,74,0.08)]"
+              />
+            </picture>
+            <div className="absolute -left-2 md:-left-3.5 bottom-5 md:bottom-6 bg-white rounded-2xl px-4 py-3 md:px-[18px] md:py-3 shadow-[0_6px_24px_rgba(27,42,74,0.12)] border-l-[5px] border-water">
+              <b className="block text-navy font-black text-base md:text-[18px] leading-tight">満足保証</b>
+              <small className="text-text-secondary text-[11px] md:text-[12px]">ご納得いただけなければ料金0円</small>
+            </div>
           </div>
         </div>
-      </section>
 
-      <div className="max-w-[1240px] mx-auto px-4 py-6 md:py-10">
-        <picture>
-          <source media="(max-width: 900px)" srcSet="/images/hero/kv-bottom-sp.svg" />
-          <source media="(min-width: 901px)" srcSet="/images/hero/kv-bottom.svg" />
-          <img
-            src="/images/hero/kv-bottom.svg"
-            alt=""
-            className="w-full"
-            aria-hidden="true"
-            loading="lazy"
-          />
-        </picture>
+        {/* Category selector */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-[18px] mt-7 md:mt-9">
+          <a
+            href="#water"
+            className="flex items-center gap-4 bg-white border border-border-warm rounded-2xl px-5 py-4 md:px-[22px] md:py-[18px] shadow-[0_6px_24px_rgba(27,42,74,0.08)] hover:-translate-y-0.5 transition-transform"
+          >
+            <span className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-2xl bg-water-tint flex items-center justify-center text-2xl shrink-0" aria-hidden="true">💧</span>
+            <span className="min-w-0">
+              <b className="block text-navy font-black text-base md:text-[18px]">水まわりの修理</b>
+              <span className="text-[13px] text-text-secondary">トイレ・キッチン・お風呂・洗面所</span>
+            </span>
+            <span className="ml-auto font-black text-water" aria-hidden="true">→</span>
+          </a>
+          <a
+            href="#electricity"
+            className="flex items-center gap-4 bg-white border border-border-warm rounded-2xl px-5 py-4 md:px-[22px] md:py-[18px] shadow-[0_6px_24px_rgba(27,42,74,0.08)] hover:-translate-y-0.5 transition-transform"
+          >
+            <span className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-2xl bg-electric-tint flex items-center justify-center text-2xl shrink-0" aria-hidden="true">⚡</span>
+            <span className="min-w-0">
+              <b className="block text-navy font-black text-base md:text-[18px]">電気まわりの修理</b>
+              <span className="text-[13px] text-text-secondary">ブレーカー・コンセント・照明・給湯器</span>
+            </span>
+            <span className="ml-auto font-black text-electric-deep" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

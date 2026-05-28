@@ -14,7 +14,7 @@ import MobileMenu from './MobileMenu.tsx';
     </div>
     <a
       href="/contact"
-      class="absolute top-0 right-[60px] w-[60px] h-[60px] flex flex-col items-center justify-center gap-[3px] bg-[#fc4076]"
+      class="absolute top-0 right-[60px] w-[60px] h-[60px] flex flex-col items-center justify-center gap-[3px] bg-cta hover:bg-cta-deep transition-colors"
     >
       <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] h-[24px]" />
       <span class="text-[10px] font-bold text-white leading-tight text-center">無料相談</span>
@@ -35,22 +35,22 @@ import MobileMenu from './MobileMenu.tsx';
       </div>
 
       <div class="ml-[12px] xl:ml-[18px] flex flex-col items-center shrink-0">
-        <span class="inline-flex items-center justify-center w-[130px] xl:w-[186px] h-[16px] xl:h-[20px] rounded-[10px] border border-[#2856cb] text-[9px] xl:text-[11px] font-bold text-[#2856cb] whitespace-nowrap leading-none">
+        <span class="inline-flex items-center justify-center w-[130px] xl:w-[186px] h-[16px] xl:h-[20px] rounded-[10px] border border-water text-[9px] xl:text-[11px] font-bold text-water whitespace-nowrap leading-none">
           電話相談無料！年中無休で対応
         </span>
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="flex items-center justify-center gap-[3px] font-['Roboto',sans-serif] text-[18px] xl:text-[26px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity mb-[12px] xl:mb-[15px] whitespace-nowrap"
+          class="flex items-center justify-center gap-[3px] font-['Roboto',sans-serif] text-[18px] xl:text-[26px] font-bold text-navy hover:opacity-70 transition-opacity mb-[12px] xl:mb-[15px] whitespace-nowrap"
         >
-          <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[11px] xl:w-[14px] h-auto" style="filter:brightness(0) saturate(100%) invert(18%) sepia(89%) saturate(3642%) hue-rotate(224deg) brightness(95%) contrast(107%);" />
+          <img src="/images/cta/cta_tel_icon.svg" alt="" class="w-[11px] xl:w-[14px] h-auto" style="filter:brightness(0) saturate(100%) invert(13%) sepia(28%) saturate(1648%) hue-rotate(189deg) brightness(95%) contrast(92%);" />
           {SITE_CONFIG.phone.display}
         </a>
       </div>
 
       <a
         href="/contact"
-        class="ml-[7px] xl:ml-[9px] self-start w-[100px] xl:w-[160px] h-[100px] flex items-center justify-center gap-[5px] xl:gap-[7px] rounded-bl-[20px] bg-[#fc4076] hover:opacity-90 text-white text-[12px] xl:text-[18px] font-bold leading-[1.2] text-center transition-opacity shrink-0"
+        class="ml-[7px] xl:ml-[9px] self-start w-[100px] xl:w-[160px] h-[100px] flex items-center justify-center gap-[5px] xl:gap-[7px] rounded-bl-[20px] bg-cta hover:bg-cta-deep text-white text-[12px] xl:text-[18px] font-bold leading-[1.2] text-center transition-colors shrink-0"
       >
         <img src="/images/cta/cta_contact_icon.svg" alt="" class="w-[24px] xl:w-[40px] h-auto" />
         <span>メールで<br />無料相談</span>
@@ -82,7 +82,7 @@ import MobileMenu from './MobileMenu.tsx';
     margin: auto;
     width: 24px;
     height: 2px;
-    background-color: #0044f2;
+    background-color: #1B2A4A;
     transition: transform 0.3s, background-color 0.3s;
   }
   .hamburger__line::before,

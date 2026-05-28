@@ -32,10 +32,9 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
   </div>
 
   <!-- KV Banner -->
-  <section class="bg-[#0044f2] h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
+  <section class="bg-navy h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
     <div class="max-w-[1200px] mx-auto px-4 w-full relative">
       <h1 class="text-[24px] sm:text-[36px] md:text-[48px] font-black text-white ml-[16px] sm:ml-[30px] md:ml-[45px]">営業所一覧</h1>
-      <p class="font-[Roboto] text-[60px] sm:text-[90px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[10px] sm:left-[15px] md:left-[20px] -translate-y-1/2 capitalize whitespace-nowrap">office</p>
     </div>
   </section>
 
@@ -57,7 +56,7 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
               <div class="flex">
                 <dt class="w-[80px] shrink-0 font-bold text-[#666]">電話</dt>
                 <dd>
-                  <a href={office.phone.href} class="text-[#0044f2] hover:underline">
+                  <a href={office.phone.href} class="text-water hover:underline">
                     {office.phone.display}
                   </a>
                   <span class="text-[12px] text-[#999] ml-1">（通話無料）</span>
@@ -71,7 +70,7 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
                 <dt class="w-[80px] shrink-0 font-bold text-[#666]">対応</dt>
                 <dd class="flex flex-wrap gap-2">
                   {office.prefecturesServed.map((pref) => (
-                    <span class="inline-block bg-[#f0f4ff] text-[#0044f2] text-[12px] md:text-[13px] font-bold px-3 py-1 rounded-full">
+                    <span class="inline-block bg-water-tint text-water text-[12px] md:text-[13px] font-bold px-3 py-1 rounded-full">
                       {pref}
                     </span>
                   ))}

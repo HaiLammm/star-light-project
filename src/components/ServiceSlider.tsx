@@ -11,20 +11,29 @@ interface ServiceSlide {
   imageAlt: string;
 }
 
+type Accent = 'water' | 'electricity';
+
 interface Props {
   slides: ServiceSlide[];
   heading: string;
   subheading: string;
-  englishLabel: string;
-  bgColor: string;
+  eyebrow: string;
+  accent: Accent;
+  anchorId?: string;
   aboveFold?: boolean;
 }
 
-export default function ServiceSlider({ slides, heading, subheading, englishLabel, bgColor, aboveFold = false }: Props) {
+const ACCENT = {
+  water: { color: 'var(--color-water)', tint: 'var(--color-water-tint)', pill: '水道' },
+  electricity: { color: 'var(--color-electric-deep)', tint: 'var(--color-electric-tint)', pill: '電気' },
+} as const;
+
+export default function ServiceSlider({ slides, heading, subheading, eyebrow, accent, anchorId, aboveFold = false }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const count = slides.length;
   const loopSlides = useMemo(() => [...slides, ...slides, ...slides], [slides]);
+  const a = ACCENT[accent];
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -70,55 +79,49 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
   }, [emblaApi, count]);
 
   return (
-    <section className={`relative overflow-hidden ${!aboveFold ? 'mt-[6.6rem] md:mt-[3rem]' : ''}`}>
-      <div className="relative max-w-[1240px] mx-auto px-5 md:px-[20px]">
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] md:w-[calc(100%-4rem)] max-w-[1200px] rounded-[20px] md:rounded-[40px] -z-10"
-          style={{ background: bgColor, aspectRatio: '1200/555' }}
-        />
-        <h2 className="relative flex flex-col items-center text-center text-xl md:text-[clamp(28px,3.4vw,42px)] font-bold text-[#1c1c1c] leading-tight">
-          <span className="block w-[2px] h-8 md:h-[clamp(40px,5.6vw,70px)] bg-[#1c1c1c]" />
-          {heading}
-          <span className="absolute top-8 md:top-[clamp(10px,3.6vw,45px)] left-1/2 -translate-x-1/2 font-[Roboto] text-[56px] md:text-[clamp(100px,14.5vw,180px)] font-bold whitespace-nowrap -z-[1] pointer-events-none opacity-30 text-white">
-            {englishLabel}
+    <section id={anchorId} className="py-14 md:py-20">
+      <div className="max-w-[1120px] mx-auto px-5">
+        <div className="text-center mb-8 md:mb-10">
+          <span className="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em]" style={{ color: a.color }}>
+            <span className="w-7 h-[3px] rounded-sm" style={{ background: a.color }} />
+            {eyebrow}
           </span>
-        </h2>
-        <p className="mt-2 md:mt-4 text-[11px] md:text-[clamp(11px,1.1vw,14px)] font-medium text-[#1c1c1c] text-center max-w-[calc(100%-3rem)] md:max-w-none mx-auto" style={{ wordBreak: 'normal' }}>{subheading}</p>
-      </div>
+          <h2 className="text-[23px] md:text-[30px] font-black text-navy tracking-wide mt-3">{heading}</h2>
+          <p className="text-[13px] md:text-[15px] text-text-secondary mt-2 max-w-[680px] mx-auto" style={{ wordBreak: 'normal' }}>{subheading}</p>
+        </div>
 
-      <div className="flex justify-center mt-2.5 md:mt-[30px]">
-        <ul className="flex items-center justify-center flex-wrap bg-white rounded-[33px] px-6 md:px-[30px] py-[9px]">
+        <div className="flex justify-center gap-2.5 flex-wrap mb-8">
           {slides.map((slide, index) => (
-            <li key={slide.slug}>
-              <button
-                onClick={() => scrollTo(index)}
-                className={`px-4 md:px-[16px] py-[5px] md:py-[9px] pb-[6px] md:pb-[12px] rounded-[8px] text-xs md:text-base font-medium transition-colors whitespace-nowrap text-[#1c1c1c] ${
-                  selectedIndex === index ? 'bg-[#f6f6f6]' : 'hover:opacity-70'
-                }`}
-              >
-                {slide.label}
-              </button>
-            </li>
+            <button
+              key={slide.slug}
+              onClick={() => scrollTo(index)}
+              className="rounded-full px-5 py-2 text-[14px] font-bold transition-colors border-[1.5px]"
+              style={
+                selectedIndex === index
+                  ? { background: a.color, borderColor: a.color, color: '#fff' }
+                  : { background: '#fff', borderColor: a.color, color: a.color }
+              }
+            >
+              {slide.label}
+            </button>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div
-        className="overflow-hidden mt-[10px] md:mt-[20px]"
+        className="overflow-hidden max-w-[1160px] mx-auto"
         ref={emblaRef}
         onMouseEnter={stopAutoplay}
         onMouseLeave={startAutoplay}
       >
-        <div className="flex items-start">
+        <div className="flex items-stretch px-2">
           {loopSlides.map((slide, index) => (
-            <div
-              key={`${slide.slug}-${index}`}
-              className={`min-w-0 flex-[0_0_60%] md:flex-[0_0_24%] px-[14px] md:px-[22px] ${index % 2 === 1 ? 'md:mt-[80px]' : ''}`}
-            >
-              <a href={slide.href} className="group flex flex-col h-full">
-                <figure className="w-full aspect-square overflow-hidden flex-shrink-0"
-                  style={{ filter: 'drop-shadow(0 5px 0 #b2b2b2)', borderRadius: 'inherit' }}
-                >
+            <div key={`${slide.slug}-${index}`} className="min-w-0 flex-[0_0_70%] sm:flex-[0_0_45%] md:flex-[0_0_25%] px-2.5 md:px-3">
+              <a
+                href={slide.href}
+                className="group flex flex-col h-full bg-white border border-border-warm rounded-2xl overflow-hidden shadow-[0_6px_24px_rgba(27,42,74,0.08)] hover:-translate-y-1 transition-transform duration-200"
+              >
+                <div className="relative h-[140px] md:h-[160px] overflow-hidden">
                   <img
                     src={slide.imageSrc}
                     alt={slide.imageAlt}
@@ -126,28 +129,34 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
                     height="640"
                     decoding="auto"
                     loading={aboveFold && index < count * 2 ? 'eager' : 'lazy'}
-                    className="w-full h-full object-cover rounded-[40px] md:rounded-[60px]"
+                    className="w-full h-full object-cover"
                   />
-                </figure>
-                <div className="px-[14px] md:px-[19px] mt-2 md:mt-[14px] overflow-hidden">
-                  <h3 className="text-sm md:text-[clamp(16px,1.77vw,22px)] font-extrabold text-gray-900 leading-snug group-hover:text-[#ff4176] transition-colors duration-200 line-clamp-2 overflow-wrap-anywhere">
+                  <span
+                    className="absolute top-2.5 left-2.5 text-white text-[11px] font-bold px-2.5 py-1 rounded-full"
+                    style={{ background: a.color }}
+                  >
+                    {a.pill}
+                  </span>
+                </div>
+                <div className="flex flex-col flex-1 px-4 pt-4 pb-[18px]">
+                  <h3 className="text-[15px] md:text-[17px] font-black text-navy leading-snug line-clamp-2 overflow-wrap-anywhere">
                     {slide.label}
                   </h3>
-                  <p className="text-[9px] md:text-[clamp(10px,0.97vw,12px)] text-gray-600 mt-0.5 line-clamp-2 overflow-wrap-anywhere">{slide.description}</p>
-                  <div className="mt-1 md:mt-2">
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-[9px] md:text-[clamp(10px,0.97vw,12px)]">作業料金</span>
-                      <span className="inline-block bg-black text-white text-[8px] md:text-[clamp(9px,0.97vw,12px)] font-medium px-2 md:px-[14px] py-px rounded-[3px] md:rounded-[5px]">
-                        WEB割引
-                      </span>
-                    </div>
-                    <p className="font-[Roboto] text-xl md:text-[clamp(24px,2.58vw,32px)] font-bold text-[#ff4176] flex items-center gap-0.5 md:gap-1 mt-0.5 flex-wrap">
+                  <p className="text-[12px] md:text-[13px] text-text-secondary leading-relaxed mt-1.5 mb-3.5 flex-1 line-clamp-2 overflow-wrap-anywhere">
+                    {slide.description}
+                  </p>
+                  <p className="text-[13px] text-text-secondary mb-3">
+                    <span className="font-[Roboto] text-[18px] md:text-[22px] font-black text-cta mr-0.5">
                       {slide.startingPrice.toLocaleString()}
-                      <span className="text-[9px] md:text-[clamp(10px,1.13vw,14px)] font-medium text-gray-900 translate-y-[2px]" style={{ fontFamily: 'Noto Sans JP, sans-serif' }}>
-                        円[税込]〜
-                      </span>
-                    </p>
-                  </div>
+                    </span>
+                    円[税込]〜
+                  </p>
+                  <span
+                    className="text-[13px] font-bold border-t border-border-warm pt-3 flex justify-between items-center"
+                    style={{ color: a.color }}
+                  >
+                    詳しく見る<span aria-hidden="true">→</span>
+                  </span>
                 </div>
               </a>
             </div>

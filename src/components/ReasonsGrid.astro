@@ -13,28 +13,28 @@ interface Props {
 
 const defaultReasons: Reason[] = [
   {
-    icon: '/images/icons/reason_01.svg',
+    icon: '/images/icons/reson_01.webp',
     number: '01',
     headingHighlight: '最短10分',
     heading: '即日駆けつけ即日工事',
     description: '最寄りのサービス拠点より、迅速にスタッフを派遣します（最短10分）。早朝・深夜を問わず営業、突発的なトラブルにも即対応',
   },
   {
-    icon: '/images/icons/reason_02.svg',
+    icon: '/images/icons/reson_02.webp',
     number: '02',
     headingHighlight: 'ご相談無料',
     heading: '必ず事前にお見積り',
     description: '作業料金は、作業費・材料費（部品代）・廃材処分費の合計で算出いたします。お見積り費用や出張費、早朝・深夜の追加料金、キャンセル料などは一切不要です。作業に入る前には必ずお見積りをご提示いたしますので、安心してご相談・ご依頼ください。',
   },
   {
-    icon: '/images/icons/reason_03.svg',
+    icon: '/images/icons/reson_03.webp',
     number: '03',
     headingHighlight: '24時間365日',
     heading: '対応',
     description: '設備プロでは24時間365日、経験豊富なスタッフが常時対応しております。礼儀・対応マナーの研修を実施し、お客様に安心してご利用いただける接客と丁寧な作業を徹底しております。',
   },
   {
-    icon: '/images/icons/reason_04.svg',
+    icon: '/images/icons/reson_04.webp',
     number: '04',
     headingHighlight: '国の資格を保有',
     heading: 'した工事士が作業担当',
@@ -46,19 +46,20 @@ const { reasons: customReasons } = Astro.props;
 const reasons = customReasons ?? defaultReasons;
 ---
 
-<section class="py-12 md:py-16 lg:py-20">
-  <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
-    <h2 class="text-[24px] md:text-[42px] font-bold relative isolate flex flex-col items-center text-center mb-6 sm:mb-8 md:mb-12">
-      <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
-      <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Reason</span>
-      <span class="flex items-center gap-1 sm:gap-2">
+<section id="reason" class="py-12 md:py-16 lg:py-20">
+  <div class="max-w-[1120px] mx-auto px-3 sm:px-4">
+    <div class="text-center mb-6 sm:mb-8 md:mb-12">
+      <span class="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em] text-navy">
+        <span class="w-7 h-[3px] rounded-sm bg-navy"></span>選ばれる理由
+      </span>
+      <h2 class="text-[23px] md:text-[30px] font-black text-navy mt-3 flex items-center justify-center gap-1 sm:gap-2">
         <img src="/images/site_logo_no-mark.jpeg" alt="設備プロ" width="120" height="32" class="h-[1em] w-auto inline-block" />
         が選ばれる理由
-      </span>
-    </h2>
+      </h2>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
       {reasons.map((reason) => (
-        <div class="bg-[#f7f7f7] rounded-[16px] sm:rounded-[20px] md:rounded-[40px] shadow-[0_8px_0_0_rgba(0,0,0,0.16)] flex items-start gap-3 sm:gap-4 md:gap-6 p-4 sm:p-5 md:p-8">
+        <div class="bg-white border border-border-warm rounded-[16px] sm:rounded-[20px] md:rounded-[40px] shadow-[0_6px_24px_rgba(27,42,74,0.08)] flex items-start gap-3 sm:gap-4 md:gap-6 p-4 sm:p-5 md:p-8">
           <div class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-[140px] md:h-[140px] relative">
             <img
               src={reason.icon}
@@ -69,14 +70,14 @@ const reasons = customReasons ?? defaultReasons;
               decoding="auto"
               class="w-full h-full object-contain"
             />
-            <p class="absolute -top-1 left-0 flex flex-col items-center text-[#0044f2] font-semibold leading-none">
+            <p class="absolute -top-1 left-0 flex flex-col items-center text-navy font-semibold leading-none">
               <span class="text-[8px] sm:text-[9px] md:text-xs font-bold uppercase tracking-normal font-[Roboto]">reason</span>
               <span class="text-2xl sm:text-3xl md:text-5xl font-semibold font-[Roboto_Condensed] -tracking-wider">{reason.number}</span>
             </p>
           </div>
           <div class="flex-grow min-w-0 pt-0 sm:pt-1 md:pt-2 overflow-hidden">
             <p class="text-[13px] sm:text-base md:text-xl font-bold mb-2 sm:mb-3 overflow-wrap-anywhere">
-              <span class="text-[#ff4176]">{reason.headingHighlight}</span>{reason.heading}
+              <span class="text-cta">{reason.headingHighlight}</span>{reason.heading}
             </p>
             <p class="text-[11px] sm:text-sm md:text-base text-gray-600 leading-relaxed overflow-wrap-anywhere">{reason.description}</p>
           </div>

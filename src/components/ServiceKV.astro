@@ -1,0 +1,61 @@
+---
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../utils/imageImports';
+
+interface Props {
+  accent: 'electricity' | 'water';
+  eyebrow: string;
+  title: string;
+  sub?: string;
+  image: string;
+  imageAlt: string;
+}
+
+const { accent, eyebrow, title, sub, image, imageAlt } = Astro.props;
+
+const meta = await resolveImage(image);
+const imgDesktop = meta ? (await getImage({ src: meta, width: 900, height: 760, format: 'webp', quality: 80 })).src : image;
+const imgMobile = meta ? (await getImage({ src: meta, width: 760, height: 520, format: 'webp', quality: 80 })).src : image;
+
+const tint = accent === 'electricity' ? 'bg-electric-tint' : 'bg-water-tint';
+const accentText = accent === 'electricity' ? 'text-electric-deep' : 'text-water';
+const accentBg = accent === 'electricity' ? 'bg-electric-deep' : 'bg-water';
+
+const badges = ['見積り0円', '最短10分で到着', '24時間365日対応'];
+---
+
+<section class={tint}>
+  <div class="max-w-[1120px] mx-auto px-5 py-8 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-[1.05fr_.95fr] gap-6 md:gap-10 items-center">
+      <div class="order-2 md:order-1">
+        <span class={`inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em] ${accentText}`}>
+          <span class={`w-7 h-[3px] rounded-sm ${accentBg}`}></span>{eyebrow}
+        </span>
+        <p class="text-[24px] md:text-[36px] leading-[1.45] font-black text-navy mt-3 overflow-wrap-anywhere">{title}</p>
+        {sub && <p class="text-[14px] md:text-[15px] text-text-secondary leading-[1.9] mt-3 overflow-wrap-anywhere">{sub}</p>}
+        <ul class="flex flex-wrap gap-2 mt-5">
+          {badges.map((b) => (
+            <li class="flex items-center gap-1.5 bg-white border border-border-warm rounded-full px-3.5 py-1.5 text-[12px] md:text-[13px] font-bold text-navy">
+              <span class={`w-1.5 h-1.5 rounded-full ${accentBg}`}></span>{b}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="order-1 md:order-2">
+        <picture>
+          <source media="(max-width: 767px)" srcset={imgMobile} />
+          <img
+            src={imgDesktop}
+            alt={imageAlt}
+            width="900"
+            height="760"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="w-full h-[200px] md:h-[360px] object-cover rounded-3xl shadow-[0_6px_24px_rgba(27,42,74,0.10)]"
+          />
+        </picture>
+      </div>
+    </div>
+  </div>
+</section>

@@ -38,7 +38,7 @@ const visiblePages = getVisiblePages(currentPage, totalPages);
       page === '...' ? (
         <span class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] text-[14px] sm:text-[16px] text-[#888]">…</span>
       ) : page === currentPage ? (
-        <span aria-current="page" class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full bg-[#0044f2] text-white text-[14px] sm:text-[16px] font-bold">{page}</span>
+        <span aria-current="page" class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full bg-navy text-white text-[14px] sm:text-[16px] font-bold">{page}</span>
       ) : (
         <a href={getPageUrl(page)} class="flex items-center justify-center w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] md:w-[46px] md:h-[46px] rounded-full border border-[#ccc] text-[14px] sm:text-[16px] hover:bg-[#f0f0f0] transition-colors">{page}</a>
       )

@@ -32,8 +32,7 @@ const {
   <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
     <div class="border-[6px] border-[#e5e5e5] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] px-3 sm:px-6 md:px-10 pb-6 sm:pb-8 md:pb-10">
       <h2 class="text-[24px] md:text-[42px] font-bold relative isolate flex flex-col items-center text-center pt-8 sm:pt-10 md:pt-12 mb-6 sm:mb-8 md:mb-12">
-        <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
-        <span class="absolute top-[65px] md:top-[55px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Compare</span>
+        <span class="block w-[2px] h-[40px] md:h-[70px] bg-navy"></span>
         {title}
       </h2>
       <div class="overflow-x-auto">
@@ -41,7 +40,7 @@ const {
           <caption class="sr-only">{caption}</caption>
           <colgroup>
             <col />
-            <col class="border-4 border-[#fbc102]" />
+            <col class="border-4 border-cta" />
             <col />
             <col />
           </colgroup>
@@ -75,20 +74,20 @@ const {
                     {row.our.type === 'price' && (
                       <div class="flex flex-col items-center gap-1">
                         <span class="inline-flex items-center gap-1 bg-black text-white text-[8px] sm:text-[9px] md:text-[11px] font-bold px-1.5 sm:px-2 py-0.5 rounded-[4px]">
-                          WEB割引<span class="text-[#fbfb00] ml-0.5">1,500円割引!</span>
+                          WEB割引<span class="text-electric ml-0.5">1,500円割引!</span>
                         </span>
-                        <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-[#ff4176]">
+                        <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-cta">
                           {row.our.amount.toLocaleString('ja-JP')}<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円[税込]〜</span>
                         </span>
                       </div>
                     )}
                     {row.our.type === 'price-zero' && (
-                      <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-[#ff4176]">
+                      <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-cta">
                         0<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円</span>
                       </span>
                     )}
                     {row.our.type === 'circle' && (
-                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-bold text-[#ff4176]" aria-label="対応">〇</span>
+                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-bold text-cta" aria-label="対応">〇</span>
                     )}
                     {row.our.type === 'cross' && (
                       <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[48px] font-light text-[#3e3e3e]" aria-label="非対応">×</span>
@@ -97,7 +96,7 @@ const {
                       <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-medium text-[#3e3e3e]" aria-label="要確認">△</span>
                     )}
                     {row.our.type === 'text' && (
-                      <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-[#ff4176]">
+                      <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-cta">
                         {row.our.value}
                       </span>
                     )}

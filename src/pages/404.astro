@@ -20,10 +20,9 @@ const breadcrumbItems = [
   </div>
 
   <!-- KV Banner -->
-  <section class="bg-[#0044f2] h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
+  <section class="bg-navy h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
     <div class="max-w-[1200px] mx-auto px-4 w-full relative">
       <h1 class="text-[20px] sm:text-[32px] md:text-[48px] font-black text-white ml-[16px] sm:ml-[30px] md:ml-[45px]">ページが見つかりません</h1>
-      <p class="font-[Roboto] text-[60px] sm:text-[90px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[10px] sm:left-[15px] md:left-[20px] -translate-y-1/2 capitalize">404</p>
     </div>
   </section>
 
@@ -36,14 +35,14 @@ const breadcrumbItems = [
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
           href="/"
-          class="inline-flex items-center justify-center bg-[#0044f2] text-white font-bold py-3 px-8 rounded-lg hover:opacity-80 transition-opacity text-[14px] md:text-[16px]"
+          class="inline-flex items-center justify-center bg-navy text-white font-bold py-3 px-8 rounded-lg hover:bg-water-deep transition-colors text-[14px] md:text-[16px]"
         >
           トップページへ戻る
         </a>
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="inline-flex flex-col items-center justify-center border-2 border-[#0044f2] text-[#0044f2] font-bold py-2 px-8 rounded-lg hover:bg-[#0044f2] hover:text-white transition-colors"
+          class="inline-flex flex-col items-center justify-center border-2 border-navy text-navy font-bold py-2 px-8 rounded-lg hover:bg-navy hover:text-white transition-colors"
         >
           <span class="text-[11px] md:text-[12px]">お電話でのお問い合わせ</span>
           <span class="text-[16px] md:text-[18px] font-bold">{SITE_CONFIG.phone.display}</span>

@@ -102,7 +102,7 @@ export default function MobileMenu({ navigation, phone }: MobileMenuProps) {
                   href={item.href}
                   className="flex items-center gap-[7px] text-[14px] font-bold text-white min-h-[44px]"
                 >
-                  <span className="shrink-0 w-[8px] h-[8px] rounded-full bg-[#fbc101]" />
+                  <span className="shrink-0 w-[8px] h-[8px] rounded-full bg-cta" />
                   {item.label}
                 </a>
                 {item.children && (
@@ -113,7 +113,7 @@ export default function MobileMenu({ navigation, phone }: MobileMenuProps) {
                           href={child.href}
                           className="flex items-center gap-[8px] text-[12px] text-white min-h-[44px]"
                         >
-                          <span className="shrink-0 w-[6px] h-[2px] bg-[#fbc101]" />
+                          <span className="shrink-0 w-[6px] h-[2px] bg-cta" />
                           {child.label}
                         </a>
                       </li>

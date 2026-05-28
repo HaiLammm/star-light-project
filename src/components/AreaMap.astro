@@ -1,31 +1,65 @@
 ---
-import { Image } from 'astro:assets';
-import areaMapImg from '../assets/images/area_2026.png';
+interface AreaRegion {
+  name: string;
+  prefs: string[];
+}
+
+const areaRegions: AreaRegion[] = [
+  { name: '関東エリア', prefs: ['東京都', '埼玉県', '神奈川県'] },
+  { name: '東海エリア', prefs: ['三重県', '岐阜県', '愛知県', '静岡県'] },
+  { name: '関西エリア', prefs: ['大阪府', '京都府', '兵庫県'] },
+  { name: '中国エリア', prefs: ['広島県'] },
+];
 ---
 
-<section class="py-12 md:py-16 lg:pt-[100px] lg:pb-[80px]">
-  <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
-    <h2 class="text-[24px] md:text-[42px] font-bold relative isolate flex flex-col items-center text-center">
-      <span class="block w-[2px] h-[40px] md:h-[70px] bg-[#fbc102]"></span>
-      <span class="absolute top-[40px] md:top-[45px] left-1/2 -translate-x-1/2 opacity-30 font-[Roboto] text-[70px] md:text-[180px] font-bold text-[#b3b3b3] whitespace-nowrap -z-[1] pointer-events-none">Area</span>
-      対応エリア
-    </h2>
-    <p class="text-center text-[11px] sm:text-[12px] md:text-[14px] text-[#555] mt-4 sm:mt-6 mb-6 sm:mb-8 md:mb-10">
-      年中無休で稼働しております。
+<section id="area" class="py-12 md:py-16 lg:pt-[100px] lg:pb-[80px]">
+  <div class="max-w-[1120px] mx-auto px-3 sm:px-4">
+    <div class="text-center">
+      <span class="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em] text-navy">
+        <span class="w-7 h-[3px] rounded-sm bg-navy"></span>対応エリア
+      </span>
+      <h2 class="text-[23px] md:text-[30px] font-black text-navy mt-3">対応エリア</h2>
+    </div>
+    <p class="text-center text-[12px] md:text-[14px] text-text-secondary mt-3 mb-8 md:mb-10">
+      年中無休で稼働しております。東京・名古屋・大阪・広島を中心に対応。
     </p>
 
-    <div class="flex justify-center">
-      <Image
-        src={areaMapImg}
-        alt="設備プロのサービス対応エリアマップ"
-        width={600}
-        height={450}
-        format="webp"
-        quality={80}
-        decoding="async"
-        loading="lazy"
-        class="w-full max-w-[600px] h-auto"
-      />
+    <div class="grid md:grid-cols-[minmax(0,1fr)_360px] gap-8 md:gap-10 items-center">
+      <!-- Map -->
+      <figure class="w-full max-w-[560px] mx-auto">
+        <img
+          src="/images/map/japan-areas.svg"
+          alt="設備プロのサービス対応エリアマップ（関東・東海・関西・中国地方）"
+          width="600"
+          height="600"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-auto"
+        />
+        <figcaption class="flex items-center justify-center gap-4 mt-3 text-[12px] text-text-secondary">
+          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-[3px] bg-water"></span>対応エリア</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-[3px] bg-[#D7E3EC]"></span>その他</span>
+        </figcaption>
+      </figure>
+
+      <!-- Legend -->
+      <ul class="flex flex-col gap-4">
+        {areaRegions.map((region) => (
+          <li class="bg-white border border-border-warm rounded-2xl shadow-[0_6px_24px_rgba(27,42,74,0.08)] p-4">
+            <p class="flex items-center gap-1.5 font-black text-navy text-[15px] md:text-[16px]">
+              <svg class="w-4 h-4 shrink-0 text-water" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2c-3.87 0-7 3.13-7 7 0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
+              </svg>
+              {region.name}
+            </p>
+            <ul class="flex flex-wrap gap-1.5 mt-2.5">
+              {region.prefs.map((pref) => (
+                <li class="bg-water-tint text-water-deep text-[12px] font-bold leading-none px-2.5 py-1.5 rounded-full">{pref}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </section>

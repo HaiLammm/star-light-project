@@ -44,10 +44,9 @@ const utilityPages = [
   </div>
 
   <!-- KV Banner -->
-  <section class="bg-[#0044f2] h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
+  <section class="bg-navy h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
     <div class="max-w-[1200px] mx-auto px-4 w-full relative">
       <h1 class="text-[24px] sm:text-[36px] md:text-[48px] font-black text-white ml-[16px] sm:ml-[30px] md:ml-[45px]">サイトマップ</h1>
-      <p class="font-[Roboto] text-[60px] sm:text-[90px] md:text-[120px] font-bold text-white opacity-20 absolute top-1/2 left-[10px] sm:left-[15px] md:left-[20px] -translate-y-1/2 capitalize">Sitemap</p>
     </div>
   </section>
 
@@ -56,21 +55,21 @@ const utilityPages = [
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         <!-- TOP -->
         <div>
-          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-[#0044f2]">
-            <a href="/" class="hover:text-[#0044f2] transition-colors">TOP</a>
+          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-navy">
+            <a href="/" class="hover:text-water transition-colors">TOP</a>
           </h2>
         </div>
 
         <!-- Service Categories -->
         {servicesByCategory.map((cat) => (
           <div>
-            <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-[#0044f2]">
-              <a href={cat.href} class="hover:text-[#0044f2] transition-colors">{cat.label}</a>
+            <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-navy">
+              <a href={cat.href} class="hover:text-water transition-colors">{cat.label}</a>
             </h2>
             <ul class="space-y-2">
               {cat.services.map((service) => (
                 <li>
-                  <a href={service.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-[#0044f2] transition-colors">
+                  <a href={service.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-water transition-colors">
                     {service.name}
                   </a>
                 </li>
@@ -81,13 +80,13 @@ const utilityPages = [
 
         <!-- Company -->
         <div>
-          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-[#0044f2]">
-            <a href="/company" class="hover:text-[#0044f2] transition-colors">会社案内</a>
+          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-navy">
+            <a href="/company" class="hover:text-water transition-colors">会社案内</a>
           </h2>
           <ul class="space-y-2">
             {companyPages.map((page) => (
               <li>
-                <a href={page.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-[#0044f2] transition-colors">
+                <a href={page.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-water transition-colors">
                   {page.label}
                 </a>
               </li>
@@ -97,13 +96,13 @@ const utilityPages = [
 
         <!-- Utility Pages -->
         <div>
-          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-[#0044f2]">
+          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-navy">
             ご利用案内
           </h2>
           <ul class="space-y-2">
             {utilityPages.map((page) => (
               <li>
-                <a href={page.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-[#0044f2] transition-colors">
+                <a href={page.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-water transition-colors">
                   {page.label}
                 </a>
               </li>

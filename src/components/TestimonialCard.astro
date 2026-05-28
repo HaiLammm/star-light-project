@@ -30,8 +30,8 @@ const {
 } = Astro.props;
 
 const categoryColorMap: Record<string, string> = {
-  electricity: 'bg-[#fb7502]',
-  water: 'bg-[#2f76eb]',
+  electricity: 'bg-electric-deep',
+  water: 'bg-water',
 };
 
 const categoryColor = categoryColorMap[serviceCategory] ?? 'bg-[#717070]';
@@ -39,7 +39,7 @@ const cardTitle = title ?? `${serviceType}をご依頼いただいたお客様�
 ---
 
 <article class="h-full">
-  <a href="/voice" class="flex flex-col w-full h-full p-[20px] md:p-[30px] md:pb-[35px] rounded-[40px] md:rounded-[50px] shadow-[0_5px_0_0_rgba(0,0,0,0.16)] md:shadow-[0_8px_0_0_rgba(0,0,0,0.16)] bg-[#f7f7f7] hover:shadow-[0_5px_0_0_rgba(0,0,0,0.24)] md:hover:shadow-[0_8px_0_0_rgba(0,0,0,0.24)] transition-shadow duration-200 ease">
+  <a href="/voice" class="flex flex-col w-full h-full p-[20px] md:p-[30px] md:pb-[35px] rounded-[40px] md:rounded-[50px] border border-border-warm shadow-[0_6px_24px_rgba(27,42,74,0.08)] bg-white hover:-translate-y-1 transition-transform duration-200 ease">
     <div class="flex items-start gap-[10px] md:gap-[20px]">
       <figure class="shrink-0 w-[80px] md:w-[100px] aspect-square rounded-[20px] overflow-hidden">
         {typeof imageSrc === 'string' ? (
@@ -68,19 +68,19 @@ const cardTitle = title ?? `${serviceType}をご依頼いただいたお客様�
       <p>{message}</p>
       <cite class="not-italic text-[10px] md:text-[11px] text-[#666] block mt-[4px]">{authorInitial}</cite>
     </blockquote>
-    <div class="w-full px-[10px] py-[7px] md:py-[8px] pb-[7px] md:pb-[6px] rounded-[20px] bg-white flex justify-center gap-[20px] mt-auto">
+    <div class="w-full px-[10px] py-[7px] md:py-[8px] pb-[7px] md:pb-[6px] rounded-[20px] bg-cream flex justify-center gap-[20px] mt-auto">
       {duration && (
-        <div class="flex flex-col items-center pr-[20px] border-r border-dotted border-[#707070]">
-          <p class="text-[11px] md:text-[12px] leading-[1.17]">作業時間</p>
-          <p class="font-[Roboto] text-[30px] md:text-[32px] font-bold">
+        <div class="flex flex-col items-center pr-[20px] border-r border-dotted border-border-warm">
+          <p class="text-[11px] md:text-[12px] leading-[1.17] text-text-secondary">作業時間</p>
+          <p class="font-[Roboto] text-[30px] md:text-[32px] font-bold text-navy">
             {duration}<span class="text-[13px] md:text-[14px] font-medium ml-[5px] md:ml-[2px]">分</span>
           </p>
         </div>
       )}
       <div class="flex flex-col items-center">
-        <p class="text-[11px] md:text-[12px] leading-[1.17]">作業料金</p>
-        <p class="font-[Roboto] text-[30px] md:text-[32px] font-bold">
-          {formatPriceNumber(cost)}<span class="text-[13px] md:text-[14px] font-medium ml-[5px] md:ml-[2px]">円</span>
+        <p class="text-[11px] md:text-[12px] leading-[1.17] text-text-secondary">作業料金</p>
+        <p class="font-[Roboto] text-[30px] md:text-[32px] font-bold text-cta">
+          {formatPriceNumber(cost)}<span class="text-[13px] md:text-[14px] font-medium ml-[5px] md:ml-[2px] text-navy">円</span>
         </p>
       </div>
     </div>

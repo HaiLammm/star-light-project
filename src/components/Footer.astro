@@ -65,13 +65,13 @@ const FOOTER_NAV = [
         {FOOTER_NAV.map((section) => (
           <div class="flex-1 py-[20px] md:py-0 border-b border-[#ccc] md:border-b-0 last:border-b-0">
             {section.href ? (
-              <a href={section.href} class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px] hover:text-[#fbc101] transition-colors">
-                <span class="w-[8px] h-[8px] rounded-full bg-[#fbc101] shrink-0"></span>
+              <a href={section.href} class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px] hover:text-orange transition-colors">
+                <span class="w-[8px] h-[8px] rounded-full bg-water shrink-0"></span>
                 {section.label}
               </a>
             ) : (
               <p class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px]">
-                <span class="w-[8px] h-[8px] rounded-full bg-[#fbc101] shrink-0"></span>
+                <span class="w-[8px] h-[8px] rounded-full bg-water shrink-0"></span>
                 {section.label}
               </p>
             )}
@@ -79,8 +79,8 @@ const FOOTER_NAV = [
               <ul class="mt-[10px] md:mt-[20px] grid grid-cols-2 md:flex md:flex-col gap-[10px] md:gap-[15px]">
                 {section.children.map((child) => (
                   <li>
-                    <a href={child.href} class="text-[12px] md:text-[14px] text-[#333] flex items-center gap-[7px] md:gap-[7px] hover:text-[#fbc101] transition-colors">
-                      <span class="w-[6px] h-[2px] bg-[#fbc101] shrink-0"></span>
+                    <a href={child.href} class="text-[12px] md:text-[14px] text-[#333] flex items-center gap-[7px] md:gap-[7px] hover:text-orange transition-colors">
+                      <span class="w-[6px] h-[2px] bg-water shrink-0"></span>
                       {child.label}
                     </a>
                   </li>
@@ -99,7 +99,7 @@ const FOOTER_NAV = [
         <a
           href={SITE_CONFIG.phone.href}
           aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="font-['Roboto',sans-serif] text-[22px] md:text-[28px] font-bold text-[#0044f2] hover:opacity-70 transition-opacity"
+          class="font-['Roboto',sans-serif] text-[22px] md:text-[28px] font-bold text-navy hover:opacity-70 transition-opacity"
         >
           {SITE_CONFIG.phone.display}
         </a>
@@ -111,5 +111,5 @@ const FOOTER_NAV = [
       </div>
     </div>
   </div>
-  <p class="bg-[#0044f2] text-white text-center text-[12px] py-[11px] md:py-[12px]">Copyright &copy; SETSUBI-PRO.</p>
+  <p class="bg-navy text-white text-center text-[12px] py-[11px] md:py-[12px]">Copyright &copy; SETSUBI-PRO.</p>
 </footer>
