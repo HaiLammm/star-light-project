@@ -77,7 +77,7 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
           style={{ background: bgColor, aspectRatio: '1200/555' }}
         />
         <h2 className="relative flex flex-col items-center text-center text-xl md:text-[clamp(28px,3.4vw,42px)] font-bold text-[#1c1c1c] leading-tight">
-          <span className="block w-[2px] h-8 md:h-[clamp(40px,5.6vw,70px)] bg-white" />
+          <span className="block w-[2px] h-8 md:h-[clamp(40px,5.6vw,70px)] bg-[#1c1c1c]" />
           {heading}
           <span className="absolute top-8 md:top-[clamp(10px,3.6vw,45px)] left-1/2 -translate-x-1/2 font-[Roboto] text-[56px] md:text-[clamp(100px,14.5vw,180px)] font-bold whitespace-nowrap -z-[1] pointer-events-none opacity-30 text-white">
             {englishLabel}
@@ -92,8 +92,8 @@ export default function ServiceSlider({ slides, heading, subheading, englishLabe
             <li key={slide.slug}>
               <button
                 onClick={() => scrollTo(index)}
-                className={`px-4 md:px-[16px] py-[5px] md:py-[9px] pb-[6px] md:pb-[12px] rounded-[8px] text-xs md:text-base font-medium transition-colors whitespace-nowrap ${
-                  selectedIndex === index ? 'bg-[#f6f6f6] text-gray-900' : 'text-gray-600 hover:text-gray-900'
+                className={`px-4 md:px-[16px] py-[5px] md:py-[9px] pb-[6px] md:pb-[12px] rounded-[8px] text-xs md:text-base font-medium transition-colors whitespace-nowrap text-[#1c1c1c] ${
+                  selectedIndex === index ? 'bg-[#f6f6f6]' : 'hover:opacity-70'
                 }`}
               >
                 {slide.label}

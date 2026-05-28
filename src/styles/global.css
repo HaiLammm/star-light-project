@@ -8,13 +8,13 @@
   --color-text-primary: #333333;
   --color-text-secondary: #666666;
   --color-border-light: #E0E0E0;
-  --color-base: #FAF8EF;
+  --color-cream: #FAF8EF;
   --color-water: #0277BD;
   --color-electric: #FBC02D;
 }
 
 body {
-  background-color: var(--color-base);
+  background-color: var(--color-cream);
 }
 
 :focus-visible {
