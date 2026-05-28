@@ -4,6 +4,7 @@ import { SITE_CONFIG } from '../utils/siteConfig';
 import ctaDecoImg from '../assets/images/cta/cta_deco.png';
 import ctaSanitaryImg from '../assets/images/cta/cta_sanitary_button_2026.png';
 import ctaSanitarySpImg from '../assets/images/cta/cta_sanitary_button_sp_2026.png';
+import CtaFeatures from './CtaFeatures.astro';
 
 const sanitaryDesktop = await getImage({ src: ctaSanitaryImg, format: 'webp', quality: 80 });
 const sanitaryMobile = await getImage({ src: ctaSanitarySpImg, format: 'webp', quality: 80 });
@@ -77,14 +78,8 @@ const phone = SITE_CONFIG.phone;
           <span class="text-[21px] md:text-[28px]">に</span>修理相談
         </p>
 
-        <!-- cta_feature banner -->
-        <figure class="relative z-20 mx-auto mt-8 md:mt-[18px] w-full max-w-[828px]">
-          <picture>
-            <source media="(max-width: 900px)" srcset="/images/cta/cta_feature_sp.svg" />
-            <source media="(min-width: 901px)" srcset="/images/cta/cta_feature.svg" />
-            <img src="/images/cta/cta_feature.svg" alt="" loading="lazy" decoding="async" class="w-full h-auto" />
-          </picture>
-        </figure>
+        <!-- feature pills -->
+        <CtaFeatures class="relative z-20 mt-8 md:mt-[18px]" />
 
         <!-- Buttons row -->
         <div class="relative z-20 flex flex-col md:flex-row justify-center gap-[10px] md:gap-[30px] mt-[22px] md:mt-[20px]">

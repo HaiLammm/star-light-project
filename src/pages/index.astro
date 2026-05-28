@@ -11,6 +11,7 @@ import TestimonialCard from '../components/TestimonialCard.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABlock from '../components/CTABlock.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
+import CtaFeatures from '../components/CtaFeatures.astro';
 import { SERVICE_CATEGORIES, REGIONAL_OFFICES, SITE_CONFIG } from '../utils/siteConfig';
 import { generateLocalBusiness, generateFAQ } from '../utils/schema';
 import { getCollection } from 'astro:content';
@@ -191,13 +192,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
           作業費+材料費部品代+処分費(※)で作業料金を算出いたします。<br />
           それ以外にかかる見積り費や出張費、早朝・深夜料金、キャンセル料は一切いただきません。
         </p>
-        <figure class="mt-4 sm:mt-6 md:mt-8 max-w-[600px] mx-auto">
-          <picture>
-            <source media="(max-width: 900px)" srcset="/images/cta/cta_feature_sp.svg" />
-            <source media="(min-width: 901px)" srcset="/images/cta/cta_feature.svg" />
-            <img src="/images/cta/cta_feature.svg" alt="見積り無料・出張費無料・キャンセル料無料" loading="lazy" decoding="async" class="w-full h-auto" />
-          </picture>
-        </figure>
+        <CtaFeatures class="mt-4 sm:mt-6 md:mt-8" />
       </div>
     </div>
   </section>
