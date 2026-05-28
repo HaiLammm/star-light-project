@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>設備プロ — Redesign Mock (B)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF8EF; --white:#fff; --navy:#1B2A4A;
+  --ink:#333; --ink2:#666;
+  --water:#0277BD; --water-deep:#015A8C; --water-tint:#EAF4FA;
+  --electric:#F1A104; --electric-tint:#FFF7E0;
+  --cta:#FF6B00; --cta-deep:#E85D00;
+  --border:#ECE6D6; --shadow:0 6px 24px rgba(27,42,74,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;word-break:keep-all;line-break:strict;color:var(--ink)}
+body{background:var(--cream);line-height:1.75;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ===== Header ===== */
+.hdr{background:rgba(250,248,239,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.hdr-in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--navy);font-size:20px;letter-spacing:.02em}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--water),var(--electric));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.logo small{display:block;font-size:10px;font-weight:500;color:var(--ink2);letter-spacing:.12em;margin-top:1px}
+.nav{display:flex;gap:22px;margin-left:auto;font-size:14px;font-weight:500;color:var(--navy)}
+.nav a{color:inherit;text-decoration:none}
+.hdr-phone{font-weight:900;color:var(--navy);font-size:20px;display:flex;align-items:center;gap:6px}
+.hdr-phone small{display:block;font-size:10px;font-weight:500;color:var(--ink2)}
+.hdr-cta{background:var(--cta);color:#fff;font-weight:700;font-size:13px;padding:10px 16px;border-radius:10px;text-decoration:none;display:flex;align-items:center;gap:6px}
+
+/* ===== Eyebrow ===== */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--water)}
+.eyebrow::before{content:"";width:28px;height:3px;border-radius:2px;background:var(--water)}
+.eyebrow.elec{color:var(--electric)}.eyebrow.elec::before{background:var(--electric)}
+
+/* ===== Hero ===== */
+.hero{padding:48px 0 8px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:40px;line-height:1.45;font-weight:900;color:var(--navy);margin:18px 0 14px;letter-spacing:.01em}
+.hero h1 .hl{color:var(--water)}
+.hero p.lead{font-size:16px;color:var(--ink2);margin-bottom:24px;line-height:1.9}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.badge{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:700;color:var(--navy);box-shadow:var(--shadow)}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--water)}
+.badge:nth-child(2) .dot{background:var(--electric)}
+.badge:nth-child(3) .dot{background:var(--cta)}
+.badge:nth-child(4) .dot{background:var(--navy)}
+.cta-row{display:flex;gap:14px;align-items:stretch;flex-wrap:wrap}
+.btn-call{background:var(--cta);color:#fff;border-radius:14px;padding:14px 24px;text-decoration:none;box-shadow:0 8px 20px rgba(255,107,0,.28)}
+.btn-call small{display:block;font-size:11px;font-weight:500;opacity:.92}
+.btn-call b{font-size:26px;font-weight:900;letter-spacing:.02em;line-height:1.1}
+.btn-mail{display:flex;align-items:center;gap:8px;background:var(--white);border:2px solid var(--navy);color:var(--navy);font-weight:700;border-radius:14px;padding:0 22px;text-decoration:none;font-size:15px}
+.hero-media{position:relative}
+.hero-media img{width:100%;height:420px;object-fit:cover;border-radius:24px;box-shadow:var(--shadow)}
+.media-tag{position:absolute;left:-14px;bottom:24px;background:var(--white);border-radius:14px;padding:12px 18px;box-shadow:var(--shadow);border-left:5px solid var(--water)}
+.media-tag b{display:block;color:var(--navy);font-weight:900;font-size:18px}
+.media-tag small{color:var(--ink2);font-size:12px}
+
+/* ===== Category selector ===== */
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+.cat{display:flex;align-items:center;gap:16px;background:var(--white);border:1px solid var(--border);border-radius:18px;padding:18px 22px;box-shadow:var(--shadow);text-decoration:none}
+.cat .ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.cat.water .ic{background:var(--water-tint)}.cat.elec .ic{background:var(--electric-tint)}
+.cat .tx b{display:block;color:var(--navy);font-weight:900;font-size:18px}
+.cat .tx span{font-size:13px;color:var(--ink2)}
+.cat .arrow{margin-left:auto;font-weight:900}
+.cat.water .arrow{color:var(--water)}.cat.elec .arrow{color:var(--electric)}
+
+/* ===== Service section ===== */
+.svc{margin-top:18px;padding:64px 0}
+.svc-head{text-align:center;margin-bottom:40px}
+.svc-head .eyebrow{justify-content:center;margin-bottom:14px}
+.svc-head h2{font-size:30px;font-weight:900;color:var(--navy);letter-spacing:.02em}
+.svc-head p{color:var(--ink2);font-size:15px;margin-top:8px}
+.tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.tab{border:1.5px solid var(--water);color:var(--water);background:var(--white);border-radius:999px;padding:8px 20px;font-size:14px;font-weight:700;cursor:pointer}
+.tab.on{background:var(--water);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.card .ph{position:relative;height:160px}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .ph .cat-pill{position:absolute;top:10px;left:10px;background:var(--water);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+.card .bd{padding:16px 16px 18px;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:6px}
+.card .desc{font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:14px;flex:1}
+.card .price{font-size:13px;color:var(--ink2);margin-bottom:12px}
+.card .price b{font-size:22px;font-weight:900;color:var(--cta);margin-right:2px}
+.card .more{font-size:13px;font-weight:700;color:var(--water);text-decoration:none;border-top:1px solid var(--border);padding-top:12px;display:flex;justify-content:space-between}
+
+/* ===== Mobile ===== */
+@media(max-width:760px){
+  .nav,.hdr-phone{display:none}
+  .hero-grid{grid-template-columns:1fr;gap:24px}
+  .hero{padding:28px 0 4px}
+  .hero h1{font-size:27px;line-height:1.5;margin:14px 0 10px}
+  .hero-media{order:-1}
+  .hero-media img{height:240px;border-radius:18px}
+  .btn-call{flex:1}.btn-mail{padding:12px 18px;justify-content:center}
+  .cats{grid-template-columns:1fr;margin-top:26px}
+  .svc{padding:44px 0}
+  .svc-head h2{font-size:23px}
+  .cards{grid-template-columns:1fr 1fr;gap:14px}
+  .card .ph{height:120px}
+  .card h3{font-size:15px}
+  .card .price b{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="#"><span class="mark">設</span><span>設備プロ<small>電気・水道の専門家</small></span></a>
+    <nav class="nav"><a>サービス</a><a>会社案内</a><a>作業の流れ</a><a>お客さまの声</a><a>コラム</a><a>お問い合わせ</a></nav>
+    <div class="hdr-phone">📞 0120-219-695<small>年中無休・受付対応</small></div>
+    <a class="hdr-cta" href="#">✉ 無料相談</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">電気・水道の修理プロ</span>
+      <h1>水まわり・電気のトラブル、<br><span class="hl">最短10分</span>でプロが駆けつけます。</h1>
+      <p class="lead">トイレのつまり、水漏れ、ブレーカー、給湯器まで。設備プロの有資格の職人が、年中無休・24時間スピード対応。まずはお気軽にご相談ください。</p>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>見積り0円</span>
+        <span class="badge"><span class="dot"></span>最短10分で到着</span>
+        <span class="badge"><span class="dot"></span>相談無料</span>
+        <span class="badge"><span class="dot"></span>24時間365日</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn-call" href="#"><small>お電話でのご相談（通話無料）</small><b>0120-219-695</b></a>
+        <a class="btn-mail" href="#">✉ メールで無料相談</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="public/images/services/sanitary_02.jpg" alt="設備プロの職人">
+      <div class="media-tag"><b>満足保証</b><small>ご納得いただけなければ料金0円</small></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cats">
+      <a class="cat water" href="#"><span class="ic">💧</span><span class="tx"><b>水まわりの修理</b><span>トイレ・キッチン・お風呂・洗面所</span></span><span class="arrow">→</span></a>
+      <a class="cat elec" href="#"><span class="ic">⚡</span><span class="tx"><b>電気まわりの修理</b><span>ブレーカー・コンセント・照明・給湯器</span></span><span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE SECTION (water) -->
+<section class="svc">
+  <div class="wrap">
+    <div class="svc-head">
+      <span class="eyebrow">水まわりの修理</span>
+      <h2>水まわりの修理サービス</h2>
+      <p>トイレ・お風呂・キッチンなど、水漏れ・つまりは設備プロにお任せください。</p>
+    </div>
+    <div class="tabs">
+      <button class="tab on">トイレ</button>
+      <button class="tab">キッチン</button>
+      <button class="tab">お風呂</button>
+      <button class="tab">洗面所</button>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="ph"><img src="public/images/services/sanitary_01.jpg" alt=""><span class="cat-pill">水道</span></div>
+        <div class="bd"><h3>トイレ修理</h3><p class="desc">つまり・水漏れ・タンク故障など、トイレのトラブルを迅速に解決します。</p><div class="price"><b>5,500</b>円〜（税込）</div><a class="more" href="#">詳しく見る<span>→</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="public/images/services/sanitary_02.jpg" alt=""><span class="cat-pill">水道</span></div>
+        <div class="bd"><h3>キッチン水漏れ</h3><p class="desc">蛇口・排水管・シンク下の水漏れを部品交換から対応いたします。</p><div class="price"><b>5,500</b>円〜（税込）</div><a class="more" href="#">詳しく見る<span>→</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="public/images/services/sanitary_03.jpg" alt=""><span class="cat-pill">水道</span></div>
+        <div class="bd"><h3>お風呂の修理</h3><p class="desc">浴室の水漏れ・排水つまり・蛇口交換など幅広く対応します。</p><div class="price"><b>6,600</b>円〜（税込）</div><a class="more" href="#">詳しく見る<span>→</span></a></div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="public/images/services/sanitary_04.jpg" alt=""><span class="cat-pill">水道</span></div>
+        <div class="bd"><h3>洗面所の修理</h3><p class="desc">洗面台の水漏れ・つまり・パッキン交換をスピーディに解決。</p><div class="price"><b>5,500</b>円〜（税込）</div><a class="more" href="#">詳しく見る<span>→</span></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
