@@ -1,6 +1,6 @@
 # Story 6.1: Implement Schema.org Structured Data on All Pages
 
-Status: review
+Status: done
 
 ## Story
 
@@ -114,3 +114,16 @@ Claude Opus 4.6 (1M context)
 - src/pages/columns/[...slug].astro (modified — added Article JSON-LD)
 - src/pages/faq.astro (modified — added FAQPage JSON-LD)
 - src/pages/[category]/index.astro (modified — added LocalBusiness + FAQ JSON-LD)
+
+### Review Findings
+
+_Code review 2026-05-29 (diff = commit 06b32c0, story's 7 files). 3 layers: Blind Hunter, Edge Case Hunter, Acceptance Auditor._
+
+- [x] [Review][Patch] AC#4 Review schema not eligible for rich results — voice page emits up to 10 standalone `Review` nodes with no parent item / AggregateRating. RESOLVED via decision: add `generateAggregateRating()` to schema.ts and nest reviews under an item with aggregateRating. [src/utils/schema.ts, src/pages/voice/[...page].astro:1006]
+- [x] [Review][Patch] JSON-LD `</script>` not escaped at injection sites — every `<script type="application/ld+json" set:html={JSON.stringify(...)} />` is unescaped; `JSON.stringify` does not escape `<`. Any FAQ answer, testimonial message, service description or article title containing `</script` breaks out of the tag (XSS / breaks all page JSON-LD). No guard in schema.ts either. [src/pages/[category]/[service].astro:263, src/pages/voice/[...page].astro:1024, all set:html sites]
+- [x] [Review][Patch] Review schema drops the rating value — page never passes `ratingValue` to `generateReview()`, though testimonials carry a `rating` field; emitted Reviews have no `reviewRating` and produce no star snippet. [src/pages/voice/[...page].astro:1006]
+- [x] [Review][Patch] Unguarded non-null assertion can crash the build — `philosophyEntry!.data` (added in this commit) throws if no company entry has `type === 'philosophy'`. Add a guard/fallback. [src/pages/company/philosophy.astro:32]
+- [x] [Review][Defer] Homepage emits only Tokyo office (`REGIONAL_OFFICES[0]`) not all 4 — weakens AC#2 on homepage. Pre-existing, outside this story's diff. [src/pages/index.astro:132] — deferred, pre-existing
+- [x] [Review][Defer] Tokyo & Hyogo LocalBusiness lack `postalCode`/`streetAddress` — may trigger Rich Results warnings (AC#1). siteConfig data, by-design/pre-existing. [src/utils/siteConfig.ts] — deferred, pre-existing
+- [x] [Review][Defer] Empty `voice` collection would 404 `/voice/` — `paginate` emits no routes for an empty array; masked by fixtures. Latent, not caused by this change. [src/pages/voice/[...page].astro] — deferred, pre-existing
+- [x] [Review][Defer] Canonical trailing-slash inconsistency across pages — `trailingSlash` unset (Astro default `ignore`) so low impact; pre-existing pattern. [multiple pages] — deferred, pre-existing

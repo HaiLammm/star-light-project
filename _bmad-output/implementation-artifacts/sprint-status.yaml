@@ -35,8 +35,9 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-08
-last_updated: 2026-05-23
+last_updated: 2026-05-29
 # Story 7-4 review: 2026-05-23
+# Story 6-1 review: 2026-05-29
 # Story 7-4 in-progress: 2026-05-23
 # Story 7-4 created: 2026-05-23
 # Story 7-3 review: 2026-05-23
@@ -139,7 +140,7 @@ development_status:
 
   # Epic 6: SEO, Performance & Accessibility Polish
   epic-6: in-progress
-  6-1-implement-schema-org-structured-data-on-all-pages: review
+  6-1-implement-schema-org-structured-data-on-all-pages: done
   6-2-implement-technical-seo-sitemap-robots-meta-tags-canonical-urls: review
   6-3-performance-optimization-and-core-web-vitals: review
   6-4-security-headers-and-cloudflare-pages-production-deployment: backlog

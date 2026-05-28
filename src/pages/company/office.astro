@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { SITE_CONFIG, REGIONAL_OFFICES } from '../../utils/siteConfig';
-import { generateLocalBusiness } from '../../utils/schema';
+import { generateLocalBusiness, serializeJsonLd } from '../../utils/schema';
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -88,6 +88,6 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
 
   <!-- Schema.org LocalBusiness JSON-LD for each office -->
   {officeSchemas.map((schema) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(schema)} />
   ))}
 </BaseLayout>

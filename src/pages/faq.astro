@@ -5,7 +5,7 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { SITE_CONFIG } from '../utils/siteConfig';
 import { getCollection } from 'astro:content';
-import { generateFAQ } from '../utils/schema';
+import { generateFAQ, serializeJsonLd } from '../utils/schema';
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -39,7 +39,7 @@ const faqSchema = allFaqItems.length > 0 ? generateFAQ(allFaqItems) : null;
   description="設備プロに寄せられるよくある質問をまとめました。電気トラブル・水まわりトラブル・料金・作業の流れについてお答えします。"
   canonicalUrl={`${SITE_CONFIG.siteUrl}/faq`}
 >
-  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
 
   <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
     <Breadcrumb items={breadcrumbItems} />

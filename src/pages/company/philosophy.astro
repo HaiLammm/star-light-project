@@ -4,11 +4,12 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { SITE_CONFIG, REGIONAL_OFFICES } from '../../utils/siteConfig';
 import { getCollection } from 'astro:content';
-import { generateLocalBusiness } from '../../utils/schema';
+import { generateLocalBusiness, serializeJsonLd } from '../../utils/schema';
 
 const companyEntries = await getCollection('company');
 const philosophyEntry = companyEntries.find((e) => e.data.type === 'philosophy');
-const data = philosophyEntry!.data;
+if (!philosophyEntry) throw new Error("Missing company entry with type 'philosophy'");
+const data = philosophyEntry.data;
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -27,7 +28,7 @@ const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
   canonicalUrl={`${SITE_CONFIG.siteUrl}/company/philosophy`}
 >
   {localBusinessSchemas.map((schema) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(schema)} />
   ))}
 
   <!-- Breadcrumb -->

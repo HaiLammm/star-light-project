@@ -5,7 +5,7 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { SITE_CONFIG, REGIONAL_OFFICES } from '../../utils/siteConfig';
 import { COMPANY_CARDS } from '../../data/companyData';
-import { generateLocalBusiness } from '../../utils/schema';
+import { generateLocalBusiness, serializeJsonLd } from '../../utils/schema';
 import { resolveImage } from '../../utils/imageImports';
 
 const companyImgMap: Record<string, string> = {};
@@ -33,7 +33,7 @@ const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
   canonicalUrl={`${SITE_CONFIG.siteUrl}/company`}
 >
   {localBusinessSchemas.map((schema) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(schema)} />
   ))}
 
   <!-- Breadcrumb -->

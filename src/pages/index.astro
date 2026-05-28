@@ -13,7 +13,7 @@ import CTABlock from '../components/CTABlock.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import CtaFeatures from '../components/CtaFeatures.astro';
 import { SERVICE_CATEGORIES, REGIONAL_OFFICES, SITE_CONFIG } from '../utils/siteConfig';
-import { generateLocalBusiness, generateFAQ } from '../utils/schema';
+import { generateLocalBusiness, generateFAQ, serializeJsonLd } from '../utils/schema';
 import { getCollection } from 'astro:content';
 import { resolveImage } from '../utils/imageImports';
 
@@ -149,8 +149,8 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
   description="水漏れ・電気トラブルなら設備プロ（セツビプロ）。24時間365日、全国対応。まずはお気軽にお電話ください。"
   canonicalUrl={SITE_CONFIG.siteUrl}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
-  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  <script type="application/ld+json" set:html={serializeJsonLd(localBusinessSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
   <h1 class="sr-only">設備プロ（セツビプロ）｜水漏れ・つまり・電気トラブルの修理を24時間365日対応する専門業者</h1>
   <HeroCarousel
     client:load

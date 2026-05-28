@@ -8,7 +8,7 @@ import FAQAccordion from '../../components/FAQAccordion.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, REGIONAL_OFFICES } from '../../utils/siteConfig';
 import { getCollection } from 'astro:content';
-import { generateLocalBusiness, generateFAQ } from '../../utils/schema';
+import { generateLocalBusiness, generateFAQ, serializeJsonLd } from '../../utils/schema';
 import { resolveImage } from '../../utils/imageImports';
 
 export async function getStaticPaths() {
@@ -110,9 +110,9 @@ const hubFaqSchema = faqItems.length > 0 ? generateFAQ(faqItems) : null;
 
 <BaseLayout title={pageTitle} description={pageDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}/${category}/`}>
   {localBusinessSchemas.map((schema) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(schema)} />
   ))}
-  {hubFaqSchema && <script type="application/ld+json" set:html={JSON.stringify(hubFaqSchema)} />}
+  {hubFaqSchema && <script type="application/ld+json" set:html={serializeJsonLd(hubFaqSchema)} />}
 
   <!-- Breadcrumb -->
   <div class="max-w-[1200px] mx-auto px-3 sm:px-4 py-3 sm:py-4">

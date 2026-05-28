@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { formatDateDot } from '../../utils/formatters';
 import { BLOG_CATEGORY_COLOR_MAP } from '../../data/blogData';
-import { generateArticle } from '../../utils/schema';
+import { generateArticle, serializeJsonLd } from '../../utils/schema';
 import { SITE_CONFIG } from '../../utils/siteConfig';
 import { resolveImage } from '../../utils/imageImports';
 
@@ -59,7 +59,7 @@ const articleSchema = generateArticle({
 ---
 
 <BaseLayout title={`${post.data.title} | 設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`}>
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={serializeJsonLd(articleSchema)} />
 
   <article class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1180px] mx-auto px-3 sm:px-4">

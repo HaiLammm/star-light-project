@@ -9,7 +9,7 @@ import CategorySidebar from '../../components/CategorySidebar.astro';
 import Pagination from '../../components/Pagination.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { VOICE_FILTER_CATEGORIES, getTestimonialImageSrc } from '../../data/caseVoiceData';
-import { generateReview } from '../../utils/schema';
+import { generateAggregateRating, serializeJsonLd } from '../../utils/schema';
 import { SITE_CONFIG } from '../../utils/siteConfig';
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
@@ -29,14 +29,15 @@ for (const item of page.data) {
   }
 }
 
-const reviewSchemas = page.data.map((item: any) =>
-  generateReview({
+const aggregateReviewSchema = generateAggregateRating(
+  page.data.map((item: any) => ({
     serviceType: item.data.serviceType,
     cost: item.data.cost,
     message: item.data.message,
     author: item.data.authorInitial ?? '匿名',
     itemReviewed: item.data.serviceType,
-  })
+    ratingValue: item.data.rating,
+  }))
 );
 
 const breadcrumbItems = [
@@ -46,9 +47,9 @@ const breadcrumbItems = [
 ---
 
 <BaseLayout title={`お客様の声${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備プロ`} description="設備プロをご利用いただいたお客様の声をご紹介します。水まわりや電気のトラブル対応に関するリアルな評価をご覧ください。" canonicalUrl={`${SITE_CONFIG.siteUrl}/voice/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
-  {reviewSchemas.map((schema: any) => (
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-  ))}
+  {aggregateReviewSchema && (
+    <script type="application/ld+json" set:html={serializeJsonLd(aggregateReviewSchema)} />
+  )}
 
   <section class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">

@@ -19,7 +19,7 @@ import ComparisonTable from '../../components/ComparisonTable.astro';
 import ServiceSlider from '../../components/ServiceSlider.tsx';
 import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES } from '../../utils/siteConfig';
 import { formatDateDot } from '../../utils/formatters';
-import { generateService, generateFAQ, type FAQItem } from '../../utils/schema';
+import { generateService, generateFAQ, serializeJsonLd, type FAQItem } from '../../utils/schema';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -266,8 +266,8 @@ const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}/${category}/${serviceData.slug}/`}>
-  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
-  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  <script type="application/ld+json" set:html={serializeJsonLd(serviceSchema)} />
+  {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
 
   <!-- Section 1: Breadcrumb -->
   <div class="max-w-[1200px] mx-auto px-3 sm:px-4 py-3 sm:py-4">

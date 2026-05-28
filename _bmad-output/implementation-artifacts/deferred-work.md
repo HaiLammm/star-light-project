@@ -55,3 +55,10 @@
 ## Deferred from: code review of story-5.2 (2026-05-22)
 
 - `entry: any` type annotations bypass TypeScript safety in all 4 listing pages (.map() calls) — low risk for static site with Zod validation at build time, but reduces IDE/compiler assistance
+
+## Deferred from: code review of story-6.1 (2026-05-29)
+
+- Homepage emits LocalBusiness for only Tokyo office (`REGIONAL_OFFICES[0]`, src/pages/index.astro:132) — weakens AC#2 on homepage; company pages cover all 4. Pre-existing, outside this story's diff.
+- Tokyo & Hyogo LocalBusiness entries lack `postalCode`/`streetAddress` (siteConfig.ts) — incomplete-address LocalBusiness may draw Rich Results warnings (AC#1). By-design/pre-existing data (see also story-4.3 W3).
+- Empty `voice` collection would 404 `/voice/` — `paginate` emits no routes for an empty array; masked by current fixtures. Latent, not caused by this change.
+- Canonical trailing-slash inconsistency across pages (service/category use trailing slash, company/faq do not) — `trailingSlash` unset so Astro default `ignore` keeps impact low; pre-existing pattern.

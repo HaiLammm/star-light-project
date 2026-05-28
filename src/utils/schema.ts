@@ -177,6 +177,12 @@ export interface ArticleSchema {
 
 const SCHEMA_CONTEXT: SchemaContext = 'https://schema.org';
 
+// Escapes `<` so a value containing `</script>` cannot break out of the
+// inline <script type="application/ld+json"> tag. `<` is still valid JSON.
+export function serializeJsonLd(schema: unknown): string {
+  return JSON.stringify(schema).replace(/</g, '\\u003c');
+}
+
 const buildPostalAddress = (address: OfficeAddress): PostalAddressSchema => {
   return {
     '@type': 'PostalAddress',
@@ -275,6 +281,83 @@ export function generateReview(testimonial: TestimonialInput): ReviewSchema {
           },
         }
       : {}),
+  };
+}
+
+interface NestedReviewSchema {
+  '@type': 'Review';
+  author: {
+    '@type': 'Person';
+    name: string;
+  };
+  reviewBody: string;
+  datePublished?: string;
+  reviewRating?: {
+    '@type': 'Rating';
+    ratingValue: string;
+    bestRating: string;
+  };
+}
+
+export interface AggregateRatingSchema {
+  '@context': SchemaContext;
+  '@type': 'Organization';
+  name: string;
+  url: string;
+  aggregateRating: {
+    '@type': 'AggregateRating';
+    ratingValue: string;
+    reviewCount: string;
+    ratingCount: string;
+    bestRating: string;
+  };
+  review: NestedReviewSchema[];
+}
+
+// Bundles reviews under a single rated item so they are eligible for rich
+// results (Google ignores standalone Review nodes). Returns null when no
+// review carries a numeric rating, since AggregateRating requires one.
+export function generateAggregateRating(
+  testimonials: TestimonialInput[],
+  item?: { name?: string; url?: string }
+): AggregateRatingSchema | null {
+  const rated = testimonials.filter((t) => typeof t.ratingValue === 'number');
+  if (rated.length === 0) return null;
+
+  const bestRating = 5;
+  const average =
+    rated.reduce((sum, t) => sum + (t.ratingValue as number), 0) / rated.length;
+
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'Organization',
+    name: item?.name ?? SITE_CONFIG.companyName,
+    url: item?.url ?? SITE_CONFIG.siteUrl,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: average.toFixed(1),
+      reviewCount: testimonials.length.toString(),
+      ratingCount: rated.length.toString(),
+      bestRating: bestRating.toString(),
+    },
+    review: testimonials.map((t) => ({
+      '@type': 'Review' as const,
+      author: {
+        '@type': 'Person' as const,
+        name: t.author,
+      },
+      reviewBody: t.message,
+      ...(t.datePublished ? { datePublished: t.datePublished } : {}),
+      ...(typeof t.ratingValue === 'number'
+        ? {
+            reviewRating: {
+              '@type': 'Rating' as const,
+              ratingValue: t.ratingValue.toString(),
+              bestRating: (t.bestRating ?? bestRating).toString(),
+            },
+          }
+        : {}),
+    })),
   };
 }
 
