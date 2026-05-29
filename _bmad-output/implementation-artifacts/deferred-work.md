@@ -62,3 +62,16 @@
 - Tokyo & Hyogo LocalBusiness entries lack `postalCode`/`streetAddress` (siteConfig.ts) — incomplete-address LocalBusiness may draw Rich Results warnings (AC#1). By-design/pre-existing data (see also story-4.3 W3).
 - Empty `voice` collection would 404 `/voice/` — `paginate` emits no routes for an empty array; masked by current fixtures. Latent, not caused by this change.
 - Canonical trailing-slash inconsistency across pages (service/category use trailing slash, company/faq do not) — `trailingSlash` unset so Astro default `ignore` keeps impact low; pre-existing pattern.
+
+## Deferred from: code review of 6-2-implement-technical-seo (2026-05-29)
+
+- columns/[...page] and columns/[...slug] are two catch-all routes in the same folder — fragile route priority; a paginated `/columns/2/` could collide with a post id "2". Works today (build passes); revisit if route conflicts appear.
+- /company (会社案内) vs /company/about (会社概要) present overlapping content — potential keyword cannibalization, both self-canonical. IA decision, pre-existing.
+- privacy/about/sitemap meta descriptions lack a CTA (AC#7 strict reading) — debatable whether legal/utility pages should carry a sales CTA; left as-is.
+- Service-detail page titles lack a region token (AC#6 example includes region) — titles are still unique + keyword-rich; the category hub already carries the region.
+- [category]/index.astro title + description advertise 東京・名古屋・広島, but REGIONAL_OFFICES lists 東京・名古屋・大阪・兵庫 (page bodies show a 広島 中国営業所) — data inconsistency between config and templates; verify the true service area.
+- Dead 'cockroach' image-key branch in [category]/[service].astro:182 — pest-control leftover after that category was removed; harmless dead code.
+
+## Deferred from: code review of 6-4-security-headers (2026-05-29)
+
+- Post-deploy live verification (Task 5.2/5.3): after the first Vercel deploy, run `curl -I` on a public route + `/admin` to confirm all Task-2 headers and the route-scoped CSP, and submit the contact form with a real `PUBLIC_FORMSPREE_ID` to confirm CSP `form-action`/`connect-src` permits the Formspree POST. Requires a live deployment — operator action.

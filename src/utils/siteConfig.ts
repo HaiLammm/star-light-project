@@ -85,10 +85,10 @@ export interface SiteConfig {
 }
 
 const SITE_PHONE: PhoneConfig = {
-  display: '0120-219-695',
-  digits: '0120219695',
-  href: 'tel:0120219695',
-  ariaLabel: '無料電話 0120-219-695',
+  display: '000000000000',
+  digits: '000000000000',
+  href: 'tel:000000000000',
+  ariaLabel: '無料電話 000000000000',
 };
 
 export const ELECTRICITY_SERVICES: ServiceItem[] = [
@@ -171,9 +171,9 @@ export const SITE_CONFIG: SiteConfig = {
   siteUrl: 'https://www.setsubi-pro.net',
   phone: SITE_PHONE,
   email: {
-    display: 'setsubi-pro@gmail.com',
-    href: 'mailto:setsubi-pro@gmail.com',
-    ariaLabel: 'メールでお問い合わせ setsubi-pro@gmail.com',
+    display: 'abcxyz@gmail.com',
+    href: 'mailto:abcxyz@gmail.com',
+    ariaLabel: 'メールでお問い合わせ abcxyz@gmail.com',
   },
   businessHours: '24時間365日',
 };
@@ -197,12 +197,12 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
     name: '設備プロ 名古屋営業所',
     shortName: '名古屋営業所',
     address: {
-      streetAddress: '井瀬木1068-205',
-      addressLocality: '北名古屋市',
-      addressRegion: '愛知県',
+      streetAddress: 'abcxyz',
+      addressLocality: 'abcxyz',
+      addressRegion: 'abcxyz',
       addressCountry: 'JP',
     },
-    formattedAddress: '愛知県北名古屋市井瀬木1068-205',
+    formattedAddress: 'abcxyz',
     phone: SITE_PHONE,
     areaServed: ['名古屋市', '北名古屋市', '一宮市', '春日井市'],
     prefecturesServed: ['愛知県', '岐阜県', '三重県'],
@@ -212,12 +212,12 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
     name: '設備プロ 大阪営業所',
     shortName: '大阪営業所',
     address: {
-      streetAddress: '東豊中町六丁目3番10号',
-      addressLocality: '豊中市',
-      addressRegion: '大阪府',
+      streetAddress: 'abcxyz',
+      addressLocality: 'abcxyz',
+      addressRegion: 'abcxyz',
       addressCountry: 'JP',
     },
-    formattedAddress: '大阪府豊中市東豊中町六丁目3番10号',
+    formattedAddress: 'abcxyz',
     phone: SITE_PHONE,
     areaServed: ['大阪市', '豊中市', '吹田市', '堺市'],
     prefecturesServed: ['大阪府', '京都府', '奈良県', '和歌山県'],

@@ -251,7 +251,7 @@ const hubFaqSchema = faqItems.length > 0 ? generateFAQ(faqItems) : null;
       </h2>
       <FAQAccordion items={faqItems} />
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
-        <a href="/question" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-white border-2 border-navy text-navy text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-full hover:bg-navy hover:text-white transition-colors duration-200">
+        <a href="/faq" class="relative flex items-center justify-center w-[200px] sm:w-[240px] md:w-[280px] min-h-[45px] sm:min-h-[50px] md:min-h-[60px] bg-white border-2 border-navy text-navy text-[12px] sm:text-[14px] md:text-[18px] font-bold rounded-full hover:bg-navy hover:text-white transition-colors duration-200">
           もっと見る
         </a>
       </div>
@@ -265,8 +265,8 @@ const hubFaqSchema = faqItems.length > 0 ? generateFAQ(faqItems) : null;
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         {[
           { name: '関東営業所', address: '準備中' },
-          { name: '東海営業所', address: '愛知県北名古屋市井瀬木1068-205' },
-          { name: '中国営業所', address: '広島県広島市西区 中広2丁目19-33' },
+          { name: '東海営業所', address: 'abcxyz' },
+          { name: '中国営業所', address: 'abcxyz' },
         ].map((office) => (
           <div class="bg-[#f7f7f7] rounded-[12px] sm:rounded-[16px] p-4 sm:p-5">
             <p class="text-[12px] sm:text-[13px] md:text-[15px] font-bold text-[#1c1c1c] mb-1">{office.name}</p>

@@ -25,7 +25,7 @@ const localBusinessSchemas = REGIONAL_OFFICES.map((office) =>
 <BaseLayout
   title="企業理念｜設備プロ"
   description="設備プロの企業理念。お客様の不安を1分でも早く取り除くため、優れた技術と心温まる接客で安心を提供します。"
-  canonicalUrl={`${SITE_CONFIG.siteUrl}/company/philosophy`}
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/company/philosophy/`}
 >
   {localBusinessSchemas.map((schema) => (
     <script type="application/ld+json" set:html={serializeJsonLd(schema)} />

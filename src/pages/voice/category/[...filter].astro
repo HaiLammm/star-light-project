@@ -10,9 +10,6 @@ import { VOICE_FILTER_CATEGORIES, VOICE_CATEGORY_LABEL_MAP, CASE_SLUG_LABEL_MAP,
 import { SITE_CONFIG } from '../../../utils/siteConfig';
 import { resolveImage } from '../../../utils/imageImports';
 
-const ELECTRICITY_SLUGS = ['breaker', 'outlet', 'lighting', 'antenna', 'water-heater'];
-const WATER_SLUGS = ['toilet', 'kitchen', 'bath', 'washroom'];
-
 export async function getStaticPaths() {
   const allTestimonials = await getCollection('testimonials');
   const paths: any[] = [];
@@ -24,20 +21,6 @@ export async function getStaticPaths() {
       paths.push({
         params: { filter: cat },
         props: { testimonials: filtered, activeFilter: cat },
-      });
-    }
-  }
-
-  const subcategorySlugs = [
-    ...['toilet', 'kitchen', 'bath', 'washroom'].map(s => ({ slug: s, cat: 'water' })),
-    ...['breaker', 'outlet', 'lighting', 'antenna', 'water-heater'].map(s => ({ slug: s, cat: 'electricity' })),
-  ];
-  for (const { slug, cat } of subcategorySlugs) {
-    const filtered = allTestimonials.filter((t) => t.data.serviceCategory === cat);
-    if (filtered.length > 0) {
-      paths.push({
-        params: { filter: slug },
-        props: { testimonials: filtered, activeFilter: slug },
       });
     }
   }

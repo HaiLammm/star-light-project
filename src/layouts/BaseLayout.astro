@@ -41,7 +41,6 @@ const ogImageUrl = new URL(ogImage ?? DEFAULT_OG_IMAGE, Astro.site).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <link rel="preconnect" href="https://maps.googleapis.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&subset=japanese,latin&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />

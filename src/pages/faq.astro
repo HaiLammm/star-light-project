@@ -37,7 +37,7 @@ const faqSchema = allFaqItems.length > 0 ? generateFAQ(allFaqItems) : null;
 <BaseLayout
   title="よくある質問｜設備プロ"
   description="設備プロに寄せられるよくある質問をまとめました。電気トラブル・水まわりトラブル・料金・作業の流れについてお答えします。"
-  canonicalUrl={`${SITE_CONFIG.siteUrl}/faq`}
+  canonicalUrl={`${SITE_CONFIG.siteUrl}/faq/`}
 >
   {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
 

@@ -18,5 +18,14 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [sitemap(), react()]
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/admin/') && !/\/404\/?$/.test(page),
+      serialize(item) {
+        item.lastmod = new Date().toISOString();
+        return item;
+      },
+    }),
+    react(),
+  ]
 });

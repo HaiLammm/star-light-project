@@ -1,6 +1,6 @@
 # Story 6.2: Implement Technical SEO (Sitemap, Robots, Meta Tags, Canonical URLs)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -151,3 +151,35 @@ Claude Opus 4.6 (1M context)
 - src/pages/columns/category/[...filter].astro (modified — added SITE_CONFIG import, canonicalUrl)
 - src/pages/voice/[...page].astro (modified — added SITE_CONFIG import, canonicalUrl, page number in title)
 - src/pages/voice/category/[...filter].astro (modified — added SITE_CONFIG import, canonicalUrl)
+
+## Review Findings (Code Review — 2026-05-29)
+
+Reviewed against the **current shipped state** (post-rebrand to `setsubi-pro.net`), not the historical 6-2 diff, because the work was committed across multi-purpose commits and partly modified by later commits. Three parallel adversarial layers (Blind Hunter, Edge Case Hunter, Acceptance Auditor); the Acceptance Auditor verified against the built `dist/`. Triage: 2 decision-needed, 5 patch, 6 deferred, 1 dismissed.
+
+### Decision needed
+
+- [x] [Review][Decision] voice/category subcategory pages are duplicate content — `src/pages/voice/category/[...filter].astro` generates 11 URLs (water, electricity + 9 service slugs), but testimonials carry only `serviceCategory` and no per-service field (content.config.ts:59-69), so every subcategory URL (toilet/kitchen/bath/washroom/breaker/outlet/lighting/antenna/water-heater) renders the *full* water- or electricity-list — identical content with a distinct self-canonical and distinct title/H1. Duplicate-content/indexing problem (AC#3 intent) plus wrong UX (the「トイレ」filter shows kitchen/bath voices). Options: (a) drop subcategory paths, keep only `/voice/category/water|electricity/` and prune the VOICE sidebar sub-links; (b) keep the pages but point canonical at the broad category and add `noindex`; (c) add a testimonial→service mapping so filtering actually works.
+  - ✔ **RESOLVED → option (a) [now a Patch]:** `voice/category/[...filter].astro` getStaticPaths returns only the two broad categories; remove `subcategories` from `VOICE_FILTER_CATEGORIES` (caseVoiceData.ts) so the voice sidebar links only `/voice/category/water|electricity/`.
+- [x] [Review][Decision] case/category sidebar links to pages that are never generated → 404 — `case/category/[...filter].astro` builds paths only from `serviceSlug` values present in cases (antenna, bath, lighting, toilet, washroom, water-heater). But `CategorySidebar` + `CASE_FILTER_CATEGORIES` (caseVoiceData.ts) link the category *titles* `/case/category/water/` & `/electricity/` (never generated — those are categories, not slugs) and sub-links kitchen/breaker/outlet (no cases) → 5 crawlable 404s on every case page. Same root cause as the voice issue (sidebar taxonomy vs filterable data). Options: (a) generate a page for every taxonomy entry with an empty-state; (b) prune the sidebar to only populated filters; (c) make the title link to the listing instead of a filter.
+  - ✔ **RESOLVED → option (b) [now a Patch]:** in `CASE_FILTER_CATEGORIES` (caseVoiceData.ts) set `href: '/case/'` on both category titles and drop the sub-keys with no cases (kitchen, breaker, outlet), leaving toilet/bath/washroom/antenna/lighting/water-heater. Caveat: re-add a sub-key when its first case is published.
+
+### Patch
+
+- [x] [Review][Patch] Unify canonical trailing slash to match served + sitemap URLs (static pages omit it, dynamic pages include it; sitemap emits the trailing-slash form) [src/pages/index.astro:150; 404.astro:16; contact.astro:16; faq.astro:40; flow.astro:17; privacy.astro:16; sitemap.astro:40; company/index.astro:33; company/about.astro:26; company/office.astro:27; company/philosophy.astro:28; company/recruit.astro:43]
+- [x] [Review][Patch] Sitemap has no <lastmod> (AC#1 requires it) — add lastmod via @astrojs/sitemap `serialize` [astro.config.mjs:21]
+- [x] [Review][Patch] Sitemap includes noindex/robots-disallowed /admin/analytics and soft-404 /404 — add a sitemap `filter` to exclude them [astro.config.mjs:21]
+- [x] [Review][Patch] Dead FAQ links to non-existent /question (every hub + service page) → should target /faq [src/pages/[category]/index.astro:254; src/pages/[category]/[service].astro:460]
+- [x] [Review][Patch] breaker meta description is 136 chars (>120, AC#7) — trim it; optionally add `.max(120)` to the services description schema [src/content/services/electricity/breaker.json]
+
+### Deferred
+
+- [x] [Review][Defer] columns/[...page] and columns/[...slug] are two catch-all routes in one folder (fragile priority; `/columns/2/` could collide with a post id "2") [src/pages/columns/] — deferred, pre-existing
+- [x] [Review][Defer] /company vs /company/about keyword cannibalization (both present 会社概要) [src/pages/company/index.astro; company/about.astro] — deferred, pre-existing
+- [x] [Review][Defer] privacy/about/sitemap meta descriptions lack a CTA (AC#7 strict reading; debatable for legal/utility pages) [src/pages/privacy.astro:15; company/about.astro:25; sitemap.astro:39] — deferred, pre-existing
+- [x] [Review][Defer] service-detail title lacks a region token (AC#6; titles still unique) [src/pages/[category]/[service].astro:249] — deferred, pre-existing
+- [x] [Review][Defer] hub title/description advertise 広島 but REGIONAL_OFFICES lists 大阪/兵庫 (content/data inconsistency) [src/pages/[category]/index.astro:102-103] — deferred, pre-existing
+- [x] [Review][Defer] dead 'cockroach' image-key branch (pest-control leftover) [src/pages/[category]/[service].astro:182] — deferred, pre-existing
+
+### Dismissed (noise)
+
+- admin GA_CLIENT_ID / GA_PROPERTY_ID inlined in client script — OAuth web client IDs and GA property IDs are public by design, and the page is `noindex` + robots-disallowed; not a secret leak.

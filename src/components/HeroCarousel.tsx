@@ -17,8 +17,8 @@ export default function HeroCarousel({
   image,
   imageSp,
   alt = '設備プロの職人',
-  phoneDisplay = '0120-219-695',
-  phoneHref = 'tel:0120219695',
+  phoneDisplay = '000000000000',
+  phoneHref = 'tel:000000000000',
 }: HeroProps) {
   return (
     <section className="pt-8 pb-2 md:pt-12 md:pb-3" aria-label="メインビジュアル">
