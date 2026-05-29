@@ -167,7 +167,7 @@ const toNavigationChildren = (services: ServiceItem[]): NavigationChild[] => {
 export const SITE_CONFIG: SiteConfig = {
   companyName: '設備プロ',
   companyNameEn: 'Setsubit',
-  legalName: '合同会社スターライト',
+  legalName: '合同会社',
   siteUrl: 'https://www.setsubi-pro.net',
   phone: SITE_PHONE,
   email: {
