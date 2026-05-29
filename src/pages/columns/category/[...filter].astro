@@ -27,12 +27,10 @@ export async function getStaticPaths() {
 
     for (const sub of BLOG_SUBCATEGORY_MAP[cat] ?? []) {
       const subPosts = catPosts.filter((p) => p.data.subcategory === sub);
-      if (subPosts.length > 0) {
-        paths.push({
-          params: { filter: `${cat}/${sub}` },
-          props: { posts: subPosts, activeCategory: cat, activeSubcategory: sub },
-        });
-      }
+      paths.push({
+        params: { filter: `${cat}/${sub}` },
+        props: { posts: subPosts, activeCategory: cat, activeSubcategory: sub },
+      });
     }
   }
 

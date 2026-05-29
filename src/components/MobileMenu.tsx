@@ -92,7 +92,7 @@ export default function MobileMenu({ navigation, phone }: MobileMenuProps) {
         aria-label="ナビゲーションメニュー"
         id="mobile-menu"
         className="fixed inset-0 w-full h-full overflow-y-auto"
-        style={{ background: 'rgba(0,0,0,0.85)', padding: '50px 20px 100px' }}
+        style={{ background: '#1B2A4A', padding: '50px 20px 100px' }}
       >
         <nav>
           <ul>

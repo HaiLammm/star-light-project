@@ -79,7 +79,7 @@ export default function ServiceSlider({ slides, heading, subheading, eyebrow, ac
   }, [emblaApi, count]);
 
   return (
-    <section id={anchorId} className="py-14 md:py-20">
+    <section id={anchorId} className="py-9 md:py-20">
       <div className="max-w-[1120px] mx-auto px-5">
         <div className="text-center mb-8 md:mb-10">
           <span className="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em]" style={{ color: a.color }}>

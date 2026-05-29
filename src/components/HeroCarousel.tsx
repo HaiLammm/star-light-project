@@ -37,13 +37,13 @@ export default function HeroCarousel({
               トイレのつまり、水漏れ、ブレーカー、給湯器まで。設備プロの有資格の職人が、年中無休・24時間スピード対応。まずはお気軽にご相談ください。
             </p>
 
-            <ul className="flex flex-wrap gap-2.5 mb-6">
+            <ul className="grid grid-cols-2 gap-2.5 mb-6 md:flex md:flex-wrap">
               {BADGES.map((b) => (
                 <li
                   key={b.label}
-                  className="flex items-center gap-2 bg-white border border-border-warm rounded-full px-4 py-2 text-[13px] font-bold text-navy shadow-[0_6px_24px_rgba(27,42,74,0.08)]"
+                  className="flex items-center justify-center gap-2 bg-white border border-border-warm rounded-full px-2.5 py-2 text-[13px] font-bold text-navy shadow-[0_6px_24px_rgba(27,42,74,0.08)] md:px-4"
                 >
-                  <span className="w-2 h-2 rounded-full" style={{ background: b.color }} />
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: b.color }} />
                   {b.label}
                 </li>
               ))}

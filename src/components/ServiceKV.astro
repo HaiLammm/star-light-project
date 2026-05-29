@@ -33,10 +33,10 @@ const badges = ['見積り0円', '最短10分で到着', '24時間365日対応']
         </span>
         <p class="text-[24px] md:text-[36px] leading-[1.45] font-black text-navy mt-3 overflow-wrap-anywhere">{title}</p>
         {sub && <p class="text-[14px] md:text-[15px] text-text-secondary leading-[1.9] mt-3 overflow-wrap-anywhere">{sub}</p>}
-        <ul class="flex flex-wrap gap-2 mt-5">
+        <ul class="grid grid-cols-3 gap-1.5 mt-5 md:flex md:flex-wrap md:gap-2">
           {badges.map((b) => (
-            <li class="flex items-center gap-1.5 bg-white border border-border-warm rounded-full px-3.5 py-1.5 text-[12px] md:text-[13px] font-bold text-navy">
-              <span class={`w-1.5 h-1.5 rounded-full ${accentBg}`}></span>{b}
+            <li class="flex items-center justify-center text-center gap-1 bg-white border border-border-warm rounded-full px-2 py-1.5 text-[11px] md:text-[13px] font-bold text-navy md:gap-1.5 md:px-3.5">
+              <span class={`shrink-0 w-1.5 h-1.5 rounded-full ${accentBg}`}></span>{b}
             </li>
           ))}
         </ul>

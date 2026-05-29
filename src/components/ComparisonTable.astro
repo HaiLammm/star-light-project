@@ -36,22 +36,22 @@ const {
         {title}
       </h2>
       <div class="overflow-x-auto">
-        <table class="w-full border-collapse text-center" style="table-layout: fixed; min-width: 500px;">
+        <table class="w-full border-collapse text-center min-w-0 sm:min-w-[520px]" style="table-layout: fixed;">
           <caption class="sr-only">{caption}</caption>
           <colgroup>
             <col />
-            <col class="border-4 border-cta" />
+            <col class="border-2 sm:border-4 border-cta" />
             <col />
             <col />
           </colgroup>
           <thead>
             <tr>
-              <th scope="col" class="bg-[#1c1c1c] text-white text-[11px] sm:text-[14px] md:text-[18px] font-bold p-2 sm:p-3 md:p-4 rounded-tl-lg"></th>
-              <th scope="col" class="bg-[#1c1c1c] text-white p-2 sm:p-3 md:p-4">
+              <th scope="col" class="bg-[#1c1c1c] text-white text-[11px] sm:text-[14px] md:text-[18px] font-bold p-1 sm:p-3 md:p-4 rounded-tl-lg"></th>
+              <th scope="col" class="bg-[#1c1c1c] text-white p-1 sm:p-3 md:p-4">
                 <img src="/images/site_logo_no-mark.jpeg" alt="設備プロ" class="w-[60px] sm:w-[80px] md:w-[100px] mx-auto" />
               </th>
-              <th scope="col" class="bg-[#1c1c1c] text-white text-[11px] sm:text-[14px] md:text-[18px] font-bold p-2 sm:p-3 md:p-4">A社</th>
-              <th scope="col" class="bg-[#1c1c1c] text-white text-[11px] sm:text-[14px] md:text-[18px] font-bold p-2 sm:p-3 md:p-4 rounded-tr-lg">B社</th>
+              <th scope="col" class="bg-[#1c1c1c] text-white text-[11px] sm:text-[14px] md:text-[18px] font-bold p-1 sm:p-3 md:p-4">A社</th>
+              <th scope="col" class="bg-[#1c1c1c] text-white text-[11px] sm:text-[14px] md:text-[18px] font-bold p-1 sm:p-3 md:p-4 rounded-tr-lg">B社</th>
             </tr>
           </thead>
           <tbody>
@@ -66,11 +66,11 @@ const {
                 <tr class={rowBg}>
                   <th
                     scope="row"
-                    class={`${thBg} text-[11px] sm:text-[14px] md:text-[18px] font-bold p-2 sm:p-3 md:p-4 sticky left-0 z-[3]${isLast ? ' rounded-bl-lg' : ''}`}
+                    class={`${thBg} text-[11px] sm:text-[14px] md:text-[18px] font-bold p-1 sm:p-3 md:p-4 sticky left-0 z-[3]${isLast ? ' rounded-bl-lg' : ''}`}
                   >
                     {row.label}
                   </th>
-                  <td class={`${ourBg} p-2 sm:p-3 md:p-4`}>
+                  <td class={`${ourBg} p-1 sm:p-3 md:p-4`}>
                     {row.our.type === 'price' && (
                       <div class="flex flex-col items-center gap-1">
                         <span class="inline-flex items-center gap-1 bg-black text-white text-[8px] sm:text-[9px] md:text-[11px] font-bold px-1.5 sm:px-2 py-0.5 rounded-[4px]">
@@ -101,7 +101,7 @@ const {
                       </span>
                     )}
                   </td>
-                  <td class="p-2 sm:p-3 md:p-4">
+                  <td class="p-1 sm:p-3 md:p-4">
                     {row.competitorA.type === 'price' && (
                       <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-medium text-[#3e3e3e]">
                         {row.competitorA.amount.toLocaleString('ja-JP')}<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円[税込]〜</span>
@@ -125,7 +125,7 @@ const {
                       <span class="text-[11px] sm:text-[14px] md:text-[18px] font-bold text-[#3e3e3e]">{row.competitorA.value}</span>
                     )}
                   </td>
-                  <td class={`p-2 sm:p-3 md:p-4${isLast ? ' rounded-br-lg' : ''}`}>
+                  <td class={`p-1 sm:p-3 md:p-4${isLast ? ' rounded-br-lg' : ''}`}>
                     {row.competitorB.type === 'price' && (
                       <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-medium text-[#3e3e3e]">
                         {row.competitorB.amount.toLocaleString('ja-JP')}<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円[税込]〜</span>

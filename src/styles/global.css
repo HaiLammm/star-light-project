@@ -31,8 +31,9 @@ body {
 
 html {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
-  word-break: keep-all;
-  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  line-break: auto;
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
