@@ -1,12 +1,6 @@
 ---
-import { getImage } from 'astro:assets';
 import { SITE_CONFIG } from '../utils/siteConfig';
-import ctaSanitaryImg from '../assets/images/cta/cta_sanitary_button_2026.png';
-import ctaSanitarySpImg from '../assets/images/cta/cta_sanitary_button_sp_2026.png';
 import CtaFeatures from './CtaFeatures.astro';
-
-const sanitaryDesktop = await getImage({ src: ctaSanitaryImg, format: 'webp', quality: 80 });
-const sanitaryMobile = await getImage({ src: ctaSanitarySpImg, format: 'webp', quality: 80 });
 
 interface Props {
   variant: 'full-width' | 'compact' | 'sticky';
@@ -134,12 +128,36 @@ const phone = SITE_CONFIG.phone;
           </a>
         </div>
         <div class="w-full flex-1">
-          <a href="/water" class="block transition-opacity hover:opacity-90">
-            <picture>
-              <source media="(max-width: 900px)" srcset={sanitaryMobile.src} />
-              <source media="(min-width: 901px)" srcset={sanitaryDesktop.src} />
-              <img src={sanitaryDesktop.src} alt="水まわりのトラブル" width={sanitaryDesktop.attributes.width} height={sanitaryDesktop.attributes.height} loading="lazy" decoding="async" class="w-full h-auto object-contain" />
-            </picture>
+          <a
+            href="/water"
+            aria-label="水まわりのトラブル WEB割引 今だけ半額 11,000円→5,000円[税込]〜"
+            class="group block w-full rounded-[16px] md:rounded-[20px] bg-[#1FB5E6] overflow-hidden shadow-[0_6px_18px_rgba(31,181,230,0.25)] transition-opacity hover:opacity-90"
+          >
+            <div class="flex items-stretch gap-1.5 md:gap-3 pl-2 pr-2 py-2 md:pl-5 md:pr-3 md:py-3">
+              <!-- Left: water drop + title -->
+              <div class="relative flex items-center shrink-0 w-[78px] md:w-[120px]">
+                <svg class="absolute inset-y-0 left-0 h-full w-auto opacity-90" viewBox="0 0 80 100" fill="none" aria-hidden="true">
+                  <path d="M40 4 C20 32, 10 52, 10 68 a30 30 0 0 0 60 0 C70 52, 60 32, 40 4 z" fill="#7AD3F2" />
+                  <path d="M28 60 a14 14 0 0 0 14 14" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85" />
+                </svg>
+                <p class="relative font-extrabold text-white text-[11px] md:text-[18px] leading-[1.2] pl-[28px] md:pl-[46px] whitespace-nowrap">
+                  水まわりの<br />トラブル
+                </p>
+              </div>
+              <!-- Right: white pill with badge + price -->
+              <div class="flex-1 min-w-0 bg-white rounded-[12px] md:rounded-[14px] px-2 py-1.5 md:px-3 md:py-2 flex flex-col justify-center">
+                <div class="flex items-center gap-1 md:gap-2">
+                  <span class="shrink-0 bg-black text-white text-[8px] md:text-[11px] font-bold leading-none px-1 py-0.5 md:px-1.5 md:py-1 rounded-[4px]">WEB割引</span>
+                  <span class="text-navy font-extrabold text-[10px] md:text-[14px] whitespace-nowrap">今だけ半額！</span>
+                </div>
+                <div class="flex items-baseline gap-0.5 md:gap-1.5 mt-0.5 md:mt-1 whitespace-nowrap">
+                  <span class="text-navy text-[9px] md:text-[13px] font-medium opacity-70">11,000円</span>
+                  <span class="text-electric text-[10px] md:text-[14px] leading-none flex-shrink-0" aria-hidden="true">▶</span>
+                  <span class="font-['Roboto',sans-serif] font-black text-water-deep text-[18px] md:text-[30px] leading-none">5,000</span>
+                  <span class="text-navy text-[8px] md:text-[12px] font-bold">円[税込]〜</span>
+                </div>
+              </div>
+            </div>
           </a>
         </div>
       </div>

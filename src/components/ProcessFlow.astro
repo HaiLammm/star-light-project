@@ -106,11 +106,11 @@ const steps = rawSteps.map((s) => ({ ...s, image: stepImageOptMap[s.image] ?? s.
               <p class="text-[13px] sm:text-[14px] md:text-base text-[#333] leading-[1.67] break-words overflow-wrap-anywhere" set:html={step.description} />
               {step.number === 5 && (
                 <div class="mt-3 sm:mt-4">
-                  <p class="text-[13px] sm:text-[14px] md:text-[16px] font-bold flex items-center gap-1.5">
+                  <p class="text-[13px] sm:text-[14px] md:text-[16px] font-bold flex items-center gap-1.5 break-words overflow-wrap-anywhere">
                     <span class="w-[10px] h-[10px] rounded-full bg-electric inline-block flex-shrink-0"></span>
                     お支払い方法
                   </p>
-                  <p class="text-[12px] sm:text-[13px] md:text-[15px] text-[#333] leading-[1.67] mt-[7px]">現金、銀行振込、または各種クレジットカードがご利用頂けます。</p>
+                  <p class="text-[12px] sm:text-[13px] md:text-[15px] text-[#333] leading-[1.67] mt-[7px] break-words overflow-wrap-anywhere">現金、銀行振込、または各種クレジットカードがご利用頂けます。</p>
                   <figure class="mt-[10px]">
                     <Image src={creditImg} alt="クレジットカード" width={280} height={40} format="webp" quality={80} loading="lazy" decoding="async" class="w-auto h-[25px] sm:h-[30px] md:h-[35px]" />
                   </figure>
