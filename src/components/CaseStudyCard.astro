@@ -13,7 +13,7 @@ interface Props {
   description: string;
   imageSrc: ImageMetadata | string;
   imageAlt: string;
-  slug: string;
+  serviceSlug: string;
 }
 
 const {
@@ -26,7 +26,7 @@ const {
   description,
   imageSrc,
   imageAlt,
-  slug,
+  serviceSlug,
 } = Astro.props;
 
 const categoryColorMap: Record<string, string> = {
@@ -38,7 +38,7 @@ const categoryColor = categoryColorMap[serviceCategory] ?? 'bg-[#717070]';
 ---
 
 <article class="h-full">
-  <a href="/case" class="flex flex-col w-full h-full p-[20px] md:p-[30px] md:pb-[35px] rounded-[40px] md:rounded-[50px] border border-border-warm shadow-[0_6px_24px_rgba(27,42,74,0.08)] bg-white hover:-translate-y-1 transition-transform duration-200 ease">
+  <a href={`/${serviceCategory}/${serviceSlug}/`} class="flex flex-col w-full h-full p-[20px] md:p-[30px] md:pb-[35px] rounded-[40px] md:rounded-[50px] border border-border-warm shadow-[0_6px_24px_rgba(27,42,74,0.08)] bg-white hover:-translate-y-1 transition-transform duration-200 ease">
     <div class="flex items-start gap-[10px] md:gap-[20px]">
       <figure class="shrink-0 w-[80px] md:w-[100px] aspect-square rounded-[20px] overflow-hidden">
         {typeof imageSrc === 'string' ? (

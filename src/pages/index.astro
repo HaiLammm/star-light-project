@@ -274,7 +274,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
                 description={entry.body ?? ''}
                 imageSrc={caseImageMap[entry.id] ?? '/images/cases/case_01.jpg'}
                 imageAlt={entry.data.imageAlt}
-                slug={entry.id}
+                serviceSlug={entry.data.serviceSlug}
               />
             </div>
           ))}

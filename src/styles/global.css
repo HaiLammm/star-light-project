@@ -54,7 +54,9 @@ input, select, textarea {
 
 .overflow-wrap-anywhere {
   overflow-wrap: anywhere;
-  word-break: auto-phrase;
+  /* word-break: normal để chữ dàn ngang lấp đầy dòng.
+     Tránh auto-phrase vì nó ngắt theo cụm từ tiếng Nhật khiến dòng không đầy ("cắt chữ xuống dòng nhồi"). */
+  word-break: normal;
 }
 
 /* Auto-numbered article headings (blog/column) */

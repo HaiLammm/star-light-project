@@ -81,7 +81,7 @@ const breadcrumbItems = [
                 description={caseItem.body ?? ''}
                 imageSrc={optimizedImages[caseItem.id] ?? getCaseImageSrc(caseItem.id)}
                 imageAlt={caseItem.data.imageAlt}
-                slug={caseItem.id}
+                serviceSlug={caseItem.data.serviceSlug}
               />
             ))}
           </div>

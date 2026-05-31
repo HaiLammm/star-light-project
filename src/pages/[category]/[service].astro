@@ -155,7 +155,7 @@ const realCaseStudies = allCases
     description: c.body ?? '',
     imageSrc: caseImgOptMap[c.data.serviceSlug] ?? caseImageMap[c.data.serviceSlug] ?? categoryKvFallback[c.data.serviceCategory],
     imageAlt: c.data.imageAlt,
-    slug: c.id,
+    serviceSlug: c.data.serviceSlug,
   }));
 
 const testimonialDetailMap: Record<string, { title: string; duration: string }> = {
