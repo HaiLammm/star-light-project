@@ -61,7 +61,11 @@ export default function HeroCarousel({
                 href="/contact"
                 className="flex items-center justify-center gap-2 bg-white border-2 border-navy text-navy font-bold rounded-2xl px-6 py-3.5 sm:py-3 w-full sm:w-auto text-[15px] hover:bg-navy hover:text-white transition-colors"
               >
-                <span aria-hidden="true">✉</span>メールで無料相談
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-[22px] h-[22px] shrink-0" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7.5 8.4 5.6a1 1 0 0 0 1.2 0L21 7.5" />
+                </svg>
+                メールで無料相談
               </a>
             </div>
           </div>
