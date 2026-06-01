@@ -87,7 +87,19 @@ export default function ServiceSlider({ slides, heading, subheading, eyebrow, ac
             {eyebrow}
           </span>
           <h2 className="text-[23px] md:text-[30px] font-black text-navy tracking-wide mt-3">{heading}</h2>
-          <p className="text-[13px] md:text-[15px] text-text-secondary mt-2 max-w-[680px] mx-auto" style={{ wordBreak: 'normal' }}>{subheading}</p>
+          <p className="text-[13px] md:text-[15px] text-text-secondary mt-2 max-w-[680px] mx-auto" style={{ wordBreak: 'normal' }}>
+            {(() => {
+              const periodIdx = subheading.indexOf('。');
+              if (periodIdx === -1 || periodIdx === subheading.length - 1) return subheading;
+              return (
+                <>
+                  {subheading.slice(0, periodIdx + 1)}
+                  <br className="md:hidden" />
+                  {subheading.slice(periodIdx + 1)}
+                </>
+              );
+            })()}
+          </p>
         </div>
 
         <div className="flex justify-start md:justify-center gap-2.5 md:flex-wrap mb-8 overflow-x-auto md:overflow-visible -mx-5 px-5 md:mx-0 md:px-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">

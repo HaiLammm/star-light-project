@@ -101,7 +101,7 @@ export default function HeroCarousel({
             <span className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-2xl bg-water-tint flex items-center justify-center text-2xl shrink-0" aria-hidden="true">💧</span>
             <span className="min-w-0">
               <b className="block text-navy font-black text-base md:text-[18px]">水まわりの修理</b>
-              <span className="text-[13px] text-text-secondary">トイレ・キッチン<br className="md:hidden" /><span className="hidden md:inline">・</span>お風呂・洗面所</span>
+              <span className="text-[13px] text-text-secondary">トイレ・キッチン・お風呂・洗面所</span>
             </span>
             <span className="ml-auto font-black text-water" aria-hidden="true">→</span>
           </a>
@@ -112,7 +112,7 @@ export default function HeroCarousel({
             <span className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-2xl bg-electric-tint flex items-center justify-center text-2xl shrink-0" aria-hidden="true">⚡</span>
             <span className="min-w-0">
               <b className="block text-navy font-black text-base md:text-[18px]">電気まわりの修理</b>
-              <span className="text-[13px] text-text-secondary">ブレーカー・コンセント<br className="md:hidden" /><span className="hidden md:inline">・</span>照明・給湯器</span>
+              <span className="text-[13px] text-text-secondary">ブレーカー・コンセント・照明・給湯器</span>
             </span>
             <span className="ml-auto font-black text-electric-deep" aria-hidden="true">→</span>
           </a>
