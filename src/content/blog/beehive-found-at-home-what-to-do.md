@@ -1,6 +1,6 @@
 ---
 title: "家にハチの巣を見つけた時は？危険なケースと対処法を解説"
-publishedDate: 2026-06-04
+publishedDate: 2026-06-03
 category: electricity
 ---
 
