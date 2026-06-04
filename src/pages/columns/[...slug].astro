@@ -72,12 +72,12 @@ const articleSchema = generateArticle({
               <p class="text-[16px] font-bold mb-[14px] flex items-center gap-[8px]">
                 <span class="inline-block w-[4px] h-[18px] bg-navy"></span>目次
               </p>
-              <ul class="flex flex-col gap-[8px]">
+              <ul class="flex flex-col gap-[7px]">
                 {tocItems.map((item) => (
-                  <li class={item.depth === 3 ? 'pl-[18px]' : ''}>
-                    <a href={`#${item.slug}`} class="flex gap-[6px] text-[14px] leading-[1.6] text-[#0277BD] hover:underline">
-                      <span class="shrink-0 font-bold font-[Roboto]">{item.number}</span>
-                      <span>{item.text}</span>
+                  <li class={item.depth === 3 ? 'pl-[22px]' : '[&:not(:first-child)]:mt-[9px]'}>
+                    <a href={`#${item.slug}`} class="group flex items-baseline gap-[8px]">
+                      <span class={`shrink-0 font-bold font-[Roboto] ${item.depth === 3 ? 'text-[12px] text-[#9aa9bd]' : 'text-[13px] text-navy'}`}>{item.number}</span>
+                      <span class={`[text-wrap:pretty] leading-[1.6] group-hover:text-[#0277BD] group-hover:underline ${item.depth === 3 ? 'text-[13px] text-[#666]' : 'text-[14px] font-medium text-[#333]'}`}>{item.text}</span>
                     </a>
                   </li>
                 ))}
@@ -115,12 +115,12 @@ const articleSchema = generateArticle({
               <p class="text-[15px] sm:text-[17px] font-bold mb-[10px] sm:mb-[14px] flex items-center gap-[8px]">
                 <span class="inline-block w-[4px] h-[18px] bg-navy"></span>目次
               </p>
-              <ul class="flex flex-col gap-[8px]">
+              <ul class="flex flex-col gap-[7px]">
                 {tocItems.map((item) => (
-                  <li class={item.depth === 3 ? 'pl-[18px] sm:pl-[24px]' : ''}>
-                    <a href={`#${item.slug}`} class="flex gap-[6px] text-[13px] sm:text-[14px] md:text-[15px] leading-[1.6] text-[#0277BD] hover:underline">
-                      <span class="shrink-0 font-bold font-[Roboto]">{item.number}</span>
-                      <span>{item.text}</span>
+                  <li class={item.depth === 3 ? 'pl-[22px] sm:pl-[26px]' : '[&:not(:first-child)]:mt-[9px]'}>
+                    <a href={`#${item.slug}`} class="group flex items-baseline gap-[8px]">
+                      <span class={`shrink-0 font-bold font-[Roboto] ${item.depth === 3 ? 'text-[12px] text-[#9aa9bd]' : 'text-[13px] sm:text-[14px] text-navy'}`}>{item.number}</span>
+                      <span class={`[text-wrap:pretty] leading-[1.6] group-hover:text-[#0277BD] group-hover:underline ${item.depth === 3 ? 'text-[13px] sm:text-[14px] text-[#666]' : 'text-[14px] sm:text-[15px] font-medium text-[#333]'}`}>{item.text}</span>
                     </a>
                   </li>
                 ))}
