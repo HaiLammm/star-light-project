@@ -6,7 +6,7 @@ publishedDate: 2026-06-13
 category: electricity
 subcategory: "ブレーカー"
 image: /images/SEO/breaker-keeps-tripping/thumbnail.jpg
-imageAlt: "arf"
+imageAlt: "breaker-keeps-tripping-thumbnail"
 ---
 
 ![ブレーカーが繰り返し落ちる場合のチェック](/images/SEO/breaker-keeps-tripping/hero.jpg)
