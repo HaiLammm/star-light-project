@@ -6,7 +6,7 @@ publishedDate: 2026-06-05
 category: water
 subcategory: "お風呂"
 image: /images/SEO/bath-drain-clog-how-to-fix/thumbnail.jpg
-imageAlt: "bathtub-drain-clogged-thumbnail"
+imageAlt: "bathroom-drain-clogged-thumbnail"
 ---
 
 お風呂の排水口に髪の毛が絡まっていたり、水の流れが急に悪くなったりした経験はありませんか？毎日使うお風呂だからこそ、排水のトラブルはすぐに解決したいものです。しかし、原因をしっかり見極めずに強力な薬剤を使ったり、無理に異物を押し込んだりすると、かえって状況を悪化させてしまうこともあります。
