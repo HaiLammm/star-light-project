@@ -13,7 +13,7 @@ export interface OfficeAddress {
   addressCountry: 'JP';
 }
 
-export type OfficeKey = 'tokyo' | 'nagoya' | 'osaka' | 'hyogo';
+export type OfficeKey = 'kanto' | 'nagoya' | 'osaka' | 'hyogo';
 
 export interface RegionalOffice {
   key: OfficeKey;
@@ -85,10 +85,10 @@ export interface SiteConfig {
 }
 
 const SITE_PHONE: PhoneConfig = {
-  display: '000000000000',
-  digits: '000000000000',
-  href: 'tel:000000000000',
-  ariaLabel: '無料電話 000000000000',
+  display: '050-8896-6909',
+  digits: '05088966909',
+  href: 'tel:05088966909',
+  ariaLabel: '無料電話 050-8896-6909',
 };
 
 export const ELECTRICITY_SERVICES: ServiceItem[] = [
@@ -167,7 +167,7 @@ const toNavigationChildren = (services: ServiceItem[]): NavigationChild[] => {
 export const SITE_CONFIG: SiteConfig = {
   companyName: '設備プロ',
   companyNameEn: 'Setsubit',
-  legalName: '合同会社',
+  legalName: '株式会社Hoaloha',
   siteUrl: 'https://www.setsubi-pro.net',
   phone: SITE_PHONE,
   email: {
@@ -180,17 +180,20 @@ export const SITE_CONFIG: SiteConfig = {
 
 export const REGIONAL_OFFICES: RegionalOffice[] = [
   {
-    key: 'tokyo',
-    name: '設備プロ 東京営業所',
-    shortName: '東京営業所',
+    key: 'kanto',
+    name: '設備プロ 関東営業所',
+    shortName: '関東営業所',
     address: {
-      addressRegion: '東京都',
+      streetAddress: '上幡木1418-35',
+      addressLocality: '鉾田市',
+      addressRegion: '茨城県',
+      postalCode: '311-2113',
       addressCountry: 'JP',
     },
-    formattedAddress: '東京都内対応',
+    formattedAddress: '〒311-2113 茨城県鉾田市上幡木1418-35',
     phone: SITE_PHONE,
-    areaServed: ['東京都', '神奈川県', '埼玉県', '千葉県'],
-    prefecturesServed: ['東京都', '神奈川県', '埼玉県', '千葉県'],
+    areaServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
+    prefecturesServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
   },
   {
     key: 'nagoya',
@@ -212,12 +215,12 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
     name: '設備プロ 大阪営業所',
     shortName: '大阪営業所',
     address: {
-      streetAddress: 'abcxyz',
-      addressLocality: 'abcxyz',
-      addressRegion: 'abcxyz',
+      streetAddress: '曽根崎新地1丁目11-20-9E',
+      addressLocality: '大阪市北区',
+      addressRegion: '大阪府',
       addressCountry: 'JP',
     },
-    formattedAddress: 'abcxyz',
+    formattedAddress: '大阪府大阪市北区曽根崎新地1丁目11-20-9E',
     phone: SITE_PHONE,
     areaServed: ['大阪市', '豊中市', '吹田市', '堺市'],
     prefecturesServed: ['大阪府', '京都府', '奈良県', '和歌山県'],

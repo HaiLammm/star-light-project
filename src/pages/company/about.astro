@@ -11,9 +11,9 @@ const breadcrumbItems = [
 ];
 
 const companyInfo = [
-  { label: '社名', value: '合同会社' },
-  { label: '住所', value: 'abcxyz' },
-  { label: '電話番号', value: '000000000000', isPhone: true },
+  { label: '社名', value: '株式会社Hoaloha' },
+  { label: '住所', value: '大阪府大阪市北区曽根崎新地1丁目11-20-9E' },
+  { label: '電話番号', value: '050-8896-6909', isPhone: true },
   { label: '設立日', value: '令和７年１０月１４日' },
   { label: '代表名', value: 'abcxyz' },
   { label: '事業内容', value: '電気工事事業、水道施設工事業' },
@@ -22,7 +22,7 @@ const companyInfo = [
 
 <BaseLayout
   title="会社概要｜設備プロ"
-  description="合同会社の会社概要。社名・住所・代表名・事業内容などの基本情報をご案内します。"
+  description="株式会社Hoalohaの会社概要。社名・住所・代表名・事業内容などの基本情報をご案内します。"
   canonicalUrl={`${SITE_CONFIG.siteUrl}/company/about/`}
 >
   <!-- Breadcrumb -->
@@ -44,7 +44,7 @@ const companyInfo = [
         設備プロについて
       </h2>
       <p class="text-[14px] md:text-[16px] leading-relaxed text-[#333] mb-6">
-        私たち合同会社は、「設備プロ」のブランド名で電気・水まわりのトラブル解決サービスを提供しております。大阪を拠点に、お客様の暮らしの安心を支えるため、迅速かつ丁寧な対応を心がけております。
+        私たち株式会社Hoalohaは、「設備プロ」のブランド名で電気・水まわりのトラブル解決サービスを提供しております。大阪を拠点に、お客様の暮らしの安心を支えるため、迅速かつ丁寧な対応を心がけております。
       </p>
       <p class="text-[14px] md:text-[16px] leading-relaxed text-[#333]">
         電気工事や水道施設工事を中心に、24時間365日体制でお客様のお困りごとに対応。確かな技術力と誠実なサービスで、地域の皆さまから信頼される企業を目指しています。
@@ -63,7 +63,7 @@ const companyInfo = [
             </th>
             <td class="text-[14px] md:text-[16px] text-[#333] py-4 px-4 md:px-6 border-b border-[#e0e0e0]">
               {row.isPhone ? (
-                <a href="tel:000000000000" class="text-water hover:underline">{row.value}</a>
+                <a href="tel:05088966909" class="text-water hover:underline">{row.value}</a>
               ) : (
                 row.value
               )}
