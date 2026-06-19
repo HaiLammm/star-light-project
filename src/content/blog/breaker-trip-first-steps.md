@@ -6,7 +6,7 @@ publishedDate: 2026-06-13
 category: electricity
 subcategory: "ブレーカー"
 image: /images/SEO/breaker-trip-first-steps/thumbnail.jpg
-imageAlt: "abc"
+imageAlt: "breaker-tripping-thumbnail"
 ---
 
 ![家庭用分電盤の代表的なブレーカー構成](/images/SEO/breaker-trip-first-steps/hero.jpg)
