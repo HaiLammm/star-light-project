@@ -383,11 +383,9 @@ const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null
   <section class="pb-10 sm:pb-12 md:pb-16">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <h3 class="text-[14px] sm:text-[16px] md:text-[20px] font-bold text-center mb-4 sm:mb-5 md:mb-6">営業所</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+      <div class="grid grid-cols-1 gap-4 sm:gap-6 max-w-md mx-auto">
         {[
-          { name: '関東営業所', address: '準備中' },
-          { name: '東海営業所', address: 'abcxyz' },
-          { name: '中国営業所', address: 'abcxyz' },
+          { name: '関東営業所', address: '〒311-2113 茨城県鉾田市上幡木1418-35' },
         ].map((office) => (
           <div class="bg-[#f7f7f7] rounded-[12px] sm:rounded-[16px] p-4 sm:p-5">
             <p class="text-[12px] sm:text-[13px] md:text-[15px] font-bold text-[#1c1c1c] mb-1">{office.name}</p>

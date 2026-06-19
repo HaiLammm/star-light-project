@@ -196,21 +196,6 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
     prefecturesServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
   },
   {
-    key: 'nagoya',
-    name: '設備プロ 名古屋営業所',
-    shortName: '名古屋営業所',
-    address: {
-      streetAddress: 'abcxyz',
-      addressLocality: 'abcxyz',
-      addressRegion: 'abcxyz',
-      addressCountry: 'JP',
-    },
-    formattedAddress: 'abcxyz',
-    phone: SITE_PHONE,
-    areaServed: ['名古屋市', '北名古屋市', '一宮市', '春日井市'],
-    prefecturesServed: ['愛知県', '岐阜県', '三重県'],
-  },
-  {
     key: 'osaka',
     name: '設備プロ 大阪営業所',
     shortName: '大阪営業所',
