@@ -2,11 +2,11 @@
 title: "漏電ブレーカーが落ちたのはなぜ？安全な確認手順と今すぐできる対処法"
 description: "漏電ブレーカーが落ちたときは、漏電や家電の故障、配線トラブルなどが原因の可能性があります。本記事では、安全に確認する手順や原因の切り分け方、復旧を試す際の注意点、感電や火災を防ぐために避けたい行動、専門業者へ相談すべき症状について解説します。"
 excerpt: "漏電ブレーカーが落ちる原因と、家庭でできる安全な確認手順を解説します。"
-publishedDate: 2026-06-14
+publishedDate: 2026-06-13
 category: electricity
 subcategory: "ブレーカー"
-image: /images/SEO/earth-leakage-breaker-tripped/thumbnail.png
-imageAlt: "cba"
+image: /images/SEO/earth-leakage-breaker-tripped/thumbnail.jpg
+imageAlt: "earth-leakage-breaker-tripped-thumbnail"
 ---
 
 ![漏電ブレーカーの確認イメージ](/images/SEO/earth-leakage-breaker-tripped/hero.jpg)
