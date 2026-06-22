@@ -6,7 +6,7 @@ publishedDate: 2026-05-29
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-noise-causes.jpg
-imageAlt: "エアコンの室外機から異音がして点検する様子"
+imageAlt: "air-conditioner-noisy-thumbnail"
 ---
 
 エアコンをつけた瞬間に「ガタガタ」と響く音、運転中ずっと続く「ブーン」という低い唸り、止めた後の「ポコポコ」という水のような音。普段は気にならなかった音が急に気になりだすと、故障ではないかと不安になりますよね。
