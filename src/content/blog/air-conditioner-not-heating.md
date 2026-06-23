@@ -50,8 +50,6 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 長期間フィルターを掃除していない場合は、一度取り外して状態を確認してみましょう。目詰まりしている場合は、掃除するだけで暖房の効きが改善することもあります。
 
-[※自分でできる掃除方法は、こちらをご確認ください。](https://www.setsubi-pro.net/columns/air-conditioner-cleaning-guide/)
-
 ### 室外機まわりに問題がある
 
 エアコンの暖房は、室外機が外気から熱を取り込む仕組みで動いています。室外機まわりに問題があると、暖房能力が大きく低下することがあります。
@@ -107,6 +105,8 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 - フィルターの奥にあるフィンには触れない
 
 フィルター掃除は定期的に行うことで、暖房効率の低下を防ぎやすくなります。
+
+[※自分でできる掃除方法は、こちらをご確認ください。](https://www.setsubi-pro.net/columns/air-conditioner-cleaning-guide/)
 
 ### 室外機まわりを確認する
 
