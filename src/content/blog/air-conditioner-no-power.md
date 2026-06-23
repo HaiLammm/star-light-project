@@ -1,12 +1,12 @@
 ---
-title: エアコンの電源が入らない！考えられる原因と今すぐ試せる対処法
-description: エアコンの電源が入らないときは、リモコン・ブレーカー・コンセントの順に確認するのが基本です。考えられる原因と、自分で安全に試せる対処法、業者へ相談したいケースを解説します。
-excerpt: エアコンの電源が入らない原因を、リモコン・電源供給・本体に分けて解説。自分で試せる対処法と業者へ相談すべきケースを紹介します。
-publishedDate: 2026-05-30
+title: "エアコンの電源が入らない！考えられる原因と今すぐ試せる対処法"
+description: "エアコンの電源が入らないときは、リモコン・ブレーカー・コンセントの順に確認するのが基本です。考えられる原因と、自分で安全に試せる対処法、業者へ相談したいケースを解説します。"
+excerpt: "エアコンの電源が入らない原因を、リモコン・電源供給・本体に分けて解説。自分で試せる対処法と業者へ相談すべきケースを紹介します。"
+publishedDate: 2026-05-29
 category: electricity
-subcategory: エアコン
+subcategory: "エアコン"
 image: /images/SEO/air-conditioner-blinking-light-causes.jpg
-imageAlt: エアコンのリモコンで電源操作する様子
+imageAlt: "エアコンのリモコンで電源操作する様子"
 ---
 
 リモコンのボタンを押してもエアコンが反応しない。本体のランプも光らない。暑い日や寒い日に急に動かなくなると、本当に困りますよね。
@@ -99,14 +99,36 @@ imageAlt: エアコンのリモコンで電源操作する様子
 
 特に、焦げ臭さや煙、火花、漏電ブレーカーの作動を伴うケースは、火災・感電の危険があります。すぐに電源プラグを抜き、ブレーカーを切った状態で連絡してください。本体内部に水濡れがある場合も、感電の恐れがあるため触らずに業者を待つほうが安全です。
 
-| 自分で対応しやすいケース | 業者へ相談したいケース |
-| --- | --- |
-| リモコンの電池切れ・液晶表示の問題 | 応急運転ボタンを押しても本体が動かない |
-| コンセントのゆるみ・延長コードの容量不足 | 漏電ブレーカーが繰り返し作動する |
-| 一時的にブレーカーが落ちただけ | 焦げ臭さ・煙・火花・水濡れがある |
-| 電源プラグを抜いてリセットで復旧 | 雷の直後から動かなくなった |
-| 設置から10年以上経ち、複数の不具合が重なる | 内部の基板・電源回路の故障が疑われる |
+<table>
+  <thead>
+    <tr>
+      <th style="background:#0ea5e9;color:#fff;padding:10px 16px;font-weight:bold">自分で対応しやすいケース</th>
+      <th style="background:#ef4444;color:#fff;padding:10px 16px;font-weight:bold">業者へ相談したいケース</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">リモコンの電池切れ・液晶表示の問題</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">応急運転ボタンを押しても本体が動かない</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">コンセントのゆるみ・延長コードの容量不足</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">漏電ブレーカーが繰り返し作動する</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">一時的にブレーカーが落ちただけ</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">焦げ臭さ・煙・火花・水濡れがある</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">電源プラグを抜いてリセットで復旧</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">雷の直後から動かなくなった</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">設置から10年以上経ち、複数の不具合が重なる</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">内部の基板・電源回路の故障が疑われる</td>
+    </tr>
+  </tbody>
+</table>
+エアコンの電源が入らない状態が続くと、夏や冬は生活への影響が大きくなります。電池交換やリセットを試しても改善しない、原因が分からず不安というときは、無理に通電を繰り返さず早めに専門業者へ相談しましょう。
 
-エアコンの電源が入らない状態が続くと、夏や冬は生活への影響が大きくなります。電池交換やリセットを試しても改善しない、原因が分からず不安というときは、無理に通電を繰り返さず一度ご相談ください。
-
-エアコンの修理から基板・電源回路の点検、状況によっては交換のご提案まで、年中無休・出張対応でサポートしています。
+**Setsubi-pro**では、エアコンの修理から基板・電源回路の点検、状況によっては交換のご提案まで、年中無休・出張対応でサポートしています。
