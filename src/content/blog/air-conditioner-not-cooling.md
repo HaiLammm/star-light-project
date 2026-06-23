@@ -101,21 +101,50 @@ imageAlt: "air-conditioner-not-cooling-thumbnail"
 
 自分で確認できる範囲を試しても改善が見られない場合、内部の故障やガス系統のトラブルが考えられます。以下の表を参考に、自分で対応できるケースと、専門業者に相談すべきケースを見極めてください。
 
-| 自分で対応しやすいケース | 業者へ相談したいケース |
-|---|---|
-| リモコンの冷房設定・温度設定の見直し | 配管に霜や氷が付着している |
-| フィルターのホコリ取りや水洗い | 室外機から異音や異臭がする |
-| 室外機周辺の障害物の撤去 | コンプレッサーが停止しているように感じられる |
-| 風向き・風量の調整 | 温度センサーの誤作動が疑われる |
-| 室内の日射・熱源を減らす | 部屋の広さに対してエアコンの能力が不足 |
-| サーキュレーターなどで風を循環させる | チェック後も30分以上冷房が全く効かない |
-
+<table>
+  <thead>
+    <tr>
+      <th style="background:#0ea5e9;color:#fff;padding:10px 16px;font-weight:bold">自分で対応しやすいケース</th>
+      <th style="background:#ef4444;color:#fff;padding:10px 16px;font-weight:bold">業者へ相談したいケース</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">リモコンの冷房設定・温度設定の見直し</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">配管に霜や氷が付着している</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">フィルターのホコリ取りや水洗い</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">室外機から異音や異臭がする</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">室外機周辺の障害物の撤去</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">コンプレッサーが停止しているように感じられる</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">風向き・風量の調整</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">温度センサーの誤作動が疑われる</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">室内の日射・熱源を減らす</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">部屋の広さに対してエアコンの能力が不足</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">サーキュレーターなどで風を循環させる</td>
+      <td style="padding:8px 16px;border-bottom:1px solid #e5e7eb">チェック後も30分以上冷房が全く効かない</td>
+    </tr>
+  </tbody>
+</table>
 次のような症状がある時は、使用を続けることで故障が悪化したり、**火災**や**感電**のリスクが高まる可能性があります。運転を止め、すぐに専門業者への連絡を検討してください。
 
 ・室外機や室内機から**異音**や**異臭**（焦げ臭いなど）がする
+
 ・室外機の配管に**霜や氷**が大量に付着している
+
 ・エアコン内部から水が漏れている
+
 ・運転ランプが点滅して故障を示している
+
 ・上記のチェックをすべて行った後も、30分以上経っても全く冷房が効かない
 
 これらのサインは、自己判断で対応を進めることなく、専門家の点検を受ける必要があります。特に**焦げ臭い**においがする場合は、内部の配線や基板に異常が生じている可能性があり、最も危険です。
