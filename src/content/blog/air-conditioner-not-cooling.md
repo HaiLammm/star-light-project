@@ -9,8 +9,6 @@ image: /images/SEO/air-conditioner-not-cooling/thumbnail.jpg
 imageAlt: "air-conditioner-not-cooling-thumbnail"
 ---
 
-![エアコンが冷えない時の確認ポイント](/images/SEO/air-conditioner-not-cooling/hero.jpg)
-
 暑い日の帰宅後、エアコンのスイッチを入れても、部屋が一向に涼しくならない。布団に入っても汗ばんで寝付けない、リビングでくつろげない——そんな経験はありませんか。エアコンが冷えないと、単なる不快感だけでなく、睡眠の質や在宅ワークの集中力まで大きく損ないます。
 
 原因は、リモコンの設定ミスやフィルターの汚れといった簡単なものから、冷媒ガスの泄漏やコンプレッサーの故障といった専門的なトラブルまで幅広くあります。[エアコンが暖かくならない原因](https://www.setsubi-pro.net/columns/air-conditioner-not-heating/)とは異なり、冷房が効かない場合は室外機の熱の放散や室内の熱負荷など、夏特有の要因も絡んでくることが多いです。安易に本体を触ろうとすると危険ですが、自分で確認できる安全なポイントも存在します。
