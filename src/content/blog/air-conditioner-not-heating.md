@@ -175,14 +175,14 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 **【Setsubi-proについて】**
 
-**電気設備・水回り設備**のトラブルに対応しています。
-
+**電気設備・水回り設備**のトラブルに対応しています。 
 
 
 **受付：** 24時間365日
 
 **対応エリア：** 京都・大阪・神戸
 
-**TEL：** 050-8896-6909
+**TEL：** 050-8896-6909 
+
 
 [お問い合わせはこちら](https://www.setsubi-pro.net/contact)
