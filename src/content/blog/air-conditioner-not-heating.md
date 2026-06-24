@@ -175,8 +175,9 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 **【Setsubi-proについて】**
 
-**電気設備・水回り設備**のトラブルに対応しています。 
+**電気設備・水回り設備**のトラブルに対応しています。
 
+&nbsp;
 
 **受付：** 24時間365日
 
@@ -184,5 +185,6 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 **TEL：** 050-8896-6909 
 
+&nbsp;
 
 [お問い合わせはこちら](https://www.setsubi-pro.net/contact)
