@@ -106,3 +106,16 @@ input, select, textarea {
   font-weight: 700;
   white-space: nowrap;
 }
+
+/* Link trong thân bài: xanh + gạch chân để khách nhận ra bấm được */
+.article-numbered a {
+  color: #0066cc;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article-numbered a:hover {
+  color: #004c99;
+}
+.article-numbered a:visited {
+  color: #551a8b;
+}
