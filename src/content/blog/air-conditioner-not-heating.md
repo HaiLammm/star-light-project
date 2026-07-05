@@ -173,7 +173,7 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 ---
 
-**【Setsubi-Pproについて】**
+**【Setsubi-Proについて】**
 
 **電気設備・水回り設備**のトラブルに対応しています。
 
