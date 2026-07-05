@@ -132,7 +132,7 @@ imageAlt: "air-conditioner-noisy-thumbnail"
 
 ---
 
-**【Setsubi-proについて】**
+**【Setsubi-Proについて】**
 
 **電気設備・水回り設備**のトラブルに対応しています。
 
