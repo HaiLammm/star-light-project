@@ -92,13 +92,13 @@ input, select, textarea {
   height: auto;
 }
 
-/* Bảng trong bài: cuộn ngang trong khung, không kéo giãn cả trang trên mobile */
+/* Bảng trong bài: căn giữa theo cột nội dung, cuộn ngang trong khung trên mobile */
 .article-numbered table {
   display: block;
-  width: 100%;
+  width: fit-content;
   max-width: 100%;
   overflow-x: auto;
-  margin: 16px 0;
+  margin: 16px auto;
   border-collapse: collapse;
   font-size: 14px;
   -webkit-overflow-scrolling: touch;
