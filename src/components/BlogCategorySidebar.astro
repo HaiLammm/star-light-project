@@ -1,5 +1,5 @@
 ---
-import { BLOG_CATEGORIES } from '../data/blogData';
+import { BLOG_CATEGORIES, subcategorySlug } from '../data/blogData';
 
 interface Props {
   activeCategory?: string;
@@ -13,7 +13,7 @@ function getCategoryUrl(catKey: string): string {
 }
 
 function getSubcategoryUrl(catKey: string, sub: string): string {
-  return `/columns/category/${catKey}/${sub}/`;
+  return `/columns/category/${catKey}/${subcategorySlug(sub)}/`;
 }
 ---
 

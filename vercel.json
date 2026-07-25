@@ -2,8 +2,113 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/columns/category/water/お風呂/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/bath/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/%E3%81%8A%E9%A2%A8%E5%91%82/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/bath/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/キッチン/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/kitchen/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/%E3%82%AD%E3%83%83%E3%83%81%E3%83%B3/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/kitchen/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/トイレ/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/toilet/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/%E3%83%88%E3%82%A4%E3%83%AC/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/toilet/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/洗面所/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/washroom/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/water/%E6%B4%97%E9%9D%A2%E6%89%80/",
+      "destination": "https://www.setsubi-pro.net/columns/category/water/washroom/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/エアコン/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/aircon/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/%E3%82%A8%E3%82%A2%E3%82%B3%E3%83%B3/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/aircon/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/アンテナ工事/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/antenna/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/%E3%82%A2%E3%83%B3%E3%83%86%E3%83%8A%E5%B7%A5%E4%BA%8B/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/antenna/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/コンセント/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/outlet/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%B3%E3%83%88/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/outlet/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/ブレーカー/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/breaker/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/%E3%83%96%E3%83%AC%E3%83%BC%E3%82%AB%E3%83%BC/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/breaker/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/照明/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/lighting/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/%E7%85%A7%E6%98%8E/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/lighting/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/給湯器交換/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/water-heater/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/category/electricity/%E7%B5%A6%E6%B9%AF%E5%99%A8%E4%BA%A4%E6%8F%9B/",
+      "destination": "https://www.setsubi-pro.net/columns/category/electricity/water-heater/",
+      "permanent": true
+    },
+    {
       "source": "/:path(.*)",
-      "has": [{ "type": "host", "value": "setsubi-pro.net" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "setsubi-pro.net"
+        }
+      ],
       "destination": "https://www.setsubi-pro.net/:path",
       "permanent": true
     }

@@ -7,7 +7,7 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 import BlogCard from '../../../components/BlogCard.astro';
 import BlogCategorySidebar from '../../../components/BlogCategorySidebar.astro';
 import { formatDateDot } from '../../../utils/formatters';
-import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP } from '../../../data/blogData';
+import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP, subcategorySlug } from '../../../data/blogData';
 import { SITE_CONFIG } from '../../../utils/siteConfig';
 
 export async function getStaticPaths() {
@@ -28,7 +28,7 @@ export async function getStaticPaths() {
     for (const sub of BLOG_SUBCATEGORY_MAP[cat] ?? []) {
       const subPosts = catPosts.filter((p) => p.data.subcategory === sub);
       paths.push({
-        params: { filter: `${cat}/${sub}` },
+        params: { filter: `${cat}/${subcategorySlug(sub)}` },
         props: { posts: subPosts, activeCategory: cat, activeSubcategory: sub },
       });
     }
