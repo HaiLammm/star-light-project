@@ -10,9 +10,10 @@ interface Props {
   description: string;
   canonicalUrl: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { title, description, canonicalUrl, ogImage } = Astro.props;
+const { title, description, canonicalUrl, ogImage, ogType = 'website' } = Astro.props;
 
 const DEFAULT_OG_IMAGE = '/images/staff_bg.jpg';
 const ogImageUrl = new URL(ogImage ?? DEFAULT_OG_IMAGE, Astro.site).href;
@@ -32,7 +33,7 @@ const ogImageUrl = new URL(ogImage ?? DEFAULT_OG_IMAGE, Astro.site).href;
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content={`${SITE_CONFIG.companyName}（セツビプロ）`} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />

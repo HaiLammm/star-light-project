@@ -58,7 +58,7 @@ const articleSchema = generateArticle({
 });
 ---
 
-<BaseLayout title={`${post.data.title} | 設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`}>
+<BaseLayout title={`${post.data.title} | 設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`} ogType="article" ogImage={heroImageSrc}>
   <script type="application/ld+json" set:html={serializeJsonLd(articleSchema)} />
 
   <article class="py-[30px] sm:py-[40px] md:py-[60px]">
