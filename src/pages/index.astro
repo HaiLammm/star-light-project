@@ -12,6 +12,8 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 import CTABlock from '../components/CTABlock.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
 import CtaFeatures from '../components/CtaFeatures.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { formatDateDot } from '../utils/formatters';
 import { SERVICE_CATEGORIES, REGIONAL_OFFICES, SITE_CONFIG } from '../utils/siteConfig';
 import { generateLocalBusiness, generateFAQ, serializeJsonLd } from '../utils/schema';
 import { getCollection } from 'astro:content';
@@ -24,6 +26,20 @@ const featuredCases = allCases
 
 const allTestimonials = await getCollection('testimonials');
 const featuredTestimonials = allTestimonials.slice(0, 4);
+
+const allPosts = await getCollection('blog');
+const latestPosts = allPosts
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 6);
+
+const blogImageMap: Record<string, string> = {};
+for (const post of latestPosts) {
+  const meta = await resolveImage(post.data.image);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 80 });
+    blogImageMap[post.id] = opt.src;
+  }
+}
 
 const allFaq = await getCollection('faq');
 const sortedFaq = allFaq.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
@@ -311,6 +327,38 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
       <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
         <a href="/voice" class="flex items-center justify-center gap-2 w-[200px] sm:w-[240px] md:w-[280px] min-h-[48px] md:min-h-[56px] bg-white border-2 border-navy text-navy text-[13px] md:text-[16px] font-bold rounded-full hover:bg-navy hover:text-white transition-colors duration-200">
           お客様の声一覧<span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog / Columns Section -->
+  <section class="py-8 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class="text-center mb-2">
+        <span class="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em] text-navy">
+          <span class="w-7 h-[3px] rounded-sm bg-navy"></span>お役立ち情報
+        </span>
+        <h2 class="text-[23px] md:text-[30px] font-black text-navy mt-3">お役立ちコラム</h2>
+      </div>
+      <p class="text-center text-[12px] md:text-[14px] text-text-secondary mt-2">電気・水まわりの修理やメンテナンスに役立つ情報をお届けします</p>
+      <div class="mt-[15px] sm:mt-[20px] md:mt-[50px] flex flex-col gap-[20px] sm:gap-[24px] md:gap-[30px]">
+        {latestPosts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            date={formatDateDot(post.data.publishedDate)}
+            category={post.data.category}
+            subcategory={post.data.subcategory}
+            excerpt={post.data.excerpt}
+            image={blogImageMap[post.id] ?? post.data.image}
+            imageAlt={post.data.imageAlt}
+            href={`/columns/${post.id}/`}
+          />
+        ))}
+      </div>
+      <div class="flex justify-center mt-[20px] sm:mt-[30px] md:mt-[42px]">
+        <a href="/columns/" class="flex items-center justify-center gap-2 w-[200px] sm:w-[240px] md:w-[280px] min-h-[48px] md:min-h-[56px] bg-white border-2 border-navy text-navy text-[13px] md:text-[16px] font-bold rounded-full hover:bg-navy hover:text-white transition-colors duration-200">
+          コラム一覧<span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
