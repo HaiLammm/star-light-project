@@ -3,6 +3,7 @@ title: "給湯器から異音がする原因は？音の種類別に危険度と
 description: "給湯器から異音がする時は、音の種類だけでなくガス臭・煙・エラーコードの有無で危険度が変わります。最初に行う安全確認、音別に考えられる原因、使用を止めて専門業者へ相談すべきケースを解説します。"
 excerpt: "給湯器の「ボンッ」「ピー」「ゴー」などの異音は、運転音の場合もあれば危険なサインの場合もあります。安全に確認する順番と相談の目安を整理します。"
 publishedDate: 2026-07-18
+updatedDate: 2026-07-18
 category: water
 subcategory: "給湯器"
 image: /images/SEO/waterheater-unsual-noise/thumbnail.jpg

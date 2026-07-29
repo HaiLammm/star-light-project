@@ -3,6 +3,7 @@ title: "給湯器が急に消えるのはなぜ？途中で止まる原因と確
 description: "給湯器が急に消えて困っていませんか？シャワー中や使用中に突然止まる原因をはじめ、確認すべきポイントや安全に対処する方法、業者へ相談する目安まで詳しく紹介します。"
 excerpt: "給湯器が使用中に急に消える時は、正常な制御の場合と点検が必要な場合があります。途中で止まる原因と安全な確認ポイントを整理します。"
 publishedDate: 2026-07-24
+updatedDate: 2026-07-24
 category: water
 subcategory: "給湯器"
 image: /images/SEO/waterheater-turn-off-suddenly/thumbnail.jpg

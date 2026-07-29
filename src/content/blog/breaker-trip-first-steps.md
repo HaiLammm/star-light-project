@@ -3,6 +3,7 @@ title: "ブレーカーが落ちたらまず試す確認手順と安全な復旧
 description: "ブレーカーが落ちて家が突然停電。そんなとき慌てず安全に復旧させるための確認手順を、初めての方にも分かりやすく解説。原因の見極め方と業者相談の目安も紹介。"
 excerpt: "ブレーカーが落ちたときの安全な復旧手順と、その後に何をすべきかの流れをまとめた、初めてトラブルに遭遇した方のための道しるべとなる記事です。"
 publishedDate: 2026-07-10
+updatedDate: 2026-07-10
 category: electricity
 subcategory: "ブレーカー"
 image: /images/SEO/breaker-trip-first-steps/thumbnail.jpg

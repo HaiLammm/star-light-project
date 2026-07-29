@@ -3,6 +3,7 @@ title: "エアコンが暖かくならない原因とは？自分でできるチ
 description: "エアコンの暖房が暖かくならない原因と、自分で確認できるチェックポイントを解説。フィルター汚れやモード設定ミスなど、よくある原因と対処法を紹介します。"
 excerpt: "エアコンの暖房が暖かくならない原因と対処法を解説。フィルター汚れやモード設定ミスなど、よくある原因を紹介します。"
 publishedDate: 2026-05-15
+updatedDate: 2026-07-05
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-not-heating-causes.jpg

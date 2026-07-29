@@ -3,6 +3,7 @@ title: "エアコン掃除のやり方は？自分でできる範囲と業者に
 description: "エアコン 掃除のやり方を知りたい方へ。カビ臭い、効きが悪い、黒い汚れが見えるときに確認したいサインから、フィルターや外側を自分で安全に掃除する手順、触ってはいけない内部部品、業者へ相談すべきケースまでわかりやすく解説します。"
 excerpt: "エアコン掃除を自分で行いたい方向けに、必要な準備と安全な手順、触れないほうがよい部分を整理しました。効きの悪さやにおいが気になるときの判断にも役立つ記事です。"
 publishedDate: 2026-06-20
+updatedDate: 2026-07-05
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-cleaning-guide/thumbnail.jpg

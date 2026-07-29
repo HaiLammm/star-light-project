@@ -3,6 +3,7 @@ title: "エアコンが冷えない時に確認したいポイントと考えら
 description: "エアコンが冷えない時に確認したい設定ミス・フィルター汚れ・室外機の状態などのチェックポイントを解説。風は出るのに冷えない場合や急に効きが悪くなった場合の原因、自分でできる対処法、冷媒ガス漏れや故障が疑われる際に業者へ相談すべきタイミングもわかります。"
 excerpt: "エアコンが冷えない時に確認したい5つのポイントと、それでも改善しない場合の原因、業者に相談すべきタイミングについて解説します。"
 publishedDate: 2026-06-20
+updatedDate: 2026-07-05
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-not-cooling/thumbnail.jpg

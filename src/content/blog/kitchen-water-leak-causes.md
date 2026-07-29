@@ -3,6 +3,7 @@ title: "キッチンの水漏れはなぜ起こる？場所別によくある原
 description: "キッチンの水漏れは、蛇口・シンク下・排水ホース・給水管など場所によって原因が異なります。場所別のよくある原因と自分でできる確認、業者へ相談したいケースを解説します。"
 excerpt: "キッチンの水漏れの原因を場所別に解説。蛇口・シンク下・給水管などのよくある原因と、自分でできる応急処置、業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-07-15
+updatedDate: 2026-07-15
 category: water
 subcategory: "キッチン"
 image: /images/SEO/kitchen-water-leak-causes.jpg

@@ -3,6 +3,7 @@ title: "エアコンがうるさいのは故障？異音の原因と自分でで
 description: "エアコンがうるさいと感じたら、音の種類で原因を見分けるのがポイントです。室内機・室外機それぞれの異音の理由と、自分でできる確認方法、業者に相談したいケースを解説します。"
 excerpt: "エアコンがうるさい原因を音の種類別に解説。室内機・室外機の異音の見分け方と自分でできる確認方法、業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-05-29
+updatedDate: 2026-07-05
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-noise-causes.jpg

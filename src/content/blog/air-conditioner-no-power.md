@@ -3,6 +3,7 @@ title: "エアコンの電源が入らない！考えられる原因と今すぐ
 description: "エアコンの電源が入らないときは、リモコン・ブレーカー・コンセントの順に確認するのが基本です。考えられる原因と、自分で安全に試せる対処法、業者へ相談したいケースを解説します。"
 excerpt: "エアコンの電源が入らない原因を、リモコン・電源供給・本体に分けて解説。自分で試せる対処法と業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-07-08
+updatedDate: 2026-07-08
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-blinking-light-causes.jpg

@@ -3,6 +3,7 @@ title: "給湯器の水漏れは故障？まず確認したい原因と対処法
 description: "給湯器の水漏れを見つけた時に、正常な排水か故障のサインかを見分ける確認手順を解説します。水が出る場所、危険なにおい、元栓の扱い、業者へ相談すべき症状まで整理し、安全に判断できるようにします。"
 excerpt: "給湯器の下や配管まわりが濡れている時に確認したいポイントを整理。正常な排水との違い、応急対応、相談が必要な症状を解説します。"
 publishedDate: 2026-07-19
+updatedDate: 2026-07-19
 category: water
 subcategory: "給湯器"
 image: /images/SEO/waterheater-water-leak/thumbnail.jpg

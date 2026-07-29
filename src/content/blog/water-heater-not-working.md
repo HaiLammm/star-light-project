@@ -3,6 +3,7 @@ title: "給湯器が動かない原因と確認したい5つのポイント｜�
 description: "給湯器が急に動かなくなったときは、エラーコードや元栓まわりのトラブルが原因になっていることがあります。確認しやすいポイントや、無理せず業者へ相談したほうがよいケースを解説します。"
 excerpt: "給湯器が動かない原因と確認ポイントを解説。エラーコードや元栓の確認方法、業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-07-12
+updatedDate: 2026-07-12
 category: electricity
 subcategory: "給湯器交換"
 image: /images/SEO/water-heater-not-working-causes.jpg

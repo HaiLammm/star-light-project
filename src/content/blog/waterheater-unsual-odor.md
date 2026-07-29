@@ -3,6 +3,7 @@ title: "給湯器のお湯が臭い！原因は故障？臭い別の対処法を
 description: "給湯器のお湯が臭い原因は故障だけではありません。硫黄臭・カビ臭・鉄臭など臭い別の原因や、自分でできる対処法、修理が必要なケースまでわかりやすく解説します。"
 excerpt: "給湯器のお湯や本体まわりから異臭がする時に、まず確認したい臭いの種類と安全な対処法を解説します。危険なサインや相談先の判断にも役立つ内容です。"
 publishedDate: 2026-07-20
+updatedDate: 2026-07-20
 category: water
 subcategory: "給湯器"
 image: /images/SEO/water-heater-odd-smell/thumbnail.jpg

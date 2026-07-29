@@ -3,6 +3,7 @@ title: "ブレーカーが落ちて戻らない！原因を絞り込む安全確
 description: "ブレーカーが落ちて戻らない原因は、電気の使いすぎだけでなく、漏電や短絡、ブレーカー本体の故障などさまざまです。本記事では、安全に確認する手順や原因の見分け方、やってはいけない対応、専門業者へ相談すべきタイミングを解説します。"
 excerpt: "ブレーカーが落ちて戻らない場合、原因を安全に切り分けることが重要です。この記事では、短絡や漏電、故障など具体的な原因と、専門業者へ連絡すべきサインをわかりやすく紹介します。"
 publishedDate: 2026-07-11
+updatedDate: 2026-07-11
 category: electricity
 subcategory: "ブレーカー"
 image: /images/SEO/breaker-trip-cannot-reset/thumbnail.jpg

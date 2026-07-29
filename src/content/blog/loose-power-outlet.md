@@ -3,6 +3,7 @@ title: "コンセントがゆるい原因とは？火災を防ぐための安全
 description: "コンセントがゆるいと感じたら、放置は禁物です。接触不良による発熱や火災のリスクを防ぐため、安全な確認手順と専門業者へ相談すべきケースをわかりやすく解説します。"
 excerpt: "コンセントの緩みは火災や感電の重大なリスクにつながります。自分でできる安全なチェック方法と、専門業者を呼ぶべき危険信号をまとめました。"
 publishedDate: 2026-07-09
+updatedDate: 2026-07-09
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/loose-power-outlet/thumbnail.jpg

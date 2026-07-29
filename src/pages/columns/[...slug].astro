@@ -47,6 +47,10 @@ const breadcrumbItems = [
   { label: post.data.title, href: `/columns/${post.id}/` },
 ];
 
+// Mọi bài luôn hiển thị cả ngày đăng và ngày cập nhật cuối. Bài chưa từng sửa lại
+// (không có `updatedDate`) coi ngày cập nhật = ngày đăng, thay vì ẩn dòng đó đi.
+const updatedDate = post.data.updatedDate ?? post.data.publishedDate;
+
 const articleSchema = generateArticle({
   title: post.data.title,
   publishedDate: post.data.publishedDate.toISOString(),
@@ -54,7 +58,7 @@ const articleSchema = generateArticle({
   description: post.data.description,
   url: `${SITE_CONFIG.siteUrl}/columns/${post.id}/`,
   image: post.data.image,
-  modifiedDate: post.data.updatedDate?.toISOString(),
+  modifiedDate: updatedDate.toISOString(),
 });
 ---
 
@@ -87,11 +91,14 @@ const articleSchema = generateArticle({
         )}
 
         <div class="lg:flex-1 lg:min-w-0 w-full max-w-[800px] mx-auto lg:mx-0">
-          <div class="flex items-center gap-[10px] mb-[10px] sm:mb-[15px]">
+          <div class="flex flex-wrap items-center gap-x-[10px] gap-y-[4px] mb-[10px] sm:mb-[15px]">
             <span class={`inline-block ${badgeBg} text-white text-[10px] sm:text-[11px] md:text-[12px] font-bold px-[8px] py-[2px] rounded-[4px] sm:rounded-[5px]`}>{post.data.subcategory}</span>
-            <time class="text-[12px] sm:text-[13px] md:text-[14px] text-[#888]" datetime={post.data.publishedDate.toISOString()}>
-              {formatDateDot(post.data.publishedDate)}
-            </time>
+            <span class="text-[12px] sm:text-[13px] md:text-[14px] text-[#888]">
+              公開日：<time datetime={post.data.publishedDate.toISOString()}>{formatDateDot(post.data.publishedDate)}</time>
+            </span>
+            <span class="text-[12px] sm:text-[13px] md:text-[14px] text-[#888]">
+              更新日：<time datetime={updatedDate.toISOString()}>{formatDateDot(updatedDate)}</time>
+            </span>
           </div>
 
           <h1 class="text-[20px] sm:text-[26px] md:text-[36px] font-bold leading-tight mb-[20px] sm:mb-[25px] md:mb-[30px]">

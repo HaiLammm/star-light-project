@@ -3,6 +3,7 @@ title: "お風呂の排水口が詰まったら？自分でできる解消法と
 description: "お風呂の排水口の詰まりで水が流れにくいとき、自分で安全に試せる対処法を順に紹介。ラバーカップや重曹の使い方、効果がない場合の原因、プロに依頼する目安も解説します。"
 excerpt: "お風呂の排水口が詰まったら、まずは落ち着いて順番にチェック。自分でできる解消法や、危険な症状、プロに頼むタイミングをまとめました。"
 publishedDate: 2026-07-13
+updatedDate: 2026-07-13
 category: water
 subcategory: "お風呂"
 image: /images/SEO/bath-drain-clog-how-to-fix/thumbnail.jpg

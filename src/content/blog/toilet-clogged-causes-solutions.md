@@ -3,6 +3,7 @@ title: "トイレが詰まった！原因別の対処法と業者を呼ぶべき
 description: "トイレが詰まったときは、紙の使いすぎや異物の流入が原因になっていることがあります。よくある原因や自分で試せる対処法、無理せず業者へ相談したほうがよいケースを解説します。"
 excerpt: "トイレが詰まったときのよくある原因と自分で試せる対処法、業者へ相談すべきケースを解説します。"
 publishedDate: 2026-07-14
+updatedDate: 2026-07-14
 category: water
 subcategory: "トイレ"
 image: /images/SEO/toilet-clog-causes-solutions.jpg
