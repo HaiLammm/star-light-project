@@ -3,6 +3,7 @@ title: "コンセントが熱い…そのまま使うと危険？見逃しては
 description: "コンセントが熱い原因は過負荷や接触不良、トラッキング現象などさまざまです。危険なサインの見分け方、安全な対処法、業者へ相談すべきタイミングをわかりやすく解説します。"
 excerpt: "コンセントやプラグが熱い時に確認したい危険サインと、安全にできる対処法を解説します。焦げ臭さや変色がある場合は使用を中止しましょう。"
 publishedDate: 2026-07-27
+updatedDate: 2026-07-28
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/power-outlet-hot/thumbnail.jpg

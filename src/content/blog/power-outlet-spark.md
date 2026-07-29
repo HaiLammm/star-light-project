@@ -3,6 +3,7 @@ title: "コンセントから火花が！そのまま使うのは危険？原因
 description: "コンセント 火花は火災や感電の危険があります。まず使用を止め、焦げ跡・異臭・煙・発熱を確認し、危険な症状や業者へ相談すべき目安を解説します。"
 excerpt: "コンセントから火花が出たときは、使い続けてよいか迷わず安全確認が必要です。使用中止の目安、原因、専門業者へ相談すべき症状を解説します。"
 publishedDate: 2026-07-26
+updatedDate: 2026-07-26
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/power-outlet-spark/thumbnail.jpg

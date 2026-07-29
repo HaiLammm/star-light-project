@@ -3,6 +3,7 @@ title: "コンセントが通電しないときはどうする？チェックポ
 description: "コンセント 通電しないときは、家電側の不具合、別の差し込み口、ブレーカー、焦げや発熱などの危険サインを順番に確認することが大切です。安全にできる対処法と、専門業者へ相談すべき目安を解説します。"
 excerpt: "コンセントに電気が来ていないように感じたときの確認手順を紹介します。家電、別の差し込み口、ブレーカー、危険サインの順に見ていきましょう。"
 publishedDate: 2026-07-25
+updatedDate: 2026-07-25
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/outlet-no-power-checkpoints/thumbnail.jpg
