@@ -3,7 +3,6 @@ title: "ブレーカーが何回も落ちる原因は？再発を防ぐための
 description: "ブレーカーが何度も落ちて再発する原因とは？時間帯や使用家電に着目した自己診断のポイントと、安全のために業者へ相談すべきケースを解説します。"
 excerpt: "ブレーカーが何度も落ちる原因を時間帯や家電ごとに解説。自分で確認できるポイントと、危険なサインをまとめました。"
 publishedDate: 2026-07-11
-updatedDate: 2026-07-11
 category: electricity
 subcategory: "ブレーカー"
 image: /images/SEO/breaker-keeps-tripping/thumbnail.jpg
