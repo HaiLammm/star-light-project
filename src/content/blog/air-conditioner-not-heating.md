@@ -3,7 +3,6 @@ title: "エアコンが暖かくならない原因とは？自分でできるチ
 description: "エアコンの暖房が暖かくならない原因と、自分で確認できるチェックポイントを解説。フィルター汚れやモード設定ミスなど、よくある原因と対処法を紹介します。"
 excerpt: "エアコンの暖房が暖かくならない原因と対処法を解説。フィルター汚れやモード設定ミスなど、よくある原因を紹介します。"
 publishedDate: 2026-05-15
-updatedDate: 2026-07-05
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-not-heating-causes.jpg
@@ -105,6 +104,8 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 フィルターは取り外して水洗いするか、掃除機でホコリを取り除くだけでも改善につながることがあります。
 
+![ホコリが溜まったエアコンフィルター](/images/SEO/air-conditioner-not-heating/2.jpg)
+
 掃除のポイントは以下の通りです。
 
 - エアコンの電源を切ってからフィルターを取り外す
@@ -113,11 +114,11 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 フィルター掃除は定期的に行うことで、暖房効率の低下を防ぎやすくなります。
 
-[※自分でできる掃除方法は、こちらをご確認ください。](https://www.setsubi-pro.net/columns/air-conditioner-cleaning-guide/)
+掃除の頻度や手順は[エアコンのフィルター掃除のやり方](https://www.setsubi-pro.net/columns/air-conditioner-cleaning-guide/)をご覧ください。
 
 
 
-![ホコリが溜まったエアコンフィルター](/images/SEO/air-conditioner-not-heating/2.jpg)
+
 
 
 
@@ -143,6 +144,8 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 
 ## 業者へ相談したほうがよいケース
 
+![エアコンを点検する作業員](/images/SEO/air-conditioner-not-heating/4.jpg)
+
 フィルター掃除やモード確認など、自分でできる対処を試しても改善しない場合は、内部部品の故障や冷媒ガスの問題が関係しているケースがあります。特に以下のような症状がある場合は、無理に使い続けず早めに専門業者へ相談しましょう。
 
 - 設定を見直してもぬるい風しか出ない
@@ -161,11 +164,6 @@ imageAlt: "air-conditioner-not-heating-thumbnail"
 | 室外機まわりの障害物 | エラーランプの点滅 |
 | リモコンの電池切れ | 異音・異臭がする |
 | 霜取り運転中の一時停止 | 10年以上使用で症状が続く |
-
-
-
-![エアコンを点検する作業員](/images/SEO/air-conditioner-not-heating/4.jpg)
-
 
 
 エアコンの暖房が暖かくならない原因は、モード設定のミスやフィルターの汚れなど比較的簡単なものから、冷媒ガスの不足や内部故障までさまざまです。設定の確認やフィルター掃除で改善するケースもありますが、何度試しても暖まらない場合は、無理に使い続けないことが大切です。
