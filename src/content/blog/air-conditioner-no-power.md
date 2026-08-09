@@ -3,6 +3,7 @@ title: "エアコンの電源が入らない！考えられる原因と今すぐ
 description: "エアコンの電源が入らないときは、リモコン・ブレーカー・コンセントの順に確認するのが基本です。考えられる原因と、自分で安全に試せる対処法、業者へ相談したいケースを解説します。"
 excerpt: "エアコンの電源が入らない原因を、リモコン・電源供給・本体に分けて解説。自分で試せる対処法と業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-07-08
+updatedDate: 2026-08-09
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-blinking-light-causes.jpg
@@ -117,8 +118,8 @@ imageAlt: "エアコンのリモコンで電源操作する様子"
 <table>
   <thead>
     <tr>
-      <th style="background:#0ea5e9;color:#fff;padding:10px 16px;font-weight:bold">自分で対応しやすいケース</th>
-      <th style="background:#ef4444;color:#fff;padding:10px 16px;font-weight:bold">業者へ相談したいケース</th>
+      <th style="background-color:#339900;color:#fff;padding:10px 16px;font-weight:bold;">自分で対応しやすいケース</th>
+      <th style="background-color:#CC3300;color:#fff;padding:10px 16px;font-weight:bold;">業者へ相談したいケース</th>
     </tr>
   </thead>
   <tbody>
@@ -144,6 +145,7 @@ imageAlt: "エアコンのリモコンで電源操作する様子"
     </tr>
   </tbody>
 </table>
+
 エアコンの電源が入らない状態が続くと、夏や冬は生活への影響が大きくなります。電池交換やリセットを試しても改善しない、原因が分からず不安というときは、無理に通電を繰り返さず早めに専門業者へ相談しましょう。
 
 **Setsubi-pro**では、エアコンの修理から基板・電源回路の点検、状況によっては交換のご提案まで、年中無休・出張対応でサポートしています。

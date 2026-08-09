@@ -2,6 +2,26 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/columns/anzen-breaker-tripped/",
+      "destination": "https://www.setsubi-pro.net/columns/safety-breaker-tripped/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/anzen-breaker-tripped",
+      "destination": "https://www.setsubi-pro.net/columns/safety-breaker-tripped/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/water-heater-not-working/",
+      "destination": "https://www.setsubi-pro.net/columns/waterheater-not-working/",
+      "permanent": true
+    },
+    {
+      "source": "/columns/water-heater-not-working",
+      "destination": "https://www.setsubi-pro.net/columns/waterheater-not-working/",
+      "permanent": true
+    },
+    {
       "source": "/columns/category/water/お風呂/",
       "destination": "https://www.setsubi-pro.net/columns/category/water/bath/",
       "permanent": true

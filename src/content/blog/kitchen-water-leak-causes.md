@@ -3,6 +3,7 @@ title: "キッチンの水漏れはなぜ起こる？場所別によくある原
 description: "キッチンの水漏れは、蛇口・シンク下・排水ホース・給水管など場所によって原因が異なります。場所別のよくある原因と自分でできる確認、業者へ相談したいケースを解説します。"
 excerpt: "キッチンの水漏れの原因を場所別に解説。蛇口・シンク下・給水管などのよくある原因と、自分でできる応急処置、業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-07-15
+updatedDate: 2026-08-09
 category: water
 subcategory: "キッチン"
 image: /images/SEO/kitchen-water-leak-causes.jpg
@@ -125,8 +126,8 @@ imageAlt: "キッチンのシンク下の水漏れを確認する様子"
 <table>
   <thead>
     <tr>
-      <th style="background:#0ea5e9;color:#fff;padding:10px 16px;font-weight:bold">自分で対応しやすいケース</th>
-      <th style="background:#ef4444;color:#fff;padding:10px 16px;font-weight:bold">業者へ相談したいケース</th>
+      <th style="background-color:#339900;color:#fff;padding:10px 16px;font-weight:bold;">自分で対応しやすいケース</th>
+      <th style="background-color:#CC3300;color:#fff;padding:10px 16px;font-weight:bold;">業者へ相談したいケース</th>
     </tr>
   </thead>
   <tbody>
@@ -152,6 +153,7 @@ imageAlt: "キッチンのシンク下の水漏れを確認する様子"
     </tr>
   </tbody>
 </table>
+
 キッチンの水漏れは、放っておくと床材の腐食やカビ、階下漏水まで広がることがあります。応急処置で止水しても改善しない、原因がわからず不安というときは、無理に部品交換を試さず一度ご相談ください。
 
 **Setsubi-pro**では、水栓の修理・交換から配管の点検、状況によっては床下調査まで、年中無休・出張対応でサポートしています。

@@ -3,7 +3,7 @@ title: "エアコンがうるさいのは故障？異音の原因と自分でで
 description: "エアコンがうるさいと感じたら、音の種類で原因を見分けるのがポイントです。室内機・室外機それぞれの異音の理由と、自分でできる確認方法、業者に相談したいケースを解説します。"
 excerpt: "エアコンがうるさい原因を音の種類別に解説。室内機・室外機の異音の見分け方と自分でできる確認方法、業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-05-29
-updatedDate: 2026-07-05
+updatedDate: 2026-08-09
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-noise-causes.jpg
@@ -71,7 +71,7 @@ imageAlt: "air-conditioner-noisy-thumbnail"
 
 前面パネルを開けてフィルターを取り外し、ほこりが固まっていないか確認します。掃除機でほこりを吸い、汚れがひどい場合は水洗いして陰干しします。吹き出し口のルーバーがゆがんでいたり、外れかかっていないかも目視で確認しましょう。
 
-[※自分でできる掃除方法は、こちらをご確認ください。](https://www.setsubi-pro.net/columns/air-conditioner-cleaning-guide/)
+ほこりの落とし方は[自分でできるエアコン掃除の方法](https://www.setsubi-pro.net/columns/air-conditioner-cleaning-guide/)にまとめています。
 
 ### ドレンホースの先端を確認する
 
@@ -83,8 +83,7 @@ imageAlt: "air-conditioner-noisy-thumbnail"
 
 ここまでの確認で改善しない場合や、音が大きくなり続ける場合は、内部部品の劣化が疑われます。前述のように電源プラグを抜いた状態で一度様子を見て、それでも改善しないなら専門業者に相談したほうが安全です。
 
-## こんなときは早めの相談を
-
+## エアコンの異音で早めに相談したいケース
 次のようなケースでは、自力で原因を突き止めようとせず、早めに業者へ相談することをおすすめします。
 
 - 運転中ずっと大きな音が続き、生活に支障が出ている
@@ -99,8 +98,8 @@ imageAlt: "air-conditioner-noisy-thumbnail"
 <table>
   <thead>
     <tr>
-      <th style="background:#0ea5e9;color:#fff;padding:10px 16px;font-weight:bold">自分で対応しやすいケース</th>
-      <th style="background:#ef4444;color:#fff;padding:10px 16px;font-weight:bold">業者へ相談したいケース</th>
+      <th style="background-color:#339900;color:#fff;padding:10px 16px;font-weight:bold;">自分で対応しやすいケース</th>
+      <th style="background-color:#CC3300;color:#fff;padding:10px 16px;font-weight:bold;">業者へ相談したいケース</th>
     </tr>
   </thead>
   <tbody>
@@ -126,14 +125,15 @@ imageAlt: "air-conditioner-noisy-thumbnail"
     </tr>
   </tbody>
 </table>
+
 エアコンの異音は、フィルターの汚れなどが原因の場合もありますが、内部部品の劣化や故障が関係していることもあります。掃除をしても改善しない場合や異音が続く場合は、早めに専門業者へ相談しましょう。
 
 
-**Setsubi-Pro**では、エアコンの異音や不具合に関するご相談を受け付けています。気になる症状がある場合は、お気軽にご相談ください。
+**Setsubi-pro**では、エアコンの異音や不具合に関するご相談を受け付けています。気になる症状がある場合は、お気軽にご相談ください。
 
 ---
 
-**【Setsubi-Proについて】**
+**【Setsubi-proについて】**
 
 **電気設備・水回り設備**のトラブルに対応しています。
 
