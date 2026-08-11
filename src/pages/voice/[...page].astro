@@ -46,7 +46,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<BaseLayout title={`お客様の声${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備プロ`} description="設備プロをご利用いただいたお客様の声をご紹介します。水まわりや電気のトラブル対応に関するリアルな評価をご覧ください。" canonicalUrl={`${SITE_CONFIG.siteUrl}/voice/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
+<BaseLayout title={`お客様の声${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備プロ`} description={`設備プロをご利用いただいたお客様の声をご紹介します。水漏れ・つまり・停電などのトラブル対応について、作業内容や対応スピードに関するリアルな評価をご覧ください${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}。`} canonicalUrl={`${SITE_CONFIG.siteUrl}/voice/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
   {aggregateReviewSchema && (
     <script type="application/ld+json" set:html={serializeJsonLd(aggregateReviewSchema)} />
   )}

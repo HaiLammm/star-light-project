@@ -1,14 +1,22 @@
 ---
+import { REGIONAL_OFFICES } from '../utils/siteConfig';
+
 interface AreaRegion {
   name: string;
   prefs: string[];
 }
 
+// Danh sách này từng được viết tay và lệch khỏi thực tế (nêu cả 東海・中国 dù không có
+//営業所 nào ở đó). Dẫn xuất thẳng từ REGIONAL_OFFICES — cùng nguồn với LocalBusiness
+// schema — để trang hiển thị và dữ liệu có cấu trúc không bao giờ nói hai điều khác nhau.
+const kanto = REGIONAL_OFFICES.find((o) => o.key === 'kanto');
+const kansaiPrefs = REGIONAL_OFFICES.filter((o) => o.key !== 'kanto').flatMap(
+  (o) => o.prefecturesServed
+);
+
 const areaRegions: AreaRegion[] = [
-  { name: '関東エリア', prefs: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県', '栃木県'] },
-  { name: '東海エリア', prefs: ['三重県', '岐阜県', '愛知県', '静岡県'] },
-  { name: '関西エリア', prefs: ['大阪府', '京都府', '兵庫県'] },
-  { name: '中国エリア', prefs: ['広島県'] },
+  { name: '関東エリア', prefs: kanto?.prefecturesServed ?? [] },
+  { name: '関西エリア', prefs: [...new Set(kansaiPrefs)] },
 ];
 ---
 
@@ -21,7 +29,7 @@ const areaRegions: AreaRegion[] = [
       <h2 class="text-[23px] md:text-[30px] font-black text-navy mt-3">対応エリア</h2>
     </div>
     <p class="text-center text-balance text-[12px] md:text-[14px] text-text-secondary mt-3 mb-8 md:mb-10">
-      年中無休で稼働しております。東京・名古屋・大阪・広島を中心に対応。
+      年中無休で稼働しております。関東（東京・神奈川・埼玉・千葉・茨城）と関西（大阪・京都・奈良・和歌山・兵庫）を中心に対応。
     </p>
 
     <div class="grid md:grid-cols-[minmax(0,1fr)_360px] gap-8 md:gap-10 items-center rounded-[20px] md:rounded-[40px] bg-white border border-border-warm shadow-[0_6px_24px_rgba(27,42,74,0.06)] px-5 py-8 md:px-10 md:py-12">
@@ -29,7 +37,7 @@ const areaRegions: AreaRegion[] = [
       <figure class="w-full max-w-[560px] mx-auto">
         <img
           src="/images/map/japan-areas.svg"
-          alt="設備プロのサービス対応エリアマップ（関東・東海・関西・中国地方）"
+          alt="設備プロのサービス対応エリアマップ（関東地方・関西地方）"
           width="600"
           height="600"
           loading="lazy"

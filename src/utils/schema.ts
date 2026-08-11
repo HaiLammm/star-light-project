@@ -163,8 +163,9 @@ export interface ArticleSchema {
   datePublished: string;
   dateModified: string;
   author: {
-    '@type': 'Person';
+    '@type': 'Organization';
     name: string;
+    url: string;
   };
   publisher: {
     '@type': 'Organization';
@@ -382,9 +383,13 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
     description: post.description,
     datePublished: post.publishedDate,
     dateModified: post.modifiedDate ?? post.publishedDate,
+    // Bài viết được biên soạn dưới danh nghĩa công ty, không phải một cá nhân cụ thể.
+    // Khai '@type': 'Person' với tên công ty là sai thực thể — Google không quy được
+    // uy tín cho một Person không tồn tại. Dùng Organization trỏ về chính site.
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: post.author,
+      url: SITE_CONFIG.siteUrl,
     },
     publisher: {
       '@type': 'Organization',

@@ -57,6 +57,10 @@ const visiblePosts = posts.slice(0, PAGE_SIZE);
 
 const filterLabel = activeSubcategory ?? BLOG_CATEGORY_LABEL_MAP[activeCategory] ?? activeCategory;
 
+// Description cũ chỉ có ~30 ký tự và gần như trùng nhau giữa các chuyên mục.
+// Gắn thêm số bài và phạm vi nội dung để mỗi trang có mô tả riêng, đủ dài cho SERP.
+const metaDescription = `${filterLabel}のトラブルに関する記事を${posts.length}件掲載。症状ごとに考えられる原因、自分で安全に確認・対処できる手順、専門業者へ相談すべきタイミングまで設備プロが解説します。`;
+
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
   { label: 'コラム', href: '/columns/' },
@@ -64,7 +68,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<BaseLayout title={`${filterLabel}の記事一覧 | お役立ち情報 | 設備プロ`} description={`${filterLabel}に関する修理・メンテナンスのお役立ち情報をお届けします。`} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
+<BaseLayout title={`${filterLabel}の記事一覧 | お役立ち情報 | 設備プロ`} description={metaDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
   <section class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <Breadcrumb items={breadcrumbItems} />
