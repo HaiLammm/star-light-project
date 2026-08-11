@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 import { formatDateDot } from '../../utils/formatters';
 import { BLOG_CATEGORY_COLOR_MAP } from '../../data/blogData';
 import { generateArticle, serializeJsonLd } from '../../utils/schema';
@@ -145,6 +146,8 @@ const articleSchema = generateArticle({
           ">
             <Content />
           </div>
+
+          <RelatedPosts currentId={post.id} category={post.data.category} subcategory={post.data.subcategory} />
         </div>
       </div>
     </div>

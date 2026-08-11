@@ -32,6 +32,36 @@
       "statusCode": 301
     },
     {
+      "source": "/columns/aircon-gas-refill/",
+      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
+      "statusCode": 301
+    },
+    {
+      "source": "/columns/aircon-gas-refill",
+      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
+      "statusCode": 301
+    },
+    {
+      "source": "/columns/aircon-gas-leak-repair/",
+      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
+      "statusCode": 301
+    },
+    {
+      "source": "/columns/aircon-gas-leak-repair",
+      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
+      "statusCode": 301
+    },
+    {
+      "source": "/columns/aircon-gas-leak-symptoms/",
+      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
+      "statusCode": 301
+    },
+    {
+      "source": "/columns/aircon-gas-leak-symptoms",
+      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
+      "statusCode": 301
+    },
+    {
       "source": "/columns/category/water/お風呂/",
       "destination": "https://www.setsubi-pro.net/columns/category/water/bath/",
       "statusCode": 301

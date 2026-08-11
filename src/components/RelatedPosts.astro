@@ -1,0 +1,61 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+import { formatDateDot } from '../utils/formatters';
+import { resolveImage } from '../utils/imageImports';
+
+interface Props {
+  currentId: string;
+  category: string;
+  subcategory: string;
+  limit?: number;
+}
+
+const { currentId, category, subcategory, limit = 4 } = Astro.props;
+
+// Ưu tiên bài cùng subcategory; thiếu thì bù bằng bài cùng category
+const allPosts = await getCollection('blog');
+const byDateDesc = (a: any, b: any) =>
+  new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime();
+
+const sameSub = allPosts
+  .filter((p) => p.id !== currentId && p.data.subcategory === subcategory)
+  .sort(byDateDesc);
+const sameCat = allPosts
+  .filter((p) => p.id !== currentId && p.data.subcategory !== subcategory && p.data.category === category)
+  .sort(byDateDesc);
+
+const related = [...sameSub, ...sameCat].slice(0, limit);
+
+const imageMap: Record<string, string> = {};
+for (const post of related) {
+  const meta = await resolveImage(post.data.image);
+  if (meta) {
+    const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 80 });
+    imageMap[post.id] = opt.src;
+  }
+}
+---
+
+{related.length > 0 && (
+  <section aria-label="関連記事" class="mt-[40px] sm:mt-[50px] md:mt-[60px] pt-[25px] sm:pt-[30px] border-t border-[#e0e0e0]">
+    <h2 class="text-[18px] sm:text-[20px] md:text-[24px] font-bold mb-[20px] sm:mb-[24px] flex items-center gap-[8px]">
+      <span class="inline-block w-[4px] h-[20px] bg-navy"></span>関連記事
+    </h2>
+    <div class="flex flex-col gap-[20px] sm:gap-[24px] md:gap-[30px]">
+      {related.map((post) => (
+        <BlogCard
+          title={post.data.title}
+          date={formatDateDot(post.data.publishedDate)}
+          category={post.data.category}
+          subcategory={post.data.subcategory}
+          excerpt={post.data.excerpt}
+          image={imageMap[post.id] ?? post.data.image}
+          imageAlt={post.data.imageAlt}
+          href={`/columns/${post.id}/`}
+        />
+      ))}
+    </div>
+  </section>
+)}

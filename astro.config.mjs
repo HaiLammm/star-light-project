@@ -13,7 +13,9 @@ const blogDir = new URL('./src/content/blog/', import.meta.url);
 const blogDateMap = new Map();
 for (const file of readdirSync(blogDir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))) {
   const content = readFileSync(new URL(file, blogDir), 'utf-8');
-  const m = content.match(/publishedDate:\s*(\d{4}-\d{2}-\d{2})/);
+  const updated = content.match(/updatedDate:\s*(\d{4}-\d{2}-\d{2})/);
+  const published = content.match(/publishedDate:\s*(\d{4}-\d{2}-\d{2})/);
+  const m = updated ?? published;
   if (m) {
     const slug = file.replace(/\.mdx?$/, '');
     blogDateMap.set(
