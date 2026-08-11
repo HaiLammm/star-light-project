@@ -5,6 +5,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
+import { rehypeArticleImages } from './src/utils/rehypeArticleImages.mjs';
 
 // Build a URL→lastmod map from blog frontmatter so sitemap entries get
 // per-page dates instead of a single build timestamp.
@@ -34,6 +35,9 @@ export default defineConfig({
     service: {
       entrypoint: 'astro/assets/services/sharp',
     },
+  },
+  markdown: {
+    rehypePlugins: [rehypeArticleImages],
   },
   vite: {
     plugins: [tailwindcss()]
