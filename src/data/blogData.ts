@@ -44,7 +44,36 @@ export const BLOG_SUBCATEGORY_SLUG_MAP: Record<string, string> = {
   '洗面所': 'washroom',
 };
 
+/**
+ * Một số bài dùng nhãn rút gọn khác với danh sách chuyên mục chuẩn ở trên.
+ * Gộp về nhãn chuẩn để bài không bị rơi khỏi trang chuyên mục và khỏi các
+ * khối liên kết nội bộ.
+ */
+const BLOG_SUBCATEGORY_ALIAS_MAP: Record<string, string> = {
+  '給湯器': '給湯器交換',
+};
+
+/** Nhãn chuyên mục con đã chuẩn hoá (dùng để so khớp, không phải để hiển thị thô). */
+export function normalizeSubcategory(sub: string): string {
+  return BLOG_SUBCATEGORY_ALIAS_MAP[sub] ?? sub;
+}
+
+const SUBCATEGORY_TO_CATEGORY = new Map(
+  Object.entries(BLOG_SUBCATEGORY_MAP).flatMap(([cat, subs]) => subs.map((sub) => [sub, cat] as const)),
+);
+
+/**
+ * Chuyên mục lớn suy ra từ chuyên mục con. Một số bài có `category` không khớp
+ * với chuyên mục con (ví dụ 給湯器 được gắn `water` trong khi điều hướng xếp
+ * 給湯器交換 vào 電気まわり); lấy chuyên mục con làm chuẩn để bài không biến mất
+ * khỏi trang chuyên mục.
+ */
+export function postCategory(post: { category: string; subcategory: string }): string {
+  return SUBCATEGORY_TO_CATEGORY.get(normalizeSubcategory(post.subcategory)) ?? post.category;
+}
+
 /** Japanese subcategory → latin URL slug (falls back to the raw value if unmapped). */
 export function subcategorySlug(sub: string): string {
-  return BLOG_SUBCATEGORY_SLUG_MAP[sub] ?? sub;
+  const normalized = normalizeSubcategory(sub);
+  return BLOG_SUBCATEGORY_SLUG_MAP[normalized] ?? normalized;
 }

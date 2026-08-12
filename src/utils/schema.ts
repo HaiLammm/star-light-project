@@ -71,6 +71,7 @@ export interface ArticleInput {
   author: string;
   description: string;
   url: string;
+  /** Đường dẫn ảnh; tương đối hay tuyệt đối đều được, hàm sẽ tự absolute hóa. */
   image?: string;
   modifiedDate?: string;
 }
@@ -155,6 +156,11 @@ export interface BreadcrumbListSchema {
   itemListElement: ListItemSchema[];
 }
 
+interface ImageObjectSchema {
+  '@type': 'ImageObject';
+  url: string;
+}
+
 export interface ArticleSchema {
   '@context': SchemaContext;
   '@type': 'Article';
@@ -162,6 +168,7 @@ export interface ArticleSchema {
   description: string;
   datePublished: string;
   dateModified: string;
+  inLanguage: 'ja';
   author: {
     '@type': 'Organization';
     name: string;
@@ -171,12 +178,53 @@ export interface ArticleSchema {
     '@type': 'Organization';
     name: string;
     url: string;
+    logo: ImageObjectSchema;
+  };
+  isPartOf: {
+    '@type': 'WebSite';
+    name: string;
+    url: string;
   };
   mainEntityOfPage: string;
-  image?: string;
+  image?: string[];
+}
+
+export interface WebSiteSchema {
+  '@context': SchemaContext;
+  '@type': 'WebSite';
+  name: string;
+  alternateName: string;
+  url: string;
+  inLanguage: 'ja';
+  publisher: { '@id': string };
+}
+
+export interface OrganizationSchema {
+  '@context': SchemaContext;
+  '@type': 'Organization';
+  '@id': string;
+  name: string;
+  alternateName: string;
+  legalName: string;
+  url: string;
+  logo: ImageObjectSchema;
+  image: string;
+  telephone: string;
 }
 
 const SCHEMA_CONTEXT: SchemaContext = 'https://schema.org';
+
+/** Ghép đường dẫn tương đối thành URL tuyệt đối — structured data của Google
+ *  bỏ qua giá trị tương đối, khác với thẻ og:image do trình duyệt tự resolve. */
+const absoluteUrl = (path: string): string => new URL(path, SITE_CONFIG.siteUrl).href;
+
+/** `@id` cố định cho thực thể Organization, để WebSite/Article trỏ về cùng một node. */
+const ORGANIZATION_ID = `${SITE_CONFIG.siteUrl}/#organization`;
+
+const buildLogo = (): ImageObjectSchema => ({
+  '@type': 'ImageObject',
+  url: absoluteUrl(SITE_CONFIG.logoPath),
+});
 
 // Escapes `<` so a value containing `</script>` cannot break out of the
 // inline <script type="application/ld+json"> tag. `<` is still valid JSON.
@@ -303,6 +351,7 @@ interface NestedReviewSchema {
 export interface AggregateRatingSchema {
   '@context': SchemaContext;
   '@type': 'Organization';
+  '@id'?: string;
   name: string;
   url: string;
   aggregateRating: {
@@ -332,6 +381,10 @@ export function generateAggregateRating(
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'Organization',
+    // Không có override tức là đang nói về chính công ty: dùng lại `@id` của node
+    // Organization phát ở BaseLayout để Google gộp làm một thực thể, thay vì
+    // thấy hai Organization trùng tên trên cùng một trang.
+    ...(item?.name || item?.url ? {} : { '@id': ORGANIZATION_ID }),
     name: item?.name ?? SITE_CONFIG.companyName,
     url: item?.url ?? SITE_CONFIG.siteUrl,
     aggregateRating: {
@@ -395,8 +448,44 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
       '@type': 'Organization',
       name: SITE_CONFIG.companyName,
       url: SITE_CONFIG.siteUrl,
+      logo: buildLogo(),
+    },
+    inLanguage: 'ja',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: SITE_CONFIG.companyName,
+      url: SITE_CONFIG.siteUrl,
     },
     mainEntityOfPage: post.url,
-    ...(post.image ? { image: post.image } : {}),
+    ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
+  };
+}
+
+/** Cho Google biết tên site (thay vì hiển thị domain trần trên SERP). */
+export function generateWebSite(): WebSiteSchema {
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'WebSite',
+    name: SITE_CONFIG.companyName,
+    alternateName: SITE_CONFIG.companyNameKana,
+    url: `${SITE_CONFIG.siteUrl}/`,
+    inLanguage: 'ja',
+    publisher: { '@id': ORGANIZATION_ID },
+  };
+}
+
+/** Nguồn logo có cấu trúc cho toàn site — Google dùng để chọn favicon/knowledge panel. */
+export function generateOrganization(): OrganizationSchema {
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'Organization',
+    '@id': ORGANIZATION_ID,
+    name: SITE_CONFIG.companyName,
+    alternateName: SITE_CONFIG.companyNameKana,
+    legalName: SITE_CONFIG.legalName,
+    url: `${SITE_CONFIG.siteUrl}/`,
+    logo: buildLogo(),
+    image: absoluteUrl(SITE_CONFIG.logoPath),
+    telephone: SITE_CONFIG.phone.display,
   };
 }

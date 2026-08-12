@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import { formatDateDot } from '../../utils/formatters';
-import { BLOG_CATEGORY_COLOR_MAP } from '../../data/blogData';
+import { BLOG_CATEGORY_COLOR_MAP, postCategory } from '../../data/blogData';
 import { generateArticle, serializeJsonLd } from '../../utils/schema';
 import { SITE_CONFIG } from '../../utils/siteConfig';
 import { resolveImage } from '../../utils/imageImports';
@@ -37,10 +37,23 @@ const tocItems = headings
   });
 
 const heroMeta = await resolveImage(post.data.image);
-const heroOpt = heroMeta ? await getImage({ src: heroMeta, width: 800, height: 450, format: 'webp', quality: 80 }) : null;
+// Không phóng to quá kích thước gốc: một phần ảnh bài chỉ rộng ~670px, ép lên
+// 800/1200 chỉ làm file nặng hơn mà không thêm chi tiết nào.
+const scaledWidth = (target: number) => (heroMeta ? Math.min(target, heroMeta.width) : target);
+const sized = (target: number) => {
+  const width = scaledWidth(target);
+  return { width, height: Math.round((width * 9) / 16) };
+};
+
+const heroOpt = heroMeta ? await getImage({ src: heroMeta, ...sized(800), format: 'webp', quality: 80 }) : null;
 const heroImageSrc = heroOpt?.src ?? post.data.image;
 
-const badgeBg = BLOG_CATEGORY_COLOR_MAP[post.data.category] ?? 'bg-[#717070]';
+// Bản 800px dùng cho <img> hero (giữ LCP nhẹ); riêng OG/structured data cần cạnh
+// dài ≥1200px thì Google mới nhận làm ảnh preview lớn, nên xuất thêm bản 1200×675.
+const shareOpt = heroMeta ? await getImage({ src: heroMeta, ...sized(1200), format: 'webp', quality: 80 }) : null;
+const shareImageSrc = shareOpt?.src ?? heroImageSrc;
+
+const badgeBg = BLOG_CATEGORY_COLOR_MAP[postCategory(post.data)] ?? 'bg-[#717070]';
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -58,12 +71,12 @@ const articleSchema = generateArticle({
   author: SITE_CONFIG.companyName,
   description: post.data.description,
   url: `${SITE_CONFIG.siteUrl}/columns/${post.id}/`,
-  image: post.data.image,
+  image: shareImageSrc,
   modifiedDate: updatedDate.toISOString(),
 });
 ---
 
-<BaseLayout title={`${post.data.title} | 設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`} ogType="article" ogImage={heroImageSrc}>
+<BaseLayout title={`${post.data.title}｜設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`} ogType="article" ogImage={shareImageSrc}>
   <script type="application/ld+json" set:html={serializeJsonLd(articleSchema)} />
 
   <article class="py-[30px] sm:py-[40px] md:py-[60px]">
@@ -110,8 +123,8 @@ const articleSchema = generateArticle({
             <img
               src={heroImageSrc}
               alt={post.data.imageAlt}
-              width="800"
-              height="450"
+              width={heroOpt?.attributes.width ?? sized(800).width}
+              height={heroOpt?.attributes.height ?? sized(800).height}
               loading="eager"
               decoding="async"
               class="w-full h-auto object-cover"
@@ -147,7 +160,7 @@ const articleSchema = generateArticle({
             <Content />
           </div>
 
-          <RelatedPosts currentId={post.id} category={post.data.category} subcategory={post.data.subcategory} />
+          <RelatedPosts currentId={post.id} category={postCategory(post.data)} subcategory={post.data.subcategory} />
         </div>
       </div>
     </div>

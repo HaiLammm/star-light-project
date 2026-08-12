@@ -76,9 +76,13 @@ export interface EmailConfig {
 
 export interface SiteConfig {
   companyName: string;
+  /** Cách đọc katakana — dùng làm `alternateName` để Google nhận diện tên site. */
+  companyNameKana: string;
   companyNameEn: string;
   legalName: string;
   siteUrl: string;
+  /** Đường dẫn tương đối tới logo dùng cho structured data (Organization/publisher). */
+  logoPath: string;
   phone: PhoneConfig;
   email: EmailConfig;
   businessHours: string;
@@ -166,9 +170,11 @@ const toNavigationChildren = (services: ServiceItem[]): NavigationChild[] => {
 
 export const SITE_CONFIG: SiteConfig = {
   companyName: '設備プロ',
+  companyNameKana: 'セツビプロ',
   companyNameEn: 'Setsubit',
   legalName: '株式会社Hoaloha',
   siteUrl: 'https://www.setsubi-pro.net',
+  logoPath: '/images/site_logo_no-mark.jpeg',
   phone: SITE_PHONE,
   email: {
     display: 'abcxyz@gmail.com',

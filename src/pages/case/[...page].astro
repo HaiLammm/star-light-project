@@ -37,7 +37,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<BaseLayout title={`施工事例${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備プロ`} description={`水まわりや電気のトラブルに迅速に対応した施工事例をご紹介します。トイレ、お風呂、洗面所、照明、給湯器交換、アンテナ工事など幅広い実績を作業内容とあわせて掲載${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}。`} canonicalUrl={`${SITE_CONFIG.siteUrl}/case/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
+<BaseLayout title={`施工事例${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}｜設備プロ`} description={`水まわりや電気のトラブルに迅速に対応した施工事例をご紹介します。トイレ、お風呂、洗面所、照明、給湯器交換、アンテナ工事など幅広い実績を作業内容とあわせて掲載${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}。`} canonicalUrl={`${SITE_CONFIG.siteUrl}/case/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
   <section class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <Breadcrumb items={breadcrumbItems} />

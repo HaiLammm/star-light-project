@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BlogCard from './BlogCard.astro';
 import { formatDateDot } from '../utils/formatters';
 import { resolveImage } from '../utils/imageImports';
+import { normalizeSubcategory, postCategory } from '../data/blogData';
 
 interface Props {
   currentId: string;
@@ -19,11 +20,19 @@ const allPosts = await getCollection('blog');
 const byDateDesc = (a: any, b: any) =>
   new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime();
 
+const currentSub = normalizeSubcategory(subcategory);
+const currentCat = postCategory({ category, subcategory });
+
 const sameSub = allPosts
-  .filter((p) => p.id !== currentId && p.data.subcategory === subcategory)
+  .filter((p) => p.id !== currentId && normalizeSubcategory(p.data.subcategory) === currentSub)
   .sort(byDateDesc);
 const sameCat = allPosts
-  .filter((p) => p.id !== currentId && p.data.subcategory !== subcategory && p.data.category === category)
+  .filter(
+    (p) =>
+      p.id !== currentId &&
+      normalizeSubcategory(p.data.subcategory) !== currentSub &&
+      postCategory(p.data) === currentCat,
+  )
   .sort(byDateDesc);
 
 const related = [...sameSub, ...sameCat].slice(0, limit);
@@ -48,7 +57,7 @@ for (const post of related) {
         <BlogCard
           title={post.data.title}
           date={formatDateDot(post.data.publishedDate)}
-          category={post.data.category}
+          category={postCategory(post.data)}
           subcategory={post.data.subcategory}
           excerpt={post.data.excerpt}
           image={imageMap[post.id] ?? post.data.image}

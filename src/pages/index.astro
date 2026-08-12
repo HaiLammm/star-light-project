@@ -16,6 +16,7 @@ import BlogCard from '../components/BlogCard.astro';
 import { formatDateDot } from '../utils/formatters';
 import { SERVICE_CATEGORIES, REGIONAL_OFFICES, SITE_CONFIG } from '../utils/siteConfig';
 import { generateLocalBusiness, generateFAQ, serializeJsonLd } from '../utils/schema';
+import { BLOG_CATEGORIES, subcategorySlug, normalizeSubcategory, postCategory } from '../data/blogData';
 import { getCollection } from 'astro:content';
 import { resolveImage } from '../utils/imageImports';
 
@@ -40,6 +41,29 @@ for (const post of latestPosts) {
     blogImageMap[post.id] = opt.src;
   }
 }
+
+// Trang chủ trước đây chỉ trỏ tới 6 bài mới nhất, nên phần lớn bài viết chỉ được
+// liên kết từ trang danh sách. Khối dưới đây liệt kê toàn bộ bài theo chuyên mục
+// con để Google có đường thu thập trực tiếp từ trang chủ tới từng bài.
+const postsByRecency = [...allPosts].sort(
+  (a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime(),
+);
+
+const columnIndex = BLOG_CATEGORIES.map((category) => ({
+  key: category.key,
+  label: category.label,
+  href: `/columns/category/${category.key}/`,
+  groups: category.subcategories
+    .map((sub) => ({
+      label: sub,
+      href: `/columns/category/${category.key}/${subcategorySlug(sub)}/`,
+      posts: postsByRecency.filter(
+        (post) =>
+          postCategory(post.data) === category.key && normalizeSubcategory(post.data.subcategory) === sub,
+      ),
+    }))
+    .filter((group) => group.posts.length > 0),
+})).filter((category) => category.groups.length > 0);
 
 const allFaq = await getCollection('faq');
 const sortedFaq = allFaq.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
@@ -148,6 +172,8 @@ const localBusinessSchema = generateLocalBusiness({
   ...REGIONAL_OFFICES[0],
   url: SITE_CONFIG.siteUrl,
   openingHours: ['Mo-Su 00:00-23:59'],
+  // URL tuyệt đối — Google bỏ qua đường dẫn tương đối trong structured data.
+  image: [new URL(SITE_CONFIG.logoPath, Astro.site).href],
 });
 
 const faqSchema = sortedFaq.length > 0
@@ -347,7 +373,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
           <BlogCard
             title={post.data.title}
             date={formatDateDot(post.data.publishedDate)}
-            category={post.data.category}
+            category={postCategory(post.data)}
             subcategory={post.data.subcategory}
             excerpt={post.data.excerpt}
             image={blogImageMap[post.id] ?? post.data.image}
@@ -360,6 +386,63 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
         <a href="/columns/" class="flex items-center justify-center gap-2 w-[200px] sm:w-[240px] md:w-[280px] min-h-[48px] md:min-h-[56px] bg-white border-2 border-navy text-navy text-[13px] md:text-[16px] font-bold rounded-full hover:bg-navy hover:text-white transition-colors duration-200">
           コラム一覧<span aria-hidden="true">→</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Column Index Section: liên kết trực tiếp tới từng bài viết theo chuyên mục -->
+  <section class="py-8 md:py-16 lg:py-20">
+    <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
+      <div class="text-center mb-2">
+        <span class="inline-flex items-center gap-2.5 text-[13px] font-bold tracking-[0.08em] text-navy">
+          <span class="w-7 h-[3px] rounded-sm bg-navy"></span>症状から探す
+        </span>
+        <h2 class="text-[23px] md:text-[30px] font-black text-navy mt-3">お困りごと別コラム</h2>
+      </div>
+      <p class="text-center text-[12px] md:text-[14px] text-text-secondary mt-2">気になる症状を選ぶと、原因の見分け方と対処法をまとめた記事へ移動します</p>
+
+      <div class="mt-[20px] sm:mt-[28px] md:mt-[50px] flex flex-col gap-7 md:gap-12">
+        {columnIndex.map((category) => (
+          <div class="bg-white border border-border-warm rounded-[20px] md:rounded-[32px] px-4 py-5 sm:px-6 sm:py-7 md:px-10 md:py-9">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border-warm pb-3">
+              <span class={`w-[6px] h-[20px] rounded-sm ${category.key === 'water' ? 'bg-water' : 'bg-electric'}`} aria-hidden="true"></span>
+              <h3 class="text-[16px] md:text-[20px] font-bold text-navy">{category.label}</h3>
+              <a
+                href={category.href}
+                class="ml-auto inline-flex items-center gap-1 text-[12px] md:text-[14px] font-bold text-navy hover:underline"
+              >
+                {category.label}の記事一覧<span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div class="mt-4 md:mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5 md:gap-y-8">
+              {category.groups.map((group) => (
+                <div>
+                  <a
+                    href={group.href}
+                    class="inline-flex items-center gap-1.5 text-[13px] md:text-[15px] font-bold text-navy hover:underline"
+                  >
+                    <span class={`w-[8px] h-[8px] rounded-full ${category.key === 'water' ? 'bg-water' : 'bg-electric'}`} aria-hidden="true"></span>
+                    {group.label}
+                  </a>
+                  <ul class="mt-2 flex flex-col gap-2">
+                    {group.posts.map((post) => (
+                      <li>
+                        <a
+                          href={`/columns/${post.id}/`}
+                          class="flex gap-1.5 text-[12px] md:text-[13px] leading-[1.65] text-text-secondary hover:text-navy hover:underline"
+                        >
+                          <span aria-hidden="true" class="shrink-0">›</span>
+                          <span class="line-clamp-2">{post.data.title}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>

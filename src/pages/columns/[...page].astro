@@ -9,6 +9,7 @@ import Pagination from '../../components/Pagination.astro';
 import { formatDateDot } from '../../utils/formatters';
 import { SITE_CONFIG } from '../../utils/siteConfig';
 import { resolveImage } from '../../utils/imageImports';
+import { postCategory } from '../../data/blogData';
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const allPosts = await getCollection('blog');
@@ -35,7 +36,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<BaseLayout title={`お役立ち情報${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''} | 設備プロ`} description={`電気・水まわりの修理やメンテナンスに役立つ情報をお届けします。エアコン、ブレーカー、コンセント、給湯器、トイレ、お風呂など幅広いカテゴリーの記事を掲載${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}。`} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
+<BaseLayout title={`お役立ち情報${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}｜設備プロ`} description={`電気・水まわりの修理やメンテナンスに役立つ情報をお届けします。エアコン、ブレーカー、コンセント、給湯器、トイレ、お風呂など幅広いカテゴリーの記事を掲載${page.currentPage > 1 ? `（${page.currentPage}ページ目）` : ''}。`} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${page.currentPage === 1 ? '' : page.currentPage + '/'}`}>
   <section class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <Breadcrumb items={breadcrumbItems} />
@@ -52,7 +53,7 @@ const breadcrumbItems = [
               <BlogCard
                 title={post.data.title}
                 date={formatDateDot(post.data.publishedDate)}
-                category={post.data.category}
+                category={postCategory(post.data)}
                 subcategory={post.data.subcategory}
                 excerpt={post.data.excerpt}
                 image={blogImageMap[post.id] ?? post.data.image}

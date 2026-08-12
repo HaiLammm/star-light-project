@@ -7,7 +7,7 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 import BlogCard from '../../../components/BlogCard.astro';
 import BlogCategorySidebar from '../../../components/BlogCategorySidebar.astro';
 import { formatDateDot } from '../../../utils/formatters';
-import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP, subcategorySlug } from '../../../data/blogData';
+import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP, subcategorySlug, normalizeSubcategory, postCategory } from '../../../data/blogData';
 import { SITE_CONFIG } from '../../../utils/siteConfig';
 
 export async function getStaticPaths() {
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
   for (const cat of categories) {
     const catPosts = allPosts
-      .filter((p) => p.data.category === cat)
+      .filter((p) => postCategory(p.data) === cat)
       .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime());
 
     paths.push({
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
     });
 
     for (const sub of BLOG_SUBCATEGORY_MAP[cat] ?? []) {
-      const subPosts = catPosts.filter((p) => p.data.subcategory === sub);
+      const subPosts = catPosts.filter((p) => normalizeSubcategory(p.data.subcategory) === sub);
       paths.push({
         params: { filter: `${cat}/${subcategorySlug(sub)}` },
         props: { posts: subPosts, activeCategory: cat, activeSubcategory: sub },
@@ -68,7 +68,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<BaseLayout title={`${filterLabel}の記事一覧 | お役立ち情報 | 設備プロ`} description={metaDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
+<BaseLayout title={`${filterLabel}の記事一覧｜お役立ち情報｜設備プロ`} description={metaDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
   <section class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <Breadcrumb items={breadcrumbItems} />
@@ -86,7 +86,7 @@ const breadcrumbItems = [
                 <BlogCard
                   title={post.data.title}
                   date={formatDateDot(post.data.publishedDate)}
-                  category={post.data.category}
+                  category={postCategory(post.data)}
                   subcategory={post.data.subcategory}
                   excerpt={post.data.excerpt}
                   image={optimizedImages[post.id] ?? post.data.image}
