@@ -3,9 +3,9 @@ title: "浴槽の寿命は何年？長く使うための掃除・お手入れ方
 description: "浴槽の寿命は何年？FRP・ホーロー・人工大理石の寿命の目安と、ひび割れ・黄ばみなどの劣化サインを紹介。長く使うための掃除・お手入れ方法や、修理・交換の判断基準も解説します。"
 excerpt: "浴槽の寿命を素材別に紹介し、劣化を見分けるポイントや清潔感を長く保つお手入れ方法を解説します。修理と交換の目安も確認できます。"
 publishedDate: 2026-08-14
-updatedDate: 2026-08-15
+updatedDate: 2026-08-17
 category: water
-subcategory: "浴室"
+subcategory: "お風呂"
 image: /images/SEO/bathtub-lifespan/thumbnail.jpg
 imageAlt: "浴槽の寿命と長く使うためのお手入れ"
 ---
