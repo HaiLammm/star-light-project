@@ -1,0 +1,135 @@
+---
+import type { NavigationItem } from '../utils/siteConfig';
+
+interface Props {
+  navigation: NavigationItem[];
+}
+
+const { navigation } = Astro.props;
+---
+
+<div id="mobile-menu-root" class="hidden fixed inset-0 z-50 lg:hidden">
+  <div data-menu-overlay class="absolute inset-0" aria-hidden="true"></div>
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-label="ナビゲーションメニュー"
+    id="mobile-menu"
+    class="fixed inset-0 w-full h-full overflow-y-auto"
+    style="background:#1B2A4A;padding:50px 20px 100px"
+  >
+    <nav>
+      <ul>
+        {navigation.map((item) => (
+          <li class="py-[20px]" style="border-bottom:1px dotted rgba(255,255,255,0.5)">
+            <a
+              href={item.href}
+              class="flex items-center gap-[7px] text-[14px] font-bold text-white min-h-[44px]"
+            >
+              <span class="shrink-0 w-[8px] h-[8px] rounded-full bg-cta"></span>
+              {item.label}
+            </a>
+            {item.children && (
+              <ul class="grid grid-cols-2 gap-[10px] mt-[10px]">
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class="flex items-center gap-[8px] text-[12px] text-white min-h-[44px]"
+                    >
+                      <span class="shrink-0 w-[6px] h-[2px] bg-cta"></span>
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {item.columns && (
+              <div class="mt-[12px] flex flex-col gap-[16px]">
+                {item.columns.map((col) => {
+                  const accent = col.accent === 'electric' ? '#FBC02D' : '#0277BD';
+                  return (
+                    <div>
+                      <a
+                        href={col.href}
+                        class="flex items-center gap-[8px] text-[13px] font-bold text-white min-h-[40px]"
+                      >
+                        <span class="shrink-0 w-[9px] h-[9px] rounded-full" style={`background:${accent}`}></span>
+                        {col.label}
+                      </a>
+                      <ul class="grid grid-cols-2 gap-[10px] mt-[6px] pl-[17px]">
+                        {col.children.map((child) => (
+                          <li>
+                            <a
+                              href={child.href}
+                              class="flex items-center gap-[8px] text-[12px] text-white min-h-[40px]"
+                            >
+                              <span class="shrink-0 w-[6px] h-[2px]" style={`background:${accent}`}></span>
+                              {child.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<script>
+  const root = document.getElementById('mobile-menu-root');
+  const trigger = document.getElementById('mobile-menu-trigger');
+  const panel = document.getElementById('mobile-menu');
+  const overlay = root?.querySelector('[data-menu-overlay]');
+
+  if (root && trigger && panel) {
+    const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    let isOpen = false;
+
+    function handleKeydown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        close();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const focusable = panel!.querySelectorAll<HTMLElement>(focusableSelector);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function open() {
+      isOpen = true;
+      root!.classList.remove('hidden');
+      trigger!.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      panel!.querySelector<HTMLElement>(focusableSelector)?.focus();
+      document.addEventListener('keydown', handleKeydown);
+    }
+
+    function close() {
+      isOpen = false;
+      root!.classList.add('hidden');
+      trigger!.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeydown);
+      trigger!.focus();
+    }
+
+    trigger.addEventListener('click', () => (isOpen ? close() : open()));
+    overlay?.addEventListener('click', close);
+  }
+</script>

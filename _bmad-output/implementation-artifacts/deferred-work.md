@@ -75,3 +75,7 @@
 ## Deferred from: code review of 6-4-security-headers (2026-05-29)
 
 - Post-deploy live verification (Task 5.2/5.3): after the first Vercel deploy, run `curl -I` on a public route + `/admin` to confirm all Task-2 headers and the route-scoped CSP, and submit the contact form with a real `PUBLIC_FORMSPREE_ID` to confirm CSP `form-action`/`connect-src` permits the Formspree POST. Requires a live deployment — operator action.
+
+## Deferred from: code review of 6-3-performance-optimization-and-core-web-vitals (2026-08-22)
+
+- Remove duplicate carousel lib (Embla + Swiper both in package.json) — blocked: after the review's lazy-load fix, both libs remain legitimately used (Embla by React ServiceSlider.tsx islands, Swiper by inline case/voice/column carousels in index.astro and [service].astro). Removal requires migrating one to the other (NOTE.md plan step 5, medium risk). Perf impact is now neutralized: swiper.js + swiper/css load in a lazy chunk only when a carousel approaches the viewport.

@@ -1,6 +1,6 @@
 # Story 6.3: Performance Optimization and Core Web Vitals
 
-Status: review
+Status: in-progress
 
 ## Story
 
@@ -58,6 +58,28 @@ so that I can access emergency service information instantly.
   - [x] 6.4 Performance validated: WebP images, non-blocking fonts, deferred JS islands, compressed HTML
   - [x] 6.5 Fixed: all raster images now WebP, 15 corrupted price images identified and removed from src/assets (pre-existing data issue)
   - [x] 6.6 Final build successful with all optimizations applied
+
+### Review Findings
+
+Code review 2026-08-22 — scope: 6 recent perf commits (88a2a7a^..1c6dcf7). Layers: Blind Hunter + Edge Case Hunter + Acceptance Auditor. Context: NOTE.md PSI report 2026-08-22 (Mobile Performance 58, LCP 8.4s).
+
+- [x] [Review][Decision] AC #1/#2 remain unmet on production (Mobile Perf 58, FCP 7.4s, LCP 8.4s measured 2026-08-22) — RESOLVED 2026-08-22: finish under story 6-3; the 6 root-cause items converted to patch items below, story status → in-progress
+- [x] [Review][Patch] MobileMenu: replace React island (`client:load`, ships React+ReactDOM ~45KB eager on every page) with vanilla Astro component — FIXED 2026-08-22: new `src/components/MobileMenu.astro` (static markup + vanilla focus-trap/esc/scroll-lock script); MobileMenu.tsx deleted; interior pages (company, columns) now ship ZERO JS [src/components/Header.astro:79]
+- [x] [Review][Patch] First ServiceSlider `client:idle` → `client:visible` — FIXED 2026-08-22 [src/pages/index.astro:209]
+- [x] [Review][Patch] Swiper eager import → lazy-load via IntersectionObserver (rootMargin 400px) + dynamic import in both index.astro and [service].astro; swiper.js (63KB) + swiper/css now separate chunks off the critical path — FIXED 2026-08-22 [src/pages/index.astro:480]
+- [x] [Review][Defer] Remove duplicate carousel lib (Embla + Swiper) — deferred: after lazy-loading, BOTH libs remain legitimately used (Embla by React ServiceSlider.tsx, Swiper by inline case/voice/column carousels); removal requires migrating one to the other (NOTE.md plan step 5, medium risk) — perf impact now neutralized since Swiper is off the critical path [package.json]
+- [x] [Review][Patch] Add width/height for remaining raw `<img>` — FIXED 2026-08-22: CTABlock.astro:79 (230×60) and ComparisonTable.astro:51 (100×26, + lazy/async); Footer.astro:60 and ReasonsGrid.astro:60 already had them (auditor over-reported) [src/components/CTABlock.astro:79, src/components/ComparisonTable.astro:51]
+- [x] [Review][Patch] Align loaded font weights with usage — FIXED 2026-08-22: Google Fonts URL now `wght@400;500;700;800;900` [src/layouts/BaseLayout.astro:57]
+- [x] [Review][Patch] Restore font weight 500 — FIXED 2026-08-22 (same URL change as above) [src/layouts/BaseLayout.astro:57]
+- [x] [Review][Patch] Remove fake phone default `'000000000000'` — FIXED 2026-08-22: defaults now come from SITE_CONFIG.phone [src/components/HeroSection.astro:14]
+- [x] [Review][Patch] Header logo: dropped `fetchpriority="high"`; both variants unified to identical width={230} → identical srcset URLs, one download per page (verified in dist: only the 2 hero preloads carry fetchpriority=high) [src/components/Header.astro:15,31]
+- [x] [Review][Patch] Header logo blurry on high-DPR — FIXED 2026-08-22: `densities={[1,2,3]}` (srcset 1x/2x/3x verified in dist) + `h-auto` fixes the phantom 60px height at lg [src/components/Header.astro:15,31]
+- [x] [Review][Patch] Logo source moved to `src/assets/images/site_logo_no-mark.jpeg` (public copy kept for Footer/CTABlock/ComparisonTable/ReasonsGrid + JSON-LD logoPath) — output WebP 10–16kB vs 75kB JPEG [src/components/Header.astro:7]
+- [x] [Review][Patch] Hero preloads: removed hardcoded `type="image/webp"` — preload now valid regardless of the heroMeta fallback format [src/pages/index.astro:195]
+- [x] [Review][Patch] `<slot name="head" />` moved before JSON-LD/insights scripts, right after font links [src/layouts/BaseLayout.astro:59]
+- [x] [Review][Patch] Deleted orphaned `HeroCarousel.tsx`; File List below updated to reflect HeroSection.astro reality [src/components/HeroCarousel.tsx]
+
+**Post-fix verification (2026-08-22):** `astro build` — 91 pages in 5.1s, zero errors. Homepage JS: React runtime deferred behind `client:visible`; Swiper in lazy chunk. Interior pages (company/columns): 0 JS. AC #1 numbers must be re-measured on production (PSI) after deploy before this story can close.
 
 ## Dev Notes
 
@@ -193,6 +215,7 @@ Claude Opus 4.6 (1M context)
 
 ### Change Log
 - 2026-05-22: Implemented image optimization pipeline with WebP conversion across entire site
+- 2026-08-22: Code review (3-layer) of perf commits 88a2a7a..1c6dcf7 → 14 findings applied: MobileMenu → vanilla Astro, ServiceSlider client:visible, Swiper lazy-loaded via IntersectionObserver, font weights 400;500;700;800;900, header logo unified/densities/src-assets, hero preload type fix, head slot reorder, w/h on CTABlock+ComparisonTable logos, dead code removed. Lib dedup (Embla+Swiper) deferred. Awaiting production PSI re-measurement for AC #1.
 
 ### File List
 - `src/utils/imageImports.ts` (NEW) — async image resolver utility
@@ -206,7 +229,8 @@ Claude Opus 4.6 (1M context)
 - `src/components/BlogCard.astro` (MODIFIED) — accepts ImageMetadata|string, conditional Image
 - `src/components/CaseStudyCard.astro` (MODIFIED) — accepts ImageMetadata|string, conditional Image
 - `src/components/TestimonialCard.astro` (MODIFIED) — accepts ImageMetadata|string, conditional Image
-- `src/components/HeroCarousel.tsx` (MODIFIED) — accepts slides prop for pre-optimized URLs
+- `src/components/HeroSection.astro` (NEW, replaces HeroCarousel.tsx) — zero-JS static hero; HeroCarousel.tsx DELETED 2026-08-22 (superseded by commit c6cadc9 + review cleanup)
+- `src/components/MobileMenu.astro` (NEW, replaces MobileMenu.tsx) — vanilla mobile menu, no React island; MobileMenu.tsx DELETED 2026-08-22
 - `src/pages/index.astro` (MODIFIED) — pre-optimizes hero, slider, case, testimonial images
 - `src/pages/[category]/[service].astro` (MODIFIED) — pre-optimizes KV, pricing, case, column images
 - `src/pages/[category]/index.astro` (MODIFIED) — pre-optimizes KV, service grid images

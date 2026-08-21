@@ -2,9 +2,9 @@
 import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
 import { Image } from 'astro:assets';
 import MegaMenu from './MegaMenu.astro';
-import MobileMenu from './MobileMenu.tsx';
+import MobileMenu from './MobileMenu.astro';
 
-import siteLogo from '../../public/images/site_logo_no-mark.jpeg';
+import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
 ---
 
 <header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
@@ -12,7 +12,7 @@ import siteLogo from '../../public/images/site_logo_no-mark.jpeg';
   <div class="lg:hidden w-full flex items-center justify-between h-[60px] pl-[10px] pr-[120px]">
     <div class="shrink-0 m-0 leading-none">
       <a href="/" aria-label={SITE_CONFIG.companyName}>
-        <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={153} format="webp" class="w-[153px] object-contain" loading="eager" fetchpriority="high" />
+        <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={230} densities={[1, 2, 3]} format="webp" class="w-[153px] h-auto object-contain" loading="eager" />
       </a>
     </div>
     <a
@@ -28,7 +28,7 @@ import siteLogo from '../../public/images/site_logo_no-mark.jpeg';
   <div class="hidden lg:flex w-full items-center justify-between h-[100px] pl-[10px] xl:pl-[20px]">
     <div class="shrink-0 relative z-10 m-0 leading-none">
       <a href="/" aria-label={SITE_CONFIG.companyName}>
-        <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={230} format="webp" class="w-[150px] xl:w-[230px] object-contain" loading="eager" fetchpriority="high" />
+        <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={230} densities={[1, 2, 3]} format="webp" class="w-[150px] xl:w-[230px] h-auto object-contain" loading="eager" />
       </a>
     </div>
 
@@ -76,7 +76,7 @@ import siteLogo from '../../public/images/site_logo_no-mark.jpeg';
 
 <div class="h-[60px] lg:h-[100px]"></div>
 
-<MobileMenu client:load navigation={NAVIGATION} phone={SITE_CONFIG.phone} />
+<MobileMenu navigation={NAVIGATION} />
 
 <style>
   .hamburger__line {

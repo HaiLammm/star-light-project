@@ -491,12 +491,8 @@ const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null
   <CTABlock variant="full-width" />
 
   <script>
-    import 'swiper/css';
-    import Swiper from 'swiper';
-    import { Autoplay } from 'swiper/modules';
-
-    const caseSwiper = new Swiper('.caseSwiper', {
-      modules: [Autoplay],
+    // Swiper chỉ được nạp khi carousel sắp vào viewport — giữ nó khỏi critical path (PSI: 2.3s chain + forced reflow).
+    const autoplayOptions = {
       loop: true,
       centeredSlides: true,
       slidesPerView: 1,
@@ -508,31 +504,41 @@ const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null
         901: { slidesPerView: 3, spaceBetween: 30 },
         1240: { slidesPerView: 3, spaceBetween: 45 },
       },
-    });
+    };
 
-    const voiceSwiper = new Swiper('.voiceSwiper', {
-      modules: [Autoplay],
-      loop: true,
-      centeredSlides: true,
-      slidesPerView: 1,
-      spaceBetween: 20,
-      speed: 1000,
-      autoplay: { delay: 2500, disableOnInteraction: false },
-      breakpoints: {
-        650: { slidesPerView: 1.5, spaceBetween: 30 },
-        901: { slidesPerView: 3, spaceBetween: 30 },
-        1240: { slidesPerView: 3, spaceBetween: 45 },
-      },
-    });
+    let swiperLoaded = false;
+    async function initServiceSwipers() {
+      if (swiperLoaded) return;
+      swiperLoaded = true;
+      const [{ default: Swiper }, { Autoplay }] = await Promise.all([
+        import('swiper'),
+        import('swiper/modules'),
+        import('swiper/css'),
+      ]);
+      new Swiper('.caseSwiper', { modules: [Autoplay], ...autoplayOptions });
+      new Swiper('.voiceSwiper', { modules: [Autoplay], ...autoplayOptions });
+      new Swiper('.columnSwiper', {
+        slidesPerView: 1.2,
+        spaceBetween: 16,
+        breakpoints: {
+          640: { slidesPerView: 2.1, spaceBetween: 20 },
+          1024: { slidesPerView: 3, spaceBetween: 24 },
+        },
+      });
+    }
 
-    const columnSwiper = new Swiper('.columnSwiper', {
-      slidesPerView: 1.2,
-      spaceBetween: 16,
-      breakpoints: {
-        640: { slidesPerView: 2.1, spaceBetween: 20 },
-        1024: { slidesPerView: 3, spaceBetween: 24 },
-      },
-    });
-
+    const swiperTargets = document.querySelectorAll('.caseSwiper, .voiceSwiper, .columnSwiper');
+    if (swiperTargets.length) {
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            obs.disconnect();
+            initServiceSwipers();
+          }
+        },
+        { rootMargin: '400px' }
+      );
+      swiperTargets.forEach((el) => observer.observe(el));
+    }
   </script>
 </BaseLayout>

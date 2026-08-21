@@ -1,4 +1,6 @@
 ---
+import { SITE_CONFIG } from '../utils/siteConfig';
+
 interface Props {
   image: string;
   imageSp?: string;
@@ -11,8 +13,8 @@ const {
   image,
   imageSp,
   alt = '設備プロの職人',
-  phoneDisplay = '000000000000',
-  phoneHref = 'tel:000000000000',
+  phoneDisplay = SITE_CONFIG.phone.display,
+  phoneHref = SITE_CONFIG.phone.href,
 } = Astro.props;
 
 const BADGES = [
