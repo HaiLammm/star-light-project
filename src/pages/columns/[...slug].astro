@@ -95,7 +95,7 @@ const articleSchema = generateArticle({
                   <li class={item.depth === 3 ? 'pl-[22px]' : '[&:not(:first-child)]:mt-[9px]'}>
                     <a href={`#${item.slug}`} class="group flex items-baseline gap-[8px]">
                       <span class={`shrink-0 font-bold font-[Roboto] ${item.depth === 3 ? 'text-[12px] text-[#9aa9bd]' : 'text-[13px] text-navy'}`}>{item.number}</span>
-                      <span class={`[text-wrap:pretty] leading-[1.6] group-hover:text-[#0277BD] group-hover:underline ${item.depth === 3 ? 'text-[13px] text-[#666]' : 'text-[14px] font-medium text-[#333]'}`}>{item.text}</span>
+                      <span class={`[text-wrap:pretty] leading-[1.6] group-hover:text-[#0277BD] group-hover:underline ${item.depth === 3 ? 'text-[13px] text-[#666]' : 'text-[14px] font-normal text-[#333]'}`}>{item.text}</span>
                     </a>
                   </li>
                 ))}
@@ -141,7 +141,7 @@ const articleSchema = generateArticle({
                   <li class={item.depth === 3 ? 'pl-[22px] sm:pl-[26px]' : '[&:not(:first-child)]:mt-[9px]'}>
                     <a href={`#${item.slug}`} class="group flex items-baseline gap-[8px]">
                       <span class={`shrink-0 font-bold font-[Roboto] ${item.depth === 3 ? 'text-[12px] text-[#9aa9bd]' : 'text-[13px] sm:text-[14px] text-navy'}`}>{item.number}</span>
-                      <span class={`[text-wrap:pretty] leading-[1.6] group-hover:text-[#0277BD] group-hover:underline ${item.depth === 3 ? 'text-[13px] sm:text-[14px] text-[#666]' : 'text-[14px] sm:text-[15px] font-medium text-[#333]'}`}>{item.text}</span>
+                      <span class={`[text-wrap:pretty] leading-[1.6] group-hover:text-[#0277BD] group-hover:underline ${item.depth === 3 ? 'text-[13px] sm:text-[14px] text-[#666]' : 'text-[14px] sm:text-[15px] font-normal text-[#333]'}`}>{item.text}</span>
                     </a>
                   </li>
                 ))}

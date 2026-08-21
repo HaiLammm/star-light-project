@@ -93,7 +93,7 @@ const {
                       <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[48px] font-light text-[#3e3e3e]" aria-label="非対応">×</span>
                     )}
                     {row.our.type === 'triangle' && (
-                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-medium text-[#3e3e3e]" aria-label="要確認">△</span>
+                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-normal text-[#3e3e3e]" aria-label="要確認">△</span>
                     )}
                     {row.our.type === 'text' && (
                       <span class="font-[Roboto] text-[20px] sm:text-[28px] md:text-[40px] font-black text-cta">
@@ -103,23 +103,23 @@ const {
                   </td>
                   <td class="p-1 sm:p-3 md:p-4">
                     {row.competitorA.type === 'price' && (
-                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-medium text-[#3e3e3e]">
+                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-normal text-[#3e3e3e]">
                         {row.competitorA.amount.toLocaleString('ja-JP')}<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円[税込]〜</span>
                       </span>
                     )}
                     {row.competitorA.type === 'price-zero' && (
-                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-medium text-[#3e3e3e]">
+                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-normal text-[#3e3e3e]">
                         0<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円</span>
                       </span>
                     )}
                     {row.competitorA.type === 'circle' && (
-                      <span class="font-[Roboto] text-[18px] sm:text-[24px] md:text-[32px] font-medium text-[#3e3e3e]" aria-label="対応">〇</span>
+                      <span class="font-[Roboto] text-[18px] sm:text-[24px] md:text-[32px] font-normal text-[#3e3e3e]" aria-label="対応">〇</span>
                     )}
                     {row.competitorA.type === 'cross' && (
                       <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[48px] font-light text-[#3e3e3e]" aria-label="非対応">×</span>
                     )}
                     {row.competitorA.type === 'triangle' && (
-                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-medium text-[#3e3e3e]" aria-label="要確認">△</span>
+                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-normal text-[#3e3e3e]" aria-label="要確認">△</span>
                     )}
                     {row.competitorA.type === 'text' && (
                       <span class="text-[11px] sm:text-[14px] md:text-[18px] font-bold text-[#3e3e3e]">{row.competitorA.value}</span>
@@ -127,23 +127,23 @@ const {
                   </td>
                   <td class={`p-1 sm:p-3 md:p-4${isLast ? ' rounded-br-lg' : ''}`}>
                     {row.competitorB.type === 'price' && (
-                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-medium text-[#3e3e3e]">
+                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-normal text-[#3e3e3e]">
                         {row.competitorB.amount.toLocaleString('ja-JP')}<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円[税込]〜</span>
                       </span>
                     )}
                     {row.competitorB.type === 'price-zero' && (
-                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-medium text-[#3e3e3e]">
+                      <span class="font-[Roboto] text-[16px] sm:text-[22px] md:text-[32px] font-normal text-[#3e3e3e]">
                         0<span class="text-[10px] sm:text-[12px] md:text-[14px] font-semibold">円</span>
                       </span>
                     )}
                     {row.competitorB.type === 'circle' && (
-                      <span class="font-[Roboto] text-[18px] sm:text-[24px] md:text-[32px] font-medium text-[#3e3e3e]" aria-label="対応">〇</span>
+                      <span class="font-[Roboto] text-[18px] sm:text-[24px] md:text-[32px] font-normal text-[#3e3e3e]" aria-label="対応">〇</span>
                     )}
                     {row.competitorB.type === 'cross' && (
                       <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[48px] font-light text-[#3e3e3e]" aria-label="非対応">×</span>
                     )}
                     {row.competitorB.type === 'triangle' && (
-                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-medium text-[#3e3e3e]" aria-label="要確認">△</span>
+                      <span class="font-[Roboto] text-[24px] sm:text-[32px] md:text-[40px] font-normal text-[#3e3e3e]" aria-label="要確認">△</span>
                     )}
                     {row.competitorB.type === 'text' && (
                       <span class="text-[11px] sm:text-[14px] md:text-[18px] font-bold text-[#3e3e3e]">{row.competitorB.value}</span>

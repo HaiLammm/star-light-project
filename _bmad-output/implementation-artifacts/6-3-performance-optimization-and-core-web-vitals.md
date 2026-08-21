@@ -215,7 +215,8 @@ Claude Opus 4.6 (1M context)
 
 ### Change Log
 - 2026-05-22: Implemented image optimization pipeline with WebP conversion across entire site
-- 2026-08-22: Code review (3-layer) of perf commits 88a2a7a..1c6dcf7 → 14 findings applied: MobileMenu → vanilla Astro, ServiceSlider client:visible, Swiper lazy-loaded via IntersectionObserver, font weights 400;500;700;800;900, header logo unified/densities/src-assets, hero preload type fix, head slot reorder, w/h on CTABlock+ComparisonTable logos, dead code removed. Lib dedup (Embla+Swiper) deferred. Awaiting production PSI re-measurement for AC #1.
+- 2026-08-22: Code review (3-layer) of perf commits 88a2a7a..1c6dcf7 → 14 findings applied: MobileMenu → vanilla Astro, ServiceSlider client:visible, Swiper lazy-loaded via IntersectionObserver, font weights 400;500;700;800;900, header logo unified/densities/src-assets, hero preload type fix, head slot reorder, w/h on CTABlock+ComparisonTable logos, dead code removed. Lib dedup (Embla+Swiper) deferred. Shipped as commit 9928fe0.
+- 2026-08-22 (post-deploy): Lighthouse mobile (local, PSI-equivalent simulated throttling) on production: **Performance 86** (was 58), FCP 3.0s (was 7.4s), LCP 3.4s (was 8.4s), TBT 0ms, CLS 0.005, SI 3.0s. AC #1 (>=95, LCP<1.5s) still unmet. Remaining levers: Google Fonts CSS now 148KB across 5 weights (LH est. 710ms — tradeoff of fixing faux-bold; could trim to 400;700;900 by retiring font-medium/extrabold utilities), hero image load duration ~535ms. Critical request chain is now trivial (768B + 827B scripts).
 
 ### File List
 - `src/utils/imageImports.ts` (NEW) — async image resolver utility

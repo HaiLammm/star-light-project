@@ -75,7 +75,7 @@ const colsClass = category.subServices.length === 5
         {heading}
         {englishLabel && <span class={`text-sm md:text-base font-normal tracking-widest ml-2 ${bgColor ? 'text-white/80' : 'text-[#E8B341]'}`}>{englishLabel}</span>}
       </h2>
-      {subheading && <p class={`mt-2 text-sm font-medium ${bgColor ? 'text-white/90' : 'text-gray-600'}`}>{subheading}</p>}
+      {subheading && <p class={`mt-2 text-sm font-normal ${bgColor ? 'text-white/90' : 'text-gray-600'}`}>{subheading}</p>}
     </div>
     <div class={`grid ${colsClass} gap-4 md:gap-6`}>
       {category.subServices.map((service, index) => (
