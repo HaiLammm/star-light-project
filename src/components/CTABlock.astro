@@ -1,5 +1,7 @@
 ---
 import { SITE_CONFIG } from '../utils/siteConfig';
+import { Image } from 'astro:assets';
+import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
 import CtaFeatures from './CtaFeatures.astro';
 
 interface Props {
@@ -76,7 +78,7 @@ const phone = SITE_CONFIG.phone;
 
         <!-- Heading: Logo + に修理相談 -->
         <p class="relative z-20 flex flex-wrap items-center justify-center gap-x-1 mt-5 md:mt-1 font-black text-[29px] md:text-[40px]">
-          <img src="/images/site_logo_no-mark.jpeg" alt="設備プロ" width="230" height="60" loading="lazy" decoding="async" class="w-[177px] md:w-[230px] h-auto object-contain mr-0.5" />
+          <Image src={siteLogo} alt="設備プロ" width={230} densities={[1, 2]} format="webp" class="w-[177px] md:w-[230px] h-auto object-contain mr-0.5" />
           <span class="text-[21px] md:text-[28px]">に</span>修理相談
         </p>
 

@@ -1,5 +1,7 @@
 ---
 import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
+import { Image } from 'astro:assets';
+import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
 
 const FOOTER_NAV = [
   {
@@ -57,7 +59,7 @@ const FOOTER_NAV = [
 <footer class="mb-[calc(90px+env(safe-area-inset-bottom))] md:mb-0">
   <div class="max-w-[1200px] mx-auto pt-[30px] pb-[16px] md:pt-[50px] md:pb-[45px] px-[12px] md:px-[45px]">
     <figure class="w-[153px] md:w-[230px] mx-auto">
-      <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} width="230" height="60" loading="lazy" decoding="async" class="w-full h-auto" />
+      <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={230} densities={[1, 2]} format="webp" class="w-full h-auto" />
     </figure>
 
     <nav aria-label="フッターナビゲーション" class="mt-[10px] md:mt-[50px] px-[12px] md:px-[45px]">

@@ -37,7 +37,7 @@ const blogImageMap: Record<string, string> = {};
 for (const post of latestPosts) {
   const meta = await resolveImage(post.data.image);
   if (meta) {
-    const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 80 });
+    const opt = await getImage({ src: meta, width: 350, height: 196, format: 'webp', quality: 70 });
     blogImageMap[post.id] = opt.src;
   }
 }
@@ -93,7 +93,7 @@ async function optimizeImageMap(map: Record<string, string>, w: number, h: numbe
   for (const [key, path] of Object.entries(map)) {
     const meta = await resolveImage(path);
     if (meta) {
-      const opt = await getImage({ src: meta, width: w, height: h, format: 'webp', quality: 80 });
+      const opt = await getImage({ src: meta, width: w, height: h, format: 'webp', quality: 70 });
       result[key] = opt.src;
     } else {
       result[key] = path;
