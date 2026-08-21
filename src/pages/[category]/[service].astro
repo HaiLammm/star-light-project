@@ -492,6 +492,9 @@ const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null
 
   <script>
     // Swiper chỉ được nạp khi carousel sắp vào viewport — giữ nó khỏi critical path (PSI: 2.3s chain + forced reflow).
+    // CSS import qua ?url thay vì import('swiper/css') để Astro không hoist thành <link> render-blocking trong <head>.
+    import swiperCssUrl from 'swiper/css?url';
+
     const autoplayOptions = {
       loop: true,
       centeredSlides: true,
@@ -510,10 +513,17 @@ const faqSchema = faqSchemaItems.length > 0 ? generateFAQ(faqSchemaItems) : null
     async function initServiceSwipers() {
       if (swiperLoaded) return;
       swiperLoaded = true;
+      const cssReady = new Promise((resolve) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = swiperCssUrl;
+        link.onload = link.onerror = () => resolve(undefined);
+        document.head.appendChild(link);
+      });
       const [{ default: Swiper }, { Autoplay }] = await Promise.all([
         import('swiper'),
         import('swiper/modules'),
-        import('swiper/css'),
+        cssReady,
       ]);
       new Swiper('.caseSwiper', { modules: [Autoplay], ...autoplayOptions });
       new Swiper('.voiceSwiper', { modules: [Autoplay], ...autoplayOptions });
