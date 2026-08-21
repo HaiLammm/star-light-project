@@ -1,7 +1,10 @@
 ---
 import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
+import { Image } from 'astro:assets';
 import MegaMenu from './MegaMenu.astro';
 import MobileMenu from './MobileMenu.tsx';
+
+import siteLogo from '../../public/images/site_logo_no-mark.jpeg';
 ---
 
 <header data-header class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow">
@@ -9,7 +12,7 @@ import MobileMenu from './MobileMenu.tsx';
   <div class="lg:hidden w-full flex items-center justify-between h-[60px] pl-[10px] pr-[120px]">
     <div class="shrink-0 m-0 leading-none">
       <a href="/" aria-label={SITE_CONFIG.companyName}>
-        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[153px] object-contain" />
+        <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={153} format="webp" class="w-[153px] object-contain" loading="eager" fetchpriority="high" />
       </a>
     </div>
     <a
@@ -25,7 +28,7 @@ import MobileMenu from './MobileMenu.tsx';
   <div class="hidden lg:flex w-full items-center justify-between h-[100px] pl-[10px] xl:pl-[20px]">
     <div class="shrink-0 relative z-10 m-0 leading-none">
       <a href="/" aria-label={SITE_CONFIG.companyName}>
-        <img src="/images/site_logo_no-mark.jpeg" alt={SITE_CONFIG.companyName} class="w-[150px] xl:w-[230px] object-contain" />
+        <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={230} format="webp" class="w-[150px] xl:w-[230px] object-contain" loading="eager" fetchpriority="high" />
       </a>
     </div>
 

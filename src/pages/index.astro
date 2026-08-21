@@ -195,7 +195,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
   {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
   <h1 class="sr-only">設備プロ（セツビプロ）｜水漏れ・つまり・電気トラブルの修理を24時間365日対応する専門業者</h1>
   <HeroCarousel
-    client:load
+    client:idle
     image={heroImageDesktop}
     imageSp={heroImageMobile}
     alt="設備プロの有資格の職人"
@@ -203,7 +203,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
     phoneHref={SITE_CONFIG.phone.href}
   />
   <ServiceSlider
-    client:load
+    client:idle
     slides={waterSlides}
     heading="水まわりの修理サービス"
     subheading="トイレ・お風呂・キッチンなどの水回りのつまり・水漏れ修理。安心の事前見積りと24時間即対応"
