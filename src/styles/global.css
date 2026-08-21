@@ -30,7 +30,8 @@ body {
 }
 
 html {
-  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  /* System font JP: không tải webfont — Android/ChromeOS có sẵn Noto Sans CJK, iOS/macOS dùng Hiragino, Windows dùng Yu Gothic/Meiryo. Hết CLS do font swap. */
+  font-family: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, sans-serif;
   word-break: normal;
   overflow-wrap: anywhere;
   line-break: auto;
