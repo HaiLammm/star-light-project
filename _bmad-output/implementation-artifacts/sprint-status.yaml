@@ -142,7 +142,7 @@ development_status:
   epic-6: in-progress
   6-1-implement-schema-org-structured-data-on-all-pages: done
   6-2-implement-technical-seo-sitemap-robots-meta-tags-canonical-urls: done
-  6-3-performance-optimization-and-core-web-vitals: in-progress
+  6-3-performance-optimization-and-core-web-vitals: done
   6-4-security-headers-and-cloudflare-pages-production-deployment: done
   6-5-wcag-2-1-aa-accessibility-audit-and-fixes: backlog
   epic-6-retrospective: optional

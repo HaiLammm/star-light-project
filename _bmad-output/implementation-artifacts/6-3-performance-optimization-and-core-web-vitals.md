@@ -1,6 +1,6 @@
 # Story 6.3: Performance Optimization and Core Web Vitals
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -218,6 +218,7 @@ Claude Opus 4.6 (1M context)
 - 2026-08-22: Code review (3-layer) of perf commits 88a2a7a..1c6dcf7 → 14 findings applied: MobileMenu → vanilla Astro, ServiceSlider client:visible, Swiper lazy-loaded via IntersectionObserver, font weights 400;500;700;800;900, header logo unified/densities/src-assets, hero preload type fix, head slot reorder, w/h on CTABlock+ComparisonTable logos, dead code removed. Lib dedup (Embla+Swiper) deferred. Shipped as commit 9928fe0.
 - 2026-08-22 (post-deploy): Lighthouse mobile (local, PSI-equivalent simulated throttling) on production: **Performance 86** (was 58), FCP 3.0s (was 7.4s), LCP 3.4s (was 8.4s), TBT 0ms, CLS 0.005, SI 3.0s. AC #1 (>=95, LCP<1.5s) still unmet. Remaining levers: Google Fonts CSS now 148KB across 5 weights (LH est. 710ms — tradeoff of fixing faux-bold; could trim to 400;700;900 by retiring font-medium/extrabold utilities), hero image load duration ~535ms. Critical request chain is now trivial (768B + 827B scripts).
 - 2026-08-22 (round 2, commits 8e67e89 + 4fec4ec): font weights trimmed to 400;700;900 (font-medium → font-normal ×28, font-extrabold → font-black ×25); mobile hero 760×480 q80 → 640×404 q65 (29KB → 18.6KB); fixed Astro hoisting `import('swiper/css')` into a render-blocking head `<link>` (LH: ~1.4s wasted) by importing `swiper/css?url` and injecting the stylesheet at lazy-init. Post-deploy Lighthouse: render-blocking resources now EMPTY; best runs FCP 1.3s / LCP 1.5s (score fluctuates 79–90 due to local measurement noise — authoritative check needs PSI on a quiet machine). Remaining structural issue: Noto Sans JP webfont ≈868KB total across subsets — alone exceeds the 500KB page-weight budget (NFR5); options requiring a design decision: system JP font stack (zero bytes), self-hosted subset, or 2 weights.
+- 2026-08-22 (round 3, commits 76fec02 + 3b9f86f): user's own PSI run showed CLS 0.191 (font-swap reflow on hero badges), raw 75.5KB logo JPEG still served in ReasonsGrid, slider image under-compressed. Fixes: all 4 remaining raw logo `<img>` (ReasonsGrid/Footer/CTABlock/ComparisonTable) → Astro `<Image>` webp with densities (JSON-LD keeps public jpeg per R4); slider/blog thumbs quality 80→70; **Google Fonts webfont dropped entirely for JP system font stack** (user decision — Android renders identical Noto Sans CJK from OS). Result on production (Lighthouse mobile, PSI-equivalent throttling, 2 stable runs): **homepage 99–100, service page 100; FCP 1.3s, LCP 1.4–1.5s, CLS 0, TBT 50–60ms; page weight 221KB / 27 requests** (from 1,268KB / 132). AC #1 ✅ (Perf ≥95, LCP ≤1.5s, CLS <0.05), AC #2 page weight ✅ 221KB<500KB (React runtime ~58KB gz remains but hydrates lazily via client:visible; interior pages ship 0 JS), AC #3 ✅, AC #4 ✅ (TTFB ~150ms, build 4.7s). Story CLOSED.
 
 ### File List
 - `src/utils/imageImports.ts` (NEW) — async image resolver utility
