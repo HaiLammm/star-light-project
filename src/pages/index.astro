@@ -1,7 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroCarousel from '../components/HeroCarousel.tsx';
+import HeroSection from '../components/HeroSection.astro';
 import ServiceSlider from '../components/ServiceSlider.tsx';
 import ReasonsGrid from '../components/ReasonsGrid.astro';
 import ProcessFlow from '../components/ProcessFlow.astro';
@@ -198,8 +198,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
   <script type="application/ld+json" set:html={serializeJsonLd(localBusinessSchema)} />
   {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
   <h1 class="sr-only">設備プロ（セツビプロ）｜水漏れ・つまり・電気トラブルの修理を24時間365日対応する専門業者</h1>
-  <HeroCarousel
-    client:idle
+  <HeroSection
     image={heroImageDesktop}
     imageSp={heroImageMobile}
     alt="設備プロの有資格の職人"
