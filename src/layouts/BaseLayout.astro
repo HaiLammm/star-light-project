@@ -58,6 +58,7 @@ const siteJsonLd = serializeJsonLd([generateOrganization(), generateWebSite()]);
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&subset=japanese,latin&display=swap" /></noscript>
     <script type="application/ld+json" set:html={siteJsonLd} />
     <script is:inline defer src="/_vercel/insights/script.js"></script>
+    <slot name="head" />
   </head>
   <body class="text-text-primary">
     <a

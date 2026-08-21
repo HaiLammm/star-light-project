@@ -191,6 +191,10 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 760, 
   description="水漏れ・つまり・停電などの設備トラブルなら設備プロ（セツビプロ）。関東・関西エリアに24時間365日対応し、最短10分で駆けつけます。お見積り・出張費・キャンセル料はすべて無料です。"
   canonicalUrl={`${SITE_CONFIG.siteUrl}/`}
 >
+  <Fragment slot="head">
+    <link rel="preload" as="image" type="image/webp" href={heroImageMobile} media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href={heroImageDesktop} media="(min-width: 768px)" fetchpriority="high" />
+  </Fragment>
   <script type="application/ld+json" set:html={serializeJsonLd(localBusinessSchema)} />
   {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
   <h1 class="sr-only">設備プロ（セツビプロ）｜水漏れ・つまり・電気トラブルの修理を24時間365日対応する専門業者</h1>
