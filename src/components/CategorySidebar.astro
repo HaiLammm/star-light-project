@@ -56,14 +56,14 @@ const { categories, filterBasePath, activeFilter } = Astro.props;
     gap: 7px;
     padding-bottom: 9.5px;
     padding-right: 10px;
-    border-bottom: 1px solid #1B2A4A;
+    border-bottom: 1px solid var(--color-navy);
     margin-bottom: 5px;
     text-decoration: none;
   }
   .sidebar__title::before {
     content: "";
     display: block;
-    background-color: #1B2A4A;
+    background-color: var(--color-navy);
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -74,8 +74,8 @@ const { categories, filterBasePath, activeFilter } = Astro.props;
     display: block;
     width: 9px;
     height: 9px;
-    border-top: 2px solid #1B2A4A;
-    border-right: 2px solid #1B2A4A;
+    border-top: 2px solid var(--color-navy);
+    border-right: 2px solid var(--color-navy);
     transform: rotate(45deg);
     margin-left: auto;
     flex-shrink: 0;
@@ -100,8 +100,8 @@ const { categories, filterBasePath, activeFilter } = Astro.props;
     display: block;
     width: 9px;
     height: 9px;
-    border-top: 2px solid #1B2A4A;
-    border-right: 2px solid #1B2A4A;
+    border-top: 2px solid var(--color-navy);
+    border-right: 2px solid var(--color-navy);
     transform: rotate(45deg);
     margin-left: auto;
     flex-shrink: 0;
@@ -111,7 +111,7 @@ const { categories, filterBasePath, activeFilter } = Astro.props;
   }
   .sidebar__link--active {
     font-weight: 700;
-    color: #1B2A4A;
+    color: var(--color-navy);
   }
 
   @media (max-width: 900px) {

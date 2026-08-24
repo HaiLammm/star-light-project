@@ -1,59 +1,8 @@
 ---
-import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
+import { FOOTER_NAV } from '@config/navigation';
 import { Image } from 'astro:assets';
 import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
-
-const FOOTER_NAV = [
-  {
-    label: '水まわりサービス',
-    href: '/water',
-    children: [
-      { label: 'トイレサービス', href: '/water/toilet' },
-      { label: 'キッチンサービス', href: '/water/kitchen' },
-      { label: 'お風呂サービス', href: '/water/bath' },
-      { label: '洗面所サービス', href: '/water/washroom' },
-    ],
-  },
-  {
-    label: '電気まわりサービス',
-    href: '/electricity',
-    children: [
-      { label: 'ブレーカーサービス', href: '/electricity/breaker' },
-      { label: 'コンセントサービス', href: '/electricity/outlet' },
-      { label: '照明サービス', href: '/electricity/lighting' },
-      { label: 'アンテナ工事サービス', href: '/electricity/antenna' },
-      { label: '給湯器交換サービス', href: '/electricity/water-heater' },
-    ],
-  },
-  {
-    label: '会社案内',
-    href: '/company',
-    children: [
-      { label: '会社概要', href: '/company/about' },
-      { label: '企業理念', href: '/company/philosophy' },
-      { label: '採用ページ', href: '/company/recruit' },
-      { label: '対応エリア', href: '/company/office' },
-    ],
-  },
-  {
-    label: 'はじめてご利用の方へ',
-    children: [
-      { label: '作業の流れ', href: '/flow' },
-      { label: '施工事例', href: '/case' },
-      { label: 'お客さまの声', href: '/voice' },
-      { label: 'コラム', href: '/columns' },
-      { label: 'よくある質問', href: '/faq' },
-    ],
-  },
-  {
-    label: 'サイト情報',
-    children: [
-      { label: '無料相談フォーム', href: '/contact' },
-      { label: 'プライバシーポリシー', href: '/privacy' },
-      { label: 'サイトマップ', href: '/sitemap' },
-    ],
-  },
-];
 ---
 
 <footer class="mb-[calc(90px+env(safe-area-inset-bottom))] md:mb-0">

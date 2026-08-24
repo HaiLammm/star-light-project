@@ -15,7 +15,7 @@ interface Props {
 
 const { title, date, category, subcategory, excerpt, image, imageAlt, href } = Astro.props;
 
-const categoryColor = category === 'electricity' ? '#FBC02D' : '#0277BD';
+const categoryColor = category === 'electricity' ? 'var(--color-electric)' : 'var(--color-water)';
 ---
 
 <article>

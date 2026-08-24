@@ -7,7 +7,7 @@ import TestimonialCard from '../../../components/TestimonialCard.astro';
 import CategorySidebar from '../../../components/CategorySidebar.astro';
 import CTABlock from '../../../components/CTABlock.astro';
 import { VOICE_FILTER_CATEGORIES, VOICE_CATEGORY_LABEL_MAP, CASE_SLUG_LABEL_MAP, getTestimonialImageSrc } from '../../../data/caseVoiceData';
-import { SITE_CONFIG } from '../../../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
 import { resolveImage } from '../../../utils/imageImports';
 
 export async function getStaticPaths() {
@@ -111,7 +111,7 @@ const breadcrumbItems = [
   .under-heading::after {
     content: "";
     display: block;
-    background-color: #1B2A4A;
+    background-color: var(--color-navy);
     width: 40px;
     height: 2px;
     position: absolute;

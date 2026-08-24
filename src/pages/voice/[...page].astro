@@ -10,7 +10,7 @@ import Pagination from '../../components/Pagination.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { VOICE_FILTER_CATEGORIES, getTestimonialImageSrc } from '../../data/caseVoiceData';
 import { generateAggregateRating, serializeJsonLd } from '../../utils/schema';
-import { SITE_CONFIG } from '../../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const allTestimonials = await getCollection('testimonials');
@@ -130,7 +130,7 @@ const breadcrumbItems = [
   .under-heading::after {
     content: "";
     display: block;
-    background-color: #1B2A4A;
+    background-color: var(--color-navy);
     width: 40px;
     height: 2px;
     position: absolute;

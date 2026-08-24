@@ -1,4 +1,4 @@
-import { SITE_CONFIG, type OfficeAddress, type RegionalOffice } from './siteConfig';
+import { SITE_CONFIG, type OfficeAddress, type RegionalOffice } from '@config/site';
 
 type SchemaContext = 'https://schema.org';
 

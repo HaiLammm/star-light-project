@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import CTABlock from '../components/CTABlock.astro';
-import { SITE_CONFIG, SERVICE_CATEGORIES } from '../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
+import { SERVICE_CATEGORIES } from '@config/services';
 import { getCollection } from 'astro:content';
 
 const breadcrumbItems = [

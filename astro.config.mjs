@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { rehypeArticleImages } from './src/utils/rehypeArticleImages.mjs';
+import { SITE_CONFIG } from './src/config/site';
 
 // Build a URL→lastmod map from blog frontmatter so sitemap entries get
 // per-page dates instead of a single build timestamp.
@@ -19,8 +20,9 @@ for (const file of readdirSync(blogDir).filter(f => f.endsWith('.md') || f.endsW
   const m = updated ?? published;
   if (m) {
     const slug = file.replace(/\.mdx?$/, '');
+    // new URL để key khớp URL đã chuẩn hóa của @astrojs/sitemap, kể cả khi siteUrl có "/" cuối
     blogDateMap.set(
-      `https://www.setsubi-pro.net/columns/${slug}/`,
+      new URL(`/columns/${slug}/`, SITE_CONFIG.siteUrl).href,
       new Date(m[1]).toISOString(),
     );
   }
@@ -28,7 +30,7 @@ for (const file of readdirSync(blogDir).filter(f => f.endsWith('.md') || f.endsW
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.setsubi-pro.net',
+  site: SITE_CONFIG.siteUrl,
   output: 'static',
   compressHTML: true,
   image: {

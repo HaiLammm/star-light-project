@@ -7,7 +7,8 @@ import CtaFeatures from '../../components/CtaFeatures.astro';
 import FAQAccordion from '../../components/FAQAccordion.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import PriceBar from '../../components/PriceBar.astro';
-import { SITE_CONFIG, ELECTRICITY_SERVICES, WATER_SERVICES, REGIONAL_OFFICES } from '../../utils/siteConfig';
+import { SITE_CONFIG, REGIONAL_OFFICES } from '@config/site';
+import { ELECTRICITY_SERVICES, WATER_SERVICES } from '@config/services';
 import { getCollection } from 'astro:content';
 import { generateLocalBusiness, generateFAQ, serializeJsonLd } from '../../utils/schema';
 import { resolveImage } from '../../utils/imageImports';
@@ -131,7 +132,7 @@ const hubFaqSchema = faqItems.length > 0 ? generateFAQ(faqItems) : null;
   />
 
   <!-- 24/7 Availability -->
-  <div class="bg-[#1B2A4A] text-white text-center py-2 sm:py-3">
+  <div class="bg-navy text-white text-center py-2 sm:py-3">
     <p class="text-[12px] sm:text-[14px] md:text-[16px] font-bold tracking-wide">
       <span class="inline-block bg-[#FF6B00] text-white text-[10px] sm:text-[11px] md:text-[13px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full mr-2 align-middle">24時間</span>
       <span class="align-middle">365日年中無休で対応 ｜ 電話相談無料</span>
@@ -207,7 +208,7 @@ const hubFaqSchema = faqItems.length > 0 ? generateFAQ(faqItems) : null;
                 <p class="text-[13px] sm:text-[15px] md:text-[18px] font-bold leading-snug">{s.label}トラブル</p>
                 <p class="text-[10px] sm:text-[11px] md:text-[12px] text-[#666] mt-1">{s.description}</p>
                 <div class="flex items-center justify-center gap-1.5 mt-2">
-                  <span class="bg-[#E53935] text-white text-[8px] sm:text-[9px] md:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-[4px] leading-tight whitespace-nowrap">WEB割引</span>
+                  <span class="bg-red text-white text-[8px] sm:text-[9px] md:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-[4px] leading-tight whitespace-nowrap">WEB割引</span>
                   <p class="font-[Roboto] text-[18px] sm:text-[22px] md:text-[26px] font-bold text-cta leading-none">
                     {s.startingPrice.toLocaleString('ja-JP')}<span class="font-['Noto_Sans_JP'] text-[10px] sm:text-[11px] md:text-[12px] font-normal text-[#333] ml-0.5">円[税込]〜</span>
                   </p>

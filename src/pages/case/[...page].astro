@@ -9,7 +9,7 @@ import CategorySidebar from '../../components/CategorySidebar.astro';
 import Pagination from '../../components/Pagination.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { CASE_FILTER_CATEGORIES, CATEGORY_LABEL_MAP, getCaseImageSrc } from '../../data/caseVoiceData';
-import { SITE_CONFIG } from '../../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const allCases = await getCollection('cases');
@@ -117,7 +117,7 @@ const breadcrumbItems = [
   .under-heading::after {
     content: "";
     display: block;
-    background-color: #1B2A4A;
+    background-color: var(--color-navy);
     width: 40px;
     height: 2px;
     position: absolute;

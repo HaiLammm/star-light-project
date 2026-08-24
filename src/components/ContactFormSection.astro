@@ -1,5 +1,5 @@
 ---
-import { SITE_CONFIG } from '../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
 
 interface Props {
   variant?: 'homepage' | 'page';
@@ -8,6 +8,13 @@ interface Props {
 const { variant = 'homepage' } = Astro.props;
 const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID ?? '';
 const formAction = formspreeId ? `https://formspree.io/f/${formspreeId}` : '/contact';
+
+// Fallback khi gửi form thất bại — client JS đọc qua data attribute;
+// số điện thoại nội suy từ SITE_CONFIG ngay tại frontmatter.
+// Escape vì chuỗi này đi vào innerHTML ở client (giá trị config không được chứa markup sống).
+const escapeHtml = (s: string) =>
+  s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c);
+const submitErrorHtml = `送信に失敗しました。お電話でもお問い合わせいただけます。<a href="${escapeHtml(SITE_CONFIG.phone.href)}" class="font-bold underline ml-1">${escapeHtml(SITE_CONFIG.phone.display)}</a>`;
 
 const FIELDS = [
   { name: 'name', label: 'お名前', type: 'text', placeholder: '例：山田 花子', autocomplete: 'name', required: true },
@@ -34,6 +41,7 @@ const FIELDS = [
           action={formAction}
           method="POST"
           aria-label="コンタクトフォーム"
+          data-error-html={submitErrorHtml}
           class="flex flex-col gap-[20px] sm:gap-[30px]"
         >
           <!-- Honeypot -->
@@ -63,7 +71,7 @@ const FIELDS = [
                   placeholder={placeholder}
                   required={required}
                   aria-required={required ? 'true' : 'false'}
-                  class="w-full h-[40px] sm:h-[48px] px-[10px] sm:px-[14px] py-[10px] sm:py-[12px] rounded-[4px] sm:rounded-[5px] border border-[#e0e0e0] bg-white text-[14px] sm:text-[16px] placeholder:text-[#aaa] outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A] focus:border-[#1B2A4A] transition-colors duration-200"
+                  class="w-full h-[40px] sm:h-[48px] px-[10px] sm:px-[14px] py-[10px] sm:py-[12px] rounded-[4px] sm:rounded-[5px] border border-[#e0e0e0] bg-white text-[14px] sm:text-[16px] placeholder:text-[#aaa] outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-navy focus:border-navy transition-colors duration-200"
                 />
               </div>
             </div>
@@ -94,7 +102,7 @@ const FIELDS = [
                   name="agree"
                   required
                   aria-required="true"
-                  class="w-[24px] h-[24px] sm:w-[28px] sm:h-[28px] accent-[#0277BD] shrink-0 cursor-pointer"
+                  class="w-[24px] h-[24px] sm:w-[28px] sm:h-[28px] accent-water shrink-0 cursor-pointer"
                 />
                 <span class="text-[14px] sm:text-[16px] md:text-[17px] font-bold">プライバシーポリシーに同意する</span>
               </label>
@@ -104,7 +112,7 @@ const FIELDS = [
           <!-- Submit button -->
           <button
             type="submit"
-            class="w-[200px] sm:w-[240px] md:w-[280px] min-h-[48px] md:min-h-[60px] flex justify-center items-center gap-2 mx-auto mt-[30px] sm:mt-[40px] bg-cta hover:bg-cta-deep text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold rounded-full shadow-[0_8px_20px_rgba(255,107,0,0.28)] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1B2A4A]"
+            class="w-[200px] sm:w-[240px] md:w-[280px] min-h-[48px] md:min-h-[60px] flex justify-center items-center gap-2 mx-auto mt-[30px] sm:mt-[40px] bg-cta hover:bg-cta-deep text-white text-[14px] sm:text-[16px] md:text-[18px] font-bold rounded-full shadow-[0_8px_20px_rgba(255,107,0,0.28)] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-navy"
           >
             送信
           </button>
@@ -139,18 +147,18 @@ const FIELDS = [
           submitBtn.disabled = false;
           submitBtn.textContent = '送信';
           const errorDiv = document.createElement('div');
-          errorDiv.className = 'bg-[#ffebee] border border-[#E53935] rounded p-4 text-[#c62828] text-[14px]';
+          errorDiv.className = 'bg-[#ffebee] border border-red rounded p-4 text-[#c62828] text-[14px]';
           errorDiv.setAttribute('role', 'alert');
-          errorDiv.innerHTML = `送信に失敗しました。お電話でもお問い合わせいただけます。<a href="tel:05088966909" class="font-bold underline ml-1">050-8896-6909</a>`;
+          errorDiv.innerHTML = form.dataset.errorHtml || '送信に失敗しました。お時間をおいて再度お試しください。';
           form.prepend(errorDiv);
         }
       } catch {
         submitBtn.disabled = false;
         submitBtn.textContent = '送信';
         const errorDiv = document.createElement('div');
-        errorDiv.className = 'bg-[#ffebee] border border-[#E53935] rounded p-4 text-[#c62828] text-[14px]';
+        errorDiv.className = 'bg-[#ffebee] border border-red rounded p-4 text-[#c62828] text-[14px]';
         errorDiv.setAttribute('role', 'alert');
-        errorDiv.innerHTML = `送信に失敗しました。お電話でもお問い合わせいただけます。<a href="tel:05088966909" class="font-bold underline ml-1">050-8896-6909</a>`;
+        errorDiv.innerHTML = form.dataset.errorHtml || '送信に失敗しました。お時間をおいて再度お試しください。';
         form.prepend(errorDiv);
       }
     });

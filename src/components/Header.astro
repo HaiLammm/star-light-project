@@ -1,5 +1,6 @@
 ---
-import { SITE_CONFIG, NAVIGATION } from '../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
+import { NAVIGATION } from '@config/navigation';
 import { Image } from 'astro:assets';
 import MegaMenu from './MegaMenu.astro';
 import MobileMenu from './MobileMenu.astro';
@@ -85,7 +86,7 @@ import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
     margin: auto;
     width: 24px;
     height: 2px;
-    background-color: #1B2A4A;
+    background-color: var(--color-navy);
     transition: transform 0.3s, background-color 0.3s;
   }
   .hamburger__line::before,

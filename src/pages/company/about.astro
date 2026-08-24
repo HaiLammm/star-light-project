@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTABlock from '../../components/CTABlock.astro';
-import { SITE_CONFIG } from '../../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -13,7 +13,7 @@ const breadcrumbItems = [
 const companyInfo = [
   { label: '社名', value: '株式会社Hoaloha' },
   { label: '住所', value: '大阪府大阪市北区曽根崎新地1丁目11-20-9E' },
-  { label: '電話番号', value: '050-8896-6909', isPhone: true },
+  { label: '電話番号', value: SITE_CONFIG.phone.display, isPhone: true },
   { label: '設立日', value: '令和８年４月９日' },
   { label: '代表名', value: '御園 祐輔' },
   { label: '事業内容', value: '電気工事事業、水道施設工事業' },
@@ -63,7 +63,7 @@ const companyInfo = [
             </th>
             <td class="text-[14px] md:text-[16px] text-[#333] py-4 px-4 md:px-6 border-b border-[#e0e0e0]">
               {row.isPhone ? (
-                <a href="tel:05088966909" class="text-water hover:underline">{row.value}</a>
+                <a href={SITE_CONFIG.phone.href} class="text-water hover:underline">{row.value}</a>
               ) : (
                 row.value
               )}

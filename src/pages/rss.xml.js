@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { SITE_CONFIG } from '../utils/siteConfig';
+import { SITE_CONFIG } from '@config/site';
 
 export async function GET(context) {
   const posts = await getCollection('blog');
@@ -9,7 +9,7 @@ export async function GET(context) {
   );
 
   return rss({
-    title: `${SITE_CONFIG.companyName}｜お役立ちコラム`,
+    title: SITE_CONFIG.rssTitle,
     description: '電気設備・水回り設備のトラブル対処法や予防のポイントを専門スタッフが解説するコラムです。',
     site: context.site,
     items: sorted.map((post) => ({

@@ -1,5 +1,5 @@
 ---
-import type { NavigationItem } from '../utils/siteConfig';
+import type { NavigationItem } from '@config/navigation';
 
 interface Props {
   navigation: NavigationItem[];
@@ -16,7 +16,7 @@ const { navigation } = Astro.props;
     aria-label="ナビゲーションメニュー"
     id="mobile-menu"
     class="fixed inset-0 w-full h-full overflow-y-auto"
-    style="background:#1B2A4A;padding:50px 20px 100px"
+    style="background:var(--color-navy);padding:50px 20px 100px"
   >
     <nav>
       <ul>
@@ -47,7 +47,7 @@ const { navigation } = Astro.props;
             {item.columns && (
               <div class="mt-[12px] flex flex-col gap-[16px]">
                 {item.columns.map((col) => {
-                  const accent = col.accent === 'electric' ? '#FBC02D' : '#0277BD';
+                  const accent = col.accent === 'electric' ? 'var(--color-electric)' : 'var(--color-water)';
                   return (
                     <div>
                       <a
