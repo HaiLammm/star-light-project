@@ -5,7 +5,7 @@ excerpt: "アンテナが倒れたときの安全確認から、考えられる�
 publishedDate: 2026-08-28
 updatedDate: 2026-08-28
 category: electricity
-subcategory: "テレビアンテナ"
+subcategory: "アンテナ工事"
 image: /images/SEO/antenna-felldown/thumbnail.jpg
 imageAlt: "屋根に倒れたテレビアンテナ"
 ---
