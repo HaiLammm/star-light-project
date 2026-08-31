@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ウマノミカタ — Color System Reference</title>
+<style>
+  :root{
+    --ink:#1A2333; --ink-soft:#55627A; --brand:#16324F; --brand-tint:#EEF3F8;
+    --turf:#2F7D5A; --turf-tint:#EAF4EF; --accent:#C25E1E; --bridge:#8A4A63;
+    --paper:#FFFFFF; --paper-warm:#F7F6F3; --line:#E3E6EC;
+    --win:#1E7A46; --loss:#B3261E; --notice:#5A5F6A;
+    --jp:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium","Yu Gothic","Meiryo",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--jp);background:var(--paper-warm);color:var(--ink);padding:40px 20px 80px;max-width:960px;margin:0 auto}
+  h1{font-size:24px;margin-bottom:4px}
+  .lead{color:var(--ink-soft);font-size:14px;margin-bottom:32px}
+  h2{font-size:17px;margin:36px 0 12px;padding-left:10px;border-left:4px solid var(--brand)}
+  .sw{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{width:150px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .chip .c{height:64px}
+  .chip .t{padding:8px 10px;font-size:11px;line-height:1.5}
+  .chip .t b{display:block;font-size:11.5px}
+  .chip .t span{color:var(--ink-soft)}
+  .demo{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:8px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:6px}
+  .tag.turf{background:var(--turf-tint);color:var(--turf)}
+  .tag.race{background:var(--brand-tint);color:var(--brand)}
+  .tag.bridge{background:#F5ECF0;color:var(--bridge)}
+  .btn{display:inline-block;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:700;text-decoration:none;margin:4px 8px 4px 0}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.secondary{border:1.5px solid var(--brand);color:var(--brand)}
+  a.link{color:var(--brand)}
+  a.gloss{color:var(--brand);text-decoration:underline dotted;text-underline-offset:3px}
+  p.body{font-size:16px;line-height:1.9;max-width:680px;margin:10px 0}
+  .noticeband{background:var(--paper-warm);color:var(--notice);font-size:12px;line-height:1.7;padding:12px 14px;border-radius:8px;margin-top:14px;max-width:680px}
+  table{border-collapse:collapse;font-size:13px;margin-top:10px;background:#fff}
+  th{background:var(--brand-tint);color:var(--brand);text-align:left;padding:8px 14px;font-size:11px}
+  td{padding:9px 14px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  .win{color:var(--win);font-weight:700}.loss{color:var(--loss);font-weight:700}
+  .hdrdemo{background:var(--brand);color:#fff;border-radius:10px;padding:14px 18px;font-weight:800;letter-spacing:.04em;max-width:680px}
+  .contrast{font-size:12.5px;line-height:1.8;color:var(--ink-soft);margin-top:10px}
+</style>
+</head>
+<body>
+<h1>ウマノミカタ — Color System Reference</h1>
+<p class="lead">Single light theme, locked in the UX Design Specification (Visual Design Foundation). These values become the Tailwind v4 <code>@theme</code> block in <code>src/styles/global.css</code>. Ink-navy brand deliberately differentiates from the green branding of netkeiba and JRA.</p>
+
+<h2>Tokens</h2>
+<div class="sw">
+  <div class="chip"><div class="c" style="background:#1A2333"></div><div class="t"><b>--color-ink</b><span>#1A2333 · body text</span></div></div>
+  <div class="chip"><div class="c" style="background:#55627A"></div><div class="t"><b>--color-ink-soft</b><span>#55627A · metadata</span></div></div>
+  <div class="chip"><div class="c" style="background:#16324F"></div><div class="t"><b>--color-brand</b><span>#16324F · brand navy</span></div></div>
+  <div class="chip"><div class="c" style="background:#EEF3F8"></div><div class="t"><b>--color-brand-tint</b><span>#EEF3F8 · quiet fills</span></div></div>
+  <div class="chip"><div class="c" style="background:#2F7D5A"></div><div class="t"><b>--color-turf</b><span>#2F7D5A · beginner pillar</span></div></div>
+  <div class="chip"><div class="c" style="background:#EAF4EF"></div><div class="t"><b>--color-turf-tint</b><span>#EAF4EF · guide fills</span></div></div>
+  <div class="chip"><div class="c" style="background:#C25E1E"></div><div class="t"><b>--color-accent</b><span>#C25E1E · single warm CTA</span></div></div>
+  <div class="chip"><div class="c" style="background:#8A4A63"></div><div class="t"><b>--color-bridge</b><span>#8A4A63 · uma-bridge pillar</span></div></div>
+  <div class="chip"><div class="c" style="background:#FFFFFF;border-bottom:1px solid var(--line)"></div><div class="t"><b>--color-paper</b><span>#FFFFFF · page bg</span></div></div>
+  <div class="chip"><div class="c" style="background:#F7F6F3"></div><div class="t"><b>--color-paper-warm</b><span>#F7F6F3 · alt sections</span></div></div>
+  <div class="chip"><div class="c" style="background:#E3E6EC"></div><div class="t"><b>--color-line</b><span>#E3E6EC · borders</span></div></div>
+  <div class="chip"><div class="c" style="background:#1E7A46"></div><div class="t"><b>--color-win</b><span>#1E7A46 · ledger 的中</span></div></div>
+  <div class="chip"><div class="c" style="background:#B3261E"></div><div class="t"><b>--color-loss</b><span>#B3261E · ledger 不的中</span></div></div>
+  <div class="chip"><div class="c" style="background:#5A5F6A"></div><div class="t"><b>--color-notice</b><span>#5A5F6A · notices</span></div></div>
+</div>
+
+<h2>In context — chrome & pillar identity</h2>
+<div class="demo">
+  <div class="hdrdemo">ウマノミカタ</div>
+  <p style="margin-top:14px">
+    <span class="tag turf">初心者向け</span>
+    <span class="tag race">レース分析</span>
+    <span class="tag bridge">ウマ娘×競馬</span>
+  </p>
+</div>
+
+<h2>In context — reading surface</h2>
+<div class="demo">
+  <p class="body">はじめての馬券なら、まずは<a class="gloss" href="#">複勝</a>（3着以内に入れば当たりの買い方）がおすすめです。くわしくは<a class="link" href="#">出馬表の読み方</a>で解説しています。</p>
+  <a class="btn primary" href="#">深掘り記事を読む</a>
+  <a class="btn secondary" href="#">レース分析をすべて見る</a>
+  <div class="noticeband">馬券の購入は20歳になってから。当サイトの予想・分析は的中や利益を保証するものではありません。</div>
+</div>
+
+<h2>In context — ledger (equal-weight honesty)</h2>
+<div class="demo">
+  <table>
+    <tr><th>レース</th><th>予想</th><th>結果</th><th>記録日時</th></tr>
+    <tr><td>ジャパンカップ</td><td>◎ 3番</td><td class="win">○ 的中</td><td>2026-11-29 14:02</td></tr>
+    <tr><td>マイルCS</td><td>◎ 7番</td><td class="loss">× 不的中</td><td>2026-11-22 13:55</td></tr>
+    <tr><td>エリザベス女王杯</td><td>◎ 12番</td><td class="loss">× 不的中</td><td>2026-11-15 14:10</td></tr>
+  </table>
+</div>
+
+<h2>Contrast verification (WCAG 2.1 AA)</h2>
+<p class="contrast">
+  ink on paper 14.9:1 ・ brand on paper 10.9:1 ・ ink-soft on paper 6.0:1 ・ accent on white 4.6:1 (restricted to bold ≥16px CTA text) ・ white on brand 10.9:1 ・ white on accent 4.6:1 ・ win on white 5.3:1 ・ loss on white 6.1:1 ・ notice on paper-warm 5.6:1.
+  Rule: every token pair used for text must hold ≥4.5:1; outcomes and pillar identities always pair color with text/symbol — never color alone.
+</p>
+</body>
+</html>

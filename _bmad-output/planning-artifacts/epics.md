@@ -1,938 +1,794 @@
 ---
-stepsCompleted: [step-01, step-02, step-03, step-04]
+stepsCompleted:
+  [
+    step-01-validate-prerequisites,
+    step-02-design-epics,
+    step-03-create-stories,
+    step-04-final-validation,
+  ]
+completedAt: '2026-08-26'
+project_name: 'racing-horse (ウマノミカタ working name)'
+totalEpics: 8
+totalStories: 28
+mvpStories: 25
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/architecture.md
   - _bmad-output/planning-artifacts/ux-design-specification.md
+  - _bmad-output/project-context.md
 ---
 
-# star-light - Epic Breakdown
+# Keiba Media Pivot (ウマノミカタ) - Epic Breakdown
 
 ## Overview
 
-This document provides the complete epic and story breakdown for star-light, decomposing the requirements from the PRD, UX Design, and Architecture into implementable stories.
+This document provides the complete epic and story breakdown for the Keiba Media Pivot (ウマノミカタ), decomposing the requirements from the PRD, UX Design Specification, and Architecture Decision Document into implementable stories. This is a brownfield conversion of the existing Astro 5 static site (star-light heritage); epic ordering follows the architecture's six-stage build-green conversion sequence so `npm run build` stays green at every stage boundary.
 
 ## Requirements Inventory
 
 ### Functional Requirements
 
-FR1: Visitor can navigate to any page within 3 clicks from homepage
-FR2: Visitor can access primary navigation menu on all pages (desktop and mobile)
-FR3: Visitor can view breadcrumb trail showing current location on all pages
-FR4: Visitor can access footer navigation with complete site links on all pages
-FR5: Mobile visitor can open/close a hamburger navigation menu
-FR6: Visitor can initiate a phone call with one tap on mobile devices from any page
-FR7: Visitor can see the emergency phone number prominently displayed on every page
-FR8: Visitor can submit a contact request via form with name, address, phone, email, service category, and description
-FR9: Visitor can select service category (water, electrical, pest control) in the contact form
-FR10: Visitor can see 24/7 availability messaging on all service pages
-FR11: Visitor can browse water repair services with sub-categories (toilet, kitchen, bath, washroom)
-FR12: Visitor can browse electrical repair services with sub-categories (breaker, outlet, lighting, antenna, water heater)
-FR13: Visitor can browse pest control services with sub-categories
-FR14: Visitor can view starting prices for each service category
-FR15: Visitor can view the 5-step service process flow (consultation → dispatch → estimate → work → payment)
-FR16: Visitor can view the satisfaction guarantee policy ("no charge if unsatisfied")
-FR17: Visitor can view service coverage areas (Tokyo, Nagoya, Osaka, Hyogo)
-FR18: Visitor can view office locations and contact details for each region
-FR19: Visitor can view a visual map of service areas
-FR20: Visitor can view customer testimonials with service details
-FR21: Visitor can view case studies with photos, location, duration, and cost
-FR22: Visitor can see trust indicators (licensed technicians, years of experience, certifications)
-FR23: Visitor can see the "reasons to choose us" section with key differentiators
-FR24: Visitor can browse blog/column articles listing
-FR25: Visitor can read individual blog/column articles
-FR26: Visitor can view FAQ with common questions and answers
-FR27: Visitor can view company overview (about, philosophy)
-FR28: Visitor can view office information for each regional location
-FR29: Visitor can view privacy policy
-FR30: Visitor can view a hero carousel with rotating service banners
-FR31: Visitor can see service category overview cards on homepage
-FR32: Visitor can view featured case studies on homepage
-FR33: Visitor can view featured customer testimonials on homepage
-FR34: Visitor can view FAQ highlights on homepage
-FR35: Search engine can crawl and index all pages via sitemap.xml
-FR36: Search engine can read structured data (LocalBusiness, Service, FAQ, Review, Breadcrumb) on relevant pages
-FR37: Search engine can determine page language and region via hreflang and lang attributes
-FR38: Search engine can resolve canonical URLs for each page
-FR39: Content manager can update service information, pricing, and descriptions via data files
-FR40: Content manager can add/edit/remove case studies with photos
-FR41: Content manager can add/edit/remove customer testimonials
-FR42: Content manager can add/edit/remove FAQ entries
-FR43: Content manager can publish new blog/column articles
-FR44: Content manager can preview changes locally before deployment
-FR45: Content manager can deploy content updates with automatic build and publish
+**Content Library & Reading Experience**
+
+- FR1: Readers can browse and read beginner guides (出馬表 reading, bet types, first track day, online betting onboarding) without registration or payment.
+- FR2: Readers can look up keiba terminology in a glossary, and encounter jargon terms explained inline wherever they appear in articles.
+- FR3: Readers can read Uma Musume bridge articles — factual profiles of the real horses behind characters — and follow links from them into beginner guides and race content.
+- FR4: Readers can read G1/重賞 deep-dive articles (history, course characteristics, pedigree stories, horse profiles) organized around the JRA race calendar.
+- FR5: Readers can visit a per-race hub page for each covered G1 that accumulates and surfaces that race's content across years.
+- FR6: Readers can navigate by content pillar (beginner hub, magazine, glossary) from any page.
+- FR7: Readers can discover related content from any article (internal linking by topic, race, and horse).
+
+**Trust & Compliance Infrastructure**
+
+- FR8: Readers can view the named author's profile page, credentials, and the site's editorial policy.
+- FR9: Readers can see an AI-assistance disclosure explaining how content is produced and reviewed.
+- FR10: Readers see responsible-gambling and under-20 notices on every prediction-related and betting-related page.
+- FR11: All published race facts stay within the documented data boundary (prose facts, hand-curated history; no bulk data tables, no scraped content) — verifiable per article.
+- FR12: Prediction-related content contains no profitability claims and uses 景品表示法-safe language patterns.
+
+**Prediction Ledger**
+
+- FR13: The operator can record a prediction entry (picks + reasoning) with a pre-race timestamp before the race runs. *(MVP: private)*
+- FR14: The operator can record each prediction's actual result and computed outcome after the race, with entries immutable once recorded.
+- FR15: The operator can view the accumulated hit-rate/ROI record across all entries to evaluate the dry run. *(MVP: private)*
+- FR16: Readers can view the public ledger — every published prediction with its result, including losses, and honest aggregate ROI. *(Phase 2)*
+- FR17: Readers can read the prediction methodology page explaining how predictions are made and framed. *(Phase 2)*
+- FR18: Readers can read weekly prediction articles for graded races, published before the race. *(Phase 2)*
+
+**Distribution & Audience Channels**
+
+- FR19a: Readers can follow the site's X account from touchpoints on the site.
+- FR19b: The operator can publish a thread version of each G1 deep-dive to X.
+- FR20: Readers can subscribe to a weekend newsletter and/or LINE channel from any page, timed to the JRA calendar.
+- FR21: Readers can subscribe to the site's RSS feed.
+- FR22: Shared links render correct OGP previews (title, 1200×675 image) on X and LINE, including in-app browsers.
+
+**Search Discovery & SEO**
+
+- FR23: Every content page carries complete structured data (Article JSON-LD, BreadcrumbList, Organization identity) per the site's SEO playbook, rendering as rich results.
+- FR24: Search engines receive an accurate sitemap with per-page last-modified dates driven by content update dates.
+- FR25: Every published URL remains stable; renamed or removed URLs 301-redirect (raw + percent-encoded forms for Japanese URLs).
+- FR26: The launch article set targets keywords committed via the pre-MVP keyword-gap research.
+
+**Content Operations (Operator)**
+
+- FR27: The operator can produce articles via the AI pipeline and pass each through a mandatory human review checklist (fact-check, Japanese QA, tone/policy check) before publish.
+- FR28: Content missing required editorial metadata (title/description within length rules, dates, category, images, alt text) cannot be published — enforcement is automatic, not a manual checklist step.
+- FR29: The operator can execute a defined weekly race-cadence workflow (deep-dive, thread, ledger entry, result recording) and a documented fallback mode when capacity is reduced.
+- FR30: The operator can verify SEO/rich-results compliance per release via a repeatable publish checklist.
+
+**Site Identity & Migration**
+
+- FR31: The site presents the new keiba brand (validated name, logo, theme) consistently on every page and in every metadata surface — no home-services remnants reachable by users or crawlers.
+- FR32: The conversion retires all home-services routes, categories, the contact flow, and the Decap CMS surface (/admin plus its auth worker), with deliberate handling of legacy URLs and site identity.
+
+**Analytics & Measurement**
+
+- FR33: The operator can measure the success-criteria metrics: organic sessions, return-visitor rate, ranking positions, subscriber counts, and G1-week cadence adherence.
+- FR34: Measurement stays within the privacy-light posture defined in NFR15 (cookieless, CSP-compatible, <5KB page-weight impact) — no tracking beyond it, protecting the trust brand.
 
 ### NonFunctional Requirements
 
-NFR1: Page load time < 1 second on 4G mobile networks in Japan
-NFR2: Lighthouse Performance score ≥ 95 on all pages
-NFR3: LCP < 1.5s, INP < 100ms, CLS < 0.05 on all pages
-NFR4: TTFB < 200ms (Cloudflare Pages edge delivery)
-NFR5: Total page weight < 500KB per page
-NFR6: JavaScript payload < 50KB (carousel + form islands only)
-NFR7: All images served in WebP/AVIF with responsive srcset
-NFR8: Font loading does not block first paint (font-display: swap)
-NFR9: All pages served over HTTPS (Cloudflare automatic SSL)
-NFR10: Contact form submissions protected against spam (Formspree built-in honeypot + reCAPTCHA option)
-NFR11: No sensitive data stored on the website (stateless static site)
-NFR12: Content-Security-Policy headers configured to prevent XSS
-NFR13: Static site handles unlimited concurrent visitors (no server bottleneck)
-NFR14: Build time < 60 seconds for full site rebuild
-NFR15: Color contrast ratio ≥ 4.5:1 for normal text, ≥ 3:1 for large text
-NFR16: All interactive elements keyboard-navigable with visible focus indicators
-NFR17: Semantic HTML structure with proper heading hierarchy
-NFR18: ARIA labels on interactive components (carousel controls, mobile menu, form inputs)
-NFR19: Skip navigation link for screen reader users
-NFR20: Form inputs with associated labels and accessible error messages
-NFR21: prefers-reduced-motion media query disables carousel autoplay
-NFR22: Image alt text in Japanese on all images
-NFR23: Formspree: Contact form submissions delivered to client email within 5 minutes
-NFR24: Google Maps Embed: Service area map loads without blocking page render
-NFR25: Schema.org JSON-LD: Valid structured data on all pages (zero errors in Google Rich Results Test)
-NFR26: sitemap.xml: Auto-generated, includes all pages with correct lastmod dates
-NFR27: Google Search Console: Site verification and sitemap submission at launch
+**Performance**
+
+- NFR1: Mobile Lighthouse Performance ≥99 on every page type (article, hub, glossary, top) at every release; verified before deploy whenever hero, layout, fonts, images, or islands change.
+- NFR2: Core Web Vitals on real mobile devices: LCP <1.5s, CLS <0.02, INP <200ms on a mid-range Android over 4G.
+- NFR3: Content pages ship zero client-side JS by default; any island must use `client:visible` and be justified against the performance budget in its PR/commit.
+- NFR4: All images are delivered in a size- and format-optimized form that holds the NFR1/NFR2 budgets, with explicit dimensions (CLS ≈ 0); only the LCP hero loads eagerly.
+
+**Security**
+
+- NFR5: The site remains fully static — no server endpoints, no secrets in the repository or client code; the only external runtime calls are the newsletter/LINE signup and analytics endpoints, each allowlisted in CSP in the same change that introduces it.
+- NFR6: Security headers (HSTS, X-Frame-Options, strict CSP) are never weakened; header config is reviewed whenever `vercel.json` changes.
+- NFR7: Subscriber data (newsletter/LINE) lives only in the chosen provider — the site never stores personal data itself.
+
+**Compliance & Content Integrity**
+
+- NFR8: 100% of published pages pass the data-boundary rule (prose facts and hand-curated history only; no bulk results tables, no scraped or licensed-feed data) — checked in the publish checklist.
+- NFR9: 100% of prediction/betting-related pages carry the responsible-gambling + under-20 notice and contain no profitability claims (景品表示法-safe wording list maintained in the editorial policy).
+- NFR10: Ledger integrity: prediction entries are timestamped before race start and never edited or deleted after results are recorded; corrections append, never overwrite.
+- NFR11: Every AI-assisted article records that a human review pass (fact-check + Japanese QA) occurred before publish; the AI-assistance disclosure stays accurate to the actual process.
+- NFR12: Uma Musume bridge content uses only factual real-horse information — no game assets, character names in titles kept within nominative fair-use framing, re-checked against Cygames guidelines quarterly.
+
+**Integration**
+
+- NFR13: Newsletter/LINE provider integration must work under the strict CSP, add no render-blocking scripts, and degrade gracefully (a failed signup widget never breaks the page).
+- NFR14: ≥90% of AI-pipeline article drafts pass content validation (required metadata, title/description length rules) without manual per-file fixes; recurring validation failures are corrected at the pipeline level, not article by article.
+- NFR15: Analytics collection is cookieless/privacy-light, CSP-compatible, and adds <5KB to page weight.
+
+**Operability (Solo Operator)**
+
+- NFR16: The weekly race-cadence loop (deep-dive review + thread + ledger entry + result recording) fits within the declared weekly hour budget of 10 hours/week; if a step routinely pushes the loop over budget, the workflow — not the operator — is adjusted.
+- NFR17: `npm run build` remains the single quality gate: TS strict + Zod violations block publish; a failed build can never partially deploy.
+- NFR18: The fallback mode is documented and executable: reduced race-week output (deep-dive only) without breaking site integrity, cadence promises, or ledger continuity.
+- NFR19: Content publishing requires no infrastructure beyond git push → Vercel build; recovery from any bad deploy is a git revert.
 
 ### Additional Requirements
 
-- Starter template: `create astro` with minimal template — project initialization as first implementation story
-- Tailwind CSS v4 via `@tailwindcss/vite` plugin (not legacy `@astrojs/tailwind`)
-- Content collections with Zod schema validation at build time for 6 content types (services, cases, testimonials, faq, blog, company)
-- 3 JS islands only: HeroCarousel (Embla ~3KB), ContactForm (React ~8KB), MobileMenu (~1KB) — total JS budget ~12KB gzip
-- Static output mode (`output: 'static'`) for Cloudflare Pages deployment
-- CSP headers via Astro 6 CSP API (whitelist Google Fonts, Maps, Formspree)
-- Formspree honeypot spam protection (no reCAPTCHA for MVP)
-- Form error handling with phone number fallback message
-- Site config centralized in `src/utils/siteConfig.ts` — never hardcode phone numbers or company data
-- Schema.org JSON-LD generated via `src/utils/schema.ts` utility functions — never inline in pages
-- All images via Astro `<Image>` component with explicit width/height for CLS prevention
-- Dynamic routes via `getStaticPaths()` for service detail pages and blog posts
-- Cloudflare Pages auto-build on git push to main branch
-- Pest control pages: `pages/pest-control/` with index.astro + [service].astro + content collection entries
-- Pagination pattern for case studies and testimonials via getStaticPaths() with page parameter
+**From Architecture — conversion strategy (binding):**
+
+- AR1: No starter template — this is a brownfield conversion-in-place of the existing `racing-horse` codebase on a feature branch; the first implementation work is the identity/token rewrite followed by the retirement pass, not scaffolding.
+- AR2: The conversion follows the six-stage build-green implementation sequence: (1) identity & tokens, (2) retirement pass, (3) schema & routing + seeded content, (4) SEO & distribution, (5) ledger, (6) analytics & launch. Each stage must leave `npm run build` green.
+- AR3: Six new content collections defined with Zod + `glob()` loaders in root `src/content.config.ts`: `guides` (md), `glossary` (md), `bridge` (md), `races` (json), `raceArticles` (md), `predictions` (json) — with the shared `articleBase` frontmatter contract (title ≤40, description 50–160, dates, image/imageAlt, relatedTerms, relatedRace, draft) and collection-specific fields as specified in Architecture D1/D2.
+- AR4: Cross-collection referential integrity (`relatedTerms`, `relatedRace`, `race`, `keyRaces`) enforced by a build-time assertion helper `src/utils/contentGraph.ts` used from `getStaticPaths`/hub pages; unknown reference → thrown error naming file and field.
+- AR5: Prediction ledger model (D2): one JSON file per entry at `src/content/predictions/<year>/<date>-<race-slug>.json`; schema with picks (fixed ¥100 stake), `entryPostedAt` ISO+09:00, status pending/recorded, result outcomes, append-only `annotations`; git commit lifecycle (`ledger: entry` / `ledger: result` / `ledger: annotate`); aggregates computed at build time by `src/utils/ledger.ts`, never stored. MVP: no `/yosou/*` route files exist.
+- AR6: URL scheme with ASCII kebab-case romaji slugs only (no Japanese characters in paths): `/guide/`, `/uma-musume/`, `/races/[race]/[slug]/`, `/glossary/[term]/`, trust pages, `/rss.xml`; Phase-2 `/yosou/*` routes designed but absent from MVP builds.
+- AR7: Redirect strategy: the old 33-entry setsubi-pro.net redirect map is deleted (new domain, old SEO history deliberately left behind); `vercel.json` keeps exactly one redirect at launch (apex ↔ www); FR25 301-discipline applies to new-domain URLs from launch day.
+- AR8: Config refactor (D4): `site.ts` rewritten (SITE_CONFIG, placeholder brand/domain — one-line change at cutover), `navigation.ts` rewritten (4 pillars + menu-only trust links, 5th slot 予想 commented for Phase 2), `theme.ts` re-tokened, `services.ts` deleted; NEW modules `author.ts` (AUTHOR_CONFIG), `raceCalendar.ts` (graded-race calendar + `getRaceWeek()`), `compliance.ts` (notices, banned-wording list, disclosure-link registry).
+- AR9: Retirement scope (D5) is exhaustive: home-services routes/pages, 6 old collections + `src/content/*` dirs + legacy `src/content/config.ts`, 19 named components + ServiceSlider.tsx island, `src/data/*.ts` modules, dependencies (`@formspree/react`, `embla-carousel*`, `swiper`), `cms-auth/` worker dir, `/admin` CSP exemption, Formspree + Google Fonts CSP hosts, Decap sitemap filter, stray asset dirs, home-services images, `docs/admin-guide.md`; schema.ts pruned (LocalBusiness/Service/Review/AggregateRating out).
+- AR10: React/`@astrojs/react` are RETAINED (zero islands in MVP; Phase-2 tools pre-contracted); the conversion adds ZERO new npm dependencies.
+- AR11: SEO plumbing (D6): JSON-LD via `schema.ts` generators only — Article (+FAQPage when `faqEntries`) + BreadcrumbList per article template, `DefinedTerm` for glossary (new `generateDefinedTerm()`), `Person` author node from AUTHOR_CONFIG; `buildLastmodMap()` (`src/utils/lastmod.mjs`) generalizing sitemap lastmod over all four dated collections; RSS rebuilt over guides+bridge+raceArticles; title ≤24 display chars + 全角｜ brand suffix; description front-loaded ≤70 chars; `max-image-preview:large`.
+- AR12: Analytics (D7): Vercel Web Analytics beacon in BaseLayout (first-party, cookieless, no cookie banner); ~15-line first-party visitor-type snippet (localStorage marker → `visitor_type: new|returning` custom event); Google Search Console verified via DNS record; cadence/subscriber metrics operator-tracked.
+- AR13: Newsletter (D8): Buttondown via plain HTML form POST (zero JS); CSP `form-action` gains `https://buttondown.com` in the same change; graceful degradation to hosted subscribe-page link; X/LINE as plain links only — no widgets/SDKs/embeds ever.
+- AR14: Image/OGP conventions (D10): dual-location rule — `src/assets/images/articles/<collection>/<slug>/hero.webp` (≥1200px source, renders 800×450) + `public/images/articles/<collection>/<slug>/share.webp` (1200×675 OGP); `og:image` 1200×675 + `twitter:card summary_large_image` per article; hub/trust pages fall back to `SITE_CONFIG.defaultOgImage`; bridge imagery rights-cleared only.
+- AR15: Glossary-link mechanism: rehype plugin `rehypeGlossaryLinks.mjs` tags `/glossary/`-prefixed anchors with `.glossary-term`; authoring rule — first occurrence carries a written parenthetical gloss matching `glossary.shortGloss`; never inside headings. MDX is NOT introduced.
+- AR16: Post-conversion CSP baseline: `default-src 'self'`; `script-src 'self' 'unsafe-inline'`; `style-src 'self' 'unsafe-inline'`; `img-src 'self' data:`; `connect-src 'self'`; `form-action 'self' https://buttondown.com`; `object-src 'none'`; `base-uri 'self'`; single `/(.*)` scope; CSP-change protocol: any new external URL modifies `vercel.json` in the same PR.
+- AR17: Operator docs live in `docs/`: `publish-checklist.md` (FR30) and `operations.md` (weekly loop + fallback mode, FR29/NFR18) — created during implementation.
+- AR18: Routes ship in the same PR as their first real content (empty-collection 404 landmine); no "coming soon" pages.
+- AR19: Ledger timestamps stored as ISO 8601 with explicit `+09:00` offset; display `M/D HH:mm` JST with full-ISO `datetime` attribute; ledger/KPI numerals use `tabular-nums`; money via ja-JP locale formatting with explicit 円.
 
 ### UX Design Requirements
 
-UX-DR1: Pixel-perfect replication of star-light15.net color system — white bg, navy accents (#1B2A4A), orange CTAs (#FF6B00), red discount badges (#E53935), light gray sections (#F5F5F5)
-UX-DR2: Noto Sans JP font loading with Google Fonts + preconnect + display=swap, fallback stack (Hiragino Kaku Gothic ProN, Yu Gothic, Meiryo)
-UX-DR3: Sticky header on all pages — logo (left), mega-menu nav (center, desktop), phone CTA (right), shadow on scroll
-UX-DR4: Mobile sticky bottom CTA bar with phone number — always visible on mobile viewports
-UX-DR5: WEB割引 (web discount) badge on CTA blocks and service cards — red/orange bg, white text, rotated ~-5deg
-UX-DR6: Service detail page canonical 13-section layout: breadcrumb → hero + WEB badge → anchor menu → pricing → reasons → comparison → area map → process flow → cases → testimonials → FAQ → related services → CTA + footer
-UX-DR7: Anchor menu (AnchorMenu.astro) — horizontal icon-based section jump nav with scroll-margin-top accounting for sticky header + anchor menu combined height
-UX-DR8: Competitor comparison table (ComparisonTable.astro) — 3-column (当社 vs A社 vs B社) with ○/×/△ indicators, horizontal scroll on mobile with sticky first column
-UX-DR9: Contact form with Japanese UX conventions — 「必須」 red badge for required fields (not asterisk), validation on blur + submit, IME composition event handling (compositionstart/compositionend), error messages in Japanese
-UX-DR10: FAQ accordion using native `<details>/<summary>` — zero JavaScript, CSS-only with [open] selector
-UX-DR11: Card hover states — subtle shadow increase only, transition 0.2s ease, no transform/scale effects
-UX-DR12: Japanese typography CSS baseline — word-break: keep-all, line-break: strict, -webkit-text-size-adjust: 100%, input font-size 16px minimum (prevent iOS zoom)
-UX-DR13: Button hierarchy — Primary orange (phone CTA only), Secondary navy (form/nav), Tertiary white+border (filters), Ghost (text links)
-UX-DR14: Mobile-first responsive breakpoints: 320px (default) → 768px (md:) → 1024px (lg:) → 1440px (xl:) with specific layout shifts per component
-UX-DR15: Accessibility — visible focus ring (2px navy outline, 2px offset), skip-nav link, min 44x44px touch targets, aria-roledescription on carousel, aria-label on ○/× in comparison table
-UX-DR16: No scroll-triggered animations, no parallax, no modals/popups, no chatbot, no back-to-top button, no image lightbox — matches original site's zero-decoration simplicity
-UX-DR17: Section spacing pattern — 60-80px vertical padding between sections, 24-32px heading to content, 16-24px within-section gaps, content max-width 1100-1200px centered
-UX-DR18: Form feedback pattern — field error (red border + inline text), submitting (disabled + spinner + 送信中...), success (green banner + thank you), server error (red banner + phone fallback)
+- UX-DR1: New `@theme` token palette in `src/styles/global.css` — ink/ink-soft/brand/brand-tint/turf/turf-tint/accent/bridge/paper/paper-warm/line/win/loss/notice with exact hex values and semantic mapping per the UX spec; `src/config/theme.ts` mirrors as CSS-var strings; all pairs used for text ≥4.5:1; single light theme (dark mode out of scope).
+- UX-DR2: Typography system: JP system font stack only (no webfonts — protected), mobile-first type scale (H1 24/32, body 16/17 at 1.9 line-height, tabular-nums display numbers), JP rules (letter-spacing 0.03em headings, bold-only emphasis, no italic JP, 16px form inputs).
+- UX-DR3: Layout foundation: article body max 680px, hub content max 1080px, 16px mobile side padding, 56px/64px sticky header, section rhythm 48/72px, single-column article pages at all sizes (no sidebars), `md:` as the only structural breakpoint.
+- UX-DR4: Design direction: D2 "Quiet Magazine" base + D5 race-week module & beginner on-ramp box (homepage above the fold) + D4 record-book ledger treatment; homepage composition order (mobile): header → pillar chips → RaceWeekModule → BeginnerOnrampBox → featured deep-dive hero → latest-article rows → footer with standing notices.
+- UX-DR5: Eight page templates: Top, Pillar hub (guide/uma-musume/races/glossary variants), Article (guide/bridge/deep-dive/prediction variants), Race hub, Glossary entry, Ledger, Trust page, 404.
+- UX-DR6: New components (each with the anatomy/states/accessibility specified in the UX spec): GlossaryTerm, ContinuationBlock (variants guide/bridge/deep-dive/prediction; ONE primary next step + 2–3 secondary), SeriesNav/SeriesMarker, AuthorByline, AuthorCard, RaceWeekModule (off-week "next upcoming" variant — never empty), BeginnerOnrampBox, KeyFactsBox/SummaryBox, TableOfContents, NoticeFooter/ComplianceNotice, SubscribeBlock, ArticleListRow/ArticleCard, HorseStoryCard (bridge hub only, CSS scroll-snap, no JS), LedgerTable (full/recent-5 variants) + LedgerKPIs.
+- UX-DR7: Retained/re-skinned components: BaseLayout, Header, MobileMenu (vanilla toggle, focus-trapped, aria-expanded), Footer (new IA columns + standing short compliance notice on every page), Breadcrumb (+JSON-LD, 375px middle-truncation), Pagination (held), FAQAccordion (`<details>`).
+- UX-DR8: Navigation: pillar chips + hamburger (mobile) / inline pillar links (≥768px); MVP nav = 初心者向け・レース分析・ウマ娘×競馬・用語集 + menu-only サイトについて/編集方針; nav designed for a 5th 予想 slot (Phase 2); footer 4 columns: pillars, trust pages, channels, compliance notice.
+- UX-DR9: Trust furniture repeats identically on every page: byline block (avatar+name+dates+AI-disclosure link), disclosure links, footer notices — same position, same styling; entry is always an article, so every article template carries full orientation (breadcrumb, pillar tag, byline).
+- UX-DR10: Button hierarchy: one solid-accent primary per viewport max; outlined-brand secondary; underlined-brand tertiary links; no red CTAs (red reserved for ledger losses); calm-imperative copy, urgency words banned.
+- UX-DR11: Feedback patterns: inline newsletter success/failure (fallback plain link — page never breaks); styled 404 with BeginnerOnrampBox + pillar links; 「結果待ち」 ledger pending rows; no spinners, no toasts, no modals (MobileMenu is the single overlay), no cookie banner.
+- UX-DR12: Forms: single subscription form class; visible label, `type="email" required`, 16px input, IME composition guard on any JS enhancement, Japanese inline errors, privacy line naming the provider.
+- UX-DR13: Accessibility (pragmatic WCAG 2.1 AA): skip-link, landmarks, one h1/sequential headings, visible 2px brand focus outline, ≥44×44px touch targets, no color-only meaning (○/× on ledger, text in chips), JP alt text, `lang="ja"`, `prefers-reduced-motion` respected, LedgerTable as true `<table>` with caption/scoped headers in `overflow-x-auto` wrapper.
+- UX-DR14: Responsive strategy: 375px baseline (safe to 320px), `md:` 2-col hub grids + inline nav, `xl:` 1080px cap + optional margin ToC; in-app browsers (X/LINE) are Priority 1 mobile — no 100vh dependencies; per-template QA: keyboard walkthrough, VoiceOver pass, axe scan, 375/1240 visual QA, 320px JP-overflow check, OGP render check in X and LINE.
+- UX-DR15: Content-discovery rules: no search/filtering in MVP (hubs/series/internal links navigate the ~25-article corpus); glossary index grouped by theme (馬券/レース/血統/コース) with 五十音 anchor row; hubs curate rather than list chronologically; visited-link styling in article bodies.
 
 ### FR Coverage Map
 
-FR1: Epic 1 - Navigate within 3 clicks
-FR2: Epic 1 - Primary navigation menu
-FR3: Epic 1 - Breadcrumb trail
-FR4: Epic 1 - Footer navigation
-FR5: Epic 1 - Mobile hamburger menu
-FR6: Epic 1 - Click-to-call one tap
-FR7: Epic 1 - Phone number on every page
-FR8: Epic 4 - Contact form submission
-FR9: Epic 4 - Service category in form
-FR10: Epic 2 - 24/7 availability messaging
-FR11: Epic 3 - Water repair services
-FR12: Epic 3 - Electrical repair services
-FR13: Epic 3 - Pest control services
-FR14: Epic 2, 3 - Starting prices
-FR15: Epic 2, 4 - 5-step process flow
-FR16: Epic 3 - Satisfaction guarantee
-FR17: Epic 3 - Service coverage areas
-FR18: Epic 3 - Office locations per region
-FR19: Epic 3 - Visual service area map
-FR20: Epic 3 - Customer testimonials
-FR21: Epic 3 - Case studies
-FR22: Epic 3 - Trust indicators
-FR23: Epic 2 - Reasons to choose us
-FR24: Epic 5 - Blog listing
-FR25: Epic 5 - Individual blog articles
-FR26: Epic 3, 4 - FAQ
-FR27: Epic 4 - Company overview
-FR28: Epic 4 - Office information
-FR29: Epic 4 - Privacy policy
-FR30: Epic 2 - Hero carousel
-FR31: Epic 2 - Service category cards
-FR32: Epic 2 - Featured case studies
-FR33: Epic 2 - Featured testimonials
-FR34: Epic 2 - FAQ highlights
-FR35: Epic 6 - sitemap.xml crawlable
-FR36: Epic 6 - Schema.org structured data
-FR37: Epic 6 - hreflang and lang
-FR38: Epic 6 - Canonical URLs
-FR39: Epic 5 - Update service info via files
-FR40: Epic 5 - Add/edit case studies
-FR41: Epic 5 - Add/edit testimonials
-FR42: Epic 5 - Add/edit FAQ entries
-FR43: Epic 5 - Publish blog articles
-FR44: Epic 5 - Preview changes locally
-FR45: Epic 5 - Deploy with auto build
-FR46: Epic 7 - Admin dashboard access with GitHub OAuth
-FR47: Epic 7 - CMS interface for all content types
-FR48: Epic 7 - Embedded GA4 analytics dashboard
-FR49: Epic 7 - Google Search Console links
+| FR | Epic(s) | Coverage |
+|---|---|---|
+| FR1 | Epic 2 | Guide article template + beginner hub + seeded guide series, no registration/payment anywhere |
+| FR2 | Epic 2 | Glossary collection, index + entry pages, GlossaryTerm inline pattern + rehype plugin |
+| FR3 | Epic 3 | Bridge hub + article template + seeded bridge articles linking into guides/races |
+| FR4 | Epic 3 | Race-article template (deep-dive/preview/recap) + magazine hub calendar organization |
+| FR5 | Epic 3 | `races` collection + permanent `/races/[race]/` hub template accumulating editions |
+| FR6 | Epic 1 (nav shell), Epics 2–3 (pillar chips on hubs/top) | Pillar navigation from every page |
+| FR7 | Epics 2–3 | ContinuationBlock variants, relatedTerms/relatedRace frontmatter routing, latest/related rows |
+| FR8 | Epic 4 | /about/ author profile + /editorial-policy/ |
+| FR9 | Epic 4 | AI-assistance disclosure on /editorial-policy/ + AuthorByline disclosure link |
+| FR10 | Epic 1 (footer short form), Epic 4 (in-content band), Epic 8 (public prediction pages) | Standing responsible-gambling + under-20 notices |
+| FR11 | Epic 4 (checklist enforcement), Epic 3 (authoring rule in content stories) | Data-boundary rule verifiable per article |
+| FR12 | Epic 4 | compliance.ts banned-word list + safe-wording patterns wired into review checklist |
+| FR13 | Epic 6 | Prediction entry schema + pre-race timestamp lifecycle (private) |
+| FR14 | Epic 6 | Result recording + immutability (append-only annotations) |
+| FR15 | Epic 6 | Build-time hit-rate/ROI aggregation + LedgerKPIs/LedgerTable (private) |
+| FR16 | Epic 8 *(Phase 2, trigger-gated)* | Public ledger page /yosou/record/ |
+| FR17 | Epic 8 *(Phase 2, trigger-gated)* | Methodology page /yosou/about/ |
+| FR18 | Epic 8 *(Phase 2, trigger-gated)* | Prediction article template /yosou/[slug]/ |
+| FR19a | Epic 5 | X follow touchpoints (SubscribeBlock, footer channels) |
+| FR19b | Epic 4 | X-thread repurposing workflow in operations doc |
+| FR20 | Epic 5 | Buttondown newsletter form + LINE link, calendar-timed copy |
+| FR21 | Epic 5 | RSS rebuilt over guides+bridge+raceArticles |
+| FR22 | Epic 5 | OGP conventions per template, 1200×675, X/LINE in-app verification |
+| FR23 | Epic 5 | JSON-LD wiring (Article/FAQPage/Person/DefinedTerm/Breadcrumb/Organization) |
+| FR24 | Epic 5 | buildLastmodMap() sitemap lastmod over all dated collections |
+| FR25 | Epic 1 (old map removal), Epic 5 (301 discipline from launch) | URL stability |
+| FR26 | Epic 7 (launch audit), Epics 2–3 (seeded keyword-targeted content) | Launch article set per keyword-gap research |
+| FR27 | Epic 4 | Human review checklist + pipeline contract |
+| FR28 | Epic 2 | Zod schemas as automatic metadata enforcement |
+| FR29 | Epic 4 (workflow + fallback doc), Epic 6 (ledger loop rehearsal) | Weekly cadence workflow |
+| FR30 | Epic 4 | Repeatable publish checklist doc; executed in Epic 7 launch story |
+| FR31 | Epic 1 (identity/config/shell), Epic 7 (final brand/domain swap) | New brand everywhere, zero remnants |
+| FR32 | Epic 1 | Full retirement pass (routes, collections, components, CMS, worker, deps, CSP) |
+| FR33 | Epic 7 | Analytics beacon + visitor-type events + Search Console |
+| FR34 | Epic 7 | Cookieless/CSP-compatible/<5KB posture verified |
+
+**Deliberately deferred (per PRD Phase-2 contracting policy):** FR16–FR18 are contracted now and fully designed (Architecture D2/D3), but implemented only when the 8–12-week dry-run trigger fires — they form Epic 8, which MUST NOT be scheduled into the MVP sprint plan. All other Growth-scope items (interactive tools, affiliate, partnerships) have no FRs and no stories by design; they require a PRD amendment first.
 
 ## Epic List
 
-### Epic 1: Project Foundation & Shared Shell
-Thiết lập project Astro, design tokens, content schemas, và shared layout (Header, Footer, Navigation, CTABlock) — nền tảng cho mọi trang. Sau epic này, visitor có thể thấy site shell hoàn chỉnh với navigation, phone CTA, và breadcrumb trên mọi trang.
-**FRs covered:** FR1, FR2, FR3, FR4, FR5, FR6, FR7
+### Epic 1: New Brand Foundation & Home-Services Retirement
+The site builds and deploys as a clean, fully keiba-branded shell — new identity, tokens, navigation, and compliance footer on every page — with every home-services route, collection, component, dependency, and admin surface removed and no remnant reachable by users or crawlers. (Architecture stages 1–2; build stays green.)
+**FRs covered:** FR6, FR10 (footer short form), FR25 (old map removal), FR31, FR32
 
-### Epic 2: Homepage Experience
-Visitor có thể xem trang chủ hoàn chỉnh với hero carousel, service overview cards, reasons to choose us, process flow, area map, case studies, testimonials, và FAQ highlights — trang landing chính cho conversion.
-**FRs covered:** FR10, FR14, FR15, FR23, FR30, FR31, FR32, FR33, FR34
+### Epic 2: Beginner Guides & Glossary — the Core Reading Loop
+Readers can read beginner guides end-to-end on a phone with jargon decoded inline (glossary entries + GlossaryTerm links), navigate guide series in order, and always get a designed next step — without registration or payment. Zod schemas make invalid content unpublishable. (Architecture stage 3, part 1.)
+**FRs covered:** FR1, FR2, FR6 (pillar chips), FR7, FR26 (seeded keyword-targeted content), FR28
 
-### Epic 3: Service Pages (Water, Electrical, Pest Control)
-Visitor có thể browse tất cả dịch vụ qua hub pages và detail pages với đầy đủ 13-section canonical layout — pricing tiers, competitor comparison, area map, process flow, case studies, testimonials, FAQ, và trust signals.
-**FRs covered:** FR11, FR12, FR13, FR14, FR16, FR17, FR18, FR19, FR20, FR21, FR22, FR26
+### Epic 3: Race Magazine & Uma Musume Bridge
+Readers can read G1/重賞 deep-dives organized on the JRA calendar, visit permanent per-race hub pages, read factual Uma Musume bridge articles that route into guides and races, and land on a complete homepage with the race-week module and beginner on-ramp. (Architecture stage 3, part 2.)
+**FRs covered:** FR3, FR4, FR5, FR6, FR7, FR11 (authoring), FR26 (seeded content)
 
-### Epic 4: Contact, Company & Supporting Pages
-Visitor có thể liên hệ qua contact form với service category selection, xem thông tin công ty (about, philosophy, offices), privacy policy, process flow page, FAQ page, sitemap page, và 404 page.
-**FRs covered:** FR8, FR9, FR15, FR26, FR27, FR28, FR29
+### Epic 4: Trust, Compliance & Operator Workflow
+Readers can verify who writes the site, how AI is used, and see responsible-gambling/under-20 notices on every betting-adjacent surface; the operator has an enforceable review checklist, publish checklist, weekly cadence workflow, and fallback mode in writing.
+**FRs covered:** FR8, FR9, FR10, FR11, FR12, FR19b, FR27, FR29, FR30
 
-### Epic 5: Blog/Column & Content Management
-Visitor có thể browse blog/column articles. Content manager có thể thêm/sửa/xóa nội dung (services, cases, testimonials, FAQ, blog) qua data files, preview locally, và deploy với automatic build.
-**FRs covered:** FR24, FR25, FR39, FR40, FR41, FR42, FR43, FR44, FR45
+### Epic 5: Search Discovery & Distribution
+Search engines receive complete structured data, accurate sitemaps, and stable URLs; readers can subscribe (newsletter/LINE/RSS), follow on X, and share any page with correct OGP previews in X/LINE in-app browsers. (Architecture stage 4.)
+**FRs covered:** FR19a, FR20, FR21, FR22, FR23, FR24, FR25
 
-### Epic 6: SEO, Performance & Accessibility Polish
-Search engines có thể crawl, index, và đọc structured data (Schema.org JSON-LD). Site đạt Lighthouse ≥ 95, WCAG 2.1 AA compliance, Core Web Vitals pass, CSP headers, và Cloudflare Pages production deployment.
-**FRs covered:** FR35, FR36, FR37, FR38
+### Epic 6: Private Prediction Ledger — Dry Run
+The operator can record pre-race prediction entries with timestamps, record immutable results after each race, and view honest hit-rate/ROI aggregates — entirely privately (no public route exists), building the data and components the Phase-2 public debut will reuse unchanged. (Architecture stage 5.)
+**FRs covered:** FR13, FR14, FR15, FR29 (ledger loop)
 
-### Epic 7: Admin Dashboard & CMS Integration
-Content manager có thể quản lý toàn bộ nội dung website qua web UI (Decap CMS) và xem thống kê truy cập qua embedded Google Analytics dashboard. Không cần biết Git hoặc code. Authentication qua GitHub OAuth.
-**FRs covered:** FR46, FR47, FR48, FR49
+### Epic 7: Analytics, Launch Readiness & Cutover
+The operator can measure all success-criteria metrics within the privacy-light posture, and the site launches on the validated brand/domain with the keyword-committed article set, Lighthouse ≥99 verified on all eight templates, and the publish checklist executed. (Architecture stage 6.)
+**FRs covered:** FR26, FR31 (final swap), FR33, FR34
 
-## Epic 1: Project Foundation & Shared Shell
+### Epic 8: Public Prediction Ledger (Phase 2 — trigger-gated, DO NOT schedule in MVP)
+Readers can audit the full public prediction record — every pick, every loss, honest ROI — read the methodology page, and read pre-race prediction articles; the 予想 pillar joins the navigation. **Gate: implemented only after the 8–12-week dry-run evaluation decides the public framing (PRD Phase-2 trigger).**
+**FRs covered:** FR10 (prediction pages), FR12 (prediction pages), FR16, FR17, FR18
 
-Thiết lập project Astro, design tokens, content schemas, và shared layout (Header, Footer, Navigation, CTABlock) — nền tảng cho mọi trang. Sau epic này, visitor có thể thấy site shell hoàn chỉnh với navigation, phone CTA, và breadcrumb trên mọi trang.
+## Epic 1: New Brand Foundation & Home-Services Retirement
 
-### Story 1.1: Initialize Astro Project with Design Tokens
+The site becomes a clean keiba-branded shell with the complete retirement of the home-services product. Every story leaves `npm run build` green. After this epic: the top page, 404, and global chrome present ウマノミカタ (placeholder constants); no home-services route, collection, component, image, dependency, or admin surface remains; CSP and vercel.json are at the new minimal baseline.
 
-As a developer,
-I want a fully configured Astro project with Tailwind CSS v4, TypeScript strict mode, and design tokens matching the original site,
-So that all subsequent development has a consistent foundation.
+### Story 1.1: Keiba Identity Configuration & Design Tokens
 
-**Acceptance Criteria:**
-
-**Given** a fresh project directory
-**When** the initialization commands are run
-**Then** Astro project is created with minimal template, TypeScript strict, and integrations (tailwind, sitemap, react) installed
-**And** Embla Carousel and @formspree/react dependencies are installed
-**And** `tailwind.config.mjs` contains design tokens (colors: navy #1B2A4A, orange #FF6B00, red #E53935, section gray #F5F5F5, text #333333/#666666)
-**And** `src/styles/global.css` contains Tailwind imports + Japanese typography baseline (word-break: keep-all, line-break: strict, Noto Sans JP font stack)
-**And** `astro.config.mjs` is set to `output: 'static'`
-**And** `.env.example` contains PUBLIC_FORMSPREE_ID placeholder
-**And** `astro dev` starts successfully with no errors
-
-### Story 1.2: Create Site Configuration and Utility Modules
-
-As a developer,
-I want centralized site configuration and utility functions,
-So that phone numbers, company data, and formatters are never hardcoded across components.
+As the operator,
+I want the site's identity, theme tokens, and configuration modules rewritten for the keiba brand,
+So that every page and future component draws brand, palette, navigation, author, calendar, and compliance data from single sources of truth and the final brand/domain swap is a one-line change (FR31, AR8, UX-DR1, UX-DR2).
 
 **Acceptance Criteria:**
 
-**Given** the initialized project
-**When** siteConfig.ts is created
-**Then** it exports phone number (0120-219-695), company name, regional office addresses (Tokyo, Nagoya, Osaka, Hyogo), navigation structure, and service categories
-**And** `src/utils/formatters.ts` exports price formatting (¥1,100) and Japanese date formatting functions
-**And** `src/utils/schema.ts` exports Schema.org JSON-LD generator functions (generateLocalBusiness, generateService, generateFAQ, generateReview, generateBreadcrumb, generateArticle)
-**And** all functions are typed with TypeScript strict mode
+**Given** the existing `src/config/` and `src/styles/global.css`
+**When** the identity pass is complete
+**Then** `site.ts` exports the rewritten `SITE_CONFIG` (siteName ウマノミカタ placeholder, siteNameKana, siteUrl placeholder, logoPath, defaultDescription, defaultOgImage, rssTitle, socialLinks) with all physical-business fields (phone, email, hours, REGIONAL_OFFICES) removed
+**And** `navigation.ts` exports the 4-pillar nav (初心者向け・レース分析・ウマ娘×競馬・用語集) plus menu-only trust links and footer columns, with the 5th 予想 slot present but commented for Phase 2 (UX-DR8)
+**And** new modules exist: `author.ts` (AUTHOR_CONFIG with placeholder persona per Open Decision 1), `raceCalendar.ts` (typed graded-race array + `getRaceWeek()` returning current or next-upcoming race), `compliance.ts` (footer/in-content notice strings, banned-wording array 絶対・確実・儲かる・的中保証…, disclosure-link registry)
+**And** `services.ts` is deleted.
 
-### Story 1.3: Define Content Collection Schemas
+**Given** the `@theme` block in `src/styles/global.css`
+**When** tokens are replaced
+**Then** the block defines exactly the UX palette (`--color-ink`, `--color-ink-soft`, `--color-brand`, `--color-brand-tint`, `--color-turf`, `--color-turf-tint`, `--color-accent`, `--color-bridge`, `--color-paper`, `--color-paper-warm`, `--color-line`, `--color-win`, `--color-loss`, `--color-notice`) with the spec's hex values and the JP system `--font-sans` stack (no webfonts)
+**And** `theme.ts` mirrors all tokens as `var(--color-*)` strings
+**And** no hex color exists outside `@theme`
+**And** JP typography helpers (`overflow-wrap` utilities, `.article-numbered`, `scroll-margin-top` registry) are retained.
 
-As a content manager,
-I want validated content schemas for all 6 content types,
-So that invalid content is caught at build time before reaching production.
+**Given** the completed changes
+**When** `npm run build` runs
+**Then** it exits green with no TypeScript or content errors.
 
-**Acceptance Criteria:**
+### Story 1.2: Retire the Home-Services Content Layer & Components
 
-**Given** the project with utilities configured
-**When** `src/content/config.ts` is created
-**Then** Zod schemas are defined for: services (with serviceName, startingPrice, serviceArea, imageAlt, isEmergency fields), cases, testimonials, faq, blog, and company collections
-**And** sample content files exist for each collection (at least 1 per type) with valid data
-**And** `astro build` validates content against schemas and fails on invalid data
-**And** content collection directory structure matches architecture spec (services/electricity/, services/water/, cases/, testimonials/, faq/, blog/, company/)
-
-### Story 1.4: Build BaseLayout with Header and Footer
-
-As a visitor,
-I want a consistent page shell with navigation and contact information on every page,
-So that I can navigate the site and find the phone number from any page.
+As the operator,
+I want every home-services route, collection, component, data module, image set, and unused dependency removed,
+So that no home-services content is reachable by users or crawlers and the codebase contains only what the keiba product needs (FR32, AR9, AR10).
 
 **Acceptance Criteria:**
 
-**Given** a visitor loads any page
-**When** the page renders
-**Then** BaseLayout includes `<html lang="ja">`, UTF-8 charset, skip-nav link, Noto Sans JP preconnect, and semantic landmarks (header, main, footer)
-**And** Header is sticky (position: sticky, top: 0, z-index: 50) with logo (left), navigation links (center on desktop), and phone CTA 0120-219-695 (right)
-**And** Header phone number is imported from siteConfig.ts, not hardcoded
-**And** Header shows subtle box-shadow on scroll
-**And** Footer contains full sitemap navigation, phone/email CTA, company info, and copyright
-**And** visible focus ring (2px navy outline, 2px offset) is applied on all interactive elements via keyboard navigation
-**And** skip-nav link is the first focusable element and jumps to `<main>`
+**Given** the home-services routes and content
+**When** the retirement pass completes
+**Then** these pages are deleted: `src/pages/[category]/` (incl. cockroach branch), `services/`, `case/`, `voice/`, `company/`, `columns/`, `contact.astro`, `faq.astro`, `flow.astro`, `sitemap.astro`, `admin/`, and old `index.astro`/`404.astro`/`privacy.astro` are replaced by minimal branded placeholders that keep the build green
+**And** the collections `services`, `cases`, `testimonials`, `faq`, `blog`, `company` are removed from schema config along with their `src/content/*` directories and the legacy duplicate `src/content/config.ts`
+**And** `src/data/*.ts` (blogData, caseVoiceData, companyData) are deleted.
 
-### Story 1.5: Build Desktop MegaMenu Navigation
+**Given** the component and asset inventory
+**When** the pass completes
+**Then** all 19 retired components (PriceBar, PricingTier, AreaMap, ContactFormSection, ProcessFlow, ServiceKV, ServiceCard, ServiceCategorySection, ComparisonTable, TestimonialCard, CaseStudyCard, CtaFeatures, ReasonsGrid, HeroSection, MegaMenu, FilterNav, CategorySidebar, BlogCategorySidebar, AnchorMenu) plus `ServiceSlider.tsx` are deleted
+**And** home-services images under `src/assets/images/` and `public/images/`, the stray `src/assets/images/hero/.astro/` and `src/assets/images/hero/node_modules/` artifacts, and `docs/admin-guide.md` are deleted
+**And** `src/utils/schema.ts` no longer contains `generateLocalBusiness`, `generateService`, `generateReview`, `generateAggregateRating` while retaining `serializeJsonLd`, `absoluteUrl`, `generateArticle`, `generateBreadcrumb`, `generateFAQ`, `generateWebSite`, `generateOrganization` re-pointed at the new `SITE_CONFIG`.
 
-As a desktop visitor,
-I want dropdown navigation showing all service sub-categories,
-So that I can navigate directly to any service page in one click.
+**Given** `package.json`
+**When** dependencies are pruned
+**Then** `@formspree/react`, `embla-carousel`, `embla-carousel-react`, `swiper` are removed; `react`, `react-dom`, `@astrojs/react`, `@types/react*` are retained; zero new dependencies are added; package `name` becomes `umanomikata`
+**And** `npm run build` exits green
+**And** `grep -ri` for home-services identifiers (setsubi, formspree, service categories electricity/water) in `src/` returns no functional references.
 
-**Acceptance Criteria:**
+### Story 1.3: Deployment Config & Infra Cleanup
 
-**Given** a desktop visitor hovers over a service nav item
-**When** the mega-menu opens
-**Then** it displays 2 service groups: 電気工事 (5 services) and 水道工事 (4 services) with icons and labels
-**And** mega-menu opens with 150ms delay and closes with 150ms delay to prevent accidental dismiss
-**And** keyboard navigation works: arrow keys to move between items, Escape to close
-**And** ARIA attributes are correct: `aria-expanded`, `aria-haspopup`, `role="menu"`
-**And** visitor can navigate to any page within 3 clicks from homepage (FR1)
-
-### Story 1.6: Build Mobile Menu and Sticky CTA Bar
-
-As a mobile visitor,
-I want a hamburger menu and a sticky phone CTA bar,
-So that I can navigate the site and call immediately from any scroll position.
+As the operator,
+I want `vercel.json`, `astro.config.mjs`, and the CMS auth infrastructure reduced to the new product's minimal baseline,
+So that the deploy surface carries no legacy redirects, no admin exemptions, and a strict CSP matching the architecture baseline (FR32, FR25, AR7, AR16).
 
 **Acceptance Criteria:**
 
-**Given** a mobile visitor (viewport < 768px)
-**When** the page loads
-**Then** hamburger icon is visible in the header (top-right)
-**And** tapping hamburger opens a slide-from-right full-screen menu with same links as mega-menu + phone CTA
-**And** mobile menu has focus trap when open, `aria-modal="true"`, Escape to close, body scroll lock
-**And** a sticky bottom CTA bar with phone number is visible at all times on mobile (UX-DR4)
-**And** phone number links use `tel:0120219695` for one-tap calling (FR6)
-**And** all touch targets are minimum 44x44px
+**Given** `vercel.json`
+**When** the cleanup completes
+**Then** the 33-entry setsubi-pro.net redirect map is deleted and exactly one redirect remains (apex ↔ www placeholder, matching `SITE_CONFIG.siteUrl` canonical host)
+**And** the CSP header scope collapses from `/((?!admin).*)` to `/(.*)`
+**And** the CSP equals the architecture baseline: `default-src 'self'`; `script-src 'self' 'unsafe-inline'`; `style-src 'self' 'unsafe-inline'`; `img-src 'self' data:`; `connect-src 'self'`; `form-action 'self'` (Buttondown added later in the same change that introduces the form, per protocol); `object-src 'none'`; `base-uri 'self'` — with Formspree and Google Fonts hosts removed
+**And** security headers (HSTS, X-Frame-Options, etc.) are preserved unweakened (NFR6).
 
-### Story 1.7: Build Breadcrumb and CTABlock Components
+**Given** the CMS infrastructure
+**When** the cleanup completes
+**Then** the `cms-auth/` directory is deleted from the repo and the operator task to tear down its Cloudflare deployment is recorded in the story's completion notes
+**And** the Decap admin sitemap-exclusion filter is removed from `astro.config.mjs` and the sitemap `serialize()` blog-frontmatter map is reduced to a stub ready for the new lastmod builder
+**And** `npm run build` exits green and `npm run preview` serves the shell with no `/admin` route.
 
-As a visitor,
-I want breadcrumb navigation and prominent CTA blocks throughout the site,
-So that I know where I am and can always contact the service easily.
+### Story 1.4: Branded Global Shell — Header, Footer, Top Page & 404
 
-**Acceptance Criteria:**
-
-**Given** a visitor is on any sub-page
-**When** the page renders
-**Then** Breadcrumb shows `TOP > [Category] > [Service Name]` with `>` separator, current page bold and not linked
-**And** Breadcrumb generates BreadcrumbList Schema.org markup
-**And** CTABlock component supports 3 variants: full-width, compact, and sticky (via string enum `variant` prop)
-**And** CTABlock displays phone number (from siteConfig), "通話無料", WEB割引 badge (rotated ~-5deg, red/orange bg), and secondary email button
-**And** CTABlock phone link has `aria-label="無料電話 0120-219-695"` and 44x44px minimum touch target
-**And** button hierarchy follows UX-DR13: primary orange for phone, secondary navy for form/nav
-
-## Epic 2: Homepage Experience
-
-Visitor có thể xem trang chủ hoàn chỉnh với hero carousel, service overview cards, reasons to choose us, process flow, area map, case studies, testimonials, và FAQ highlights — trang landing chính cho conversion.
-
-### Story 2.1: Build Hero Carousel
-
-As a visitor,
-I want a rotating hero banner showcasing services,
-So that I immediately see the main service offerings and promotional messages on landing.
+As a reader,
+I want a consistent keiba-branded header, footer, minimal top page, and styled 404 on the new design tokens,
+So that from the very first deploy every page presents the new brand, pillar navigation, and the standing compliance notice (FR6, FR31, FR10 short form, UX-DR3, UX-DR7, UX-DR8, UX-DR11).
 
 **Acceptance Criteria:**
 
-**Given** a visitor loads the homepage
-**When** the page renders
-**Then** HeroCarousel displays 3 slides with service promotion images, overlay text, and CTA buttons
-**And** slides auto-rotate every 5 seconds with dot navigation indicators
-**And** slide 1 uses `fetchpriority="high"` and `loading="eager"` for LCP optimization
-**And** remaining slides use `loading="lazy"`
-**And** carousel pauses on hover and focus
-**And** `prefers-reduced-motion: reduce` disables auto-rotate and transitions (UX-DR16, NFR21)
-**And** ARIA: `aria-roledescription="carousel"`, `aria-label` per slide, dots as `<button>` with `aria-current`
-**And** touch/swipe navigation works on mobile
-**And** total JS island size is ~3KB gzip (Embla)
+**Given** `BaseLayout.astro`
+**When** the re-skin completes
+**Then** it renders `lang="ja"`, new-brand head/meta defaults from `SITE_CONFIG`, a skip-to-content link as the first focusable element, semantic landmarks, and the analytics-free baseline (beacon comes in Epic 7)
+**And** `Header.astro` renders the 56px (mobile) / 64px (desktop) sticky header with logo and hamburger at base, inline pillar links at `md:` (UX-DR8)
+**And** `MobileMenu.astro` keeps the vanilla-script toggle, focus trap, and `aria-expanded` behavior with the new nav content
+**And** `Footer.astro` renders the four-column IA (pillars, trust pages, channels, notice) with the standing short compliance notice from `compliance.ts` (「馬券の購入は20歳になってから。…」 + /responsible-gambling/ link) on every page.
 
-### Story 2.2: Build Service Category Cards Grid
+**Given** the top page and 404
+**When** this story completes
+**Then** `index.astro` renders a minimal branded top page (header, pillar chips row, placeholder hero section on `--color-paper-warm`, footer) awaiting content modules from Epic 3
+**And** `404.astro` renders the styled recovery page with apology line, pillar links, and top-page link (BeginnerOnrampBox is added in Story 3.1 when the component exists)
+**And** minimal branded trust-page stubs exist at `/about/`, `/editorial-policy/`, `/responsible-gambling/`, and `/privacy/` (per the architecture's stage-2 "empty-but-branded shell") so that every nav/footer/byline link resolves from day one — full content lands in Epic 4
+**And** all interactive elements have visible 2px brand focus outlines and ≥44×44px touch targets
+**And** both pages verify at 375px and 1240px+ with no horizontal overflow at 320px
+**And** `npm run build` exits green.
 
-As a visitor,
-I want to see all service categories on the homepage,
-So that I can quickly identify and navigate to the service I need.
+## Epic 2: Beginner Guides & Glossary — the Core Reading Loop
 
-**Acceptance Criteria:**
+Readers get the product's defining interaction: read a guide, understand every term inline, follow a designed next step. Ships the article-side content schemas (with automatic metadata enforcement), the glossary system, the guide article template, and the beginner hub — each route landing with its first real content in the same story (AR18).
 
-**Given** a visitor scrolls to the service overview section
-**When** the section renders
-**Then** ServiceCard components display all service categories (water 4 + electrical 5 + pest control) with photo, name, starting price (¥X,XXX~), and WEB割引 badge
-**And** cards link to respective service detail pages
-**And** card grid is responsive: 1 column (mobile) → 2 columns (tablet) → 3-5 columns (desktop)
-**And** cards show subtle shadow increase on hover with `transition: box-shadow 0.2s ease`, no transform/scale (UX-DR11)
-**And** each card image uses Astro `<Image>` with explicit width/height and Japanese alt text
-**And** prices are formatted via formatters.ts (¥1,100~)
+### Story 2.1: Keiba Content Schemas & Referential Integrity
 
-### Story 2.3: Build Reasons, Process Flow, and Area Map Sections
-
-As a visitor,
-I want to see why I should choose this service, how the process works, and which areas are covered,
-So that I feel confident about the service quality, know what to expect, and can verify my area is served.
+As the operator,
+I want the five article-side content collections defined with strict Zod schemas and cross-collection reference checking,
+So that content missing required editorial metadata cannot build, and broken internal references fail loudly at build time (FR28, AR3, AR4, NFR14, NFR17).
 
 **Acceptance Criteria:**
 
-**Given** a visitor scrolls through the homepage
-**When** the reasons section renders
-**Then** ReasonsGrid displays 4 columns (desktop) / 2 (tablet) / 1 (mobile) with SVG icon + heading + description per cell (speed, free estimates, 24/7, qualified staff)
-**And** SVG icons have `aria-hidden="true"`, meaning conveyed by text only
-**And** 24/7 availability messaging (「24時間365日対応」) is visible (FR10)
+**Given** root `src/content.config.ts`
+**When** the schema pass completes
+**Then** collections `guides`, `glossary`, `bridge`, `races`, `raceArticles` are defined with `glob()` loaders on the architecture's directories and formats (md/md/md/json/md)
+**And** the shared `articleBase` contract is enforced on guides/bridge/raceArticles: `title` ≤40, `description` 50–160 chars, `publishedDate`, optional `updatedDate`, `image`, `imageAlt` (Japanese, required), `relatedTerms` (default []), optional `relatedRace`, `draft` (default false)
+**And** collection-specific fields match Architecture D1 exactly: guides (`series`, `seriesOrder`, `faqEntries`; `seriesTotal` never stored), glossary (`term`, `reading`, `category` enum baken/race/pedigree/course, `shortGloss` ≤60, no required hero image), bridge (`horseName`, `horseNameEn?`, `era`, `umaCharacter?` never rendered as asset reference, `keyRaces`), races (`raceId`, `name`, `grade` G1/G2/G3, `course`, `distance` as prose string, `month` 1–12, `description`, optional hero), raceArticles (`race`, `edition`, `articleType` deep-dive/preview/recap).
 
-**When** the process flow section renders
-**Then** ProcessFlow displays 5 numbered steps (相談→訪問→見積→作業→支払) with illustrations and descriptions
-**And** layout is horizontal on desktop, vertical on mobile
-**And** uses `<ol>` with step numbers in text for accessibility
+**Given** `src/utils/contentGraph.ts`
+**When** any route's `getStaticPaths` or hub page runs at build time
+**Then** every `relatedTerms` slug, `relatedRace` id, `raceArticles.race` id, and `keyRaces` id is asserted to exist in its target collection
+**And** an unknown reference throws an error naming the offending file and field
+**And** a fixture entry per collection (real launch content or reviewed seed) builds green, and a deliberately broken fixture (missing `imageAlt`, over-length `description`, unknown `relatedRace`) fails `npm run build` with a message naming the file.
 
-**When** the area map section renders
-**Then** AreaMap displays static map image + prefecture/city lists for Tokyo, Nagoya, Osaka, Hyogo
-**And** map image has detailed Japanese alt text describing service coverage
-**And** Google Maps embed (if used) loads without blocking page render (NFR24)
+### Story 2.2: Glossary — Term Lookup & the Inline Decode Pattern
 
-### Story 2.4: Build Featured Case Studies, Testimonials, and FAQ on Homepage
-
-As a visitor,
-I want to see real case studies, customer reviews, and common questions on the homepage,
-So that I trust the service based on proof and can get quick answers to concerns.
+As a beginner reader,
+I want a glossary of keiba terms with a browsable index and per-term pages, and a consistent inline marker for glossary links in articles,
+So that I can understand jargon at the exact point of confusion without leaving the page, and go one tap deeper when I want (FR2, AR15, UX-DR6, UX-DR15).
 
 **Acceptance Criteria:**
 
-**Given** a visitor scrolls to the social proof sections
-**When** case studies section renders
-**Then** CaseStudyCard displays featured cases with photo, service category tag, location, duration, and cost
-**And** cards link to the full case studies page
+**Given** seeded glossary content (the launch term set, each with `term`, `reading`, `category`, `shortGloss`, body)
+**When** the build runs
+**Then** `/glossary/` renders the index grouped by theme (馬券/レース/血統/コース) with a 五十音 anchor row (anchor targets registered in `scroll-margin-top`)
+**And** `/glossary/[term]/` renders each entry: term + reading, shortGloss lede, long body, related terms links, breadcrumb — using ASCII romaji slugs (e.g. `/glossary/fukusho/`).
 
-**When** testimonials section renders
-**Then** TestimonialCard displays featured testimonials with service type, cost, and customer message
-**And** uses `<blockquote>` with `<cite>` for semantic markup
-**And** cards link to the full testimonials page
+**Given** the rehype pipeline
+**When** any Markdown article body contains a link whose href starts with `/glossary/`
+**Then** `rehypeGlossaryLinks.mjs` adds `class="glossary-term"` to the anchor
+**And** `.glossary-term` styles render the dotted underline (`underline dotted`, `text-underline-offset: 3px`, `--color-brand`) with visited and focus states, tap target padded to ≥44px height, and no layout shift or JP line-wrap breakage at 320–375px
+**And** the authoring rule (first occurrence carries a written parenthetical gloss matching `shortGloss`; never inside headings) is documented in the content authoring notes for the pipeline
+**And** glossary pages ship zero client JS and `npm run build` is green.
 
-**When** FAQ section renders
-**Then** FAQAccordion displays FAQ entries using native `<details>/<summary>` — zero JavaScript (UX-DR10)
-**And** CSS-only expand/collapse with `[open]` selector, no animation
-**And** full header bar is clickable (44x44px minimum touch target)
+### Story 2.3: Beginner Guide Articles — Read, Decode, Continue
 
-### Story 2.5: Assemble Complete Homepage
-
-As a visitor,
-I want the homepage to present all sections in the correct order with proper spacing,
-So that I experience the full conversion funnel from landing to action.
+As a beginner reader,
+I want to read beginner guide articles with named authorship, series orientation, FAQs, and a designed continuation at the end,
+So that I can go from curiosity to decoding a real 出馬表 across a linked series without registration, payment, or dead ends (FR1, FR7, UX-DR5, UX-DR6, UX-DR9).
 
 **Acceptance Criteria:**
 
-**Given** a visitor loads the homepage (`/`)
-**When** the page fully renders
-**Then** sections appear in order: Hero Carousel → Service Cards → Reasons Grid → Process Flow → Area Map → Case Studies → Testimonials → FAQ → CTA Block
-**And** CTABlock components are placed between major sections (3-5 instances per page)
-**And** section spacing follows UX-DR17: 60-80px vertical padding, 24-32px heading-to-content, content max-width 1100-1200px centered
-**And** alternating section backgrounds (white / #F5F5F5) for visual rhythm
-**And** page title tag is unique with keyword + region (例: 「設備人｜水漏れ・電気修理・害虫駆除｜24時間対応」)
-**And** single H1, sequential H2/H3 heading hierarchy
-**And** page weight < 500KB, Lighthouse Performance ≥ 90 (final 95+ target in Epic 6)
+**Given** seeded guide content (the launch guide series: 出馬表 reading, bet types, first track day, online betting onboarding — keyword-targeted per FR26)
+**When** the build runs
+**Then** `/guide/[slug]/` renders the guide article template: Breadcrumb + pillar tag, H1, SeriesMarker (第n回／全N回 with N derived from the collection, never stored), AuthorByline (avatar, name, published/updated `<time>` dates, AI-disclosure link), lede, TableOfContents (`<details>` 目次) for long guides, article body at 680px max measure with 1.9 line-height, FAQAccordion (`<details>`) fed from `faqEntries`, SeriesNav prev/next (plain text when at ends, never dead links)
+**And** glossary links in the body render with the `.glossary-term` treatment from Story 2.2
+**And** the guide-end 「この記事でわかったこと」 recap renders via the `summary` variant of KeyFactsBox (the UX spec's SummaryBox — one component, not a separate file).
 
-## Epic 3: Service Pages (Water, Electrical, Pest Control)
+**Given** the end of any guide article
+**When** the reader reaches the ContinuationBlock
+**Then** it renders the `guide` variant: divider + 「次はこれ」 label, ONE primary card (next in series, accent-bordered, title + why-line), 2–3 secondary text links (race hub via `relatedRace` when present, pillar hub, glossary), then AuthorCard (avatar 48px, name, 2-line bio, links to /about/ and /editorial-policy/) — inside `<nav aria-label="次の記事">`
+**And** the final guide in a series points outward (「今週のレースで試す」 style link) instead of a dead end.
 
-Visitor có thể browse tất cả dịch vụ qua hub pages và detail pages với đầy đủ 13-section canonical layout — pricing tiers, competitor comparison, area map, process flow, case studies, testimonials, FAQ, và trust signals.
+**Given** the whole guide surface
+**When** verified
+**Then** no registration, payment, or interstitial exists anywhere on the path; pages ship zero client JS; hero image is eager+`fetchpriority=high` with explicit dimensions and all others lazy; 375px/1240px visual QA passes; `npm run build` is green.
 
-### Story 3.1: Build Service Detail Page Template with Anchor Menu and Pricing
+### Story 2.4: Beginner Hub — the Curated Learning Path
 
-As a visitor,
-I want to view detailed service information with pricing and easy section navigation,
-So that I can quickly find pricing for my specific problem and jump to sections I care about.
-
-**Acceptance Criteria:**
-
-**Given** a visitor navigates to a service detail page (e.g., `/electricity/breaker`)
-**When** the page renders
-**Then** the 13-section canonical layout begins with: Breadcrumb → Hero image + WEB割引 badge (¥1,500 discount) → Anchor menu → Pricing tiers
-**And** AnchorMenu displays horizontal icon-based jump nav (料金, 選ばれる理由, 比較, エリア, フロー, 施工事例, お客様の声, FAQ) with horizontal scroll on mobile
-**And** `scroll-margin-top` on target sections accounts for sticky header + anchor menu combined height (UX-DR7)
-**And** smooth scroll via `scroll-behavior: smooth`, disabled when `prefers-reduced-motion`
-**And** PricingTier cards display service photo, tier name, and price with 税込 notation
-**And** prices are formatted via formatters.ts and sourced from content collections
-**And** starting prices are visible for each service (FR14)
-**And** WEB割引 badge appears at page top (UX-DR5)
-
-### Story 3.2: Build Comparison Table, Reasons Grid, and Trust Signals for Service Pages
-
-As a visitor,
-I want to compare this service against competitors and see credentials,
-So that I feel confident this is the best choice for my repair needs.
+As a beginner reader,
+I want a beginner hub page that presents guides as an ordered learning path,
+So that I always know where to start and where I am in the curriculum (FR1, FR6, UX-DR5, UX-DR15).
 
 **Acceptance Criteria:**
 
-**Given** a visitor scrolls to the comparison section on a service detail page
-**When** ComparisonTable renders
-**Then** it displays a 3-column table (当社 vs A社 vs B社) with ○/×/△ feature indicators
-**And** table uses proper `<table>` with `<th scope="col">`, `<caption>`
-**And** ○/× indicators have `aria-label="対応"/"非対応"` for screen readers (UX-DR8)
-**And** on mobile (< 768px), table has horizontal scroll with sticky first column
+**Given** the seeded guide series
+**When** `/guide/` builds
+**Then** it renders as a curated hub (intro copy normalizing not-knowing, learning-path sections listing series in reading order with series markers, then other guides) — not a chronological dump
+**And** entries render as ArticleListRow (64px thumb, pillar tag chip, 2-line title, date) with the whole row as one link
+**And** the pillar chip row renders under the header for one-tap pillar switching (FR6)
+**And** the hub uses the 1080px content cap with 2-column grid at `md:` and passes 375px/1240px QA
+**And** breadcrumb + BreadcrumbList are present, and `npm run build` is green.
 
-**When** ReasonsGrid renders on service detail page
-**Then** it displays 4-column grid with trust indicators: licensed technicians, certifications (第1種/第2種電気工事士), years of experience (FR22)
-**And** satisfaction guarantee messaging ("no charge if unsatisfied") is visible (FR16)
+## Epic 3: Race Magazine & Uma Musume Bridge
 
-### Story 3.3: Build Service Area, Process Flow, Case Studies, Testimonials, and FAQ Sections for Service Pages
+The magazine and bridge pillars ship with their hubs, templates, and launch content; the homepage becomes the full "Quiet Magazine" composition. After this epic all four MVP pillars are live and internally linked.
 
-As a visitor,
-I want to verify service coverage, understand the process, and see proof of quality on every service page,
-So that I can confirm my area is served and trust the service before calling.
+### Story 3.1: Race Hubs & the Calendar-Organized Magazine
 
-**Acceptance Criteria:**
-
-**Given** a visitor scrolls through a service detail page
-**When** Area Map section renders
-**Then** it displays service coverage for Tokyo, Nagoya, Osaka, Hyogo with prefecture/city lists (FR17, FR19)
-**And** office locations and contact details are shown per region (FR18)
-
-**When** Process Flow section renders
-**Then** 5-step flow (相談→訪問→見積→作業→支払) displays with numbered illustrations (FR15)
-
-**When** Case Studies section renders
-**Then** CaseStudyCard components display with photo, category tag, location, duration, and cost (FR21)
-
-**When** Testimonials section renders
-**Then** TestimonialCard components display with service type, cost, and customer message (FR20)
-
-**When** FAQ section renders
-**Then** FAQAccordion displays service-specific Q&A using native `<details>/<summary>` (FR26)
-
-**And** Related services cards appear after FAQ linking to other services in same category
-**And** CTA Block + Footer complete the page
-**And** CTABlock appears 3-5 times throughout the page between major sections
-
-### Story 3.4: Create Service Content Data and Dynamic Route Generation
-
-As a content manager,
-I want all service data defined in content collections with dynamic page generation,
-So that adding or updating a service only requires editing a JSON file.
+As a casual-to-intermediate fan,
+I want a magazine hub organized on the JRA calendar and a permanent hub page per covered race,
+So that I can find this week's race and everything the site has ever written about each G1 from one stable URL (FR4, FR5, FR6, UX-DR6).
 
 **Acceptance Criteria:**
 
-**Given** content collection files exist for all services
-**When** `astro build` runs
-**Then** `[service].astro` uses `getStaticPaths()` to generate pages for all electricity services (breaker, outlet, lighting, antenna, water-heater) from `content/services/electricity/`
-**And** `[service].astro` generates pages for all water services (toilet, kitchen, bath, washroom) from `content/services/water/`
-**And** pest control `[service].astro` generates pages for cockroach, termite, rodent, general-pest from `content/services/pest-control/` (FR13)
-**And** each generated page follows the identical 13-section template with data from content collections
-**And** Zod schema validation catches missing or invalid fields at build time
-**And** all service JSON files contain: serviceName, startingPrice, serviceArea, imageAlt, pricing tiers, FAQ entries, related services
+**Given** seeded `races` JSON entries (the launch set of covered G1s) and `raceCalendar.ts`
+**When** the build runs
+**Then** `/races/` renders the magazine hub organized by the race calendar (upcoming/current graded races first via `getRaceWeek()`, then races by `month`), with pillar chips and breadcrumb
+**And** `/races/[race]/` renders the evergreen race hub template: race name, grade chip, course/distance/month as prose (data-boundary safe), description, articles grouped by `edition` (newest first), RaceWeekModule where the race is current, and BeginnerOnrampBox (「競馬、はじめてですか？」 turf-tint box linking to guide series 第1回)
+**And** `RaceWeekModule` renders the brand-bordered card (「今週の重賞」 header bar, race name, hook, single accent CTA) and its off-week variant shows the next upcoming race (「次の重賞」) — it never renders empty
+**And** a race hub with no articles yet still renders meaningfully (description + calendar info + on-ramp) — no empty-state gap
+**And** `404.astro` is retrofitted with BeginnerOnrampBox now that the component exists (closing the deferral from Story 1.4)
+**And** `contentGraph` assertions verify every article's `race` reference, and `npm run build` is green.
 
-### Story 3.5: Build Service Hub Pages
+### Story 3.2: G1 Deep-Dive Articles — the Magazine Format
 
-As a visitor,
-I want hub pages for each service category showing all available sub-services,
-So that I can browse and compare options within water, electrical, or pest control categories.
-
-**Acceptance Criteria:**
-
-**Given** a visitor navigates to `/electricity`
-**When** the hub page renders
-**Then** it displays all 5 electrical services as ServiceCard grid with photo, name, starting price, and WEB割引 badge
-**And** cards link to respective detail pages (`/electricity/breaker`, etc.)
-
-**Given** a visitor navigates to `/water`
-**When** the hub page renders
-**Then** it displays all 4 water services as ServiceCard grid (FR11)
-
-**Given** a visitor navigates to `/pest-control`
-**When** the hub page renders
-**Then** it displays all pest control services as ServiceCard grid (FR13)
-
-**And** all hub pages include Breadcrumb, CTABlock sections, and Footer
-**And** card grid responsive: 1 col (mobile) → 2 col (tablet) → 3-4 col (desktop)
-**And** each hub page has unique title tag with keyword + region for SEO
-**And** 24/7 availability messaging visible on all service pages (FR10)
-
-## Epic 4: Contact, Company & Supporting Pages
-
-Visitor có thể liên hệ qua contact form với service category selection, xem thông tin công ty (about, philosophy, offices), privacy policy, process flow page, FAQ page, sitemap page, và 404 page.
-
-### Story 4.1: Build Contact Form Page
-
-As a visitor,
-I want to submit a contact request with my details and service needs,
-So that I can request a consultation without making a phone call.
+As a casual-to-intermediate fan,
+I want feature-quality deep-dive articles (history, course quirks, pedigree stories) attached to race hubs,
+So that race weekends are richer because I know the stories — with every race fact inside the data boundary (FR4, FR11, FR26, UX-DR5, UX-DR6).
 
 **Acceptance Criteria:**
 
-**Given** a visitor navigates to `/contact`
-**When** the page renders
-**Then** ContactForm (React island) displays single-column form with fields: name, address, phone, email, service category dropdown, description textarea
-**And** service category dropdown uses native `<select>` with grouped options: 電気工事 (5 services) / 水道工事 (4 services) / 害虫駆除 (sub-types) (FR9)
-**And** required fields marked with 「必須」 red badge next to label (not asterisk) (UX-DR9)
-**And** every `<input>` has a visible `<label>` — never placeholder-only
-**And** input font-size is minimum 16px to prevent iOS zoom on focus
-**And** form validates on blur (field exit) + on submit
-**And** error messages display in Japanese below field: 「[フィールド名]を入力してください」 with red border
-**And** IME composition events handled: form submission suppressed during `compositionstart`→`compositionend` (UX-DR9)
-**And** `aria-describedby` links errors to fields, `aria-required="true"` on required fields
+**Given** 2–3 seeded launch deep-dives (keyword-targeted per FR26) under `src/content/race-articles/<raceId>/`
+**When** the build runs
+**Then** `/races/[race]/[slug]/` renders the deep-dive template: Breadcrumb, pillar tag, H1, AuthorByline, standfirst, KeyFactsBox (`--color-brand-tint`, `dl` semantics, race/course/date/distance in prose — no results tables), TableOfContents for long pieces, section rhythm per the type scale, glossary-term links active
+**And** the ContinuationBlock renders the `deep-dive` variant (primary = that race's hub; secondary = relevant explainer guide + pillar hub) and AuthorCard
+**And** filenames follow `<edition>-<type>.md` and `articleType` renders appropriate labeling for deep-dive/preview/recap
+**And** no Markdown table of results/odds/times exists in any article body (data-boundary rule — review-blocking)
+**And** hero image conventions hold (eager LCP hero with explicit dimensions, others lazy) and `npm run build` is green.
 
-### Story 4.2: Implement Contact Form Submission and Feedback
+### Story 3.3: Uma Musume Bridge — Hub & Real-Horse Stories
 
-As a visitor,
-I want clear feedback when I submit the contact form,
-So that I know my request was received or can take alternative action if it fails.
+As an Uma Musume fan,
+I want factual profiles of the real horses behind characters, with a designed path into race cards and guides,
+So that my fandom becomes a guided entry into real racing — with zero game assets and IP-safe framing (FR3, NFR12, UX-DR6).
 
 **Acceptance Criteria:**
 
-**Given** a visitor fills all required fields correctly and clicks 「送信する」
-**When** form submits to Formspree endpoint (`import.meta.env.PUBLIC_FORMSPREE_ID`)
-**Then** submit button shows disabled state + spinner + 「送信中...」 to prevent double submission
-**And** on success: green banner displays 「お問い合わせありがとうございます。担当者より連絡いたします。」 and form fields clear (UX-DR18)
-**And** on server error: red banner displays 「送信に失敗しました。お電話でもお問い合わせいただけます。」 with phone number fallback, form data preserved
-**And** Formspree honeypot field is included for spam protection (no reCAPTCHA for MVP)
-**And** submission feedback uses `aria-live="polite"` for screen reader announcement
-**And** total ContactForm island JS size ~8KB gzip
+**Given** seeded bridge articles under `src/content/bridge/` (launch set, keyword-targeted 「馬名+実在」 long-tail per FR26)
+**When** the build runs
+**Then** `/uma-musume/` renders the bridge hub with the HorseStoryCard horizontal CSS scroll row (`overflow-x-auto` + scroll-snap, no JS) plus list rows for all profiles
+**And** `/uma-musume/[slug]/` renders the bridge article template (slug = horse name romaji): Breadcrumb, bridge pillar tag (`--color-bridge`), H1, AuthorByline, real-horse story body with glossary links, era line
+**And** the ContinuationBlock renders the `bridge` variant: primary = the race-card guide (出馬表の読み方) or the featured race via `keyRaces`/`relatedRace`; secondary = bridge hub + glossary
+**And** `umaCharacter` frontmatter is used only for search/linking metadata — never rendered as an image or asset reference; all imagery is rights-cleared (checked in review, no Cygames asset in the repo)
+**And** `keyRaces` references are contentGraph-verified and `npm run build` is green.
 
-### Story 4.3: Build Company Pages
+### Story 3.4: The Complete Top Page — Quiet Magazine Composition
 
-As a visitor,
-I want to view company information, philosophy, and office locations,
-So that I can verify the company is legitimate and find my nearest office.
-
-**Acceptance Criteria:**
-
-**Given** a visitor navigates to `/company`
-**When** the page renders
-**Then** company overview page displays about information and philosophy summary (FR27)
-**And** links to sub-pages: philosophy and office
-
-**Given** a visitor navigates to `/company/philosophy`
-**When** the page renders
-**Then** company philosophy content displays from `content/company/philosophy.json`
-
-**Given** a visitor navigates to `/company/office`
-**When** the page renders
-**Then** office information displays for all 4 regional locations (Tokyo, Nagoya, Osaka, Hyogo) with addresses, phone numbers, and contact details (FR28)
-**And** office data sourced from `content/company/offices.json`
-**And** all pages include Breadcrumb, CTABlock sections, and proper heading hierarchy
-
-### Story 4.4: Build Process Flow, FAQ, Privacy, Sitemap, and 404 Pages
-
-As a visitor,
-I want dedicated pages for process flow, FAQ, privacy policy, sitemap, and a helpful 404 page,
-So that I can find detailed information and navigate even when landing on a broken link.
+As a reader,
+I want the homepage to orient me instantly: this weekend's race, where to start as a beginner, the featured story, and the latest articles,
+So that whether I'm new or returning on the calendar rhythm, my next read is one tap away (FR6, FR7, UX-DR4).
 
 **Acceptance Criteria:**
 
-**Given** a visitor navigates to `/flow`
-**When** the page renders
-**Then** ProcessFlow component displays the full 5-step process with detailed descriptions (FR15)
-**And** CTABlock sections appear between/after steps
+**Given** all pillar content from Epics 2–3
+**When** `/` builds
+**Then** the mobile composition order is exactly: compact header → pillar chips → RaceWeekModule → BeginnerOnrampBox → featured deep-dive hero (on `--color-paper-warm`, D2 register) → latest-article rows (merged newest-first across guides/bridge/raceArticles) → footer with standing notices
+**And** at `xl:` the RaceWeekModule and BeginnerOnrampBox render side by side; content caps at 1080px
+**And** exactly one accent-colored primary element is visible per viewport (UX-DR10)
+**And** the featured hero image is the only eager-loaded image (LCP) with explicit dimensions; CLS ≈ 0
+**And** 375px/1240px QA and a 320px JP-overflow check pass, and `npm run build` is green.
 
-**Given** a visitor navigates to `/faq`
-**When** the page renders
-**Then** FAQAccordion displays all 6+ FAQ entries from `content/faq/` collection (FR26)
-**And** uses native `<details>/<summary>`, zero JavaScript
+## Epic 4: Trust, Compliance & Operator Workflow
 
-**Given** a visitor navigates to `/privacy`
-**When** the page renders
-**Then** privacy policy content displays with proper heading structure (FR29)
+Trust becomes structural: named authorship pages, disclosures, standing notices, safe wording, and the operator's written workflow — the anti-scam positioning delivered as pages, components, and documents.
 
-**Given** a visitor navigates to `/sitemap`
-**When** the page renders
-**Then** HTML sitemap displays all pages organized by category with links
+### Story 4.1: Trust Pages — Author, Editorial Policy & Notices
 
-**Given** a visitor navigates to a non-existent URL
-**When** the 404 page renders
-**Then** it displays a simple message + link to homepage + phone number CTA
-**And** no elaborate illustrations — functional and conversion-focused
-
-## Epic 5: Blog/Column & Content Management
-
-Visitor có thể browse blog/column articles. Content manager có thể thêm/sửa/xóa nội dung (services, cases, testimonials, FAQ, blog) qua data files, preview locally, và deploy với automatic build.
-
-### Story 5.1: Build Blog/Column Listing and Detail Pages
-
-As a visitor,
-I want to browse blog articles and read individual posts,
-So that I can learn about home repair topics and seasonal tips.
+As a skeptical reader,
+I want to see who writes this site, how AI is used, and the site's stance on responsible gambling,
+So that I can verify legitimacy instead of being asked to assume it (FR8, FR9, NFR11, UX-DR5).
 
 **Acceptance Criteria:**
 
-**Given** a visitor navigates to `/column`
-**When** the page renders
-**Then** blog listing displays articles from `content/blog/` collection with title, date, excerpt, and category tag
-**And** FilterNav component allows filtering by category (all, electricity, water, pest control)
-**And** Pagination component enables navigation between pages (1-2-3) generated via `getStaticPaths()` with page parameter
-**And** `aria-current="page"` on active filter and current page number
+**Given** the trust-page template
+**When** the build runs
+**Then** `/about/` renders the author profile (from AUTHOR_CONFIG: name, kana, bio, avatar, sameAs links) and the site mission
+**And** `/editorial-policy/` renders the editorial policy including the AI-assistance disclosure (how content is produced, the mandatory human review pass: fact-check + Japanese QA + tone check) and the 景品表示法-safe wording commitment with the banned-word list sourced from `compliance.ts`
+**And** `/responsible-gambling/` renders the canonical responsible-gambling + under-20 page that the site-wide notices link to
+**And** `/privacy/` renders the rewritten privacy policy (placeholder analytics/newsletter sections completed in Epics 5/7)
+**And** every article's AuthorByline 「AI利用について」 link resolves to the disclosure section, and AuthorCard links to /about/ and /editorial-policy/ work from every article template
+**And** all four pages use the trust template (breadcrumb, 680px measure, quiet styling) and `npm run build` is green.
 
-**Given** a visitor clicks a blog article
-**When** `/column/[slug]` renders
-**Then** full article content displays from Markdown with proper heading hierarchy
-**And** Breadcrumb shows TOP > コラム > [Article Title]
-**And** CTABlock sections appear after article content
-**And** page has unique title tag and meta description for SEO
+### Story 4.2: Standing Compliance Notices & Safe-Wording Enforcement
 
-### Story 5.2: Build Paginated Case Studies and Testimonials Listing Pages
-
-As a visitor,
-I want to browse all case studies and testimonials with pagination and filtering,
-So that I can find relevant examples for my specific service need.
+As a reader on any betting-adjacent page,
+I want calm, consistent responsible-gambling and under-20 notices, and zero hype language anywhere,
+So that the site never triggers the scam reflex and no reader can mistake it for a paid-tips service (FR10, FR12, NFR9, UX-DR6, UX-DR10).
 
 **Acceptance Criteria:**
 
-**Given** a visitor navigates to `/case`
-**When** the page renders
-**Then** CaseStudyCard components display all case studies from `content/cases/` with photo, category, location, duration, and cost (FR40)
-**And** FilterNav allows filtering by service category
-**And** Pagination navigates between pages generated via `getStaticPaths()` with page parameter
-**And** cards link are styled with hover shadow effect (UX-DR11)
+**Given** `NoticeFooter.astro` and `compliance.ts`
+**When** the build runs
+**Then** the site footer short-form notice appears on every page (already wired in Story 1.4, verified here) and the in-content notice band (`--color-notice` text on `--color-paper-warm`, small type, dignified) renders above the ContinuationBlock on every betting-related template (bet-type guides, race articles, and — when Epic 8 lands — all prediction pages), driven by template type/frontmatter, never hand-placed per page
+**And** notice text comes exclusively from `compliance.ts` — no notice string is retyped inline anywhere.
 
-**Given** a visitor navigates to `/voice`
-**When** the page renders
-**Then** TestimonialCard components display all testimonials from `content/testimonials/` with service type, cost, and message (FR41)
-**And** FilterNav and Pagination work identically to case studies page
-**And** `<blockquote>` with `<cite>` used for semantic markup
+**Given** the banned-wording list
+**When** content or UI copy is reviewed
+**Then** the review checklist step verifies no `COMPLIANCE.bannedWords` term (絶対・確実・儲かる・的中保証・今すぐ・限定…) appears in published content or UI chrome
+**And** button/CTA copy across the site is calm-imperative with no urgency words
+**And** a documented check method exists (grep-based script or documented manual step in the publish checklist) making the verification repeatable.
 
-### Story 5.3: Document Content Management Workflow
+### Story 4.3: Operator Workflow — Review Checklist, Publish Checklist & Fallback Mode
 
-As a content manager,
-I want clear documentation on how to add, edit, and deploy content,
-So that I can maintain the site without developer assistance.
+As the solo operator,
+I want the weekly cadence workflow, human-review checklist, publish checklist, and fallback mode in writing,
+So that every article passes mandatory review, every release is SEO-verified, the X-thread step is defined, and a bad week degrades gracefully instead of breaking promises (FR19b, FR27, FR29, FR30, NFR8, NFR14, NFR16, NFR18, AR17).
 
 **Acceptance Criteria:**
 
-**Given** a content manager wants to add a new case study
-**When** they create a new Markdown file in `content/cases/` following the existing template
-**Then** Zod schema validates required fields (photo, category, location, duration, cost) at build time (FR40)
-**And** `astro build` fails with descriptive error message if any required field is missing or invalid
+**Given** `docs/operations.md`
+**When** the document is complete
+**Then** it defines the weekly race-cadence loop (Tue pipeline draft → human review pass: fact-check against publicly announced data, Japanese QA, tone/policy check → frontmatter/Zod gate → build/deploy → X-thread cut from article sections (FR19b) → pre-race ledger entry → Sun result recording → Mon metrics check) sized against the 10 h/week budget
+**And** it defines the fallback mode: deep-dive only, evergreen queue paused, cadence promise and ledger continuity intact (NFR18)
+**And** it documents the pipeline↔schema frontmatter contract (the `articleBase` fields seo-cockpit must emit) with the NFR14 rule: recurring validation failures are fixed at the pipeline level.
 
-**Given** a content manager wants to update FAQ entries
-**When** they edit JSON files in `content/faq/`
-**Then** changes are validated against Zod schema at build time (FR42)
+**Given** `docs/publish-checklist.md`
+**When** the document is complete
+**Then** it lists the repeatable per-release checks: rich-results test, OGP render in X and LINE, heading hierarchy, JP alt text presence, data-boundary check (no results tables — NFR8/FR11), banned-wording check, title/description length, Lighthouse spot-check trigger conditions, and the 301 rule for any renamed URL
+**And** both documents live in `docs/` per the architecture tree and the human-review pass requirement (NFR11) is stated as mandatory before publish.
 
-**Given** a content manager wants to add a testimonial
-**When** they create a new JSON file in `content/testimonials/`
-**Then** it validates and appears on the voice page and relevant service detail pages (FR41)
+## Epic 5: Search Discovery & Distribution
 
-**Given** a content manager wants to preview changes
-**When** they run `astro dev`
-**Then** local dev server shows all changes with hot reload (FR44)
+The SEO playbook and distribution channels go live: complete structured data, accurate sitemap/RSS, correct OGP everywhere, and subscribe/follow touchpoints — the acquisition engine for the traffic-first strategy.
 
-**Given** a content manager pushes changes to main branch
-**When** Cloudflare Pages receives the push
-**Then** automatic build runs and deploys within ~2 minutes (FR45)
-**And** Zod validation prevents invalid content from reaching production
+### Story 5.1: Structured Data Site-Wide — Rich Results Compliance
 
-## Epic 6: SEO, Performance & Accessibility Polish
-
-Search engines có thể crawl, index, và đọc structured data. Site đạt Lighthouse ≥ 95, WCAG 2.1 AA, Core Web Vitals pass. Production deployment on Cloudflare Pages.
-
-### Story 6.1: Implement Schema.org Structured Data on All Pages
-
-As a search engine,
-I want valid Schema.org JSON-LD structured data on every page,
-So that rich snippets appear in Google Japan search results.
+As the operator,
+I want every page to emit complete, playbook-compliant JSON-LD from central generators,
+So that articles render as rich results in Google.jp and the site's E-E-A-T signals (named Person author, Organization identity) are machine-readable (FR23, AR11).
 
 **Acceptance Criteria:**
 
-**Given** any page on the site
-**When** Google Rich Results Test validates the page
-**Then** zero errors are reported (NFR25)
+**Given** `src/utils/schema.ts` and the page templates
+**When** the build runs
+**Then** every article template (guide/bridge/race article) emits `Article` JSON-LD with absolute URLs, `image` array sourced from the 1200×675 original, `inLanguage: 'ja'`, `isPartOf`, publisher logo ImageObject, and `author` as a `Person` node from AUTHOR_CONFIG
+**And** guides with `faqEntries` additionally emit `FAQPage`
+**And** every page below top level emits `BreadcrumbList` matching its visible breadcrumb
+**And** BaseLayout emits site-wide `Organization` (with `@id` = `<site>/#organization`) and `WebSite`
+**And** glossary entries emit `DefinedTerm` via the new `generateDefinedTerm()` generator
+**And** zero inline JSON-LD exists in any page (generators only), sample pages of each template pass Google's Rich Results Test, and `npm run build` is green.
 
-**Given** the homepage or company pages render
-**Then** `generateLocalBusiness()` outputs valid LocalBusiness JSON-LD for all 4 regional offices (Tokyo, Nagoya, Osaka, Hyogo) with NAP consistency
+### Story 5.2: Sitemap, RSS & URL Stability
 
-**Given** a service detail page renders
-**Then** `generateService()` outputs valid Service JSON-LD with pricing, area served
-**And** `generateFAQ()` outputs valid FAQPage JSON-LD from page FAQ entries
-**And** `generateBreadcrumb()` outputs valid BreadcrumbList JSON-LD
-
-**Given** the voice/testimonials page renders
-**Then** `generateReview()` outputs valid Review/AggregateRating JSON-LD
-
-**Given** a blog post renders
-**Then** `generateArticle()` outputs valid Article JSON-LD with publishedDate
-
-**And** all structured data generated via `src/utils/schema.ts` functions — never inline JSON-LD in page templates (FR36)
-
-### Story 6.2: Implement Technical SEO (Sitemap, Robots, Meta Tags, Canonical URLs)
-
-As a search engine,
-I want a complete sitemap, robots.txt, canonical URLs, and proper language/region tags,
-So that all pages are discoverable and correctly indexed for Google Japan.
+As the operator,
+I want an accurate sitemap with real lastmod dates, a combined RSS feed, and the 301 discipline in force,
+So that search engines always see fresh, stable, correctly-dated URLs (FR21, FR24, FR25, AR11).
 
 **Acceptance Criteria:**
 
-**Given** the site is built
-**When** `sitemap.xml` is generated via `@astrojs/sitemap`
-**Then** it includes all pages with correct lastmod dates (FR35, NFR26)
+**Given** `src/utils/lastmod.mjs`
+**When** the build runs
+**Then** `buildLastmodMap()` scans all four dated collections with their URL prefixes (guides→/guide/, bridge→/uma-musume/, race-articles→/races/<race>/ with race read from frontmatter, glossary→/glossary/) and feeds `astro.config.mjs` sitemap `serialize()`
+**And** pages with `updatedDate` carry it as lastmod, pages without omit lastmod (never fake dates)
+**And** `/sitemap-index.xml` validates and contains every public route and no retired route.
 
-**Given** `robots.txt` exists in `public/`
-**Then** it contains proper crawler directives allowing full site indexing
+**Given** `src/pages/rss.xml.js`
+**When** the build runs
+**Then** the feed merges guides + bridge + raceArticles sorted by `publishedDate` desc with title/site from `SITE_CONFIG`, and `/rss.xml` validates
+**And** the RSS link renders in the footer channels column (FR21).
 
-**Given** any page renders
-**Then** `<link rel="canonical">` points to the correct URL (FR38)
-**And** `<html lang="ja">` with UTF-8 charset is set (FR37)
-**And** `hreflang` tag for Japanese content is present (FR37)
-**And** unique `<title>` tag with keyword + region (例: 「東京の水漏れ修理｜24時間対応」)
-**And** `<meta name="description">` under 120 characters with CTA
-**And** single `<h1>` per page with sequential heading hierarchy
-**And** clean URL structure: `/electricity/breaker`, `/pest-control/cockroach`
-**And** `<link rel="preconnect">` for Google Fonts and Maps
+**Given** the 301 discipline
+**When** any published URL is renamed or removed from this point on
+**Then** the same change adds a `vercel.json` 301 (single ASCII entry; raw+encoded pair rule documented for any future Japanese URL), verified as a stated rule in the publish checklist and exercised by at least one test redirect on a Vercel preview.
 
-### Story 6.3: Performance Optimization and Core Web Vitals
+### Story 5.3: OGP & Share Correctness on X and LINE
 
-As a visitor,
-I want every page to load in under 1 second on mobile,
-So that I can access emergency service information instantly.
+As a reader sharing an article,
+I want every shared link to unfurl with the right title and a 1200×675 image on X and LINE,
+So that the distribution loop through SNS and in-app browsers works on every page type (FR22, AR14).
 
 **Acceptance Criteria:**
 
-**Given** any page on the site
-**When** tested with Lighthouse on mobile
-**Then** Performance score ≥ 95 (NFR2)
-**And** LCP < 1.5s (NFR3)
-**And** INP < 100ms (NFR3)
-**And** CLS < 0.05 (NFR3)
+**Given** the image conventions
+**When** any article builds
+**Then** its hero exists in both locations (`src/assets/images/articles/<collection>/<slug>/hero.webp` ≥1200px source rendering 800×450, and `public/images/articles/<collection>/<slug>/share.webp` at 1200×675) and `og:image` points at the 1200×675 share original with `twitter:card summary_large_image`
+**And** hub, glossary, and trust pages fall back to the branded `SITE_CONFIG.defaultOgImage` (1200×675 template image created in this story)
+**And** `og:title`/`og:description` follow the meta rules (title ≤24 display chars + 全角｜ brand suffix, description front-loaded ≤70 chars).
 
-**Given** any page
-**When** page weight is measured
-**Then** total page weight < 500KB (NFR5)
-**And** total JavaScript payload < 50KB (NFR6)
-**And** font loading uses `font-display: swap` and does not block first paint (NFR8)
+**Given** the verification pass
+**When** one URL per page template is shared
+**Then** the OGP card renders correctly in X and LINE (in-app browsers included), and the check procedure is recorded in the publish checklist
+**And** pages render correctly inside X/LINE webviews (no 100vh dependencies) and `npm run build` is green.
 
-**Given** all images on the site
-**Then** they use Astro `<Image>` with WebP/AVIF output, responsive srcset, and explicit width/height for CLS prevention (NFR7)
-**And** hero slide 1 uses `fetchpriority="high"` + `loading="eager"`, all others `loading="lazy"`
+### Story 5.4: Subscribe & Follow — Newsletter, LINE, X Touchpoints
 
-**Given** Cloudflare Pages serves the site
-**Then** TTFB < 200ms from edge locations (NFR4)
-**And** build time < 60 seconds for full site rebuild (NFR14)
-
-### Story 6.4: Security Headers and Cloudflare Pages Production Deployment
-
-As a site owner,
-I want the site deployed to production with proper security headers,
-So that the site is live, secure, and serving visitors from Cloudflare's edge network.
+As a reader at a natural pause point,
+I want one-action ways to follow on X, add the LINE account, or subscribe to the weekend newsletter,
+So that a good session converts into a calendar habit — without any widget ever breaking the page (FR19a, FR20, NFR5, NFR7, NFR13, AR13, UX-DR12).
 
 **Acceptance Criteria:**
 
-**Given** the site is deployed to Cloudflare Pages
-**When** any page is requested
-**Then** HTTPS is enforced via Cloudflare automatic SSL (NFR9)
-**And** Content-Security-Policy headers are configured via Astro 6 CSP API whitelisting: `fonts.googleapis.com`, `fonts.gstatic.com`, `maps.googleapis.com`, `formspree.io` (NFR12)
-**And** no sensitive data is stored on the website (NFR11)
+**Given** `SubscribeBlock.astro`
+**When** it renders at pause points (ContinuationBlock tail on articles, hub ends — never mid-content, never modal)
+**Then** it shows the honest pitch (「土曜の朝、今週のG1の物語を1通で」), a plain HTML Buttondown form POST (visible label, `type="email" required`, 16px input font), X follow and LINE add-friend plain links from `SITE_CONFIG.socialLinks` (no widgets/SDKs/embeds), and a privacy line naming the provider with the unsubscribe promise
+**And** the same change adds `https://buttondown.com` to `form-action` in `vercel.json` CSP (protocol AR16) with the PR text naming the directive
+**And** on submit success an inline Japanese confirmation renders via the `?subscribed=1`-style param read by a tiny deferred vanilla script; without JS the provider's hosted confirmation shows instead (progressive)
+**And** a standing fallback link to the hosted Buttondown subscribe page renders beneath the form so a failed widget never breaks the page (NFR13)
+**And** any JS enhancement suppresses submit during IME composition, no render-blocking script is added, subscriber data lives only in Buttondown (NFR7), and `npm run build` is green.
 
-**Given** the Git repository main branch
-**When** a push is made
-**Then** Cloudflare Pages auto-builds and deploys within ~2 minutes
-**And** branch previews generate automatic preview URLs for PRs
+## Epic 6: Private Prediction Ledger — Dry Run
 
-**Given** `.env` configuration
-**Then** `PUBLIC_FORMSPREE_ID` and any Maps embed key are set as environment variables
-**And** `.env.example` documents all required variables
+The riskiest, most distinctive asset is built privately: the append-only ledger data model, build-time honest aggregation, and the record-book components — exercised by the real dry run, with no public route in existence. Phase 2 reuses all of it unchanged.
 
-### Story 6.5: WCAG 2.1 AA Accessibility Audit and Fixes
+### Story 6.1: Prediction Entry Schema & the Append-Only Lifecycle
 
-As a visitor with disabilities,
-I want the site to be fully accessible via keyboard, screen reader, and assistive technologies,
-So that I can access emergency repair services regardless of my abilities.
+As the operator,
+I want a strict predictions collection with pre-race timestamps and an enforced append-only lifecycle,
+So that I can record picks with reasoning before each race and the record is structurally impossible to quietly rewrite (FR13, NFR10, AR5, AR19).
 
 **Acceptance Criteria:**
 
-**Given** the entire site
-**When** tested with Lighthouse Accessibility audit
-**Then** score ≥ 95
+**Given** `src/content.config.ts`
+**When** the `predictions` collection is added
+**Then** it loads `**/*.json` from `src/content/predictions/` with the Architecture D2 schema exactly: picks (betType enum of the 7 types, selection string, `stake: z.literal(100)`, required `reasoning`), `raceId`, `raceName`, `raceDate`, `grade`, `entryPostedAt` ISO datetime, `status: pending|recorded`, optional `result` (recordedAt + per-pick outcomes with hit/payout), append-only `annotations` (default [])
+**And** the refinements enforce: `status='recorded'` requires `result`, and `result.outcomes.length === picks.length`
+**And** all `*At` timestamps are ISO 8601 with explicit `+09:00` offset, and the file convention is `<YYYY>/<YYYY-MM-DD>-<race-slug>.json`.
 
-**Given** all text on the site
-**Then** color contrast ratio ≥ 4.5:1 for normal text, ≥ 3:1 for large text (NFR15)
-**And** orange CTA text verified and darkened if needed for WCAG AA compliance
+**Given** the lifecycle conventions
+**When** documented in `docs/operations.md` (ledger section)
+**Then** the three commit types are specified (`ledger: entry` pre-race with status pending and no result; `ledger: result` post-race adding only result+status flip with picks/reasoning/entryPostedAt frozen; `ledger: annotate` appending annotations only), entries are never deleted, and corrections append
+**And** a valid pending fixture and a valid recorded fixture build green while an invalid fixture (recorded without result, or outcome-count mismatch) fails the build with a named error
+**And** no `/yosou/*` route file exists and the build output contains no prediction page.
 
-**Given** a keyboard-only user navigates the site
-**Then** all interactive elements are focusable via Tab with visible focus ring (2px navy outline, 2px offset) (NFR16)
-**And** skip-nav link is functional as first focusable element (NFR19)
-**And** mega-menu navigable with arrow keys and Escape
-**And** mobile menu has focus trap and Escape to close
+### Story 6.2: Honest Aggregation & the Record-Book Components
 
-**Given** a screen reader user
-**Then** semantic HTML landmarks are present: `<header>`, `<nav>`, `<main>`, `<footer>` (NFR17)
-**And** ARIA labels on carousel controls, mobile menu, and form inputs (NFR18)
-**And** all images have Japanese alt text, decorative SVGs have `aria-hidden="true"` (NFR22)
-**And** form errors announced via `aria-describedby` and `aria-live="polite"` (NFR20)
-
-**Given** a user with motion sensitivity
-**Then** `prefers-reduced-motion` disables carousel autoplay and smooth scroll transitions (NFR21)
-
-## Epic 7: Admin Dashboard & CMS Integration
-
-Content manager có thể quản lý toàn bộ nội dung website qua web UI (Decap CMS) và xem thống kê truy cập qua embedded Google Analytics dashboard. Không cần biết Git hoặc code. Authentication qua GitHub OAuth.
-
-### Story 7.1: Setup Decap CMS with GitHub Authentication
-
-As a content manager,
-I want to access a web-based admin interface at /admin,
-So that I can manage website content without using Git or code editors.
+As the operator,
+I want build-time hit-rate/ROI aggregation and the ledger display components,
+So that I can evaluate the dry run against an honest, never-stored, never-desynced record — and Phase 2 can unveil the exact same components (FR14, FR15, UX-DR6, UX-DR13, AR19).
 
 **Acceptance Criteria:**
 
-**Given** a content manager navigates to `/admin`
-**When** the page loads
-**Then** Decap CMS login page renders with GitHub sign-in button
-**And** after GitHub OAuth, CMS dashboard shows all 6 content types in sidebar navigation
-**And** `public/admin/index.html` loads Decap CMS from CDN
-**And** `public/admin/config.yml` defines backend (github), repo, branch, and media folder settings
-**And** GitHub OAuth application is configured with correct callback URL
+**Given** `src/utils/ledger.ts`
+**When** it aggregates the full predictions collection at build time
+**Then** hit rate and ROI (回収率 = total payout ÷ total stake, stake = picks × ¥100) are computed from entries only — never stored — with pending entries excluded from ROI
+**And** its results are verified against a hand-computed fixture set (wins, losses, pending mixed).
 
-### Story 7.2: Configure CMS Collections for All Content Types
+**Given** `LedgerTable.astro` and `LedgerKPIs.astro`
+**When** rendered (in dev/preview verification — no public route)
+**Then** LedgerKPIs shows hit rate / 回収率 / entry count in display-size `tabular-nums`
+**And** LedgerTable is a true `<table>` with `<caption>` and scoped headers inside an `overflow-x-auto` wrapper, rows show race / pick / result (○的中 in `--color-win`, ×不的中 in `--color-loss` — equal visual weight, never color-only) / pre-race timestamp (`M/D HH:mm` JST display with full-ISO `datetime`), pending rows show 「結果待ち」 in `--color-ink-soft`, annotations render as appended rows never edits, and the standing integrity note (immutability + no-guarantee + under-20 from `compliance.ts`) renders beneath
+**And** both full and recent-5 variants exist, money renders ja-JP formatted with 円, both components pass 375px/1240px checks, and `npm run build` remains green with no public ledger URL in the output.
 
-As a content manager,
-I want form-based editors for all content types,
-So that I can add/edit/remove services, cases, testimonials, FAQ, blog, and company info via UI.
+### Story 6.3: Dry Run Live — First Entries & the Weekly Ledger Loop
 
-**Acceptance Criteria:**
-
-**Given** a content manager is logged into CMS
-**When** they select a content type from the sidebar
-**Then** the editor displays appropriate form fields:
-- **Services:** serviceName, startingPrice, pricing tiers (list widget), FAQ entries, imageAlt, isEmergency, serviceArea
-- **Cases:** photo (image widget), category (select), location, duration, cost, description (Markdown editor)
-- **Testimonials:** service type (select), cost, customer message (text)
-- **FAQ:** question, answer (Markdown), category (select)
-- **Blog:** title, date, excerpt, category, body (Markdown editor), featured image
-- **Company:** office data (list widget), philosophy content (Markdown)
-**And** image uploads save to `public/images/` in correct subdirectories
-**And** CMS editorial workflow is enabled (draft → review → ready → publish)
-**And** content saved by CMS passes Zod schema validation at build time
-
-### Story 7.3: Build Analytics Dashboard Page
-
-As a content manager,
-I want to view website traffic and search performance from the admin area,
-So that I can understand content performance without switching between multiple tools.
+As the operator,
+I want the dry run actually running: real pre-race entries and post-race results recorded through the defined workflow,
+So that the 8–12-week evaluation window starts producing the data that gates the Phase-2 public debut (FR13, FR14, FR15, FR29, NFR16).
 
 **Acceptance Criteria:**
 
-**Given** a content manager accesses the analytics page
-**When** the page renders
-**Then** embedded Google Analytics 4 dashboard shows: page views, top pages, traffic sources, user demographics
-**And** direct link to Google Search Console property opens in new tab
-**And** page is not publicly accessible (requires authentication or is listed in CMS custom pages)
-**And** setup instructions for GA4 property ID configuration are provided
-**And** `robots.txt` excludes `/admin/` from crawling
+**Given** the next graded race week after this story starts
+**When** the operator executes the ledger loop
+**Then** at least one real prediction entry is committed pre-race (`ledger: entry`, `entryPostedAt` before race start, reasoning included) and its result committed post-race (`ledger: result`) within the same weekend
+**And** the aggregate output of `ledger.ts` reflects the recorded entries correctly on the next build
+**And** the round-trip (entry + result) fits the time budget expectations recorded in `docs/operations.md`, with any workflow friction noted for adjustment (NFR16: the workflow, not the operator, is adjusted)
+**And** the dry-run evaluation criteria and 8–12-week window (what will be reviewed to decide the public debut and framing) are recorded in `docs/operations.md`.
 
-### Story 7.4: Admin Deployment and Documentation
+## Epic 7: Analytics, Launch Readiness & Cutover
 
-As a content manager,
-I want clear documentation on using the admin dashboard,
-So that I can onboard quickly and manage content independently.
+Measurement goes live within the privacy-light posture and the site launches: final brand/domain constants, keyword-committed launch content verified, Lighthouse ≥99 on all eight templates, publish checklist executed.
+
+### Story 7.1: Privacy-Light Analytics — Sessions & Return Visitors
+
+As the operator,
+I want cookieless analytics with a return-visitor signal, inside CSP and under 5KB,
+So that I can measure sessions and the first-class return-visitor metric without any tracking that would betray the trust brand (FR33, FR34, NFR15, AR12).
 
 **Acceptance Criteria:**
 
-**Given** a new content manager needs to start using the admin
-**When** they read the admin guide
-**Then** it covers: admin URL, GitHub OAuth login steps, content editing walkthrough per type, image upload guidelines, publishing workflow, and analytics access
-**And** troubleshooting section addresses: login failures, build errors after publish, image size limits
-**And** Cloudflare Pages environment variables for Decap CMS backend are documented
-**And** content workflow diagram is included: Edit in CMS → Auto-commit → Auto-deploy (~2 min)
+**Given** BaseLayout
+**When** analytics is enabled
+**Then** the Vercel Web Analytics beacon (`<script defer src="/_vercel/insights/script.js">`) is injected and the feature enabled in the Vercel project, with no cookie set and no cookie banner added
+**And** a ~15-line first-party vanilla snippet sets a `localStorage` marker and reports `visitor_type: new|returning` as a custom event via `window.va`, degrading silently when `localStorage` throws
+**And** total added page weight is <5KB and no CSP change is required beyond existing `'self'` allowances (verified against the deployed CSP)
+**And** `/privacy/` is updated to disclose the analytics approach and the localStorage marker
+**And** page-view and visitor-type events verify on a Vercel preview deploy, and `npm run build` is green.
+
+### Story 7.2: Search Console & the Measurement Baseline
+
+As the operator,
+I want Google Search Console verified and the metric-tracking routine documented,
+So that ranking positions, organic sessions, and the monthly trust proxies are measurable from launch day (FR33, AR12).
+
+**Acceptance Criteria:**
+
+**Given** the launch domain
+**When** verification completes
+**Then** Search Console is verified via DNS record (no HTML tag, no script — CSP and page weight untouched) and the sitemap is submitted
+**And** `docs/operations.md` gains the Monday metrics-check section: where each success-criteria metric is read (Search Console for rankings/organic sessions, Vercel Analytics for sessions/return-visitor rate, provider dashboards for subscribers, calendar for cadence adherence) and the monthly trust-proxy review list
+**And** the pivot-threshold and 6/12-month targets from the PRD are recorded in the doc as the evaluation frame.
+
+### Story 7.3: Launch Cutover — Brand, Content Set & Performance Verification
+
+As the operator,
+I want the validated brand/domain swapped in, the keyword-committed launch content verified complete, and every template performance-checked,
+So that the site launches whole: right name, right content, Lighthouse ≥99 everywhere, checklist passed (FR26, FR31, NFR1, NFR2).
+
+**Acceptance Criteria:**
+
+**Given** the pre-MVP gates are decided (validated brand name + domain, J-PlatPat/SNS checks done; author persona named)
+**When** cutover executes
+**Then** `SITE_CONFIG` (siteName, siteUrl), `AUTHOR_CONFIG`, `package.json` name, and the `vercel.json` apex redirect are updated to final values in one change, and all absolute URLs (JSON-LD, OGP, sitemap, RSS) reflect the final domain on the next build.
+
+**Given** the launch content audit
+**When** performed against the keyword-gap research commitment
+**Then** the launch set (~20 beginner + bridge articles, glossary term set, 2–3 G1 deep-dives, hub pages, trust pages) is confirmed present and mapped to its target keywords (FR26), with gaps listed and closed before launch.
+
+**Given** the performance gate
+**When** Lighthouse runs on mobile for all eight templates (Top, pillar hub, article×3 variants, race hub, glossary entry, trust page, 404)
+**Then** Performance ≥99 and accessibility ≥95 on every one, CWV sanity-checked on one real mid-range Android over 4G (LCP <1.5s, CLS <0.02)
+**And** the full publish checklist (Story 4.3) is executed and its results recorded, and `npm run build` is green on the launch commit.
+
+## Epic 8: Public Prediction Ledger (Phase 2 — trigger-gated)
+
+**GATE: Do not implement until the 8–12-week dry run is evaluated and the public framing (entertainment/process) is decided (PRD Phase-2 trigger). This epic must not be scheduled in the MVP sprint plan.** The data model, components, and aggregation from Epic 6 are reused unchanged; this epic adds the four `/yosou/` route files and the fifth nav pillar — nothing else (Architecture D2).
+
+### Story 8.1: Prediction Pillar Goes Public — Hub, Methodology & Navigation
+
+As a skeptical fan,
+I want a prediction pillar with a plain-spoken methodology page,
+So that before reading a single pick I can see exactly how predictions are made, framed, and disclosed (FR17, FR10, FR12).
+
+**Acceptance Criteria:**
+
+**Given** the dry-run evaluation has decided the public framing
+**When** this story completes
+**Then** `/yosou/` renders the prediction pillar hub (intro with the decided framing, links to record/methodology/latest prediction articles) and `/yosou/about/` renders the methodology page (how predictions are made, AI's role, the honest-record commitment, 景品表示法-safe framing)
+**And** the commented 5th nav slot (予想) is activated in `navigation.ts` — header, mobile menu, footer, and pillar chips all show five pillars with no structural change
+**And** both pages carry the in-content compliance notice band and the footer notice (FR10), contain no banned-wording terms (FR12), emit BreadcrumbList, and follow the trust-template register
+**And** `npm run build` is green and both URLs appear in the sitemap.
+
+### Story 8.2: The Public Ledger — Every Pick, Every Loss, Honest ROI
+
+As a skeptical fan,
+I want the complete prediction record public — wins, losses, timestamps, and aggregate ROI,
+So that I can audit the site's honesty myself, including checking that yesterday's miss is already recorded (FR16, FR10, FR12, NFR10).
+
+**Acceptance Criteria:**
+
+**Given** the Epic 6 components and dry-run + live entries
+**When** `/yosou/record/` builds
+**Then** it renders LedgerKPIs (hit rate, 回収率, entry count) above the full-variant LedgerTable showing every entry ever recorded — losses with equal visual weight, `entryPostedAt` visible per row, annotations rendered append-only, pending entries as 「結果待ち」
+**And** the standing integrity note (immutability statement + no-guarantee wording + under-20 notice) renders beneath the table and the in-content notice band is present
+**And** the page's OGP is shareable as the trust artifact (title + default or KPI-bearing 1200×675 image) and the URL emits BreadcrumbList
+**And** no entry is ever edited or removed to produce this page — the build renders exactly what the collection contains — and `npm run build` is green.
+
+### Story 8.3: Weekly Prediction Articles — Published Before the Race
+
+As a weekend bettor,
+I want weekly prediction articles for graded races published before post time, with reasoning and a live link to the record,
+So that I can read the analysis for its reasoning and verify the pre-race timestamp myself (FR18, FR10, FR12, NFR10).
+
+**Acceptance Criteria:**
+
+**Given** a prediction entry committed for the week's graded race
+**When** `/yosou/[slug]/` builds
+**Then** the prediction article template renders: Breadcrumb, 予想 pillar tag, H1, AuthorByline, the pre-race timestamp displayed prominently (`M/D HH:mm` JST from `entryPostedAt`), picks with reasoning, the recent-5 LedgerTable excerpt linking to `/yosou/record/`, the in-content compliance notice band, and the ContinuationBlock `prediction` variant (primary = the ledger)
+**And** publication happens before race start (the article's public timestamp + the pre-race X thread are the external proof, per Architecture D2), and after the race the page reflects the recorded result on rebuild without any edit to picks/reasoning/entryPostedAt
+**And** no profitability claim or banned-wording term appears (FR12), Article JSON-LD + OGP follow the site conventions, the weekly workflow in `docs/operations.md` is extended with the publish step, and `npm run build` is green.

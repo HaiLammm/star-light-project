@@ -1,917 +1,253 @@
-<!DOCTYPE html>
-<html lang="ja">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>star-light — Design Direction: Pixel-Perfect Clone</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ウマノミカタ — UX Design Directions</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
-
-  :root {
-    --bg-primary: #FFFFFF;
-    --bg-section: #F5F5F5;
-    --bg-footer: #1E2D4A;
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --text-inverse: #FFFFFF;
-    --accent-navy: #1E2D4A;
-    --accent-cta: #FF6B00;
-    --accent-discount: #D32F2F;
-    --border-light: #E0E0E0;
-    --content-max: 1140px;
+  :root{
+    --ink:#1A2333; --ink-soft:#55627A; --brand:#16324F; --brand-tint:#EEF3F8;
+    --turf:#2F7D5A; --turf-tint:#EAF4EF; --accent:#C25E1E; --bridge:#8A4A63;
+    --paper:#FFFFFF; --paper-warm:#F7F6F3; --line:#E3E6EC;
+    --win:#1E7A46; --loss:#B3261E; --notice:#5A5F6A;
+    --jp:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium","Yu Gothic","Meiryo",system-ui,sans-serif;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-    color: var(--text-primary);
-    font-size: 15px;
-    line-height: 1.7;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-  }
-
-  .container { max-width: var(--content-max); margin: 0 auto; padding: 0 20px; }
-
-  /* === STICKY HEADER === */
-  .header {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-light);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  .header-inner {
-    display: flex; align-items: center; justify-content: space-between;
-    max-width: var(--content-max); margin: 0 auto; padding: 12px 20px;
-  }
-  .logo { font-size: 22px; font-weight: 700; color: var(--accent-navy); }
-  .logo span { color: var(--accent-cta); }
-  .header-phone {
-    display: flex; align-items: center; gap: 8px;
-    background: var(--accent-cta); color: white;
-    padding: 8px 20px; border-radius: 6px;
-    font-size: 18px; font-weight: 700; text-decoration: none;
-  }
-  .header-phone:hover { opacity: 0.9; }
-  .header-phone .free { font-size: 11px; font-weight: 400; }
-
-  /* === NAV === */
-  .nav { background: var(--accent-navy); }
-  .nav-inner {
-    display: flex; justify-content: center; gap: 0;
-    max-width: var(--content-max); margin: 0 auto;
-  }
-  .nav a {
-    color: var(--text-inverse); text-decoration: none;
-    padding: 12px 18px; font-size: 13px; font-weight: 500;
-    transition: background 0.2s;
-  }
-  .nav a:hover { background: rgba(255,255,255,0.1); }
-
-  /* === HERO CAROUSEL === */
-  .hero {
-    background: linear-gradient(135deg, var(--accent-navy) 0%, #2C4A7A 100%);
-    color: white; text-align: center; padding: 60px 20px;
-    position: relative; overflow: hidden;
-  }
-  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-  .hero p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; }
-  .hero-badges { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .hero-badge {
-    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-    padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: 500;
-  }
-  .carousel-dots { margin-top: 24px; display: flex; justify-content: center; gap: 8px; }
-  .carousel-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(255,255,255,0.4);
-  }
-  .carousel-dot.active { background: white; }
-
-  /* === SECTION TITLES === */
-  .section { padding: 60px 0; }
-  .section.alt { background: var(--bg-section); }
-  .section-title {
-    text-align: center; font-size: 24px; font-weight: 700;
-    color: var(--accent-navy); margin-bottom: 40px;
-  }
-  .section-title span { color: var(--accent-cta); }
-
-  /* === SERVICE CARDS === */
-  .service-grid { display: grid; gap: 20px; }
-  .service-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
-  .service-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
-  .service-card {
-    background: white; border-radius: 8px; overflow: hidden;
-    border: 1px solid var(--border-light);
-    transition: box-shadow 0.2s, transform 0.2s;
-    cursor: pointer; text-decoration: none; color: inherit;
-    display: block;
-  }
-  .service-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
-  .service-card-img {
-    height: 140px; background: linear-gradient(135deg, #e8edf2 0%, #d1dbe6 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 40px; color: var(--accent-navy);
-  }
-  .service-card-body { padding: 16px; }
-  .service-card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--accent-navy); }
-  .service-card-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
-  .service-card-price { font-size: 18px; font-weight: 700; color: var(--accent-cta); }
-  .service-card-price small { font-size: 11px; font-weight: 400; color: var(--text-secondary); }
-  .web-badge {
-    display: inline-block; background: var(--accent-discount); color: white;
-    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px;
-    margin-bottom: 6px;
-  }
-
-  /* === CTA BLOCK === */
-  .cta-block {
-    background: linear-gradient(135deg, var(--accent-navy) 0%, #2C4A7A 100%);
-    color: white; text-align: center; padding: 40px 20px;
-  }
-  .cta-block h3 { font-size: 20px; margin-bottom: 8px; }
-  .cta-block p { font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
-  .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .cta-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 32px; border-radius: 8px; font-size: 18px;
-    font-weight: 700; text-decoration: none; transition: opacity 0.2s;
-  }
-  .cta-btn:hover { opacity: 0.9; }
-  .cta-btn.phone { background: var(--accent-cta); color: white; }
-  .cta-btn.email { background: white; color: var(--accent-navy); }
-
-  /* === REASONS GRID === */
-  .reasons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-  .reason-card { text-align: center; padding: 24px 16px; }
-  .reason-icon {
-    width: 64px; height: 64px; margin: 0 auto 16px;
-    background: var(--bg-section); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; color: var(--accent-cta);
-  }
-  .reason-title { font-size: 16px; font-weight: 700; color: var(--accent-navy); margin-bottom: 8px; }
-  .reason-desc { font-size: 13px; color: var(--text-secondary); }
-
-  /* === PROCESS FLOW === */
-  .flow-steps { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .flow-step {
-    flex: 1; min-width: 160px; max-width: 200px;
-    text-align: center; position: relative;
-  }
-  .flow-num {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--accent-cta); color: white;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 700; margin: 0 auto 12px;
-  }
-  .flow-img {
-    width: 100%; height: 100px; background: var(--bg-section);
-    border-radius: 8px; margin-bottom: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; color: var(--accent-navy);
-  }
-  .flow-title { font-size: 14px; font-weight: 700; color: var(--accent-navy); }
-  .flow-desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
-
-  /* === AREA MAP === */
-  .area-map {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
-  }
-  .area-map-img {
-    background: var(--bg-section); border-radius: 12px;
-    height: 300px; display: flex; align-items: center; justify-content: center;
-    font-size: 18px; color: var(--text-secondary);
-  }
-  .area-list h4 { font-size: 16px; font-weight: 700; color: var(--accent-navy); margin-bottom: 8px; }
-  .area-list ul { list-style: none; padding: 0; columns: 2; }
-  .area-list li { font-size: 13px; padding: 3px 0; color: var(--text-secondary); }
-  .area-list li::before { content: "●"; color: var(--accent-cta); margin-right: 6px; font-size: 8px; }
-
-  /* === CASE/VOICE CARDS === */
-  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .card {
-    background: white; border-radius: 8px; overflow: hidden;
-    border: 1px solid var(--border-light); transition: box-shadow 0.2s;
-    cursor: pointer;
-  }
-  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-  .card-img {
-    height: 160px; background: linear-gradient(135deg, #e8edf2, #d1dbe6);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px; color: var(--accent-navy);
-  }
-  .card-body { padding: 16px; }
-  .card-tag {
-    display: inline-block; background: var(--bg-section); color: var(--accent-navy);
-    font-size: 11px; padding: 2px 8px; border-radius: 3px; margin-bottom: 8px;
-  }
-  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
-  .card-meta { font-size: 12px; color: var(--text-secondary); display: flex; gap: 16px; }
-
-  /* === COMPARISON TABLE === */
-  .comparison-table { width: 100%; border-collapse: collapse; }
-  .comparison-table th, .comparison-table td {
-    padding: 12px 16px; text-align: center; border: 1px solid var(--border-light);
-    font-size: 14px;
-  }
-  .comparison-table thead th {
-    background: var(--accent-navy); color: white; font-weight: 700;
-  }
-  .comparison-table thead th:first-child { background: var(--bg-section); color: var(--text-primary); }
-  .comparison-table .us { background: #FFF8F0; font-weight: 700; color: var(--accent-cta); }
-  .comparison-table .check { color: var(--accent-cta); font-size: 18px; }
-  .comparison-table .cross { color: #CCC; font-size: 18px; }
-
-  /* === FAQ ACCORDION === */
-  .faq-item { border-bottom: 1px solid var(--border-light); }
-  .faq-q {
-    padding: 16px 20px; font-size: 15px; font-weight: 700;
-    cursor: pointer; display: flex; justify-content: space-between;
-    align-items: center; color: var(--accent-navy);
-  }
-  .faq-q::after { content: "＋"; font-size: 20px; color: var(--accent-cta); }
-  .faq-q.open::after { content: "－"; }
-  .faq-a { padding: 0 20px 16px; font-size: 14px; color: var(--text-secondary); display: none; }
-  .faq-a.show { display: block; }
-
-  /* === ANCHOR MENU === */
-  .anchor-menu {
-    background: white; border-bottom: 2px solid var(--accent-navy);
-    position: sticky; top: 65px; z-index: 90;
-  }
-  .anchor-inner {
-    display: flex; justify-content: center; gap: 0;
-    max-width: var(--content-max); margin: 0 auto;
-  }
-  .anchor-item {
-    padding: 12px 16px; font-size: 12px; font-weight: 500;
-    color: var(--accent-navy); text-decoration: none;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    transition: background 0.2s;
-  }
-  .anchor-item:hover { background: var(--bg-section); }
-  .anchor-icon { font-size: 18px; }
-
-  /* === BREADCRUMB === */
-  .breadcrumb {
-    padding: 12px 0; font-size: 12px; color: var(--text-secondary);
-  }
-  .breadcrumb a { color: var(--accent-navy); text-decoration: none; }
-  .breadcrumb span { margin: 0 8px; }
-
-  /* === PRICING TIER === */
-  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .pricing-card {
-    background: white; border: 1px solid var(--border-light);
-    border-radius: 8px; overflow: hidden; text-align: center;
-  }
-  .pricing-img {
-    height: 120px; background: var(--bg-section);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 32px; color: var(--accent-navy);
-  }
-  .pricing-body { padding: 16px; }
-  .pricing-name { font-size: 14px; font-weight: 700; color: var(--accent-navy); margin-bottom: 8px; }
-  .pricing-amount { font-size: 24px; font-weight: 700; color: var(--accent-cta); }
-  .pricing-amount small { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
-
-  /* === FOOTER === */
-  .footer { background: var(--bg-footer); color: var(--text-inverse); padding: 48px 0 24px; }
-  .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 32px; }
-  .footer h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-  .footer a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; display: block; padding: 3px 0; }
-  .footer a:hover { color: white; }
-  .footer-bottom { text-align: center; font-size: 12px; opacity: 0.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
-
-  /* === PAGE LABEL === */
-  .page-label {
-    background: var(--accent-cta); color: white;
-    text-align: center; padding: 8px; font-size: 12px; font-weight: 700;
-  }
-  .page-divider {
-    background: var(--accent-navy); color: white;
-    text-align: center; padding: 20px; font-size: 20px; font-weight: 700;
-    margin: 40px 0 0;
-  }
-
-  /* === RESPONSIVE === */
-  @media (max-width: 768px) {
-    .service-grid.cols-5, .service-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
-    .reasons-grid { grid-template-columns: repeat(2, 1fr); }
-    .card-grid { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; }
-    .area-map { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: repeat(2, 1fr); }
-    .flow-steps { flex-direction: column; align-items: center; }
-    .nav-inner { display: none; }
-    .anchor-inner { overflow-x: auto; justify-content: flex-start; }
-    .hero h1 { font-size: 22px; }
-  }
-
-  /* === MOBILE CTA BAR (improvement) === */
-  @media (max-width: 768px) {
-    .mobile-cta-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-      background: var(--accent-cta); padding: 12px 20px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
-    }
-    .mobile-cta-bar a {
-      color: white; font-size: 18px; font-weight: 700; text-decoration: none;
-    }
-    .mobile-cta-bar .label { font-size: 11px; font-weight: 400; }
-    body { padding-bottom: 60px; }
-  }
-  @media (min-width: 769px) {
-    .mobile-cta-bar { display: none; }
-  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--jp);background:#22293a;color:var(--ink);padding:32px 16px 80px}
+  h1.page{color:#fff;text-align:center;font-size:26px;margin-bottom:6px}
+  p.sub{color:#aeb7cc;text-align:center;font-size:14px;max-width:760px;margin:0 auto 40px}
+  .grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+  .direction{width:400px}
+  .dir-head{color:#fff;margin-bottom:12px}
+  .dir-head .num{display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:700;border-radius:3px;padding:2px 8px;margin-right:8px}
+  .dir-head h2{display:inline;font-size:18px}
+  .dir-head p{color:#aeb7cc;font-size:12.5px;line-height:1.6;margin-top:6px}
+  .phone{width:375px;margin:0 auto;background:var(--paper);border-radius:24px;border:6px solid #0d1117;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.45)}
+  .verdict{margin-top:10px;font-size:12.5px;line-height:1.6;padding:10px 12px;border-radius:8px}
+  .verdict.keep{background:#12351f;color:#a9e5bf}
+  .verdict.mix{background:#3a3620;color:#e8dc9c}
+  .verdict.no{background:#3a2222;color:#e5a9a9}
+  /* ---------- shared mock parts ---------- */
+  .hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .logo{font-weight:800;font-size:17px;letter-spacing:.04em}
+  .burger{width:22px}
+  .burger i{display:block;height:2px;background:currentColor;margin:4px 0;border-radius:2px}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.05em}
+  .tag.turf{background:var(--turf-tint);color:var(--turf)}
+  .tag.race{background:var(--brand-tint);color:var(--brand)}
+  .tag.bridge{background:#F5ECF0;color:var(--bridge)}
+  .ftr{background:var(--brand);color:#cfdae6;font-size:10px;line-height:1.7;padding:14px 16px}
+  .ftr b{color:#fff;display:block;font-size:11px;margin-bottom:4px}
+  .row{display:flex;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .row .th{flex:0 0 64px;height:44px;border-radius:6px;background:linear-gradient(120deg,#3a5a40,#588157)}
+  .row .th.b2{background:linear-gradient(120deg,#16324F,#3d5a80)}
+  .row .th.b3{background:linear-gradient(120deg,#6d3350,#9d5c78)}
+  .row h4{font-size:13px;line-height:1.45;font-weight:700}
+  .row .meta{font-size:10px;color:var(--ink-soft);margin-top:3px}
+  .secttl{font-size:15px;font-weight:800;padding:18px 16px 8px;display:flex;align-items:center;gap:8px}
+  .secttl::before{content:"";width:4px;height:16px;background:var(--brand);border-radius:2px}
+  /* ================= D1 newspaper ================= */
+  .d1 .hdr{background:#fff;color:var(--brand);border-bottom:3px double var(--brand)}
+  .d1 .top{padding:14px 16px;border-bottom:1px solid var(--line)}
+  .d1 .top h3{font-size:19px;line-height:1.4;font-weight:800}
+  .d1 .top p{font-size:11.5px;color:var(--ink-soft);margin-top:6px;line-height:1.7}
+  .d1 .cols{display:flex}
+  .d1 .col{flex:1;padding:10px 12px;border-right:1px solid var(--line);font-size:11px;line-height:1.6}
+  .d1 .col:last-child{border-right:0}
+  .d1 .col b{display:block;font-size:11.5px;margin-bottom:4px}
+  /* ================= D2 quiet magazine ================= */
+  .d2 .hdr{background:#fff;color:var(--brand)}
+  .d2 .pillars{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;color:var(--brand);overflow:hidden}
+  .d2 .pillars span{padding:6px 10px;background:var(--brand-tint);border-radius:16px;white-space:nowrap}
+  .d2 .hero{padding:20px 16px;background:var(--paper-warm)}
+  .d2 .hero h3{font-size:20px;line-height:1.45;font-weight:800;margin-top:8px}
+  .d2 .hero p{font-size:12px;color:var(--ink-soft);line-height:1.8;margin-top:8px}
+  .d2 .byline{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;color:var(--ink-soft)}
+  .d2 .avatar{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700}
+  /* ================= D3 turf ================= */
+  .d3 .hdr{background:var(--turf);color:#fff;border-bottom:0}
+  .d3 .hero{background:linear-gradient(160deg,#2F7D5A,#1c5a3e);color:#fff;padding:22px 16px}
+  .d3 .hero h3{font-size:20px;line-height:1.45;font-weight:800}
+  .d3 .hero p{font-size:12px;opacity:.85;margin-top:8px;line-height:1.7}
+  .d3 .chips{display:flex;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .d3 .chips span{font-size:11px;font-weight:700;color:var(--turf);border:1.5px solid var(--turf);padding:6px 12px;border-radius:18px}
+  /* ================= D4 record book ================= */
+  .d4 .hdr{background:var(--brand);color:#fff;border-bottom:0}
+  .d4 table{width:100%;border-collapse:collapse;font-size:11px}
+  .d4 th{background:var(--brand-tint);color:var(--brand);text-align:left;padding:8px 10px;font-size:10px;letter-spacing:.05em}
+  .d4 td{padding:9px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  .d4 .win{color:var(--win);font-weight:700}
+  .d4 .loss{color:var(--loss);font-weight:700}
+  .d4 .kpis{display:flex;border-bottom:1px solid var(--line)}
+  .d4 .kpi{flex:1;text-align:center;padding:14px 4px;border-right:1px solid var(--line)}
+  .d4 .kpi:last-child{border-right:0}
+  .d4 .kpi b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+  .d4 .kpi span{font-size:10px;color:var(--ink-soft)}
+  .d4 .note{font-size:10px;color:var(--notice);padding:10px 16px;line-height:1.7;background:var(--paper-warm)}
+  /* ================= D5 calendar pulse ================= */
+  .d5 .hdr{background:#fff;color:var(--brand)}
+  .d5 .week{margin:14px 16px;border:1.5px solid var(--brand);border-radius:12px;overflow:hidden}
+  .d5 .week .bar{background:var(--brand);color:#fff;font-size:11px;font-weight:700;padding:7px 12px;display:flex;justify-content:space-between}
+  .d5 .week .bar em{font-style:normal;color:#ffd9b8}
+  .d5 .week .body{padding:14px}
+  .d5 .week h3{font-size:18px;font-weight:800;line-height:1.4}
+  .d5 .week p{font-size:11.5px;color:var(--ink-soft);line-height:1.7;margin-top:6px}
+  .d5 .week a.cta{display:block;text-align:center;background:var(--accent);color:#fff;font-size:13px;font-weight:700;border-radius:8px;padding:10px;margin-top:12px;text-decoration:none}
+  .d5 .start{margin:0 16px 14px;background:var(--turf-tint);border-radius:12px;padding:14px}
+  .d5 .start h4{font-size:13px;font-weight:800;color:var(--turf)}
+  .d5 .start p{font-size:11.5px;line-height:1.7;margin-top:4px;color:var(--ink)}
+  /* ================= D6 fan-warm ================= */
+  .d6 .hdr{background:#fff;color:var(--bridge)}
+  .d6 .hero{background:linear-gradient(150deg,#8A4A63,#5d3145);color:#fff;padding:22px 16px}
+  .d6 .hero h3{font-size:19px;line-height:1.5;font-weight:800}
+  .d6 .hero p{font-size:12px;opacity:.9;line-height:1.7;margin-top:8px}
+  .d6 .cardrow{display:flex;gap:10px;padding:14px 16px;overflow:hidden}
+  .d6 .card{flex:0 0 150px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .d6 .card .img{height:70px;background:linear-gradient(120deg,#9d5c78,#c98da8)}
+  .d6 .card h5{font-size:11.5px;font-weight:700;padding:8px 10px 2px;line-height:1.4}
+  .d6 .card p{font-size:10px;color:var(--ink-soft);padding:0 10px 10px}
 </style>
 </head>
 <body>
+<h1 class="page">ウマノミカタ — Design Direction Explorations</h1>
+<p class="sub">Six homepage-led directions built from the locked visual foundation (ink-navy brand, turf green, single warm accent, JP system fonts, zero-JS patterns). Verdict labels record the autonomous evaluation: KEEP = adopted, MIX = element adopted into the chosen direction, NO = rejected.</p>
 
-<!-- ===== MOBILE STICKY CTA BAR (invisible improvement) ===== -->
-<div class="mobile-cta-bar">
-  <span>📞</span>
-  <a href="tel:0120219695">
-    <span class="label">ご相談無料</span><br>
-    0120-219-695
-  </a>
+<div class="grid">
+
+  <!-- ============ Direction 1 ============ -->
+  <section class="direction">
+    <div class="dir-head"><span class="num">D1</span><h2>紙面 — Racing Paper</h2>
+      <p>Newspaper metaphor: double-rule header, dense multi-column digest, serif-adjacent authority. Borrowing 競馬新聞 heritage for credibility.</p></div>
+    <div class="phone d1">
+      <div class="hdr"><span class="logo">ウマノミカタ</span><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="top">
+        <span class="tag race">今週の重賞</span>
+        <h3>ジャパンカップ2026 — 東京2400mを決める5つの物語</h3>
+        <p>外国馬の再挑戦、3歳世代の逆襲、そして王者の引退ロード。今年のJCを読み解く。</p>
+      </div>
+      <div class="cols">
+        <div class="col"><b>初心者向け</b>出馬表の読み方、馬券の種類、はじめての競馬場。</div>
+        <div class="col"><b>ウマ娘×競馬</b>キャラクターの実在モデルとなった名馬たちの物語。</div>
+        <div class="col"><b>用語集</b>複勝・脚質・馬場…わからない言葉はここで。</div>
+      </div>
+      <div class="secttl">最新記事</div>
+      <div class="row"><span class="th"></span><div><h4>複勝ってなに？いちばん当てやすい馬券の話</h4><div class="meta">初心者ガイド・11月18日</div></div></div>
+      <div class="ftr"><b>ウマノミカタ</b>馬券の購入は20歳から。予想は的中を保証するものではありません。</div>
+    </div>
+    <p class="verdict no"><b>NO.</b> The 競馬新聞 metaphor signals "for insiders" — the exact gatekeeping feeling the beginner pillar must avoid. Multi-column digest is unscannable for novices and fragile with space-less JP text at 375px.</p>
+  </section>
+
+  <!-- ============ Direction 2 ============ -->
+  <section class="direction">
+    <div class="dir-head"><span class="num">D2</span><h2>Quiet Magazine</h2>
+      <p>note.com-grade calm: white space, author-forward hero, pillar chips as navigation, warm-paper hero surface. Reading is the interface.</p></div>
+    <div class="phone d2">
+      <div class="hdr"><span class="logo">ウマノミカタ</span><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="pillars"><span>初心者向け</span><span>レース分析</span><span>ウマ娘×競馬</span><span>用語集</span></div>
+      <div class="hero">
+        <span class="tag race">ジャパンカップ 11/29(日)</span>
+        <h3>東京2400mは、なぜ「世界一難しい」と呼ばれるのか</h3>
+        <p>今年のジャパンカップを10倍おもしろく観るための、コースと血統の物語。</p>
+        <div class="byline"><span class="avatar">ウ</span><span>編集長・ウマノミカタ ｜ 11月24日更新</span></div>
+      </div>
+      <div class="secttl">はじめての方へ</div>
+      <div class="row"><span class="th"></span><div><span class="tag turf">第1回</span><h4>出馬表の読み方 — 5分でわかる基本のき</h4><div class="meta">初心者ガイド・全6回</div></div></div>
+      <div class="row"><span class="th b3"></span><div><span class="tag bridge">実在馬</span><h4>あのキャラのモデル馬は今も血をつないでいる</h4><div class="meta">ウマ娘×競馬</div></div></div>
+      <div class="ftr"><b>ウマノミカタ</b>馬券の購入は20歳から。当サイトは的中や利益を保証しません。｜ 編集方針 ｜ AI利用について</div>
+    </div>
+    <p class="verdict keep"><b>KEEP — chosen base.</b> Calm authority, author identity visible before scrolling, pillar chips solve FR6 in one glance, beginner content surfaced second (never buried). Matches every emotional goal and costs zero JS.</p>
+  </section>
+
+  <!-- ============ Direction 3 ============ -->
+  <section class="direction">
+    <div class="dir-head"><span class="num">D3</span><h2>Turf Field</h2>
+      <p>Green-led sporty energy: saturated turf header and hero, outlined chip navigation. Racing atmosphere first, editorial second.</p></div>
+    <div class="phone d3">
+      <div class="hdr"><span class="logo">ウマノミカタ</span><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="hero">
+        <h3>この週末、競馬はもっと面白くなる</h3>
+        <p>初心者のための競馬メディア。出馬表の読み方から今週のG1まで。</p>
+      </div>
+      <div class="chips"><span>初心者向け</span><span>レース分析</span><span>ウマ娘×競馬</span></div>
+      <div class="secttl">最新記事</div>
+      <div class="row"><span class="th"></span><div><h4>馬券の種類、ぜんぶ説明できますか？</h4><div class="meta">初心者ガイド</div></div></div>
+      <div class="row"><span class="th b2"></span><div><h4>ジャパンカップ全史 — 外国馬はなぜ勝てなくなったのか</h4><div class="meta">レース分析</div></div></div>
+      <div class="ftr"><b>ウマノミカタ</b>馬券の購入は20歳から。</div>
+    </div>
+    <p class="verdict no"><b>NO.</b> Green-led branding collides with netkeiba and JRA (both green) — differentiation was a stated token decision. Large saturated surfaces also push toward "sporty portal," diluting the trust-editorial voice. Turf green stays as the beginner-pillar accent only.</p>
+  </section>
+
+  <!-- ============ Direction 4 ============ -->
+  <section class="direction">
+    <div class="dir-head"><span class="num">D4</span><h2>Record Book</h2>
+      <p>Ledger-led sobriety: KPI strip, tabular records, bank-statement dignity. The honesty artifact as the site's visual signature.</p></div>
+    <div class="phone d4">
+      <div class="hdr"><span class="logo">ウマノミカタ</span><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="kpis">
+        <div class="kpi"><b>32.4%</b><span>的中率（複勝）</span></div>
+        <div class="kpi"><b>87.1%</b><span>回収率</span></div>
+        <div class="kpi"><b>34</b><span>公開予想数</span></div>
+      </div>
+      <table>
+        <tr><th>レース</th><th>予想</th><th>結果</th></tr>
+        <tr><td>ジャパンC</td><td>◎ 3番</td><td class="win">○ 的中</td></tr>
+        <tr><td>マイルCS</td><td>◎ 7番</td><td class="loss">× 不的中</td></tr>
+        <tr><td>エリザベス女王杯</td><td>◎ 12番</td><td class="loss">× 不的中</td></tr>
+      </table>
+      <div class="note">すべての予想は発走前に記録し、結果にかかわらず削除・修正しません。予想は的中や利益を保証するものではありません。馬券の購入は20歳になってから。</div>
+      <div class="secttl">今週の予想記事</div>
+      <div class="row"><span class="th b2"></span><div><h4>ジャパンカップ予想 — AIと人間の読み筋</h4><div class="meta">予想・11月28日 発走前公開</div></div></div>
+      <div class="ftr"><b>ウマノミカタ</b>予想の記録はすべて公開しています。</div>
+    </div>
+    <p class="verdict mix"><b>MIX.</b> Wrong as a homepage (the ledger is Phase 2 and beginners come first), but this exact table/KPI treatment is adopted wholesale as the ledger page pattern: equal-weight wins/losses, tabular-nums, standing integrity note.</p>
+  </section>
+
+  <!-- ============ Direction 5 ============ -->
+  <section class="direction">
+    <div class="dir-head"><span class="num">D5</span><h2>Calendar Pulse</h2>
+      <p>Race-week module as the heartbeat: framed "this weekend" card with date bar and single CTA, followed by a beginner on-ramp box.</p></div>
+    <div class="phone d5">
+      <div class="hdr"><span class="logo">ウマノミカタ</span><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="week">
+        <div class="bar"><span>今週の重賞</span><em>11/29(日) 東京</em></div>
+        <div class="body">
+          <h3>ジャパンカップ 2026</h3>
+          <p>世界の強豪が東京2400mに集う。今年の見どころを5つの物語で。</p>
+          <a class="cta" href="#">深掘り記事を読む</a>
+        </div>
+      </div>
+      <div class="start">
+        <h4>競馬、はじめてですか？</h4>
+        <p>出馬表の読み方から、100円でできる最初の馬券まで。6回のガイドでご案内します。</p>
+      </div>
+      <div class="secttl">最新記事</div>
+      <div class="row"><span class="th b3"></span><div><h4>あの名馬の物語 — ウマ娘からリアル競馬へ</h4><div class="meta">ウマ娘×競馬</div></div></div>
+      <div class="ftr"><b>ウマノミカタ</b>馬券の購入は20歳から。</div>
+    </div>
+    <p class="verdict mix"><b>MIX.</b> The framed race-week module (date bar + one calm CTA) and the 「競馬、はじめてですか？」 on-ramp box are adopted into the chosen homepage — they make the calendar rhythm and the beginner promise tangible above the fold.</p>
+  </section>
+
+  <!-- ============ Direction 6 ============ -->
+  <section class="direction">
+    <div class="dir-head"><span class="num">D6</span><h2>Fan-Warm Bridge</h2>
+      <p>Bridge-vertical-led: plum-toned hero speaking to Uma Musume fans, horizontal horse-story cards. Fandom warmth as the front door.</p></div>
+    <div class="phone d6">
+      <div class="hdr"><span class="logo">ウマノミカタ</span><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="hero">
+        <h3>推しの実在モデル馬、<br>本当の物語を知っていますか</h3>
+        <p>ゲームで出会ったあの名前は、現実のターフを走っていた。</p>
+      </div>
+      <div class="cardrow">
+        <div class="card"><div class="img"></div><h5>三冠馬の孫は今週走る</h5><p>血統でつながる物語</p></div>
+        <div class="card"><div class="img"></div><h5>逃げの名手の生涯</h5><p>実在馬プロフィール</p></div>
+      </div>
+      <div class="secttl">つぎの一歩</div>
+      <div class="row"><span class="th"></span><div><span class="tag turf">ガイド</span><h4>出馬表の読み方 — 推しの子孫を応援する準備</h4><div class="meta">初心者ガイド</div></div></div>
+      <div class="ftr"><b>ウマノミカタ</b>当サイトはゲーム公式とは関係のない、実在馬の情報メディアです。</div>
+    </div>
+    <p class="verdict no"><b>NO</b> as global direction: leading the whole brand with fandom styling narrows the audience (generic 初心者 intent must stand alone per PRD risk analysis) and drifts toward IP-adjacent visual territory. The horizontal story-card row survives as a pattern <em>inside</em> bridge hub pages only.</p>
+  </section>
+
 </div>
-
-<!-- =========================================================
-     MOCKUP 1: HOMEPAGE
-     ========================================================= -->
-<div class="page-label">📄 MOCKUP 1: HOMEPAGE (トップページ)</div>
-
-<!-- HEADER -->
-<header class="header">
-  <div class="header-inner">
-    <div class="logo">設備<span>人</span></div>
-    <a href="tel:0120219695" class="header-phone">
-      <span class="free">ご相談無料</span>
-      📞 0120-219-695
-    </a>
-  </div>
-</header>
-
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="#">電気まわり ▾</a>
-    <a href="#">水まわり ▾</a>
-    <a href="#">会社案内 ▾</a>
-    <a href="#">サービスの流れ</a>
-    <a href="#">施工事例</a>
-    <a href="#">お客様の声</a>
-    <a href="#">コラム</a>
-    <a href="#">FAQ</a>
-  </div>
-</nav>
-
-<!-- HERO CAROUSEL -->
-<section class="hero">
-  <h1>電気・水まわりのトラブルは<br>設備人におまかせ！</h1>
-  <p>最短10分で駆けつけ ｜ 24時間365日対応 ｜ お見積り無料</p>
-  <div class="hero-badges">
-    <span class="hero-badge">⚡ 電気修理 1,100円〜</span>
-    <span class="hero-badge">💧 水まわり修理 5,500円〜</span>
-    <span class="hero-badge">🔧 年間実績 15,000件</span>
-  </div>
-  <div class="carousel-dots">
-    <span class="carousel-dot active"></span>
-    <span class="carousel-dot"></span>
-    <span class="carousel-dot"></span>
-  </div>
-</section>
-
-<!-- ELECTRICITY SERVICES -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">⚡ 電気まわりの<span>修理サービス</span></h2>
-    <div class="service-grid cols-5">
-      <a class="service-card">
-        <div class="service-card-img">⚡</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">ブレーカー</div>
-          <div class="service-card-desc">修理・交換・漏電調査等</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">🔌</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">コンセント</div>
-          <div class="service-card-desc">修理・増設・交換等</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">💡</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">照明</div>
-          <div class="service-card-desc">取付・交換・修理等</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">📡</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">アンテナ</div>
-          <div class="service-card-desc">設置・修理・調整等</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">🔥</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">給湯器</div>
-          <div class="service-card-desc">交換・修理・設置等</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- WATER SERVICES -->
-<section class="section alt">
-  <div class="container">
-    <h2 class="section-title">💧 水まわりの<span>修理サービス</span></h2>
-    <div class="service-grid cols-4">
-      <a class="service-card">
-        <div class="service-card-img">🚽</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">トイレ</div>
-          <div class="service-card-desc">つまり・水漏れ・交換等</div>
-          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">🍳</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">キッチン</div>
-          <div class="service-card-desc">つまり・水漏れ・交換等</div>
-          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">🛁</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">お風呂</div>
-          <div class="service-card-desc">つまり・水漏れ・交換等</div>
-          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">🚿</div>
-        <div class="service-card-body">
-          <span class="web-badge">WEB割引</span>
-          <div class="service-card-title">洗面所</div>
-          <div class="service-card-desc">つまり・水漏れ・交換等</div>
-          <div class="service-card-price">5,500円〜<small>[税込]</small></div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BLOCK 1 -->
-<div class="cta-block">
-  <h3>少しでも不調を感じたら いつでもお気軽にご相談ください</h3>
-  <p>ご相談無料！年中無休で対応 ｜ 必ず事前にお見積り</p>
-  <div class="cta-buttons">
-    <a href="tel:0120219695" class="cta-btn phone">📞 0120-219-695</a>
-    <a href="#" class="cta-btn email">✉ メールで無料相談</a>
-  </div>
-</div>
-
-<!-- 4 REASONS -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">設備人が<span>選ばれる理由</span></h2>
-    <div class="reasons-grid">
-      <div class="reason-card">
-        <div class="reason-icon">🚀</div>
-        <div class="reason-title">最短10分で駆けつけ</div>
-        <div class="reason-desc">お電話いただいてから最短10分でスタッフが現場に到着</div>
-      </div>
-      <div class="reason-card">
-        <div class="reason-icon">💰</div>
-        <div class="reason-title">お見積り無料</div>
-        <div class="reason-desc">出張費・見積り費・キャンセル料は一切いただきません</div>
-      </div>
-      <div class="reason-card">
-        <div class="reason-icon">🕐</div>
-        <div class="reason-title">24時間365日対応</div>
-        <div class="reason-desc">深夜・早朝・休日も追加料金なしで対応いたします</div>
-      </div>
-      <div class="reason-card">
-        <div class="reason-icon">📋</div>
-        <div class="reason-title">有資格者が対応</div>
-        <div class="reason-desc">第1種・第2種電気工事士など有資格者が作業を担当</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESS FLOW -->
-<section class="section alt">
-  <div class="container">
-    <h2 class="section-title">サービスの<span>流れ</span></h2>
-    <div class="flow-steps">
-      <div class="flow-step">
-        <div class="flow-num">1</div>
-        <div class="flow-img">📞</div>
-        <div class="flow-title">ご相談</div>
-        <div class="flow-desc">お電話・メールにて<br>お気軽にご相談ください</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">2</div>
-        <div class="flow-img">🚗</div>
-        <div class="flow-title">ご訪問</div>
-        <div class="flow-desc">最短10分で最寄りの<br>スタッフが駆けつけます</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">3</div>
-        <div class="flow-img">📋</div>
-        <div class="flow-title">お見積り</div>
-        <div class="flow-desc">現場確認後、作業内容と<br>料金をご説明します</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">4</div>
-        <div class="flow-img">🔧</div>
-        <div class="flow-title">作業</div>
-        <div class="flow-desc">安心・安全を第一に<br>丁寧に作業いたします</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-num">5</div>
-        <div class="flow-img">💳</div>
-        <div class="flow-title">お支払</div>
-        <div class="flow-desc">現金・クレジット・<br>銀行振込に対応</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AREA MAP -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">対応可能<span>エリア</span></h2>
-    <div class="area-map">
-      <div class="area-map-img">🗾 関西エリアマップ</div>
-      <div class="area-list">
-        <h4>大阪府</h4>
-        <ul>
-          <li>大阪市</li><li>豊中市</li><li>吹田市</li><li>堺市</li>
-          <li>東大阪市</li><li>枚方市</li><li>高槻市</li><li>茨木市</li>
-        </ul>
-        <h4 style="margin-top:16px">兵庫県</h4>
-        <ul>
-          <li>神戸市</li><li>尼崎市</li><li>西宮市</li><li>姫路市</li>
-        </ul>
-        <h4 style="margin-top:16px">京都府</h4>
-        <ul>
-          <li>京都市</li><li>宇治市</li><li>長岡京市</li><li>向日市</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CASE STUDIES -->
-<section class="section alt">
-  <div class="container">
-    <h2 class="section-title">施工<span>事例</span></h2>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-img">🔧</div>
-        <div class="card-body">
-          <span class="card-tag">ブレーカー</span>
-          <div class="card-title">ブレーカー交換工事の施工事例</div>
-          <div class="card-meta"><span>⏱ 45分</span><span>💰 14,000円</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">💧</div>
-        <div class="card-body">
-          <span class="card-tag">トイレ</span>
-          <div class="card-title">トイレつまり修理の施工事例</div>
-          <div class="card-meta"><span>⏱ 30分</span><span>💰 8,800円</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">💡</div>
-        <div class="card-body">
-          <span class="card-tag">照明</span>
-          <div class="card-title">照明器具交換の施工事例</div>
-          <div class="card-meta"><span>⏱ 50分</span><span>💰 11,000円</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">お客様の<span>声</span></h2>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-img">⭐</div>
-        <div class="card-body">
-          <span class="card-tag">給湯器交換</span>
-          <div class="card-title">迅速な対応で助かりました</div>
-          <div class="card-meta"><span>大阪市住吉区</span><span>💰 55,000円</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">⭐</div>
-        <div class="card-body">
-          <span class="card-tag">水漏れ修理</span>
-          <div class="card-title">深夜にもかかわらず丁寧でした</div>
-          <div class="card-meta"><span>神戸市中央区</span><span>💰 8,800円</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">⭐</div>
-        <div class="card-body">
-          <span class="card-tag">コンセント修理</span>
-          <div class="card-title">説明が分かりやすかったです</div>
-          <div class="card-meta"><span>豊中市</span><span>💰 5,500円</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section alt">
-  <div class="container">
-    <h2 class="section-title">よくある<span>ご質問</span></h2>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">出張費はかかりますか？</div>
-      <div class="faq-a">いいえ、出張費は一切いただいておりません。お見積りも無料です。</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">深夜・早朝の追加料金はありますか？</div>
-      <div class="faq-a">追加料金は一切ございません。24時間365日、同一料金で対応いたします。</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">どのような資格を持ったスタッフが来ますか？</div>
-      <div class="faq-a">第1種電気工事士、第2種電気工事士などの有資格者が対応いたします。</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">キャンセル料はかかりますか？</div>
-      <div class="faq-a">いいえ、キャンセル料は一切いただいておりません。お気軽にご相談ください。</div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BLOCK 2 -->
-<div class="cta-block">
-  <h3>お困りの際は、お気軽にご連絡ください</h3>
-  <p>24時間365日受付 ｜ 最短10分で駆けつけ</p>
-  <div class="cta-buttons">
-    <a href="tel:0120219695" class="cta-btn phone">📞 0120-219-695</a>
-    <a href="#" class="cta-btn email">✉ メールで無料相談</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h4>電気まわり</h4>
-        <a href="#">ブレーカー</a>
-        <a href="#">コンセント</a>
-        <a href="#">照明</a>
-        <a href="#">アンテナ</a>
-        <a href="#">給湯器</a>
-      </div>
-      <div>
-        <h4>水まわり</h4>
-        <a href="#">トイレ</a>
-        <a href="#">キッチン</a>
-        <a href="#">お風呂</a>
-        <a href="#">洗面所</a>
-      </div>
-      <div>
-        <h4>会社案内</h4>
-        <a href="#">会社概要</a>
-        <a href="#">企業理念</a>
-        <a href="#">対応エリア</a>
-        <a href="#">プライバシーポリシー</a>
-      </div>
-      <div>
-        <h4>お問い合わせ</h4>
-        <a href="tel:0120219695" style="color:white;font-size:18px;font-weight:700;">📞 0120-219-695</a>
-        <a href="#">✉ メールで無料相談</a>
-        <a href="#">サービスの流れ</a>
-        <a href="#">施工事例</a>
-        <a href="#">FAQ</a>
-      </div>
-    </div>
-    <div class="footer-bottom">Copyright &copy; SETSUBIT All Rights Reserved.</div>
-  </div>
-</footer>
-
-<!-- =========================================================
-     MOCKUP 2: SERVICE DETAIL PAGE
-     ========================================================= -->
-<div class="page-divider">📄 MOCKUP 2: SERVICE DETAIL PAGE (ブレーカーサービス)</div>
-
-<header class="header">
-  <div class="header-inner">
-    <div class="logo">設備<span>人</span></div>
-    <a href="tel:0120219695" class="header-phone">
-      <span class="free">ご相談無料</span>
-      📞 0120-219-695
-    </a>
-  </div>
-</header>
-
-<!-- BREADCRUMB -->
-<div class="container">
-  <div class="breadcrumb">
-    <a href="#">TOP</a><span>></span>
-    <a href="#">電気まわりサービス</a><span>></span>
-    ブレーカーサービス
-  </div>
-</div>
-
-<!-- SERVICE HERO + WEB DISCOUNT -->
-<section class="hero" style="padding: 40px 20px;">
-  <div style="display:inline-block;background:var(--accent-discount);padding:6px 20px;border-radius:4px;font-size:14px;font-weight:700;margin-bottom:16px;">
-    WEB割引 1,500円OFF
-  </div>
-  <h1>ブレーカーが頻繁に落ちる・<br>上がらないトラブル</h1>
-  <p>修理・交換・漏電調査 ｜ 最短10分で駆けつけ</p>
-</section>
-
-<!-- ANCHOR MENU -->
-<div class="anchor-menu">
-  <div class="anchor-inner">
-    <a href="#" class="anchor-item"><span class="anchor-icon">💰</span>料金</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">✅</span>選ばれる理由</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">📊</span>比較</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">🗾</span>エリア</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">📋</span>フロー</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">🔧</span>施工事例</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">⭐</span>お客様の声</a>
-    <a href="#" class="anchor-item"><span class="anchor-icon">❓</span>FAQ</a>
-  </div>
-</div>
-
-<!-- PRICING TIERS -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">料金の<span>ご案内</span></h2>
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <div class="pricing-img">🔍</div>
-        <div class="pricing-body">
-          <div class="pricing-name">漏電調査・応急処置</div>
-          <div class="pricing-amount">17,600円<small>[税込]</small></div>
-        </div>
-      </div>
-      <div class="pricing-card">
-        <div class="pricing-img">➕</div>
-        <div class="pricing-body">
-          <div class="pricing-name">ブレーカー新設</div>
-          <div class="pricing-amount">20,000円<small>[税込]</small></div>
-        </div>
-      </div>
-      <div class="pricing-card">
-        <div class="pricing-img">🔄</div>
-        <div class="pricing-body">
-          <div class="pricing-name">ブレーカー交換</div>
-          <div class="pricing-amount">14,000円<small>[税込]</small></div>
-        </div>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:16px;">※作業料金以外に、部品・部材費用、処分費用など別途費用が発生する場合がございます。</p>
-  </div>
-</section>
-
-<!-- COMPARISON TABLE -->
-<section class="section alt">
-  <div class="container">
-    <h2 class="section-title">他社との<span>比較</span></h2>
-    <table class="comparison-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th style="background:var(--accent-cta)">設備人</th>
-          <th>A社</th>
-          <th>B社</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>出張費</td>
-          <td class="us"><span class="check">✓</span> 無料</td>
-          <td>3,000円〜</td>
-          <td><span class="check">✓</span> 無料</td>
-        </tr>
-        <tr>
-          <td>見積り費</td>
-          <td class="us"><span class="check">✓</span> 無料</td>
-          <td>2,000円〜</td>
-          <td>1,000円〜</td>
-        </tr>
-        <tr>
-          <td>深夜料金</td>
-          <td class="us"><span class="check">✓</span> 無料</td>
-          <td>5,000円〜</td>
-          <td>3,000円〜</td>
-        </tr>
-        <tr>
-          <td>キャンセル料</td>
-          <td class="us"><span class="check">✓</span> 無料</td>
-          <td>2,000円〜</td>
-          <td><span class="check">✓</span> 無料</td>
-        </tr>
-        <tr>
-          <td>有資格者</td>
-          <td class="us"><span class="check">✓</span></td>
-          <td><span class="check">✓</span></td>
-          <td><span class="cross">✗</span></td>
-        </tr>
-        <tr>
-          <td>24時間対応</td>
-          <td class="us"><span class="check">✓</span></td>
-          <td><span class="cross">✗</span></td>
-          <td><span class="check">✓</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- CTA BLOCK -->
-<div class="cta-block">
-  <h3>ブレーカートラブルでお困りですか？</h3>
-  <p>有資格者が最短10分で駆けつけます ｜ お見積り無料</p>
-  <div class="cta-buttons">
-    <a href="tel:0120219695" class="cta-btn phone">📞 0120-219-695</a>
-    <a href="#" class="cta-btn email">✉ メールで無料相談</a>
-  </div>
-</div>
-
-<!-- RELATED SERVICES -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">その他の<span>電気サービス</span></h2>
-    <div class="service-grid cols-5">
-      <a class="service-card">
-        <div class="service-card-img">🔌</div>
-        <div class="service-card-body">
-          <div class="service-card-title">コンセント</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">💡</div>
-        <div class="service-card-body">
-          <div class="service-card-title">照明</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">📡</div>
-        <div class="service-card-body">
-          <div class="service-card-title">アンテナ</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-      <a class="service-card">
-        <div class="service-card-img">🔥</div>
-        <div class="service-card-body">
-          <div class="service-card-title">給湯器</div>
-          <div class="service-card-price">1,100円〜<small>[税込]</small></div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-bottom">Copyright &copy; SETSUBIT All Rights Reserved.</div>
-  </div>
-</footer>
-
 </body>
 </html>

@@ -1,6 +1,6 @@
-# generated: 2026-05-08
-# last_updated: 2026-05-10
-# project: star-light
+# generated: 2026-08-26
+# last_updated: 2026-08-26
+# project: racing-horse (ウマノミカタ working name)
 # project_key: NOKEY
 # tracking_system: file-system
 # story_location: {project-root}/_bmad-output/implementation-artifacts
@@ -33,124 +33,91 @@
 # - Stories can be worked in parallel if team capacity allows
 # - Developer typically creates next story after previous one is 'done' to incorporate learnings
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+#
+# SOURCE & SEQUENCE NOTES:
+# ========================
+# - Source: _bmad-output/planning-artifacts/epics.md (Keiba Media Pivot, 2026-08-26; 8 epics / 28 stories / 25 MVP)
+# - Readiness: implementation-readiness-report-2026-08-26.md verdict READY — sprint plan covers Epics 1–7 only
+# - Epic order follows the architecture's six-stage build-green conversion sequence (AR2):
+#   (1) identity & tokens + retirement → Epic 1, (2) schemas & content routes → Epics 2–3,
+#   (3) trust/compliance → Epic 4, (4) SEO & distribution → Epic 5, (5) ledger → Epic 6,
+#   (6) analytics & launch → Epic 7. npm run build must stay green at every stage boundary.
+# - The retired star-light product's sprint tracking is archived at
+#   _bmad-output/implementation-artifacts/archive-star-light/sprint-status.yaml
 
-generated: 2026-05-08
-last_updated: 2026-08-22
-# Story 7-4 review: 2026-05-23
-# Story 6-1 review: 2026-05-29
-# Story 7-4 in-progress: 2026-05-23
-# Story 7-4 created: 2026-05-23
-# Story 7-3 review: 2026-05-23
-# Story 7-3 in-progress: 2026-05-23
-# Story 7-3 created: 2026-05-23
-# Story 7-2 review: 2026-05-23
-# Story 7-2 in-progress: 2026-05-23
-# Story 7-2 created: 2026-05-23
-# Story 7-1 review: 2026-05-23
-# Story 7-1 created: 2026-05-23
-# Epic 7 added via Correct Course: 2026-05-23
-# Story 6-3 review: 2026-05-22
-# Story 6-3 created: 2026-05-22
-# Story 6-2 review: 2026-05-22
-# Story 6-2 created: 2026-05-22
-# Story 6-1 created: 2026-05-22
-# Story 5-3 created: 2026-05-22
-# Story 5-2 created: 2026-05-22
-# Story 3-5 created: 2026-05-21
-# Story 4-4 done: 2026-05-21
-# Story 5-1 created: 2026-05-21
-# Story 4-4 created: 2026-05-21
-# Story 4-3 done: 2026-05-21
-# Story 4-3 review: 2026-05-21
-# Story 4-3 created: 2026-05-21
-# Story 3-4 created: 2026-05-14
-# Story 3-3 review: 2026-05-14
-# Story 3-3 created: 2026-05-14
-# Story 3-2 created: 2026-05-14
-# Story 3-1 created: 2026-05-14
-# Story 4-2 done: 2026-05-13
-# Story 4-2 review: 2026-05-13
-# Story 4-2 created: 2026-05-13
-# Story 4-1 done: 2026-05-13
-# Story 4-1 review: 2026-05-13
-# Story 4-1 created: 2026-05-13
-# Story 2-5 created: 2026-05-12
-# Story 2-4 created: 2026-05-11
-# Story 2-3 created: 2026-05-10
-# Story 2-2 done: 2026-05-10
-# Story 2-2 created: 2026-05-10
-# Story 2-2 review: 2026-05-10
-# Story 1-5 created: 2026-05-08
-# Story 1-2 created: 2026-05-08
-# Story 1-2 review done: 2026-05-08
-# Story 1-3 created: 2026-05-08
-# Story 1-4 created: 2026-05-08
-# Story 1-6 created: 2026-05-10
-# Story 1-7 created: 2026-05-10
-# Story 2-1 created: 2026-05-10
-project: star-light
+generated: 2026-08-26
+last_updated: 2026-08-26
+project: racing-horse (ウマノミカタ working name)
 project_key: NOKEY
 tracking_system: file-system
 story_location: "{project-root}/_bmad-output/implementation-artifacts"
 
 development_status:
-  # Epic 1: Project Foundation & Shared Shell
-  epic-1: in-progress
-  1-1-initialize-astro-project-with-design-tokens: done
-  1-2-create-site-configuration-and-utility-modules: done
-  1-3-define-content-collection-schemas: review
-  1-4-build-baselayout-with-header-and-footer: done
-  1-5-build-desktop-megamenu-navigation: done
-  1-6-build-mobile-menu-and-sticky-cta-bar: review
-  1-7-build-breadcrumb-and-ctablock-components: review
+  # Epic 1: New Brand Foundation & Home-Services Retirement (arch stages 1–2)
+  epic-1: backlog
+  1-1-keiba-identity-configuration-and-design-tokens: backlog
+  1-2-retire-the-home-services-content-layer-and-components: backlog
+  1-3-deployment-config-and-infra-cleanup: backlog
+  1-4-branded-global-shell-header-footer-top-page-and-404: backlog
   epic-1-retrospective: optional
 
-  # Epic 2: Homepage Experience
-  epic-2: in-progress
-  2-1-build-hero-carousel: done
-  2-2-build-service-category-cards-grid: done
-  2-3-build-reasons-process-flow-and-area-map-sections: done
-  2-4-build-featured-case-studies-testimonials-and-faq-on-homepage: done
-  2-5-assemble-complete-homepage: done
+  # Epic 2: Beginner Guides & Glossary — the Core Reading Loop (arch stage 3, part 1)
+  epic-2: backlog
+  2-1-keiba-content-schemas-and-referential-integrity: backlog
+  2-2-glossary-term-lookup-and-the-inline-decode-pattern: backlog
+  2-3-beginner-guide-articles-read-decode-continue: backlog
+  2-4-beginner-hub-the-curated-learning-path: backlog
   epic-2-retrospective: optional
 
-  # Epic 3: Service Pages (Water, Electrical, Pest Control)
-  epic-3: in-progress
-  3-1-build-service-detail-page-template-with-anchor-menu-and-pricing: review
-  3-2-build-comparison-table-reasons-grid-and-trust-signals-for-service-pages: review
-  3-3-build-service-area-process-flow-case-studies-testimonials-and-faq-sections-for-service-pages: review
-  3-4-create-service-content-data-and-dynamic-route-generation: review
-  3-5-build-service-hub-pages: review
+  # Epic 3: Race Magazine & Uma Musume Bridge (arch stage 3, part 2)
+  epic-3: backlog
+  3-1-race-hubs-and-the-calendar-organized-magazine: backlog
+  3-2-g1-deep-dive-articles-the-magazine-format: backlog
+  3-3-uma-musume-bridge-hub-and-real-horse-stories: backlog
+  3-4-the-complete-top-page-quiet-magazine-composition: backlog
   epic-3-retrospective: optional
 
-  # Epic 4: Contact, Company & Supporting Pages
-  epic-4: in-progress
-  4-1-build-contact-form-page: done
-  4-2-implement-contact-form-submission-and-feedback: done
-  4-3-build-company-pages: done
-  4-4-build-process-flow-faq-privacy-sitemap-and-404-pages: done
+  # Epic 4: Trust, Compliance & Operator Workflow
+  epic-4: backlog
+  4-1-trust-pages-author-editorial-policy-and-notices: backlog
+  4-2-standing-compliance-notices-and-safe-wording-enforcement: backlog
+  4-3-operator-workflow-review-checklist-publish-checklist-and-fallback-mode: backlog
   epic-4-retrospective: optional
 
-  # Epic 5: Blog/Column & Content Management
-  epic-5: in-progress
-  5-1-build-blog-column-listing-and-detail-pages: done
-  5-2-build-paginated-case-studies-and-testimonials-listing-pages: done
-  5-3-document-content-management-workflow: review
+  # Epic 5: Search Discovery & Distribution (arch stage 4)
+  epic-5: backlog
+  5-1-structured-data-site-wide-rich-results-compliance: backlog
+  5-2-sitemap-rss-and-url-stability: backlog
+  5-3-ogp-and-share-correctness-on-x-and-line: backlog
+  5-4-subscribe-and-follow-newsletter-line-x-touchpoints: backlog
   epic-5-retrospective: optional
 
-  # Epic 6: SEO, Performance & Accessibility Polish
-  epic-6: in-progress
-  6-1-implement-schema-org-structured-data-on-all-pages: done
-  6-2-implement-technical-seo-sitemap-robots-meta-tags-canonical-urls: done
-  6-3-performance-optimization-and-core-web-vitals: done
-  6-4-security-headers-and-cloudflare-pages-production-deployment: done
-  6-5-wcag-2-1-aa-accessibility-audit-and-fixes: backlog
+  # Epic 6: Private Prediction Ledger — Dry Run (arch stage 5)
+  epic-6: backlog
+  6-1-prediction-entry-schema-and-the-append-only-lifecycle: backlog
+  6-2-honest-aggregation-and-the-record-book-components: backlog
+  6-3-dry-run-live-first-entries-and-the-weekly-ledger-loop: backlog
   epic-6-retrospective: optional
 
-  # Epic 7: Admin Dashboard & CMS Integration
-  epic-7: in-progress
-  7-1-setup-decap-cms-with-github-authentication: review
-  7-2-configure-cms-collections-for-all-content-types: review
-  7-3-build-analytics-dashboard-page: review
-  7-4-admin-deployment-and-documentation: review
+  # Epic 7: Analytics, Launch Readiness & Cutover (arch stage 6)
+  epic-7: backlog
+  7-1-privacy-light-analytics-sessions-and-return-visitors: backlog
+  7-2-search-console-and-the-measurement-baseline: backlog
+  7-3-launch-cutover-brand-content-set-and-performance-verification: backlog
   epic-7-retrospective: optional
+
+  # ------------------------------------------------------------------
+  # Epic 8: Public Prediction Ledger (Phase 2 — TRIGGER-GATED)
+  # ------------------------------------------------------------------
+  # NOT SCHEDULED — per epics.md: "This epic must not be scheduled in the
+  # MVP sprint plan." Gate: implemented only after the 8–12-week dry-run
+  # evaluation (Epic 6) decides the public framing (PRD Phase-2 trigger).
+  # When the gate fires, re-run sprint-planning (or uncomment these entries)
+  # to admit Epic 8 into tracking. Do NOT create stories for it before then.
+  #
+  # epic-8: backlog
+  # 8-1-prediction-pillar-goes-public-hub-methodology-and-navigation: backlog
+  # 8-2-the-public-ledger-every-pick-every-loss-honest-roi: backlog
+  # 8-3-weekly-prediction-articles-published-before-the-race: backlog
+  # epic-8-retrospective: optional
+  # ------------------------------------------------------------------

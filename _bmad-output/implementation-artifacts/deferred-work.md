@@ -1,90 +1,19 @@
-# Deferred Work
+# Deferred Work — Keiba Pivot (ウマノミカタ)
 
-## Deferred from: code review of 2-5-assemble-complete-homepage (2026-05-12)
+> The full deferred-work log of the retired home-services product (star-light) is archived at
+> `archive-star-light/deferred-work.md`. Most of its items concern routes, components, and
+> dependencies that Epic 1's retirement pass deletes outright and are therefore moot.
+> The items below are the only ones that still apply to the keiba product, because they live in
+> code the conversion RETAINS (BaseLayout, Header, `src/utils/schema.ts`, `src/utils/formatters.ts`).
 
-- H1 logo pattern creates implicit contract — future Epic 3/5 service/blog page story authors must NOT add a second H1; the Header.astro `<h1>` wrapping the logo is the single H1 on all pages (follows star-light15.net production pattern).
-- `og:type` hardcoded as "website" in BaseLayout.astro — blog/article pages (Epic 5) will need `og:type="article"` with article-specific meta; BaseLayout should accept optional `ogType` prop when Epic 5 is built.
-- JSON-LD scripts render in `<body>` not `<head>` (index.astro:132-133) — valid per Google, cosmetic improvement; could be moved to BaseLayout `<head>` slot in future to follow best practice.
+## Carried over from star-light (2026-08-26 sprint planning)
 
-## Deferred from: code review of story 1-2 (2026-05-08)
+- **`formatDate` uses runtime timezone, not JST** (`src/utils/formatters.ts`) — may produce off-by-one dates on non-JST build servers. The keiba product is explicitly JST-sensitive (AR19: ledger timestamps `+09:00`, `M/D HH:mm` JST display). Fix with `Intl.DateTimeFormat` + `timeZone: 'Asia/Tokyo'` — natural home: Story 2.1 (schemas/utils) or Story 6.1 (ledger lifecycle).
+- **`generateFAQ([])` / `generateBreadcrumb([])` emit invalid empty schema arrays** (`src/utils/schema.ts`) — Google requires ≥1 Question for FAQPage and ≥2 items for BreadcrumbList. Both generators are retained by AR9. Add minimum-length guards — natural home: Story 5.1 (structured data site-wide).
+- **JSON-LD scripts render in `<body>` not `<head>`** — valid per Google but the old pattern; when Epic 5 rewires JSON-LD through central generators, emit via the BaseLayout `<head>` slot.
+- **`BaseLayout.astro` `ogImage ?? SITE_CONFIG.defaultOgImage` passes empty string through** (`??` only guards null/undefined) — a page with `ogImage=""` makes `og:image` point at the site root; switch to `||`. Natural home: Story 5.3 (OGP correctness).
+- **Header scroll listener never removed** (`Header.astro`) — safe in MPA mode, leaks if view transitions are ever enabled. Header is retained/re-skinned (UX-DR7); note for Story 1.4.
 
-- formatDate uses runtime timezone (not JST) — may produce off-by-one dates on non-JST build servers. Consider explicit JST offset or Intl.DateTimeFormat with timeZone: 'Asia/Tokyo' when timezone-sensitive rendering is needed.
-- generateFAQ([]) and generateBreadcrumb([]) produce empty schema arrays. Google requires ≥1 Question for FAQPage and ≥2 items for BreadcrumbList. Callers should guard against empty input or these functions should validate minimum lengths.
-
-## Deferred from: code review of 1-5-build-desktop-megamenu-navigation (2026-05-10)
-
-- Touch device interaction — hover-only open/close on MegaMenu has no tap toggle fallback for touch laptops (desktop-only scope, revisit if touch issues reported)
-- Hamburger button missing `aria-expanded="false"` — will be addressed in Story 1.6 (Mobile Menu)
-
-## Deferred from: code review of 1-4-build-baselayout-with-header-and-footer (2026-05-10)
-
-- client:load on MobileMenu causes unnecessary JS hydration on desktop — consider client:idle or client:visible (belongs to Story 1.6 scope)
-- Scroll listener on header never removed — safe in MPA mode but will leak if view transitions are enabled
-
-## Deferred from: code review of story-2-1 (2026-05-10)
-
-- No WCAG 2.2.2 pause/stop button for carousel autoplay — design decision; touch/switch-access users cannot pause without hover/focus
-- No responsive images (srcset/picture element) for hero images — 2400px images served to all viewports, bandwidth waste on mobile
-
-## Deferred from: code review of story-2-2 (2026-05-10)
-
-- Hardcoded image/alt maps in ServiceCategorySection.astro should ideally live in siteConfig.ts alongside service definitions — architectural improvement beyond story scope, risk of data drift when adding/renaming services
-- Grid missing 3-column breakpoint (2→4/5 jump) — production site uses Swiper slider not grid, acceptable for static grid alternative
-- imageMap/altMap duplication — production site uses entirely different structure (Swiper), refactor not urgent until architecture stabilizes
-- Raw `<img>` instead of Astro `<Image>` — images in public/ dir, Astro Image cannot optimize public assets; migrating all images to src/ is cross-cutting concern
-
-## Deferred from: code review of story-4.3 (2026-05-21)
-
-- W1: KV banner markup duplicate across 3 company pages — extract to shared component
-- W2: Schema.org JSON-LD for office page placed in body, should be in `<head>`
-- W3: Tokyo and Hyogo offices lack real street addresses in REGIONAL_OFFICES data
-- W4: Company pages missing OG image metadata for social sharing
-- W5: Terminology mismatch: card says "対応可能エリア" but office page says "営業所一覧"
-
-## Deferred from: code review of story-4.4 (2026-05-21)
-
-- Privacy page hardcoded 154 lines of legal content in .astro file instead of data file — inconsistent with project's content collection pattern
-- KV banner h1 text-[48px] ml-[45px] and decorative text-[120px] overflow on mobile viewports under ~420px — pre-existing pattern from company pages
-- ProcessFlow padding (pt-12 pb-8 → lg:pt-[100px]) doesn't match spec py-[80px] md:py-[120px] — pre-existing, used on homepage
-- FAQ sortOrder defaults to 0 for all entries causing non-deterministic display order — pre-existing schema design
-
-## Deferred from: code review of story-5.1 (2026-05-21)
-
-- Swiper columnSwiper in service detail page renders with 0 slides if no blog posts exist — pre-existing pattern, no guard needed until blog content could be empty in production
-
-## Deferred from: code review of story-5.2 (2026-05-22)
-
-- `entry: any` type annotations bypass TypeScript safety in all 4 listing pages (.map() calls) — low risk for static site with Zod validation at build time, but reduces IDE/compiler assistance
-
-## Deferred from: code review of story-6.1 (2026-05-29)
-
-- Homepage emits LocalBusiness for only Tokyo office (`REGIONAL_OFFICES[0]`, src/pages/index.astro:132) — weakens AC#2 on homepage; company pages cover all 4. Pre-existing, outside this story's diff.
-- Tokyo & Hyogo LocalBusiness entries lack `postalCode`/`streetAddress` (siteConfig.ts) — incomplete-address LocalBusiness may draw Rich Results warnings (AC#1). By-design/pre-existing data (see also story-4.3 W3).
-- Empty `voice` collection would 404 `/voice/` — `paginate` emits no routes for an empty array; masked by current fixtures. Latent, not caused by this change.
-- Canonical trailing-slash inconsistency across pages (service/category use trailing slash, company/faq do not) — `trailingSlash` unset so Astro default `ignore` keeps impact low; pre-existing pattern.
-
-## Deferred from: code review of 6-2-implement-technical-seo (2026-05-29)
-
-- columns/[...page] and columns/[...slug] are two catch-all routes in the same folder — fragile route priority; a paginated `/columns/2/` could collide with a post id "2". Works today (build passes); revisit if route conflicts appear.
-- /company (会社案内) vs /company/about (会社概要) present overlapping content — potential keyword cannibalization, both self-canonical. IA decision, pre-existing.
-- privacy/about/sitemap meta descriptions lack a CTA (AC#7 strict reading) — debatable whether legal/utility pages should carry a sales CTA; left as-is.
-- Service-detail page titles lack a region token (AC#6 example includes region) — titles are still unique + keyword-rich; the category hub already carries the region.
-- [category]/index.astro title + description advertise 東京・名古屋・広島, but REGIONAL_OFFICES lists 東京・名古屋・大阪・兵庫 (page bodies show a 広島 中国営業所) — data inconsistency between config and templates; verify the true service area.
-- Dead 'cockroach' image-key branch in [category]/[service].astro:182 — pest-control leftover after that category was removed; harmless dead code.
-
-## Deferred from: code review of 6-4-security-headers (2026-05-29)
-
-- Post-deploy live verification (Task 5.2/5.3): after the first Vercel deploy, run `curl -I` on a public route + `/admin` to confirm all Task-2 headers and the route-scoped CSP, and submit the contact form with a real `PUBLIC_FORMSPREE_ID` to confirm CSP `form-action`/`connect-src` permits the Formspree POST. Requires a live deployment — operator action.
-
-## Deferred from: code review of 6-3-performance-optimization-and-core-web-vitals (2026-08-22)
-
-- Remove duplicate carousel lib (Embla + Swiper both in package.json) — blocked: after the review's lazy-load fix, both libs remain legitimately used (Embla by React ServiceSlider.tsx islands, Swiper by inline case/voice/column carousels in index.astro and [service].astro). Removal requires migrating one to the other (NOTE.md plan step 5, medium risk). Perf impact is now neutralized: swiper.js + swiper/css load in a lazy chunk only when a carousel approaches the viewport.
-
-## Deferred from: code review of spec-centralize-site-config (2026-08-25)
-
-- ContactFormSection failure alerts accumulate — each failed submit prepends a new `role="alert"` div, none removed on retry; add `form.querySelector('[role="alert"]')?.remove()` before prepend. Pre-existing behavior.
-- BaseLayout.astro:19 `ogImage ?? SITE_CONFIG.defaultOgImage` passes empty string through (`??` only guards null/undefined) — a page with `ogImage=""` (e.g. empty blog frontmatter image) makes og:image point at the site root; switch to `||`. Pre-existing hole, expression shape unchanged by the refactor.
-- company/about.astro still hardcodes 株式会社Hoaloha and the Osaka address one row above the now-config-driven phone — duplicates `SITE_CONFIG.legalName` / `REGIONAL_OFFICES` osaka `formattedAddress`; route the whole profile table through config.
-- Suspect identity data now centralized and highly visible in src/config/site.ts: contact email `abcxyz@gmail.com` (placeholder shipping in production schema/mailto), `companyNameEn: 'Setsubit'` (likely typo for Setsubi), `OfficeKey` union includes `'nagoya'` but REGIONAL_OFFICES has no Nagoya entry (see also 6-2 defer: area mismatch 東京・名古屋・広島 vs config). Values were preserved verbatim per spec invariant — needs a human decision, not a code fix.
-- Remaining non-token arbitrary colors outside the spec's 4-token scope: `bg-[#FF6B00]` ([category]/index.astro — value equals the `orange`/`cta` token), `text-[#666]`/`text-[#333]`/`#9aa9bd` (columns/[...slug].astro), `border-[#e0e0e0]` (ContactFormSection, company/about), form status colors `#e8f5e9`/`#4caf50`/`#2e7d32`/`#ffebee`/`#c62828`, article link/table colors in global.css (`#0066cc`, `#339900`, `#CC3300`…). Decide: map to existing tokens or mint new semantic tokens, then sweep.
-- Stale doc pointers to deleted `src/utils/siteConfig.ts`: NOTE.md:155 file-table row (left untouched this session — file carries the user's uncommitted edits) and change.md:8 design note. Update to `src/config/site.ts` when convenient.
+Everything else in the archived log (contact form, company pages, columns/blog routes, MegaMenu,
+carousels/Embla/Swiper, Decap CMS, service data, privacy hardcode, `siteConfig.ts` doc pointers)
+is resolved by deletion in Stories 1.1–1.3 (AR8/AR9) and needs no tracking here.

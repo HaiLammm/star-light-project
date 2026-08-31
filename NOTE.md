@@ -158,3 +158,119 @@ Sau deploy: kiểm tra URL bài bằng **Google Rich Results Test** và **Schema
 | `src/components/Breadcrumb.astro` | Breadcrumb hiển thị + `BreadcrumbList` JSON-LD |
 | `astro.config.mjs` | Sitemap + `lastmod` theo `updatedDate` |
 | `public/robots.txt` | Allow all, chặn `/admin/`, trỏ sitemap |
+
+---
+
+# PageSpeed Insights — setsubi-pro.net (Mobile)
+
+Báo cáo ngày: 22/08/2026
+
+## Điểm tổng quan
+
+| Chỉ số | Điểm |
+|---|---|
+| **Hiệu suất (Performance)** | **58** |
+| Hỗ trợ tiếp cận | 96 |
+| Phương pháp hay nhất | 100 |
+| SEO | 100 |
+
+## Core Web Vitals (Mobile)
+
+| Chỉ số | Giá trị |
+|---|---|
+| FCP (First Contentful Paint) | 7,4 giây |
+| LCP (Largest Contentful Paint) | 8,4 giây |
+| TBT (Total Blocking Time) | 0 ms |
+| CLS (Cumulative Layout Shift) | 0 |
+| Speed Index | 7,4 giây |
+
+## Core Web Vitals (Desktop) — tham khảo
+
+| Chỉ số | Giá trị |
+|---|---|
+| FCP | 1,0 giây |
+| LCP | 1,2 giây |
+| TBT | 0 ms |
+| CLS | 0.001 |
+| Speed Index | 1,0 giây |
+
+## Các lỗi gây chậm (xếp theo mức ảnh hưởng)
+
+### 1. Cây phần phụ thuộc mạng (Critical Request Chain)
+
+- Độ trễ tối đa: **2.327 ms**
+- Chuỗi tải nối tiếp:
+  - `index.astro` → `autoplay.js` (923ms, 24KB) → **`ServiceSlider.js` (2.327ms, 11KB)** ← bottleneck chính
+  - `MobileMenu.js` (778ms)
+  - `jsx-runtime.js` (1.554ms)
+  - `index.C5BVv2q5.js` (1.556ms)
+  - `autoplay.css` (446ms)
+
+### 2. Yêu cầu chặn hiển thị (Render-Blocking Resources)
+
+- Tiết kiệm ước tính: **300ms**
+
+### 3. Buộc chỉnh lại luồng (Forced Reflow)
+
+- File `autoplay.0KwRtJk7.js` (Swiper autoplay):
+  - Dòng 55621: **264ms** reflow
+  - [chưa được phân bổ]: **230ms**
+  - Dòng 4932: 36ms
+
+### 4. Giảm CSS không dùng đến
+
+- Tiết kiệm: **59 KiB** (chủ yếu từ Swiper CSS)
+
+### 5. Giảm JavaScript không dùng đến
+
+- Tiết kiệm: **27 KiB**
+
+### 6. Cải thiện việc phân phối hình ảnh
+
+- Tiết kiệm: **99 KiB** (nên dùng WebP/AVIF)
+
+### 7. Rút gọn CSS
+
+- Tiết kiệm: **6 KiB**
+
+### 8. Hình ảnh thiếu width/height
+
+- `CTABlock.astro:79` — `<img src="/images/site_logo_no-mark.jpeg">` không có w/h
+- `ComparisonTable.astro:51` — tương tự
+
+### 9. Tối ưu hoá kích thước DOM
+
+- DOM lớn với nhiều phần tử lặp (reason cards)
+
+### 10. Long tasks
+
+- 2 long tasks trên main thread
+
+### 11. Font loading
+
+- Hàng chục file font Noto Sans JP (woff2, 17-19KB mỗi file) từ fonts.gstatic.com
+- Load weight 400/700 nhưng code dùng cả font-extrabold (800) và font-black (900)
+
+## Nguyên nhân gốc rễ (từ khảo sát codebase)
+
+| Component | File | Vấn đề |
+|---|---|---|
+| MobileMenu | `Header.astro:79` | `client:load` → tải React+ReactDOM (~45KB) ngay lập tức trên mọi trang |
+| ServiceSlider | `index.astro:209` | `client:idle` → 2327ms trên critical path |
+| Swiper carousel | `index.astro:479-513` | Import eager, gây forced reflow 494ms |
+| Duplicate libs | package.json | Cả Embla lẫn Swiper cùng tồn tại |
+| Font weights | `BaseLayout.astro:55-58` | Thiếu weight 800/900 mà code dùng |
+
+## Plan fix
+
+Xem chi tiết tại: `.claude/plans/n-u-c-i-thi-n-c-abundant-perlis.md`
+
+| Bước | Thay đổi | Ước tính | Rủi ro |
+|------|----------|----------|--------|
+| 1 | MobileMenu → vanilla Astro component | -800ms FCP | Thấp |
+| 2 | ServiceSlider `client:idle` → `client:visible` | -1500ms FCP | Thấp |
+| 3 | Lazy-load Swiper bằng IntersectionObserver | -500ms + bỏ reflow | Thấp |
+| 4 | Thêm width/height cho ảnh | CLS fix | Trivial |
+| 5 | Thay Swiper bằng Embla | -59KB CSS, -15KB JS | Trung bình |
+| 6 | Font optimization | -200ms | Thấp |
+| 7 | Scope article CSS | -5KB | Trivial |
