@@ -59,7 +59,9 @@ imageAlt: "シャワーから水が漏れている浴室の様子"
 ### 点検前に止水栓を閉める
 
 
-![シャワー水栓の止水栓を確認している様子](/images/SEO/shower-water-leak-causes-solutions/3.jpg)
+
+![シャワー水栓の止水栓を確認している様子](/images/SEO/shower-water-leak/6.jpg)
+
 
 
 
