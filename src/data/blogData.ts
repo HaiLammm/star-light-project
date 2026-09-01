@@ -53,9 +53,14 @@ const BLOG_SUBCATEGORY_ALIAS_MAP: Record<string, string> = {
   '給湯器': '給湯器交換',
 };
 
-/** Nhãn chuyên mục con đã chuẩn hoá (dùng để so khớp, không phải để hiển thị thô). */
+/**
+ * Nhãn chuyên mục con đã chuẩn hoá (dùng để so khớp, không phải để hiển thị thô).
+ * Cắt khoảng trắng thừa vì frontmatter do pipeline sinh ra đôi khi lọt dấu cách
+ * đầu chuỗi (ví dụ `" アンテナ工事"`), khiến bài rơi khỏi trang chuyên mục con.
+ */
 export function normalizeSubcategory(sub: string): string {
-  return BLOG_SUBCATEGORY_ALIAS_MAP[sub] ?? sub;
+  const trimmed = sub.trim();
+  return BLOG_SUBCATEGORY_ALIAS_MAP[trimmed] ?? trimmed;
 }
 
 const SUBCATEGORY_TO_CATEGORY = new Map(

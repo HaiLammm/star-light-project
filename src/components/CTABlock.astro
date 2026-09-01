@@ -119,8 +119,11 @@ const phone = SITE_CONFIG.phone;
       </div>
 
       <!-- Service page-link buttons -->
-      <div class="mx-auto mt-5 md:mt-[40px] flex w-full max-w-[980px] flex-col md:flex-row items-stretch justify-center gap-4 md:gap-5">
-        <div class="w-full flex-1">
+      <!-- Hai thẻ chỉ xếp ngang từ lg trở lên: ở 768–1023px mỗi thẻ chỉ được
+           ~342px trong khi nội dung (chữ whitespace-nowrap + giá cỡ lớn) cần
+           ~450px, khiến chúng tràn ra ngoài viewport. -->
+      <div class="mx-auto mt-5 md:mt-[40px] flex w-full max-w-[980px] flex-col lg:flex-row items-stretch justify-center gap-4 lg:gap-5">
+        <div class="w-full flex-1 min-w-0">
           <a
             href="/electricity"
             aria-label="電気まわりのトラブル WEB割引 1,500円割引 2,600円→1,100円[税込]〜"
@@ -152,7 +155,7 @@ const phone = SITE_CONFIG.phone;
             </div>
           </a>
         </div>
-        <div class="w-full flex-1">
+        <div class="w-full flex-1 min-w-0">
           <a
             href="/water"
             aria-label="水まわりのトラブル WEB割引 今だけ半額 11,000円→5,000円[税込]〜"

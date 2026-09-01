@@ -4,6 +4,12 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { SITE_CONFIG, SERVICE_CATEGORIES } from '../utils/siteConfig';
 import { getCollection } from 'astro:content';
+import {
+  BLOG_CATEGORIES,
+  normalizeSubcategory,
+  postCategory,
+  subcategorySlug,
+} from '../data/blogData';
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -32,6 +38,45 @@ const utilityPages = [
   { label: 'お問い合わせ', href: '/contact' },
   { label: 'プライバシーポリシー', href: '/privacy' },
 ];
+
+const referencePages = [
+  { label: '施工事例', href: '/case' },
+  { label: 'お客様の声', href: '/voice' },
+  { label: 'お役立ちコラム', href: '/columns' },
+];
+
+// Toàn bộ bài cột báo, nhóm theo chuyên mục lớn → chuyên mục con. Trang phân
+// trang /columns/2/… chỉ hiện 14 bài mỗi trang, nên đây là đường vào duy nhất
+// dẫn tới mọi bài chỉ bằng một cú nhấp từ trang này.
+const allPosts = await getCollection('blog');
+
+const postsSortedByDate = [...allPosts].sort(
+  (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf(),
+);
+
+const columnsByCategory = BLOG_CATEGORIES.map((cat) => ({
+  label: cat.label,
+  href: `/columns/category/${cat.key}`,
+  subcategories: cat.subcategories
+    .map((sub) => ({
+      label: sub,
+      href: `/columns/category/${cat.key}/${subcategorySlug(sub)}`,
+      posts: postsSortedByDate.filter(
+        (post) =>
+          postCategory(post.data) === cat.key &&
+          normalizeSubcategory(post.data.subcategory) === sub,
+      ),
+    }))
+    .filter((sub) => sub.posts.length > 0),
+})).filter((cat) => cat.subcategories.length > 0);
+
+// Lưới hứng: bài có `subcategory` không khớp bảng chuyên mục nào (dữ liệu do
+// pipeline sinh có thể lệch) vẫn phải xuất hiện ở đây, nếu không trang này lại
+// bỏ sót đúng những bài dễ thành mồ côi nhất.
+const linkedPostIds = new Set(
+  columnsByCategory.flatMap((cat) => cat.subcategories.flatMap((sub) => sub.posts.map((p) => p.id))),
+);
+const uncategorizedPosts = postsSortedByDate.filter((post) => !linkedPostIds.has(post.id));
 ---
 
 <BaseLayout
@@ -109,6 +154,78 @@ const utilityPages = [
             ))}
           </ul>
         </div>
+
+        <!-- Reference Pages -->
+        <div>
+          <h2 class="text-[18px] md:text-[22px] font-bold mb-4 pb-2 border-b-2 border-navy">
+            実績・お役立ち情報
+          </h2>
+          <ul class="space-y-2">
+            {referencePages.map((page) => (
+              <li>
+                <a href={page.href} class="text-[14px] md:text-[16px] text-gray-700 hover:text-water transition-colors">
+                  {page.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- All column articles -->
+  <section class="pb-[80px] md:pb-[120px]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[20px] md:text-[26px] font-bold mb-8 pb-2 border-b-2 border-navy">
+        <a href="/columns" class="hover:text-water transition-colors">お役立ちコラム 記事一覧</a>
+      </h2>
+
+      <div class="space-y-10 md:space-y-12">
+        {columnsByCategory.map((cat) => (
+          <div>
+            <h3 class="text-[17px] md:text-[20px] font-bold mb-5">
+              <a href={cat.href} class="hover:text-water transition-colors">{cat.label}</a>
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {cat.subcategories.map((sub) => (
+                <div>
+                  <h4 class="text-[15px] md:text-[16px] font-bold mb-3 pb-1 border-b border-gray-300">
+                    <a href={sub.href} class="hover:text-water transition-colors">{sub.label}</a>
+                  </h4>
+                  <ul class="space-y-2">
+                    {sub.posts.map((post) => (
+                      <li>
+                        <a
+                          href={`/columns/${post.id}/`}
+                          class="text-[13px] md:text-[14px] leading-relaxed text-gray-700 hover:text-water transition-colors"
+                        >
+                          {post.data.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {uncategorizedPosts.length > 0 && (
+          <div>
+            <h3 class="text-[17px] md:text-[20px] font-bold mb-5">その他の記事</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 md:gap-x-8">
+              {uncategorizedPosts.map((post) => (
+                <a
+                  href={`/columns/${post.id}/`}
+                  class="text-[13px] md:text-[14px] leading-relaxed text-gray-700 hover:text-water transition-colors"
+                >
+                  {post.data.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   </section>

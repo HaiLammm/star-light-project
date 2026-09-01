@@ -44,7 +44,13 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/admin/') && !/\/404\/?$/.test(page),
+      // Trang phân trang (/columns/2/, /voice/3/…) chỉ là danh sách link, không
+      // có nội dung riêng. Giữ chúng trong sitemap làm loãng tín hiệu ưu tiên
+      // và chúng nằm trong nhóm "Discovered – currently not indexed" của GSC.
+      filter: (page) =>
+        !page.includes('/admin/') &&
+        !/\/404\/?$/.test(page) &&
+        !/\/(columns|voice|case)\/\d+\/?$/.test(page),
       serialize(item) {
         const blogDate = blogDateMap.get(item.url);
         if (blogDate) {
