@@ -1,65 +1,13 @@
 ---
-import { SITE_CONFIG } from '@config/legacySite';
-import { FOOTER_NAV } from '@config/legacyNavigation';
-import { Image } from 'astro:assets';
-import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
+import { SITE_CONFIG } from '@config/site';
 ---
 
-<footer class="mb-[calc(90px+env(safe-area-inset-bottom))] md:mb-0">
-  <div class="max-w-[1200px] mx-auto pt-[30px] pb-[16px] md:pt-[50px] md:pb-[45px] px-[12px] md:px-[45px]">
-    <figure class="w-[153px] md:w-[230px] mx-auto">
-      <Image src={siteLogo} alt={SITE_CONFIG.companyName} width={230} densities={[1, 2]} format="webp" class="w-full h-auto" />
-    </figure>
-
-    <nav aria-label="フッターナビゲーション" class="mt-[10px] md:mt-[50px] px-[12px] md:px-[45px]">
-      <div class="flex flex-col md:flex-row md:gap-[9px]">
-        {FOOTER_NAV.map((section) => (
-          <div class="flex-1 py-[20px] md:py-0 border-b border-[#ccc] md:border-b-0 last:border-b-0">
-            {section.href ? (
-              <a href={section.href} class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px] hover:text-orange transition-colors">
-                <span class="w-[8px] h-[8px] rounded-full bg-water shrink-0"></span>
-                {section.label}
-              </a>
-            ) : (
-              <p class="text-[14px] md:text-[16px] font-bold flex items-center gap-[7px]">
-                <span class="w-[8px] h-[8px] rounded-full bg-water shrink-0"></span>
-                {section.label}
-              </p>
-            )}
-            {section.children && (
-              <ul class="mt-[10px] md:mt-[20px] grid grid-cols-2 md:flex md:flex-col gap-[10px] md:gap-[15px]">
-                {section.children.map((child) => (
-                  <li>
-                    <a href={child.href} class="text-[12px] md:text-[14px] text-[#333] flex items-center gap-[7px] md:gap-[7px] hover:text-orange transition-colors">
-                      <span class="w-[6px] h-[2px] bg-water shrink-0"></span>
-                      {child.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
-      </div>
-    </nav>
-
-    <!-- Company contact info -->
-    <div class="mt-[24px] md:mt-[40px] px-[12px] md:px-[45px]">
-      <div class="border-t border-[#ccc] pt-[20px] md:pt-[30px] flex flex-col items-center gap-[10px] text-center">
-        <p class="text-[14px] md:text-[16px] font-bold text-[#333]">{SITE_CONFIG.legalName}（{SITE_CONFIG.companyName}）</p>
-        <a
-          href={SITE_CONFIG.phone.href}
-          aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="font-['Roboto',sans-serif] text-[22px] md:text-[28px] font-bold text-navy hover:opacity-70 transition-opacity"
-        >
-          {SITE_CONFIG.phone.display}
-        </a>
-        <p class="text-[12px] md:text-[13px] text-[#666]">電話相談無料！{SITE_CONFIG.businessHours}対応</p>
-        <ul class="mt-[6px] flex flex-col gap-[4px] text-[12px] md:text-[13px] text-[#555]">
-          <li>関東営業所：〒311-2113 茨城県鉾田市上幡木1418-35</li>
-        </ul>
-      </div>
+<footer class="border-t border-line bg-paper-warm">
+  <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 text-sm text-ink-soft md:px-6">
+    <div class="flex items-center gap-3">
+      <img src={SITE_CONFIG.logoPath} alt="" width="120" height="30" class="h-8 w-auto" loading="lazy" />
+      <span class="font-bold text-ink">{SITE_CONFIG.siteName}</span>
     </div>
+    <p>© {SITE_CONFIG.siteName}</p>
   </div>
-  <p class="bg-navy text-white text-center text-[12px] py-[11px] md:py-[12px]">Copyright &copy; SETSUBI-PRO.</p>
 </footer>

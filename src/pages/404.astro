@@ -1,55 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import CTABlock from '../components/CTABlock.astro';
-import { SITE_CONFIG } from '@config/legacySite';
-
-const breadcrumbItems = [
-  { label: 'TOP', href: '/' },
-  { label: 'ページが見つかりません', href: '/404' },
-];
+import { SITE_CONFIG } from '@config/site';
 ---
 
 <BaseLayout
-  title="ページが見つかりません｜設備プロ"
-  description="お探しのページが見つかりませんでした。URLが変更されたか、削除された可能性があります。サービス一覧やお役立ちコラムから、お探しの情報をお探しください。"
+  title="ページが見つかりません｜ウマノミカタ"
+  description={SITE_CONFIG.description}
   canonicalUrl={`${SITE_CONFIG.siteUrl}/404/`}
 >
-  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
-    <Breadcrumb items={breadcrumbItems} />
-  </div>
-
-  <!-- KV Banner -->
-  <section class="bg-navy h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
-    <div class="max-w-[1200px] mx-auto px-4 w-full relative">
-      <h1 class="text-[20px] sm:text-[32px] md:text-[48px] font-black text-white ml-[16px] sm:ml-[30px] md:ml-[45px]">ページが見つかりません</h1>
+  <section class="mx-auto max-w-2xl px-4 py-24 text-center">
+    <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand">404</p>
+    <h1 class="mt-4 text-3xl font-black text-ink md:text-5xl">ページが見つかりません</h1>
+    <p class="mt-6 text-base leading-8 text-ink-soft">
+      お探しのページは移動または削除された可能性があります。トップページからお進みください。
+    </p>
+    <div class="mt-10">
+      <a href="/" class="inline-flex min-h-11 items-center justify-center rounded-full bg-brand px-6 py-3 font-bold text-white">
+        トップページへ戻る
+      </a>
     </div>
   </section>
-
-  <section class="py-[80px] md:py-[120px]">
-    <div class="max-w-[600px] mx-auto px-4 text-center">
-      <p class="text-[14px] md:text-[16px] text-gray-600 mb-8 leading-relaxed">
-        ページが移動または削除された可能性があります。<br />
-        URLをご確認のうえ、再度お試しください。
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a
-          href="/"
-          class="inline-flex items-center justify-center bg-navy text-white font-bold py-3 px-8 rounded-lg hover:bg-water-deep transition-colors text-[14px] md:text-[16px]"
-        >
-          トップページへ戻る
-        </a>
-        <a
-          href={SITE_CONFIG.phone.href}
-          aria-label={SITE_CONFIG.phone.ariaLabel}
-          class="inline-flex flex-col items-center justify-center border-2 border-navy text-navy font-bold py-2 px-8 rounded-lg hover:bg-navy hover:text-white transition-colors"
-        >
-          <span class="text-[11px] md:text-[12px]">お電話でのお問い合わせ</span>
-          <span class="text-[16px] md:text-[18px] font-bold">{SITE_CONFIG.phone.display}</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <CTABlock variant="full-width" />
 </BaseLayout>

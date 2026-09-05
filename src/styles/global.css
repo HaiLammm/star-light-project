@@ -44,20 +44,6 @@ html {
   }
 }
 
-#price, #reason, #compare, #area, #flow, #case, #voice, #faq, #water, #electricity {
-  scroll-margin-top: 140px;
-}
-
-/* Temporary aliases for retained home-services pages; Story 1.2 removes them. */
-:root {
-  --color-navy: var(--color-brand); --color-orange: var(--color-accent); --color-red: var(--color-loss);
-  --color-section-gray: var(--color-brand-tint); --color-text-primary: var(--color-ink); --color-text-secondary: var(--color-ink-soft);
-  --color-border-light: var(--color-line); --color-cream: var(--color-paper-warm); --color-water: var(--color-brand);
-  --color-water-deep: var(--color-brand); --color-water-tint: var(--color-brand-tint); --color-electric: var(--color-accent);
-  --color-electric-deep: var(--color-accent); --color-electric-tint: var(--color-brand-tint); --color-cta: var(--color-accent);
-  --color-cta-deep: var(--color-accent); --color-border-warm: var(--color-line);
-}
-
 input, select, textarea {
   font-size: 16px;
 }
@@ -115,13 +101,13 @@ input, select, textarea {
 }
 .article-numbered th,
 .article-numbered td {
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-line);
   padding: 8px 10px;
   text-align: left;
   vertical-align: top;
 }
 .article-numbered th {
-  background: var(--color-section-gray);
+  background: var(--color-brand-tint);
   font-weight: 700;
   white-space: nowrap;
 }

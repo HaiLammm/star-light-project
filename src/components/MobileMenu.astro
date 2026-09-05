@@ -1,8 +1,8 @@
 ---
-import type { NavigationItem } from '@config/legacyNavigation';
+import type { NavigationItem } from '@config/navigation';
 
 interface Props {
-  navigation: NavigationItem[];
+  navigation: readonly NavigationItem[];
 }
 
 const { navigation } = Astro.props;
@@ -16,7 +16,7 @@ const { navigation } = Astro.props;
     aria-label="ナビゲーションメニュー"
     id="mobile-menu"
     class="fixed inset-0 w-full h-full overflow-y-auto"
-    style="background:var(--color-navy);padding:50px 20px 100px"
+    style="background:var(--color-brand);padding:50px 20px 100px"
   >
     <nav>
       <ul>
@@ -26,55 +26,9 @@ const { navigation } = Astro.props;
               href={item.href}
               class="flex items-center gap-[7px] text-[14px] font-bold text-white min-h-[44px]"
             >
-              <span class="shrink-0 w-[8px] h-[8px] rounded-full bg-cta"></span>
+              <span class="shrink-0 w-[8px] h-[8px] rounded-full bg-accent"></span>
               {item.label}
             </a>
-            {item.children && (
-              <ul class="grid grid-cols-2 gap-[10px] mt-[10px]">
-                {item.children.map((child) => (
-                  <li>
-                    <a
-                      href={child.href}
-                      class="flex items-center gap-[8px] text-[12px] text-white min-h-[44px]"
-                    >
-                      <span class="shrink-0 w-[6px] h-[2px] bg-cta"></span>
-                      {child.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {item.columns && (
-              <div class="mt-[12px] flex flex-col gap-[16px]">
-                {item.columns.map((col) => {
-                  const accent = col.accent === 'electric' ? 'var(--color-electric)' : 'var(--color-water)';
-                  return (
-                    <div>
-                      <a
-                        href={col.href}
-                        class="flex items-center gap-[8px] text-[13px] font-bold text-white min-h-[40px]"
-                      >
-                        <span class="shrink-0 w-[9px] h-[9px] rounded-full" style={`background:${accent}`}></span>
-                        {col.label}
-                      </a>
-                      <ul class="grid grid-cols-2 gap-[10px] mt-[6px] pl-[17px]">
-                        {col.children.map((child) => (
-                          <li>
-                            <a
-                              href={child.href}
-                              class="flex items-center gap-[8px] text-[12px] text-white min-h-[40px]"
-                            >
-                              <span class="shrink-0 w-[6px] h-[2px]" style={`background:${accent}`}></span>
-                              {child.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </li>
         ))}
       </ul>

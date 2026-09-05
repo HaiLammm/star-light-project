@@ -42,6 +42,7 @@ So that phone numbers, company data, and formatters are never hardcoded across c
 
 ### Review Findings
 
+- [x] [Review][Patch] Restore the archived Story 1.2 contract [src/utils/siteConfig.ts:1, src/utils/schema.ts:1, src/content.config.ts:1] — added the required 設備人 site/office/navigation/service exports, restored `generateLocalBusiness`/`generateService`/`generateReview`, and restored the typed Astro Content Layer collections.
 - [x] [Review][Defer] formatDate uses runtime timezone (not JST) — may produce off-by-one dates on non-JST build servers [src/utils/formatters.ts:10] — deferred, pre-existing JS Date behavior
 - [x] [Review][Defer] generateFAQ([]) and generateBreadcrumb([]) produce empty schema arrays — Google requires ≥1 Question for FAQPage and ≥2 items for BreadcrumbList [src/utils/schema.ts] — deferred, caller responsibility
 

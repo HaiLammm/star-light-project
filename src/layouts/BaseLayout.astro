@@ -1,9 +1,8 @@
 ---
-import { SITE_CONFIG } from '@config/legacySite';
+import { SITE_CONFIG } from '@config/site';
 import { generateWebSite, generateOrganization, serializeJsonLd } from '../utils/schema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import CTABlock from '../components/CTABlock.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 
 const { title, description, canonicalUrl, ogImage, ogType = 'website' } = Astro.props;
 
-const ogImageUrl = new URL(ogImage ?? SITE_CONFIG.defaultOgImage, Astro.site).href;
+const ogImageUrl = new URL(ogImage ?? SITE_CONFIG.defaultOgImage, SITE_CONFIG.siteUrl).href;
 
 // WebSite + Organization phát trên mọi trang: đây là tín hiệu Google dùng để hiện
 // tên site (thay vì domain trần) và để chọn logo/favicon cho toàn bộ trang con.
@@ -39,9 +38,8 @@ const siteJsonLd = serializeJsonLd([generateOrganization(), generateWebSite()]);
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="ja" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
-    <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.rssTitle} href="/rss.xml" />
     <meta property="og:locale" content="ja_JP" />
-    <meta property="og:site_name" content={`${SITE_CONFIG.companyName}（セツビプロ）`} />
+    <meta property="og:site_name" content={SITE_CONFIG.siteName} />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -53,12 +51,11 @@ const siteJsonLd = serializeJsonLd([generateOrganization(), generateWebSite()]);
     <meta name="twitter:image" content={ogImageUrl} />
     <slot name="head" />
     <script type="application/ld+json" set:html={siteJsonLd} />
-    <script is:inline defer src="/_vercel/insights/script.js"></script>
   </head>
-  <body class="text-text-primary">
+  <body class="text-ink">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:text-navy focus:outline focus:outline-2 focus:outline-navy focus:outline-offset-2"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2 focus:text-brand focus:outline focus:outline-2 focus:outline-brand focus:outline-offset-2"
     >
       コンテンツへスキップ
     </a>
@@ -67,6 +64,5 @@ const siteJsonLd = serializeJsonLd([generateOrganization(), generateWebSite()]);
       <slot />
     </main>
     <Footer />
-    <CTABlock variant="sticky" />
   </body>
 </html>

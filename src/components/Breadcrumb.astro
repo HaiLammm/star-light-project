@@ -1,6 +1,6 @@
 ---
 import { generateBreadcrumb, serializeJsonLd, type BreadcrumbItem } from '../utils/schema';
-import { SITE_CONFIG } from '@config/legacySite';
+import { SITE_CONFIG } from '@config/site';
 
 interface Props {
   items: Array<{ label: string; href: string }>;
@@ -10,14 +10,14 @@ const { items } = Astro.props;
 
 const breadcrumbData: BreadcrumbItem[] = items.map((item) => ({
   name: item.label,
-  url: item.href.startsWith('http') ? item.href : SITE_CONFIG.siteUrl + item.href,
+  url: new URL(item.href, SITE_CONFIG.siteUrl).href,
 }));
 
 const jsonLd = generateBreadcrumb(breadcrumbData);
 ---
 
 <nav aria-label="パンくずリスト">
-  <ol class="flex flex-wrap items-center gap-1 text-[14px] md:text-[15px] text-text-secondary">
+  <ol class="flex flex-wrap items-center gap-1 text-[14px] md:text-[15px] text-ink-soft">
     {items.map((item, index) => (
       <>
         {index > 0 && (
@@ -25,11 +25,11 @@ const jsonLd = generateBreadcrumb(breadcrumbData);
         )}
         {index < items.length - 1 ? (
           <li>
-            <a href={item.href} class="text-navy hover:underline">{item.label}</a>
+            <a href={item.href} class="text-brand hover:underline">{item.label}</a>
           </li>
         ) : (
           <li>
-            <span class="font-bold text-text-primary" aria-current="page">{item.label}</span>
+            <span class="font-bold text-ink" aria-current="page">{item.label}</span>
           </li>
         )}
       </>

@@ -1,4 +1,4 @@
-import { SITE_CONFIG, type OfficeAddress, type RegionalOffice } from '@config/legacySite';
+import { SITE_CONFIG, type OfficeAddress, type RegionalOffice } from './siteConfig';
 
 type SchemaContext = 'https://schema.org';
 
@@ -44,6 +44,11 @@ export interface ServiceInput {
   providerUrl?: string;
 }
 
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 export interface FAQItem {
   question: string;
   answer: string;
@@ -60,18 +65,12 @@ export interface TestimonialInput {
   bestRating?: number;
 }
 
-export interface BreadcrumbItem {
-  name: string;
-  url: string;
-}
-
 export interface ArticleInput {
   title: string;
   publishedDate: string;
   author: string;
   description: string;
   url: string;
-  /** Đường dẫn ảnh; tương đối hay tuyệt đối đều được, hàm sẽ tự absolute hóa. */
   image?: string;
   modifiedDate?: string;
 }
@@ -101,31 +100,6 @@ export interface ServiceSchema {
   url: string;
 }
 
-interface QuestionSchema {
-  '@type': 'Question';
-  name: string;
-  acceptedAnswer: {
-    '@type': 'Answer';
-    text: string;
-  };
-}
-
-export interface FAQPageSchema {
-  '@context': SchemaContext;
-  '@type': 'FAQPage';
-  mainEntity: QuestionSchema[];
-}
-
-interface ReviewedServiceSchema {
-  '@type': 'Service';
-  name: string;
-  offers: {
-    '@type': 'Offer';
-    price: string;
-    priceCurrency: 'JPY';
-  };
-}
-
 export interface ReviewSchema {
   '@context': SchemaContext;
   '@type': 'Review';
@@ -134,7 +108,15 @@ export interface ReviewSchema {
     name: string;
   };
   reviewBody: string;
-  itemReviewed: ReviewedServiceSchema;
+  itemReviewed: {
+    '@type': 'Service';
+    name: string;
+    offers: {
+      '@type': 'Offer';
+      price: string;
+      priceCurrency: 'JPY';
+    };
+  };
   datePublished?: string;
   reviewRating?: {
     '@type': 'Rating';
@@ -143,22 +125,33 @@ export interface ReviewSchema {
   };
 }
 
-interface ListItemSchema {
-  '@type': 'ListItem';
-  position: number;
-  name: string;
-  item: string;
+interface ImageObjectSchema {
+  '@type': 'ImageObject';
+  url: string;
 }
 
 export interface BreadcrumbListSchema {
   '@context': SchemaContext;
   '@type': 'BreadcrumbList';
-  itemListElement: ListItemSchema[];
+  itemListElement: Array<{
+    '@type': 'ListItem';
+    position: number;
+    name: string;
+    item: string;
+  }>;
 }
 
-interface ImageObjectSchema {
-  '@type': 'ImageObject';
-  url: string;
+export interface FAQPageSchema {
+  '@context': SchemaContext;
+  '@type': 'FAQPage';
+  mainEntity: Array<{
+    '@type': 'Question';
+    name: string;
+    acceptedAnswer: {
+      '@type': 'Answer';
+      text: string;
+    };
+  }>;
 }
 
 export interface ArticleSchema {
@@ -205,32 +198,25 @@ export interface OrganizationSchema {
   '@id': string;
   name: string;
   alternateName: string;
-  legalName: string;
   url: string;
   logo: ImageObjectSchema;
   image: string;
-  telephone: string;
 }
 
 const SCHEMA_CONTEXT: SchemaContext = 'https://schema.org';
 
-/** Ghép đường dẫn tương đối thành URL tuyệt đối — structured data của Google
- *  bỏ qua giá trị tương đối, khác với thẻ og:image do trình duyệt tự resolve. */
-const absoluteUrl = (path: string): string => new URL(path, SITE_CONFIG.siteUrl).href;
+export function serializeJsonLd(schema: unknown): string {
+  return JSON.stringify(schema).replace(/</g, '\\u003c');
+}
 
-/** `@id` cố định cho thực thể Organization, để WebSite/Article trỏ về cùng một node. */
+export const absoluteUrl = (path: string): string => new URL(path, SITE_CONFIG.siteUrl).href;
+
 const ORGANIZATION_ID = `${SITE_CONFIG.siteUrl}/#organization`;
 
 const buildLogo = (): ImageObjectSchema => ({
   '@type': 'ImageObject',
   url: absoluteUrl(SITE_CONFIG.logoPath),
 });
-
-// Escapes `<` so a value containing `</script>` cannot break out of the
-// inline <script type="application/ld+json"> tag. `<` is still valid JSON.
-export function serializeJsonLd(schema: unknown): string {
-  return JSON.stringify(schema).replace(/</g, '\\u003c');
-}
 
 const buildPostalAddress = (address: OfficeAddress): PostalAddressSchema => {
   return {
@@ -287,6 +273,19 @@ export function generateService(service: ServiceInput): ServiceSchema {
   };
 }
 
+export function generateBreadcrumb(items: BreadcrumbItem[]): BreadcrumbListSchema {
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
 export function generateFAQ(items: FAQItem[]): FAQPageSchema {
   return {
     '@context': SCHEMA_CONTEXT,
@@ -333,101 +332,6 @@ export function generateReview(testimonial: TestimonialInput): ReviewSchema {
   };
 }
 
-interface NestedReviewSchema {
-  '@type': 'Review';
-  author: {
-    '@type': 'Person';
-    name: string;
-  };
-  reviewBody: string;
-  datePublished?: string;
-  reviewRating?: {
-    '@type': 'Rating';
-    ratingValue: string;
-    bestRating: string;
-  };
-}
-
-export interface AggregateRatingSchema {
-  '@context': SchemaContext;
-  '@type': 'Organization';
-  '@id'?: string;
-  name: string;
-  url: string;
-  aggregateRating: {
-    '@type': 'AggregateRating';
-    ratingValue: string;
-    reviewCount: string;
-    ratingCount: string;
-    bestRating: string;
-  };
-  review: NestedReviewSchema[];
-}
-
-// Bundles reviews under a single rated item so they are eligible for rich
-// results (Google ignores standalone Review nodes). Returns null when no
-// review carries a numeric rating, since AggregateRating requires one.
-export function generateAggregateRating(
-  testimonials: TestimonialInput[],
-  item?: { name?: string; url?: string }
-): AggregateRatingSchema | null {
-  const rated = testimonials.filter((t) => typeof t.ratingValue === 'number');
-  if (rated.length === 0) return null;
-
-  const bestRating = 5;
-  const average =
-    rated.reduce((sum, t) => sum + (t.ratingValue as number), 0) / rated.length;
-
-  return {
-    '@context': SCHEMA_CONTEXT,
-    '@type': 'Organization',
-    // Không có override tức là đang nói về chính công ty: dùng lại `@id` của node
-    // Organization phát ở BaseLayout để Google gộp làm một thực thể, thay vì
-    // thấy hai Organization trùng tên trên cùng một trang.
-    ...(item?.name || item?.url ? {} : { '@id': ORGANIZATION_ID }),
-    name: item?.name ?? SITE_CONFIG.companyName,
-    url: item?.url ?? SITE_CONFIG.siteUrl,
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: average.toFixed(1),
-      reviewCount: testimonials.length.toString(),
-      ratingCount: rated.length.toString(),
-      bestRating: bestRating.toString(),
-    },
-    review: testimonials.map((t) => ({
-      '@type': 'Review' as const,
-      author: {
-        '@type': 'Person' as const,
-        name: t.author,
-      },
-      reviewBody: t.message,
-      ...(t.datePublished ? { datePublished: t.datePublished } : {}),
-      ...(typeof t.ratingValue === 'number'
-        ? {
-            reviewRating: {
-              '@type': 'Rating' as const,
-              ratingValue: t.ratingValue.toString(),
-              bestRating: (t.bestRating ?? bestRating).toString(),
-            },
-          }
-        : {}),
-    })),
-  };
-}
-
-export function generateBreadcrumb(crumbs: BreadcrumbItem[]): BreadcrumbListSchema {
-  return {
-    '@context': SCHEMA_CONTEXT,
-    '@type': 'BreadcrumbList',
-    itemListElement: crumbs.map((crumb, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: crumb.name,
-      item: crumb.url,
-    })),
-  };
-}
-
 export function generateArticle(post: ArticleInput): ArticleSchema {
   return {
     '@context': SCHEMA_CONTEXT,
@@ -436,9 +340,7 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
     description: post.description,
     datePublished: post.publishedDate,
     dateModified: post.modifiedDate ?? post.publishedDate,
-    // Bài viết được biên soạn dưới danh nghĩa công ty, không phải một cá nhân cụ thể.
-    // Khai '@type': 'Person' với tên công ty là sai thực thể — Google không quy được
-    // uy tín cho một Person không tồn tại. Dùng Organization trỏ về chính site.
+    inLanguage: 'ja',
     author: {
       '@type': 'Organization',
       name: post.author,
@@ -446,14 +348,13 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
     },
     publisher: {
       '@type': 'Organization',
-      name: SITE_CONFIG.companyName,
+      name: SITE_CONFIG.siteName,
       url: SITE_CONFIG.siteUrl,
       logo: buildLogo(),
     },
-    inLanguage: 'ja',
     isPartOf: {
       '@type': 'WebSite',
-      name: SITE_CONFIG.companyName,
+      name: SITE_CONFIG.siteName,
       url: SITE_CONFIG.siteUrl,
     },
     mainEntityOfPage: post.url,
@@ -461,31 +362,27 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
   };
 }
 
-/** Cho Google biết tên site (thay vì hiển thị domain trần trên SERP). */
 export function generateWebSite(): WebSiteSchema {
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'WebSite',
-    name: SITE_CONFIG.companyName,
-    alternateName: SITE_CONFIG.companyNameKana,
+    name: SITE_CONFIG.siteName,
+    alternateName: SITE_CONFIG.siteNameKana,
     url: `${SITE_CONFIG.siteUrl}/`,
     inLanguage: 'ja',
     publisher: { '@id': ORGANIZATION_ID },
   };
 }
 
-/** Nguồn logo có cấu trúc cho toàn site — Google dùng để chọn favicon/knowledge panel. */
 export function generateOrganization(): OrganizationSchema {
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'Organization',
     '@id': ORGANIZATION_ID,
-    name: SITE_CONFIG.companyName,
-    alternateName: SITE_CONFIG.companyNameKana,
-    legalName: SITE_CONFIG.legalName,
+    name: SITE_CONFIG.siteName,
+    alternateName: SITE_CONFIG.siteNameKana,
     url: `${SITE_CONFIG.siteUrl}/`,
     logo: buildLogo(),
     image: absoluteUrl(SITE_CONFIG.logoPath),
-    telephone: SITE_CONFIG.phone.display,
   };
 }

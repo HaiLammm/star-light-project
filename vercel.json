@@ -2,174 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/columns/breaker-trip-first-steps/",
-      "destination": "https://www.setsubi-pro.net/columns/breaker-tripping/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/breaker-trip-first-steps",
-      "destination": "https://www.setsubi-pro.net/columns/breaker-tripping/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/anzen-breaker-tripped/",
-      "destination": "https://www.setsubi-pro.net/columns/safety-breaker-tripped/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/anzen-breaker-tripped",
-      "destination": "https://www.setsubi-pro.net/columns/safety-breaker-tripped/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/water-heater-not-working/",
-      "destination": "https://www.setsubi-pro.net/columns/waterheater-not-working/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/water-heater-not-working",
-      "destination": "https://www.setsubi-pro.net/columns/waterheater-not-working/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/aircon-gas-refill/",
-      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/aircon-gas-refill",
-      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/aircon-gas-leak-repair/",
-      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/aircon-gas-leak-repair",
-      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/aircon-gas-leak-symptoms/",
-      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/aircon-gas-leak-symptoms",
-      "destination": "https://www.setsubi-pro.net/columns/air-conditioner-not-cooling/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/お風呂/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/bath/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/%E3%81%8A%E9%A2%A8%E5%91%82/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/bath/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/キッチン/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/kitchen/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/%E3%82%AD%E3%83%83%E3%83%81%E3%83%B3/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/kitchen/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/トイレ/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/toilet/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/%E3%83%88%E3%82%A4%E3%83%AC/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/toilet/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/洗面所/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/washroom/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/water/%E6%B4%97%E9%9D%A2%E6%89%80/",
-      "destination": "https://www.setsubi-pro.net/columns/category/water/washroom/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/エアコン/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/aircon/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/%E3%82%A8%E3%82%A2%E3%82%B3%E3%83%B3/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/aircon/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/アンテナ工事/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/antenna/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/%E3%82%A2%E3%83%B3%E3%83%86%E3%83%8A%E5%B7%A5%E4%BA%8B/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/antenna/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/コンセント/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/outlet/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%B3%E3%83%88/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/outlet/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/ブレーカー/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/breaker/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/%E3%83%96%E3%83%AC%E3%83%BC%E3%82%AB%E3%83%BC/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/breaker/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/照明/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/lighting/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/%E7%85%A7%E6%98%8E/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/lighting/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/給湯器交換/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/water-heater/",
-      "statusCode": 301
-    },
-    {
-      "source": "/columns/category/electricity/%E7%B5%A6%E6%B9%AF%E5%99%A8%E4%BA%A4%E6%8F%9B/",
-      "destination": "https://www.setsubi-pro.net/columns/category/electricity/water-heater/",
-      "statusCode": 301
-    },
-    {
       "source": "/:path(.*)",
       "has": [
         {
           "type": "host",
-          "value": "setsubi-pro.net"
+          "value": "example.com"
         }
       ],
-      "destination": "https://www.setsubi-pro.net/:path",
+      "destination": "https://www.example.com/:path",
       "statusCode": 301
     }
   ],
@@ -196,15 +36,10 @@
         {
           "key": "Permissions-Policy",
           "value": "geolocation=(), camera=(), microphone=()"
-        }
-      ]
-    },
-    {
-      "source": "/((?!admin).*)",
-      "headers": [
+        },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
         }
       ]
     }
