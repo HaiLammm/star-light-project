@@ -7,7 +7,7 @@ import RelatedPosts from '../../components/RelatedPosts.astro';
 import { formatDateDot } from '../../utils/formatters';
 import { BLOG_CATEGORY_COLOR_MAP, postCategory } from '../../data/blogData';
 import { generateArticle, serializeJsonLd } from '../../utils/schema';
-import { SITE_CONFIG } from '@config/site';
+import { SITE_CONFIG } from '@config/legacySite';
 import { resolveImage } from '../../utils/imageImports';
 
 export async function getStaticPaths() {

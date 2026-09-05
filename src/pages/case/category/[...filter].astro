@@ -8,7 +8,7 @@ import CaseStudyCard from '../../../components/CaseStudyCard.astro';
 import CategorySidebar from '../../../components/CategorySidebar.astro';
 import CTABlock from '../../../components/CTABlock.astro';
 import { CASE_FILTER_CATEGORIES, CASE_SLUG_LABEL_MAP, CATEGORY_LABEL_MAP, getCaseImageSrc } from '../../../data/caseVoiceData';
-import { SITE_CONFIG } from '@config/site';
+import { SITE_CONFIG } from '@config/legacySite';
 
 export async function getStaticPaths() {
   const allCases = await getCollection('cases');

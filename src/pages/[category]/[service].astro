@@ -18,8 +18,8 @@ import CTABlock from '../../components/CTABlock.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import PriceBar from '../../components/PriceBar.astro';
 import ServiceSlider from '../../components/ServiceSlider.tsx';
-import { SITE_CONFIG } from '@config/site';
-import { ELECTRICITY_SERVICES, WATER_SERVICES } from '@config/services';
+import { SITE_CONFIG } from '@config/legacySite';
+import { ELECTRICITY_SERVICES, WATER_SERVICES } from '@config/legacyHomeServices';
 import { formatDateDot } from '../../utils/formatters';
 import { generateService, generateFAQ, serializeJsonLd, type FAQItem } from '../../utils/schema';
 

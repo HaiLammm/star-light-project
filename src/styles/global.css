@@ -1,33 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #1B2A4A;
-  --color-orange: #FF6B00;
-  --color-red: #E53935;
-  --color-section-gray: #F5F5F5;
-  --color-text-primary: #333333;
-  --color-text-secondary: #666666;
-  --color-border-light: #E0E0E0;
-  --color-cream: #FAF8EF;
-  --color-water: #0277BD;
-  --color-water-deep: #015A8C;
-  --color-water-tint: #EAF4FA;
-  --color-electric: #FBC02D;
-  --color-electric-deep: #F1A104;
-  --color-electric-tint: #FFF7E0;
-  --color-cta: #FF6B00;
-  --color-cta-deep: #E85D00;
-  --color-border-warm: #ECE6D6;
+  --color-ink: #1A2333;
+  --color-ink-soft: #55627A;
+  --color-brand: #16324F;
+  --color-brand-tint: #EEF3F8;
+  --color-turf: #2F7D5A;
+  --color-turf-tint: #EAF4EF;
+  --color-accent: #C25E1E;
+  --color-bridge: #8A4A63;
+  --color-paper: #FFFFFF;
+  --color-paper-warm: #F7F6F3;
+  --color-line: #E3E6EC;
+  --color-win: #1E7A46;
+  --color-loss: #B3261E;
+  --color-notice: #5A5F6A;
   /* System font JP: không tải webfont — Android/ChromeOS có sẵn Noto Sans CJK, iOS/macOS dùng Hiragino, Windows dùng Yu Gothic/Meiryo. Hết CLS do font swap. */
   --font-sans: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, sans-serif;
 }
 
 body {
-  background-color: var(--color-cream);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-navy);
+  outline: 2px solid var(--color-brand);
   outline-offset: 2px;
 }
 
@@ -48,6 +46,16 @@ html {
 
 #price, #reason, #compare, #area, #flow, #case, #voice, #faq, #water, #electricity {
   scroll-margin-top: 140px;
+}
+
+/* Temporary aliases for retained home-services pages; Story 1.2 removes them. */
+:root {
+  --color-navy: var(--color-brand); --color-orange: var(--color-accent); --color-red: var(--color-loss);
+  --color-section-gray: var(--color-brand-tint); --color-text-primary: var(--color-ink); --color-text-secondary: var(--color-ink-soft);
+  --color-border-light: var(--color-line); --color-cream: var(--color-paper-warm); --color-water: var(--color-brand);
+  --color-water-deep: var(--color-brand); --color-water-tint: var(--color-brand-tint); --color-electric: var(--color-accent);
+  --color-electric-deep: var(--color-accent); --color-electric-tint: var(--color-brand-tint); --color-cta: var(--color-accent);
+  --color-cta-deep: var(--color-accent); --color-border-warm: var(--color-line);
 }
 
 input, select, textarea {
@@ -120,25 +128,25 @@ input, select, textarea {
 
 /* Link trong thân bài: xanh + gạch chân để khách nhận ra bấm được */
 .article-numbered a {
-  color: #0066cc;
+  color: var(--color-brand);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .article-numbered a:hover {
-  color: #004c99;
+  color: var(--color-ink-soft);
 }
 .article-numbered a:visited {
-  color: #551a8b;
+  color: var(--color-bridge);
 }
 
-/* Bảng so sánh "tự xử lý vs gọi thợ" (2 cột): cột trái = lục #339900, cột phải = đỏ #CC3300.
+/* Bảng so sánh "tự xử lý vs gọi thợ" (2 cột): cột trái = thắng, cột phải = thua.
    Áp cho bảng Markdown (header xám mặc định ở trên). Bảng HTML có style="background-color"
-   inline tự giữ màu riêng (inline đè CSS) — đã chuẩn hoá về đúng 2 mã màu này. */
+   inline tự giữ màu riêng (inline đè CSS). */
 .article-numbered th:first-child {
-  background: #339900;
-  color: #fff;
+  background: var(--color-win);
+  color: var(--color-paper);
 }
 .article-numbered th:last-child {
-  background: #CC3300;
-  color: #fff;
+  background: var(--color-loss);
+  color: var(--color-paper);
 }

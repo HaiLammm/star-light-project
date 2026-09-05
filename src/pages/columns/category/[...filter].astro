@@ -8,7 +8,7 @@ import BlogCard from '../../../components/BlogCard.astro';
 import BlogCategorySidebar from '../../../components/BlogCategorySidebar.astro';
 import { formatDateDot } from '../../../utils/formatters';
 import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP, subcategorySlug, normalizeSubcategory, postCategory } from '../../../data/blogData';
-import { SITE_CONFIG } from '@config/site';
+import { SITE_CONFIG } from '@config/legacySite';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
