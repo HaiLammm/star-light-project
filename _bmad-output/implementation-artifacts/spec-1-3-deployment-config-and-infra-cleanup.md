@@ -78,7 +78,7 @@ The placeholder domain is intentionally not a production hostname. The redirect 
 
 - Baseline: `a5065f7fb7f03ba2ef81c7efacdee424494fe3ee`
 - Changed `astro.config.mjs` to remove the Decap `/admin/` sitemap filter and retain a no-op serializer.
-- Deleted `cms-auth/src/index.js` and `cms-auth/wrangler.toml`; Cloudflare Worker teardown remains an operator task and was not executed.
+- Deleted `cms-auth/src/index.js` and `cms-auth/wrangler.toml`; Cloudflare Worker `cms-auth` was deleted from account `c60658b3bb232c11b94971daaee13b62` with Wrangler 4.129.0, and API verification confirmed code 10007 (Worker does not exist).
 - Verified `npm test`, `npm run build`, the CMS/admin absence scan, and the Vercel redirect/CSP shape assertion.
 - Build emits expected warnings for retired content loader directories, but completes successfully with static output.
 
