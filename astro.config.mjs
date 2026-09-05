@@ -24,7 +24,9 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/admin/'),
+      serialize(item) {
+        return item;
+      },
     }),
     react(),
   ]
