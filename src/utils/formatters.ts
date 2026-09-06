@@ -17,7 +17,9 @@ export function formatDate(date: string | Date): string {
     throw new TypeError('Invalid date value');
   }
 
-  return `${resolvedDate.getFullYear()}年${resolvedDate.getMonth() + 1}月${resolvedDate.getDate()}日`;
+  const parts = new Intl.DateTimeFormat('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(resolvedDate);
+  const get = (type: string): string => parts.find((part) => part.type === type)?.value ?? '';
+  return `${get('year')}年${get('month')}月${get('day')}日`;
 }
 
 export function formatDateDot(date: string | Date): string {
@@ -25,5 +27,7 @@ export function formatDateDot(date: string | Date): string {
   if (Number.isNaN(d.getTime())) {
     throw new TypeError('Invalid date value');
   }
-  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(d);
+  const get = (type: string): string => parts.find((part) => part.type === type)?.value ?? '';
+  return `${get('year')}.${get('month')}.${get('day')}`;
 }

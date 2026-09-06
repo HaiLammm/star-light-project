@@ -1,0 +1,11 @@
+{
+  "raceId": "japan-cup",
+  "name": "ジャパンカップ",
+  "grade": "G1",
+  "course": "東京",
+  "distance": "芝2400m",
+  "month": 11,
+  "description": "東京競馬場で行われる国際競走。",
+  "heroImage": "/images/articles/races/japan-cup/hero.webp",
+  "heroImageAlt": "東京競馬場の芝コース"
+}
