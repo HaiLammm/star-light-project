@@ -1,16 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_CONFIG } from '@config/site';
+import { PILLAR_NAVIGATION } from '@config/navigation';
 ---
 
 <BaseLayout
-  title="ウマノミカタ｜準備中"
+  title={SITE_CONFIG.siteName}
   description={SITE_CONFIG.description}
   canonicalUrl={`${SITE_CONFIG.siteUrl}/`}
 >
-  <section class="mx-auto max-w-3xl px-4 py-24 text-center">
-    <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand">Umanomikata</p>
-    <h1 class="mt-4 text-3xl font-black text-ink md:text-5xl">ウマノミカタの新しいトップページを準備中です</h1>
-    <p class="mt-6 text-base leading-8 text-ink-soft">競馬をもっと深く、もっと楽しく。公開準備中です。</p>
+  <section class="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-20">
+    <nav aria-label="柱メニュー" class="flex flex-wrap gap-2">
+      {PILLAR_NAVIGATION.map((item) => <a href={item.href} class="inline-flex min-h-11 items-center rounded-full border border-brand/20 bg-brand-tint px-4 text-sm font-bold text-brand focus-visible:outline-2 focus-visible:outline-brand">{item.label}</a>)}
+    </nav>
+    <!-- Epic 3 composition point: RaceWeekModule and featured hero will follow this stage-2 hero. -->
+    <div class="mt-8 rounded-3xl bg-paper-warm px-6 py-16 md:px-12 md:py-24">
+      <p class="text-sm font-bold tracking-[0.2em] text-brand">{SITE_CONFIG.siteName}</p>
+      <h1 class="mt-4 max-w-2xl text-3xl font-black leading-tight text-ink md:text-5xl">競馬をもっと深く、もっと楽しく。</h1>
+      <p class="mt-6 max-w-xl text-base leading-8 text-ink-soft">初心者にも、レースを読み込む人にも。競馬の見方が広がる読みものを届けます。</p>
+      <a href={PILLAR_NAVIGATION[0].href} class="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-brand px-6 py-3 font-bold text-white focus-visible:outline-2 focus-visible:outline-brand">初心者向けの記事を読む</a>
+    </div>
+    <!-- Epic 3 composition points: BeginnerOnrampBox, latest rows, and magazine modules are intentionally reserved. -->
   </section>
 </BaseLayout>

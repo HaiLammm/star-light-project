@@ -58,7 +58,7 @@ development_status:
   1-1-keiba-identity-configuration-and-design-tokens: done
   1-2-retire-the-home-services-content-layer-and-components: in-progress
   1-3-deployment-config-and-infra-cleanup: review
-  1-4-branded-global-shell-header-footer-top-page-and-404: backlog
+  1-4-branded-global-shell-header-footer-top-page-and-404: done
   epic-1-retrospective: optional
 
   # Epic 2: Beginner Guides & Glossary — the Core Reading Loop (arch stage 3, part 1)

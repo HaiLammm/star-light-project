@@ -1,4 +1,4 @@
-export interface NavigationItem { label: string; href: string; }
+export interface NavigationItem { label: string; href: string; socialKey?: 'x' | 'line'; }
 export const PILLAR_NAVIGATION: readonly NavigationItem[] = Object.freeze([
   { label: '初心者向け', href: '/guide/' }, { label: 'レース分析', href: '/races/' },
   { label: 'ウマ娘×競馬', href: '/uma-musume/' }, { label: '用語集', href: '/glossary/' },
@@ -11,7 +11,7 @@ export const TRUST_MENU: readonly NavigationItem[] = Object.freeze([
 export interface FooterNavSection { label: string; children: readonly NavigationItem[]; }
 export const FOOTER_NAV: readonly FooterNavSection[] = Object.freeze([
   { label: '読む', children: PILLAR_NAVIGATION }, { label: '信頼について', children: TRUST_MENU },
-  { label: '公式チャンネル', children: [{ label: 'X', href: '#' }, { label: 'LINE', href: '#' }] },
+  { label: '公式チャンネル', children: [{ label: 'X', href: '', socialKey: 'x' }, { label: 'LINE', href: '', socialKey: 'line' }] },
   { label: 'コンプライアンス', children: [{ label: '責任あるギャンブル', href: '/responsible-gambling/' }, { label: 'プライバシーポリシー', href: '/privacy/' }] },
 ]);
 /** 既存シェル用。新しいリンクはまだ描画しない。 */

@@ -1,30 +1,33 @@
 ---
 import type { NavigationItem } from '@config/navigation';
+import { TRUST_MENU } from '@config/navigation';
 
 interface Props {
   navigation: readonly NavigationItem[];
 }
 
 const { navigation } = Astro.props;
+const menuItems = [...navigation, ...TRUST_MENU];
 ---
 
-<div id="mobile-menu-root" class="hidden fixed inset-0 z-50 lg:hidden">
+<div id="mobile-menu-root" class="fixed inset-0 z-50 hidden md:hidden">
   <div data-menu-overlay class="absolute inset-0" aria-hidden="true"></div>
   <div
     role="dialog"
     aria-modal="true"
     aria-label="ナビゲーションメニュー"
     id="mobile-menu"
-    class="fixed inset-0 w-full h-full overflow-y-auto"
-    style="background:var(--color-brand);padding:50px 20px 100px"
+    class="relative z-10 ml-auto h-full w-full max-w-md overflow-y-auto"
+    style="background:var(--color-brand);padding:24px 20px 100px"
   >
+    <button type="button" data-menu-close class="mb-4 ml-auto flex min-h-11 min-w-11 items-center justify-center rounded text-2xl text-white focus-visible:outline-2 focus-visible:outline-white" aria-label="メニューを閉じる">×</button>
     <nav>
       <ul>
-        {navigation.map((item) => (
+        {menuItems.map((item) => (
           <li class="py-[20px]" style="border-bottom:1px dotted rgba(255,255,255,0.5)">
             <a
               href={item.href}
-              class="flex items-center gap-[7px] text-[14px] font-bold text-white min-h-[44px]"
+              class="flex min-h-11 items-center gap-[7px] text-[14px] font-bold text-white focus-visible:outline-2 focus-visible:outline-white"
             >
               <span class="shrink-0 w-[8px] h-[8px] rounded-full bg-accent"></span>
               {item.label}
@@ -41,6 +44,8 @@ const { navigation } = Astro.props;
   const trigger = document.getElementById('mobile-menu-trigger');
   const panel = document.getElementById('mobile-menu');
   const overlay = root?.querySelector('[data-menu-overlay]');
+  const closeButton = root?.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const mediaQuery = window.matchMedia('(min-width: 768px)');
 
   if (root && trigger && panel) {
     const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -85,5 +90,9 @@ const { navigation } = Astro.props;
 
     trigger.addEventListener('click', () => (isOpen ? close() : open()));
     overlay?.addEventListener('click', close);
+    closeButton?.addEventListener('click', close);
+    mediaQuery.addEventListener('change', (event) => {
+      if (event.matches && isOpen) close();
+    });
   }
 </script>

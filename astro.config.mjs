@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { rehypeArticleImages } from './src/utils/rehypeArticleImages.mjs';
+import { serializeSitemapItem } from './src/utils/sitemap.mjs';
 import { SITE_CONFIG } from './src/config/site';
 
 // https://astro.build/config
@@ -25,7 +26,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       serialize(item) {
-        return item;
+        return serializeSitemapItem(item);
       },
     }),
     react(),

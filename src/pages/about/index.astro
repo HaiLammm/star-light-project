@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_CONFIG } from '@config/site';
+---
+<BaseLayout title={`運営者情報｜${SITE_CONFIG.siteName}`} description={SITE_CONFIG.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/about/`}>
+  <section class="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24"><p class="text-sm font-bold uppercase tracking-[0.2em] text-brand">About</p><h1 class="mt-4 text-3xl font-black text-ink md:text-5xl">運営者情報</h1><p class="mt-6 text-base leading-8 text-ink-soft">運営者とサイトについての詳しい情報は、Epic 4で掲載予定です。</p></section>
+</BaseLayout>

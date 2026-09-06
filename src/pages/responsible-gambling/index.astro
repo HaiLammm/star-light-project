@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_CONFIG } from '@config/site';
+import { COMPLIANCE } from '@config/compliance';
+---
+<BaseLayout title={`責任あるギャンブル｜${SITE_CONFIG.siteName}`} description={SITE_CONFIG.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/responsible-gambling/`}>
+  <section class="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24"><p class="text-sm font-bold uppercase tracking-[0.2em] text-brand">Responsible Gambling</p><h1 class="mt-4 text-3xl font-black text-ink md:text-5xl">責任あるギャンブル</h1><p class="mt-6 text-base leading-8 text-ink-soft">{COMPLIANCE.notices.responsibleGambling} 詳しい案内はEpic 4で掲載予定です。</p></section>
+</BaseLayout>

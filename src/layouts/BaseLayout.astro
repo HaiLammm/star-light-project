@@ -6,14 +6,20 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
 interface Props {
-  title: string;
-  description: string;
-  canonicalUrl: string;
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
 }
 
-const { title, description, canonicalUrl, ogImage, ogType = 'website' } = Astro.props;
+const {
+  title = SITE_CONFIG.siteName,
+  description = SITE_CONFIG.description,
+  canonicalUrl = `${SITE_CONFIG.siteUrl}/`,
+  ogImage,
+  ogType = 'website',
+} = Astro.props;
 
 const ogImageUrl = new URL(ogImage ?? SITE_CONFIG.defaultOgImage, SITE_CONFIG.siteUrl).href;
 

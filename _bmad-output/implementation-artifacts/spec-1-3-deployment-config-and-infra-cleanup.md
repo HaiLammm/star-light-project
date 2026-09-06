@@ -55,6 +55,14 @@ context:
 - [x] `cms-auth/` -- delete the Worker source and Wrangler manifest -- retire the independent CMS authentication surface and document operator teardown.
 - [x] `spec-1-3-deployment-config-and-infra-cleanup.md` -- record the Cloudflare teardown task, changed files, and verification results -- preserve operational handoff.
 
+### Review Findings
+
+- [x] [Review][Patch] Restore the immutable sprint tracking file [ `_bmad-output/implementation-artifacts/sprint-status.yaml:49,60` ] — The spec explicitly says never to modify `sprint-status.yaml`, but this patch changes both `last_updated` and the Story 1.3 status. Restored to the baseline values.
+- [x] [Review][Patch] Preserve the admin sitemap exclusion until the admin surface is proven absent [ `astro.config.mjs:26-30`, `tests/deploymentConfig.test.ts:29-33` ] — Confirmed the retired `public/admin/` and `src/pages/admin/` surfaces are absent before sitemap generation; the sitemap integration remains free of admin-specific exceptions as required by the story.
+- [x] [Review][Patch] Add reproducible sitemap-output verification [ `astro.config.mjs:26-30`, `tests/deploymentConfig.test.ts:22-26` ] — Added a tested identity serializer that preserves entries without inventing `lastmod`; the existing build also regenerates the sitemap.
+- [x] [Review][Patch] Enforce the canonical-host contract against `SITE_CONFIG.siteUrl` [ `vercel.json:5-13`, `src/config/site.ts:7-9`, `tests/deploymentConfig.test.ts:10-20` ] — Added a regression test that derives expected redirect hosts from `SITE_CONFIG.siteUrl` and validates the single redirect/header shape.
+- [x] [Review][Defer] Refresh stale robots deployment directives [ `public/robots.txt:3-5` ] — deferred, pre-existing; the file still disallows `/admin/` and points to the retired `www.setsubi-pro.net` sitemap, but it is unchanged relative to the review baseline.
+
 **Acceptance Criteria:**
 - Given `vercel.json`, when deployment configuration is inspected, then exactly one redirect remains, its source/destination match the placeholder canonical host, the header scope is `/(.*)`, and CSP contains only the architecture baseline directives and self/data origins.
 - Given the repository, when CMS cleanup completes, then `cms-auth/`, Decap/admin assets, and admin-specific sitemap logic are absent, with no stale imports or route references.
@@ -80,6 +88,8 @@ The placeholder domain is intentionally not a production hostname. The redirect 
 - Changed `astro.config.mjs` to remove the Decap `/admin/` sitemap filter and retain a no-op serializer.
 - Deleted `cms-auth/src/index.js` and `cms-auth/wrangler.toml`; Cloudflare Worker `cms-auth` was deleted from account `c60658b3bb232c11b94971daaee13b62` with Wrangler 4.129.0, and API verification confirmed code 10007 (Worker does not exist).
 - Verified `npm test`, `npm run build`, the CMS/admin absence scan, and the Vercel redirect/CSP shape assertion.
+- Added `tests/deploymentConfig.test.ts` to enforce the canonical-host, header-scope, sitemap identity, no-synthetic-`lastmod`, and retired-admin-surface contracts; `npm test` now runs all `tests/*.test.ts` files.
+- Revalidated preview smoke checks: `/` returns 200 and `/admin/` returns 404.
 - Build emits expected warnings for retired content loader directories, but completes successfully with static output.
 
 ## Suggested Review Order
@@ -99,3 +109,7 @@ The placeholder domain is intentionally not a production hostname. The redirect 
 
 - Confirm the Wrangler deployment manifest is removed with the worker source.
   [`cms-auth/wrangler.toml:1`](../../cms-auth/wrangler.toml#L1)
+
+## Status
+
+done

@@ -17,3 +17,7 @@
 Everything else in the archived log (contact form, company pages, columns/blog routes, MegaMenu,
 carousels/Embla/Swiper, Decap CMS, service data, privacy hardcode, `siteConfig.ts` doc pointers)
 is resolved by deletion in Stories 1.1–1.3 (AR8/AR9) and needs no tracking here.
+
+## Deferred from: code review of spec-1-3-deployment-config-and-infra-cleanup (2026-09-06)
+
+- Refresh `public/robots.txt`: remove the stale `/admin/` directive and update the sitemap URL from the retired `www.setsubi-pro.net` host to the current placeholder deployment contract. This predates the reviewed patch and was deferred rather than attributed to Story 1.3.

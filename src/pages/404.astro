@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_CONFIG } from '@config/site';
+import { PILLAR_NAVIGATION } from '@config/navigation';
 ---
 
 <BaseLayout
-  title="ページが見つかりません｜ウマノミカタ"
+  title={`ページが見つかりません｜${SITE_CONFIG.siteName}`}
   description={SITE_CONFIG.description}
   canonicalUrl={`${SITE_CONFIG.siteUrl}/404/`}
 >
@@ -12,10 +13,13 @@ import { SITE_CONFIG } from '@config/site';
     <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand">404</p>
     <h1 class="mt-4 text-3xl font-black text-ink md:text-5xl">ページが見つかりません</h1>
     <p class="mt-6 text-base leading-8 text-ink-soft">
-      お探しのページは移動または削除された可能性があります。トップページからお進みください。
+      申し訳ありません。お探しのページは移動または削除された可能性があります。トップページからお進みください。
     </p>
+    <nav aria-label="関連ページ" class="mt-8 flex flex-wrap justify-center gap-2">
+      {PILLAR_NAVIGATION.map((item) => <a href={item.href} class="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-bold text-brand focus-visible:outline-2 focus-visible:outline-brand">{item.label}</a>)}
+    </nav>
     <div class="mt-10">
-      <a href="/" class="inline-flex min-h-11 items-center justify-center rounded-full bg-brand px-6 py-3 font-bold text-white">
+      <a href="/" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-brand px-6 py-3 font-bold text-white focus-visible:outline-2 focus-visible:outline-brand">
         トップページへ戻る
       </a>
     </div>
