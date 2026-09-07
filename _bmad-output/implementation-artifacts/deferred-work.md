@@ -20,4 +20,4 @@ is resolved by deletion in Stories 1.1–1.3 (AR8/AR9) and needs no tracking her
 
 ## Deferred from: code review of spec-1-3-deployment-config-and-infra-cleanup (2026-09-06)
 
-- Refresh `public/robots.txt`: remove the stale `/admin/` directive and update the sitemap URL from the retired `www.setsubi-pro.net` host to the current placeholder deployment contract. This predates the reviewed patch and was deferred rather than attributed to Story 1.3.
+- Refresh `public/robots.txt`: ~~update the sitemap URL from the retired `www.setsubi-pro.net` host to the current placeholder deployment contract~~ (done 2026-09-07 — now `https://example.com/sitemap-index.xml`, matching `SITE_CONFIG.siteUrl`). Still open: remove the stale `Disallow: /admin/` directive now that the admin surface is retired. This predates the reviewed patch and was deferred rather than attributed to Story 1.3.
