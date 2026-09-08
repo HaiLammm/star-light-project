@@ -16,7 +16,7 @@ import BlogCard from '../components/BlogCard.astro';
 import { formatDateDot } from '../utils/formatters';
 import { REGIONAL_OFFICES, SITE_CONFIG } from '@config/site';
 import { SERVICE_CATEGORIES } from '@config/services';
-import { generateLocalBusiness, generateFAQ, serializeJsonLd } from '../utils/schema';
+import { generateLocalBusiness, generateFAQ, generateAggregateRating, serializeJsonLd } from '../utils/schema';
 import { BLOG_CATEGORIES, subcategorySlug, normalizeSubcategory, postCategory } from '../data/blogData';
 import { getCollection } from 'astro:content';
 import { resolveImage } from '../utils/imageImports';
@@ -181,6 +181,17 @@ const faqSchema = sortedFaq.length > 0
   ? generateFAQ(sortedFaq.map((e) => ({ question: e.data.question, answer: e.data.answer })))
   : null;
 
+const aggregateRatingSchema = generateAggregateRating(
+  allTestimonials.map((item) => ({
+    serviceType: item.data.serviceType,
+    cost: item.data.cost,
+    message: item.data.message,
+    author: item.data.authorInitial ?? '匿名',
+    itemReviewed: item.data.serviceType,
+    ratingValue: item.data.rating,
+  }))
+);
+
 const heroImagePath = '/images/services/sanitary_02.jpg';
 const heroMeta = await resolveImage(heroImagePath);
 const heroImageDesktop = heroMeta ? (await getImage({ src: heroMeta, width: 900, height: 840, format: 'webp', quality: 80 })).src : heroImagePath;
@@ -198,6 +209,7 @@ const heroImageMobile = heroMeta ? (await getImage({ src: heroMeta, width: 640, 
   </Fragment>
   <script type="application/ld+json" set:html={serializeJsonLd(localBusinessSchema)} />
   {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
+  {aggregateRatingSchema && <script type="application/ld+json" set:html={serializeJsonLd(aggregateRatingSchema)} />}
   <h1 class="sr-only">設備プロ（セツビプロ）｜水漏れ・つまり・電気トラブルの修理を24時間365日対応する専門業者</h1>
   <HeroSection
     image={heroImageDesktop}

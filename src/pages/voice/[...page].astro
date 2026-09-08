@@ -19,6 +19,8 @@ export async function getStaticPaths({ paginate }: { paginate: Function }) {
 
 const { page } = Astro.props;
 
+const allTestimonials = await getCollection('testimonials');
+
 const optimizedImages: Record<string, string> = {};
 for (const item of page.data) {
   const src = getTestimonialImageSrc(item.id, item.data.serviceCategory);
@@ -30,7 +32,7 @@ for (const item of page.data) {
 }
 
 const aggregateReviewSchema = generateAggregateRating(
-  page.data.map((item: any) => ({
+  allTestimonials.map((item) => ({
     serviceType: item.data.serviceType,
     cost: item.data.cost,
     message: item.data.message,

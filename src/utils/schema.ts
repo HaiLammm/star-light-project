@@ -79,9 +79,11 @@ export interface ArticleInput {
 export interface LocalBusinessSchema {
   '@context': SchemaContext;
   '@type': 'LocalBusiness';
+  '@id': string;
   name: string;
   url: string;
   telephone: string;
+  parentOrganization: { '@id': string };
   address: PostalAddressSchema;
   areaServed: string[];
   openingHours: string[];
@@ -171,17 +173,20 @@ export interface ArticleSchema {
   inLanguage: 'ja';
   author: {
     '@type': 'Organization';
+    '@id': string;
     name: string;
     url: string;
   };
   publisher: {
     '@type': 'Organization';
+    '@id': string;
     name: string;
     url: string;
     logo: ImageObjectSchema;
   };
   isPartOf: {
     '@type': 'WebSite';
+    '@id': string;
     name: string;
     url: string;
   };
@@ -192,6 +197,7 @@ export interface ArticleSchema {
 export interface WebSiteSchema {
   '@context': SchemaContext;
   '@type': 'WebSite';
+  '@id': string;
   name: string;
   alternateName: string;
   url: string;
@@ -218,8 +224,12 @@ const SCHEMA_CONTEXT: SchemaContext = 'https://schema.org';
  *  bỏ qua giá trị tương đối, khác với thẻ og:image do trình duyệt tự resolve. */
 const absoluteUrl = (path: string): string => new URL(path, SITE_CONFIG.siteUrl).href;
 
+const ensureTrailingSlash = (url: string): string =>
+  url.endsWith('/') ? url : `${url}/`;
+
 /** `@id` cố định cho thực thể Organization, để WebSite/Article trỏ về cùng một node. */
 const ORGANIZATION_ID = `${SITE_CONFIG.siteUrl}/#organization`;
+const WEBSITE_ID = `${SITE_CONFIG.siteUrl}/#website`;
 
 const buildLogo = (): ImageObjectSchema => ({
   '@type': 'ImageObject',
@@ -247,18 +257,21 @@ const buildProviderReference = (name?: string, url?: string): OrganizationRefere
   return {
     '@type': 'LocalBusiness',
     name: name ?? SITE_CONFIG.companyName,
-    url: url ?? SITE_CONFIG.siteUrl,
+    url: ensureTrailingSlash(url ?? SITE_CONFIG.siteUrl),
     telephone: SITE_CONFIG.phone.display,
   };
 };
 
 export function generateLocalBusiness(office: LocalBusinessInput): LocalBusinessSchema {
+  const url = ensureTrailingSlash(office.url ?? SITE_CONFIG.siteUrl);
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'LocalBusiness',
+    '@id': `${SITE_CONFIG.siteUrl}/#office-${office.key}`,
     name: office.name,
-    url: office.url ?? SITE_CONFIG.siteUrl,
+    url,
     telephone: office.phone.display,
+    parentOrganization: { '@id': ORGANIZATION_ID },
     address: buildPostalAddress(office.address),
     areaServed: office.areaServed,
     openingHours: office.openingHours ?? ['Mo-Su 00:00-23:59'],
@@ -268,6 +281,7 @@ export function generateLocalBusiness(office: LocalBusinessInput): LocalBusiness
 }
 
 export function generateService(service: ServiceInput): ServiceSchema {
+  const url = ensureTrailingSlash(service.url);
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'Service',
@@ -281,9 +295,9 @@ export function generateService(service: ServiceInput): ServiceSchema {
       availability: 'https://schema.org/InStock',
       price: service.startingPrice.toString(),
       priceCurrency: 'JPY',
-      url: service.url,
+      url,
     },
-    url: service.url,
+    url,
   };
 }
 
@@ -436,27 +450,27 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
     description: post.description,
     datePublished: post.publishedDate,
     dateModified: post.modifiedDate ?? post.publishedDate,
-    // Bài viết được biên soạn dưới danh nghĩa công ty, không phải một cá nhân cụ thể.
-    // Khai '@type': 'Person' với tên công ty là sai thực thể — Google không quy được
-    // uy tín cho một Person không tồn tại. Dùng Organization trỏ về chính site.
     author: {
       '@type': 'Organization',
+      '@id': ORGANIZATION_ID,
       name: post.author,
-      url: SITE_CONFIG.siteUrl,
+      url: ensureTrailingSlash(SITE_CONFIG.siteUrl),
     },
     publisher: {
       '@type': 'Organization',
+      '@id': ORGANIZATION_ID,
       name: SITE_CONFIG.companyName,
-      url: SITE_CONFIG.siteUrl,
+      url: ensureTrailingSlash(SITE_CONFIG.siteUrl),
       logo: buildLogo(),
     },
     inLanguage: 'ja',
     isPartOf: {
       '@type': 'WebSite',
+      '@id': WEBSITE_ID,
       name: SITE_CONFIG.companyName,
-      url: SITE_CONFIG.siteUrl,
+      url: ensureTrailingSlash(SITE_CONFIG.siteUrl),
     },
-    mainEntityOfPage: post.url,
+    mainEntityOfPage: ensureTrailingSlash(post.url),
     ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
   };
 }
@@ -466,6 +480,7 @@ export function generateWebSite(): WebSiteSchema {
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'WebSite',
+    '@id': WEBSITE_ID,
     name: SITE_CONFIG.companyName,
     alternateName: SITE_CONFIG.companyNameKana,
     url: `${SITE_CONFIG.siteUrl}/`,

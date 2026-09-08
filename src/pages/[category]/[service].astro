@@ -75,7 +75,7 @@ const categoryKvFallback: Record<string, string> = {
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
   { label: `${serviceCategory}サービス`, href: `/${category}` },
-  { label: `${serviceName}サービス`, href: '#' },
+  { label: `${serviceName}サービス`, href: `/${category}/${Astro.params.service}/` },
 ];
 
 const anchorSections = [

@@ -3,3 +3,6 @@ Allow: /
 Disallow: /admin/
 
 Sitemap: https://www.setsubi-pro.net/sitemap-index.xml
+
+# AI search readiness
+Llms-txt: https://www.setsubi-pro.net/llms.txt

@@ -87,7 +87,7 @@ const images = serviceImages[category] ?? {};
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
-  { label: `${serviceLabel}サービス`, href: '#' },
+  { label: `${serviceLabel}サービス`, href: `/${category}/` },
 ];
 
 const allFaq = await getCollection('faq');

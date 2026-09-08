@@ -1,23 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { SITE_CONFIG } from '@config/site';
-
-const breadcrumbItems = [
-  { label: 'TOP', href: '/' },
-  { label: 'ページが見つかりません', href: '/404' },
-];
 ---
 
 <BaseLayout
   title="ページが見つかりません｜設備プロ"
   description="お探しのページが見つかりませんでした。URLが変更されたか、削除された可能性があります。サービス一覧やお役立ちコラムから、お探しの情報をお探しください。"
   canonicalUrl={`${SITE_CONFIG.siteUrl}/404/`}
+  noIndex
 >
-  <div class="max-w-[1200px] mx-auto px-4 pt-4 pb-2">
-    <Breadcrumb items={breadcrumbItems} />
-  </div>
 
   <!-- KV Banner -->
   <section class="bg-navy h-[160px] sm:h-[200px] md:h-[240px] relative flex items-center overflow-hidden">
