@@ -3,7 +3,7 @@ title: "キッチンの排水口が臭い原因は？安全な掃除方法と確
 description: "キッチンの排水口が臭い原因は、食品くずや油汚れだけではありません。封水切れや排水管の詰まり、シンク下の接続不良など、原因別の確認方法と安全な掃除方法、業者へ相談する目安を解説します。"
 excerpt: "キッチンの排水口が臭う原因を場所別に整理し、自宅で安全にできる掃除方法を紹介します。悪臭が消えない場合や水漏れを伴う場合の相談目安も確認できます。"
 publishedDate: 2026-08-16
-updatedDate: 2026-08-16
+updatedDate: 2026-09-10
 category: water
 subcategory: "キッチン"
 image: /images/SEO/kitchen-drain-bad-smell/thumbnail.jpg

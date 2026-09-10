@@ -3,7 +3,7 @@ title: "照明がつかないのは故障だけじゃない！まず確認した
 description: "照明がつかない時は、電球切れだけでなくリモコン、壁スイッチ、ブレーカー、配線不良が関係することもあります。安全に確認できる順番と、電気工事士へ相談すべき危険なサインを解説します。"
 excerpt: "照明がつかない時に確認したい原因を、簡単なものから順番に整理。自分でできる安全な対処と、業者へ相談すべきケースを紹介します。"
 publishedDate: 2026-07-30
-updatedDate: 2026-08-09
+updatedDate: 2026-09-10
 category: electricity
 subcategory: "照明"
 image: /images/SEO/light-not-working/thumbnail.jpg

@@ -3,7 +3,7 @@ title: "トイレの水が止まらない！原因はどこ？今すぐ確認し
 description: "トイレの水が止まらないときは、最初に止水栓を閉めて被害を抑えましょう。便器内に水が流れ続ける、タンクへの給水や水音が止まらない、レバーが戻らないといった症状を、水位やボールタップ、浮き玉、鎖、フロートバルブから確認する方法と、修理を依頼すべきケースを解説します。"
 excerpt: "トイレを流した後も水や水音が止まらないときの確認方法を紹介します。タンク内の水位と部品から原因を切り分け、安全にできる応急処置と修理の判断基準を解説します。"
 publishedDate: 2026-08-21
-updatedDate: 2026-08-21
+updatedDate: 2026-09-10
 category: water
 subcategory: "トイレ"
 image: /images/SEO/toilet-water-wont-stop-tank-causes/thumbnail.jpg

@@ -3,7 +3,7 @@ title: "LED照明がつかないからと交換はまだ早い！まず確認し
 description: "LED照明がつかない時は、電球の寿命だけでなく電源ユニット、調光器との相性、熱こもり、器具本体の劣化が関係することがあります。交換前に安全に確認できるポイントと、専門業者へ相談すべきサインを解説します。"
 excerpt: "LED照明が急につかない時に、交換前へ確認したい原因と安全な対処法を紹介します。LED電球、LEDシーリングライト、一体型照明の違いも整理します。"
 publishedDate: 2026-07-31
-updatedDate: 2026-08-09
+updatedDate: 2026-09-10
 category: electricity
 subcategory: "照明"
 image: /images/SEO/led-not-working/thumbnail.jpg

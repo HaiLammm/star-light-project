@@ -3,7 +3,7 @@ title: "排水口を掃除しても流れない！排水管が詰まる場所と
 description: "排水口を掃除しても流れないのはなぜ？排水管の詰まりが起きやすい場所と対処法を解説します。自分で試せる方法や、逆流・水漏れなど業者へ相談したい症状も紹介します。"
 excerpt: "排水口の掃除後も水が流れない場合に、排水管のどこが詰まっている可能性があるのかを解説します。安全に試せる対処法と、業者へ相談したい症状も紹介します。"
 publishedDate: 2026-08-18
-updatedDate: 2026-08-18
+updatedDate: 2026-09-10
 category: water
 subcategory: "キッチン"
 image: /images/SEO/drain-pipe-clog-what-to-do/thumbnail.jpg

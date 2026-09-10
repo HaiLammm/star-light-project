@@ -3,7 +3,7 @@ title: "エアコンが途中で止まる原因は？冷房・暖房が止まる
 description: "エアコンが途中で止まるときは、設定温度への到達やタイマー、暖房時の霜取り運転など正常な動作のほか、フィルターの汚れ、室外機の放熱不良、センサーや内部部品の不具合も考えられます。運転ランプや停止するタイミングの見分け方、自宅で安全に確認できる項目、再起動の手順、修理を依頼すべき危険な症状をわかりやすく解説します。"
 excerpt: "運転中のエアコンが勝手に止まる原因を、正常な自動停止と不具合に分けて解説します。冷房・暖房別の確認方法や安全な再起動、修理が必要なサインも紹介します。"
 publishedDate: 2026-09-05
-updatedDate: 2026-09-05
+updatedDate: 2026-09-10
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-suddenly-stop-working/thumbnail.jpg

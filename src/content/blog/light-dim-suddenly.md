@@ -3,7 +3,7 @@ title: "照明が急に暗いのはなぜ？点いているのに暗く感じる
 description: "照明が急に暗いのはなぜ？調光設定や汚れ、LED・蛍光灯の劣化、照明器具の故障など考えられる原因を解説。安全に確認できるポイントと対処法、相談が必要なケースも紹介します。"
 excerpt: "照明は点いているのに、以前より部屋が暗く感じる時の確認ポイントを解説。設定・汚れ・ランプ劣化・器具の不調を順番に見ていきます。"
 publishedDate: 2026-08-05
-updatedDate: 2026-08-09
+updatedDate: 2026-09-10
 category: electricity
 subcategory: "照明"
 image: /images/SEO/light-dim-suddenly/thumbnail.jpg
