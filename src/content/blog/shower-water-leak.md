@@ -3,7 +3,7 @@ title: "シャワーの水漏れ原因は？場所別の確認方法と対処法
 description: "シャワーの水漏れが起きたときは、ヘッド・ホース・接続部・水栓本体など、漏れている場所の特定が重要です。残留水との見分け方、止水栓を閉めて行う安全な確認方法、ナットやパッキンへの対処、ホースの応急処置を解説。壁や床への漏水など、使用を中止して業者へ相談すべき症状も紹介します。"
 excerpt: "シャワーから水が漏れる場所ごとに、考えられる原因と安全な確認方法を解説します。自分で対応できる範囲と、専門業者へ相談したい症状も確認できます。"
 publishedDate: 2026-08-31
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: water
 subcategory: "お風呂"
 image: /images/SEO/shower-water-leak-causes-solutions/thumbnail.jpg

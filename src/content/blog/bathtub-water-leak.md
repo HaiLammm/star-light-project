@@ -3,7 +3,7 @@ title: "浴槽の水漏れはどこから？確認したい場所と対処の目
 description: "浴槽の水漏れは、浴槽本体・排水口・浴槽下のどこから起きているかで対応が変わります。最初に確認したい場所、自分でできる応急対応、修理や交換を相談すべき目安を解説します。"
 excerpt: "浴槽の水位低下や床の濡れに気づいたとき、どこを確認すべきかを整理します。安全な応急対応と、業者へ相談したほうがよいケースも紹介します。"
 publishedDate: 2026-08-10
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: water
 subcategory: "お風呂"
 image: /images/SEO/bathtub-water-leak/thumbnail.jpg

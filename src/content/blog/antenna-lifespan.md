@@ -3,7 +3,7 @@ title: "テレビアンテナの寿命は何年？交換時期を見極める劣
 description: "テレビアンテナの寿命は一般に10〜15年が目安ですが、交換時期は年数だけでは決まりません。映像の乱れや本体の傾き、金具のさびなどの劣化症状、安全に確認できるポイント、長持ちさせる方法、修理と交換を業者へ相談する判断基準を分かりやすく解説します。"
 excerpt: "テレビアンテナの寿命の目安と、交換前に現れやすい劣化症状を紹介します。安全な確認方法や修理・交換を判断するポイントも確認できます。"
 publishedDate: 2026-08-29
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: " アンテナ工事"
 image: /images/SEO/antenna-lifespan/thumbnail.jpg

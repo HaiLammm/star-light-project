@@ -3,7 +3,7 @@ title: "シャワーのお湯が出ない！水は出るのにお湯だけ出な
 description: "シャワーのお湯が出ないときは、ほかの蛇口からお湯が出るかを確認すると原因を絞り込めます。水は出るのに冷たい場合に考えられる混合栓・給湯器・配管の不具合、安全にできる対処法、ガス臭や水漏れなど業者へ相談すべき症状をわかりやすく解説します。"
 excerpt: "シャワーから水は出るのに、お湯だけ出ない原因を場所別に解説します。自宅でできる安全な確認方法と、修理を依頼する判断基準も紹介します。"
 publishedDate: 2026-09-02
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: water
 subcategory: "洗面所"
 image: /images/SEO/shower-hot-water-not-working/thumbnail.jpg

@@ -3,7 +3,7 @@ title: "コンセントから変な臭いがする原因は？焦げ臭いとき
 description: "コンセントから変な臭いがするときは、内部の過熱や接触不良が起きている可能性があります。焦げ臭い、プラスチックが溶けたような匂い、魚のような異臭を感じたら使用を中止してください。匂いの種類から考えられる原因、安全な確認方法、電気工事業者へ相談すべきサインを解説します。"
 excerpt: "コンセントの異臭は、見た目に異常がなくても電気トラブルの前兆かもしれません。匂いの見分け方と安全な確認手順、使用を再開せず相談したいケースを紹介します。"
 publishedDate: 2026-09-11
-updatedDate: 2026-09-11
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/power-outlet-unsual-odor/thumbnail.jpg

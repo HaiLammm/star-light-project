@@ -3,7 +3,7 @@ title: "浴槽が割れたときはどうする？危険性・応急処置・修
 description: "浴槽 割れたと気づいたら、まず確認したいのは使い続けてよいかどうかです。ひびの深さや水漏れの有無によっては使用を止めるべき場合もあります。この記事では、危険性の判断、応急処置、修理か交換かの考え方をわかりやすく解説します。"
 excerpt: "浴槽のひび割れや破損を見つけたときに、使用を続けてよいか、応急処置で足りるか、修理や交換が必要かを判断するための記事です。"
 publishedDate: 2026-08-09
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: water
 subcategory: "お風呂"
 image: /images/SEO/bathtub-cracked-what-to-do/thumbnail.jpg

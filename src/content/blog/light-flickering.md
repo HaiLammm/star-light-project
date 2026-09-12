@@ -3,7 +3,7 @@ title: "照明がチカチカ…そのまま使って大丈夫？原因と危険
 description: "照明 チカチカの原因は、電球の寿命だけでなく接触不良、調光器との相性、電圧変動、照明器具の劣化など複数あります。危険な点滅の見分け方と、自分で確認できる範囲、業者へ相談すべきサインを解説します。"
 excerpt: "照明がチカチカする時に、電球交換で済むケースと危険なケースを見分けるポイントを解説します。焦げ臭さや異音、発熱がある場合は早めの点検が必要です。"
 publishedDate: 2026-08-02
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "照明"
 image: /images/SEO/light-flickering/thumbnail.jpg

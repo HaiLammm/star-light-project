@@ -3,7 +3,7 @@ title: "コンセントの漏電は危険？見逃したくないサインと安
 description: "コンセントの漏電は感電や火災につながる危険なサインです。焦げ臭さ、発熱、しびれ、漏電ブレーカー作動時に確認すべき点と、安全に止める判断、専門業者へ相談すべきケースを解説します。"
 excerpt: "コンセントの漏電が疑われるときは、原因探しより安全確保が先です。危険なサイン、外側からの確認方法、相談すべき目安を整理します。"
 publishedDate: 2026-07-29
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/power-outlet-electrical-leakage/thumbnail.jpg

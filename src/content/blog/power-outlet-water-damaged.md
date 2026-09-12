@@ -3,7 +3,7 @@ title: "コンセントに水がかかったらどうする？感電・漏電を
 description: "コンセントの水濡れは、感電・漏電・ショート・火災につながる危険があります。濡れた部分に触れず、安全な場所からブレーカーを切るなど、最初に行う対処を解説。自然乾燥に必要な時間の目安、再使用できる条件、自分で分解してはいけない理由、電気工事業者へ相談すべき症状も紹介します。"
 excerpt: "コンセントに水がかかったときは、触れたりプラグを抜いたりする前に電源を遮断することが重要です。感電や漏電を防ぐ初動対応と、再使用・業者相談の判断基準を解説します。"
 publishedDate: 2026-09-11
-updatedDate: 2026-09-11
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "コンセント"
 image: /images/SEO/power-outlet-water-damaged/thumbnail.jpg

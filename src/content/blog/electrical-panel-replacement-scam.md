@@ -3,7 +3,7 @@ title: "分電盤交換の詐欺に注意！高額請求を防ぐ確認方法と
 description: "分電盤交換の詐欺や高額請求では、突然の無料点検から不安をあおり、不要な工事や即日契約を迫る手口が使われます。よくある勧誘の特徴、交換理由と見積書の確認方法、契約してしまった場合の相談先、信頼できる電気工事業者の選び方を分かりやすく解説します。不審な訪問や見積もりに迷ったときは、その場で契約せず冷静に確認しましょう。"
 excerpt: "分電盤交換の詐欺で使われる手口と、高額請求を防ぐための確認方法を解説します。危険な電気の異常との見分け方や、信頼できる業者を選ぶポイントも紹介します。"
 publishedDate: 2026-08-26
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "分電盤"
 image: /images/SEO/electrical-panel-replacement-scam/thumbnail.jpg

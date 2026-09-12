@@ -3,7 +3,7 @@ title: "キッチンのシンク排水口が詰まる原因は？水が流れな
 description: "キッチンのシンク排水口が詰まって水が流れない原因と掃除方法を解説。食材カスやヌメリ、油汚れの対処法、パイプクリーナーの使い方、掃除しても改善しないときの業者への相談目安を紹介します。"
 excerpt: "キッチンのシンク排水口が詰まる原因と、安全にできる掃除・対処法を紹介します。排水口を掃除しても水が流れない場合の相談目安も確認できます。"
 publishedDate: 2026-08-15
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: water
 subcategory: "キッチン"
 image: /images/SEO/kitchen-sink-drain-blog/thumbnail.jpg

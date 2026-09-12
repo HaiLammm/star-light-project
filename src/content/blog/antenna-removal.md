@@ -3,7 +3,7 @@ title: "アンテナ撤去はどうする？費用が変わる条件と安全な
 description: "アンテナ撤去を検討する時期や費用が変わる条件、安全な処分方法を解説します。光テレビへの切り替え後や、古いアンテナの傾き・部品外れが気になる場合に確認したいポイントを整理。高所作業の危険性、見積もりの確認項目、専門業者へ相談すべきケースも紹介します。"
 excerpt: "不要になったテレビアンテナを安全に撤去する方法を解説します。費用を左右する条件や処分方法、業者選びのポイントも確認できます。"
 publishedDate: 2026-08-29
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "アンテナ工事"
 image: /images/SEO/antenna-removal/thumbnail.jpg

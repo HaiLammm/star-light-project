@@ -3,7 +3,7 @@ title: "浴槽の排水口が詰まる原因は？水が流れないときの確
 description: "浴槽の排水口詰まりで水が流れないときは、髪の毛や皮脂汚れ、固形物、配管奥の詰まりが原因のことがあります。確認する順番、自分でできる安全な掃除、業者へ相談すべき症状を解説します。"
 excerpt: "浴槽の水が流れない、ゴボゴボ音がする、水位が戻るときの確認方法を解説。自分で掃除できる範囲と相談が必要なケースを整理します。"
 publishedDate: 2026-08-11
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: water
 subcategory: "お風呂"
 image: /images/SEO/bathtub-drain-blog/thumbnail.jpg

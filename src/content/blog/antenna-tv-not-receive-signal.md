@@ -3,7 +3,7 @@ title: "アンテナが原因でテレビが映らない？受信できないと
 description: "アンテナが原因でテレビが映らないときは、E202の表示、映らないテレビやチャンネルの範囲、ケーブル、受信レベルを順番に確認しましょう。急な受信不良や雨、強風の影響も含めた主な原因、自宅で安全にできる対処法、高所作業を避けてアンテナ業者へ相談すべきケースを解説します。"
 excerpt: "テレビが急に映らなくなったときの確認手順を紹介します。E202や特定チャンネルの受信不良、雨や強風による影響を切り分け、安全な対処法と相談の目安を解説します。"
 publishedDate: 2026-08-30
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "アンテナ工事"
 image: /images/SEO/antenna-tv-not-receive-signal/thumbnail.jpg

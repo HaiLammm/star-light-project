@@ -3,7 +3,7 @@ title: "照明から音がするのは故障？音の種類ごとの原因と安
 description: "照明 音がする原因をブーン・ジー・パチパチ・ガタガタ・ポコポコなど音の種類別に整理。蛍光灯やシーリングライト、ダウンライトで起こりやすい異音の見分け方、自分で安全に確認できる範囲、焦げたにおい・煙・発熱があるときに使用を止めて専門業者へ相談すべきケースを解説します。"
 excerpt: "照明から聞こえる異音を、音の種類ごとに確認。危険サインと安全にできる対処の範囲をわかりやすく紹介します。"
 publishedDate: 2026-08-07
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "照明"
 image: /images/SEO/light-noisy/thumbnail.jpg

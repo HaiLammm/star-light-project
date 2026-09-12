@@ -3,7 +3,7 @@ title: "エアコンの運転ランプが点滅する原因は？止まらない
 description: "エアコンの運転ランプ点滅は、暖房時の霜取り運転やフィルターのお手入れ表示だけでなく、部品の取り付け不良や内部異常を知らせている場合があります。点滅の色やエラーコード、運転状態を確認する手順、一度だけ安全に再起動する方法、使い続けてよいケースと修理を依頼すべき症状を分かりやすく解説します。"
 excerpt: "エアコンの運転ランプが点滅する原因を、正常動作・お手入れ表示・故障の可能性に分けて解説します。点滅が止まらないときの確認方法や再起動の手順、使用を中止すべき症状も紹介します。"
 publishedDate: 2026-09-06
-updatedDate: 2026-09-10
+updatedDate: 2026-09-12
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-operation-light-blinking/thumbnail.jpg
