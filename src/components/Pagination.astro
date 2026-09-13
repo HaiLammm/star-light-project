@@ -1,4 +1,6 @@
 ---
+import { joinPath } from '../utils/url';
+
 interface Props {
   currentPage: number;
   totalPages: number;
@@ -7,9 +9,10 @@ interface Props {
 
 const { currentPage, totalPages, baseUrl } = Astro.props;
 
+// joinPath chịu được baseUrl có hay không có "/" cuối, nên đổi phía caller
+// không thể sinh ra "//".
 function getPageUrl(page: number): string {
-  if (page === 1) return baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
-  return `${baseUrl}/${page}/`;
+  return joinPath(baseUrl, page === 1 ? undefined : page);
 }
 
 function getVisiblePages(current: number, total: number): (number | '...')[] {

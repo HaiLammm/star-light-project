@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:slashes": "node scripts/check-trailing-slash.mjs",
+    "verify": "npm run build && npm run check:slashes"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

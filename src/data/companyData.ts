@@ -14,25 +14,25 @@ export const COMPANY_OVERVIEW = {
 export const COMPANY_CARDS: CompanyCard[] = [
   {
     title: '会社概要',
-    href: '/company/about',
+    href: '/company/about/',
     image: '/images/company/company_card_01.jpg',
     imageAlt: '会社概要',
   },
   {
     title: '企業理念',
-    href: '/company/philosophy',
+    href: '/company/philosophy/',
     image: '/images/company/company_card_02.jpg',
     imageAlt: '企業理念',
   },
   {
     title: '採用情報',
-    href: '/company/recruit',
+    href: '/company/recruit/',
     image: '/images/company/company_card_03.jpg',
     imageAlt: '採用情報',
   },
   {
     title: '対応可能エリア',
-    href: '/company/office',
+    href: '/company/office/',
     image: '/images/company/company_card_04.jpg',
     imageAlt: '対応可能エリア',
   },

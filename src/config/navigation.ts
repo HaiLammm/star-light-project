@@ -36,50 +36,50 @@ const toNavigationChildren = (services: ServiceItem[]): NavigationChild[] => {
 export const NAVIGATION: NavigationItem[] = [
   {
     label: 'サービス',
-    href: '/water',
+    href: '/water/',
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
     columns: [
       {
         key: 'water',
         label: '水道工事',
-        href: '/water',
+        href: '/water/',
         accent: 'water',
         children: [
           ...toNavigationChildren(WATER_SERVICES),
-          { slug: 'water-case', label: '施工事例', href: '/case' },
+          { slug: 'water-case', label: '施工事例', href: '/case/' },
         ],
       },
       {
         key: 'electricity',
         label: '電気工事',
-        href: '/electricity',
+        href: '/electricity/',
         accent: 'electric',
         children: [
           ...toNavigationChildren(ELECTRICITY_SERVICES),
-          { slug: 'electricity-case', label: '施工事例', href: '/case' },
+          { slug: 'electricity-case', label: '施工事例', href: '/case/' },
         ],
       },
     ],
   },
   {
     label: '会社案内',
-    href: '/company',
+    href: '/company/',
   },
   {
     label: '作業の流れ',
-    href: '/flow',
+    href: '/flow/',
   },
   {
     label: 'お客さまの声',
-    href: '/voice',
+    href: '/voice/',
   },
   {
     label: 'コラム',
-    href: '/columns',
+    href: '/columns/',
   },
   {
     label: 'お問い合わせ',
-    href: '/contact',
+    href: '/contact/',
   },
 ];
 
@@ -93,51 +93,51 @@ export interface FooterNavSection {
 export const FOOTER_NAV: FooterNavSection[] = [
   {
     label: '水まわりサービス',
-    href: '/water',
+    href: '/water/',
     children: [
-      { label: 'トイレサービス', href: '/water/toilet' },
-      { label: 'キッチンサービス', href: '/water/kitchen' },
-      { label: 'お風呂サービス', href: '/water/bath' },
-      { label: '洗面所サービス', href: '/water/washroom' },
+      { label: 'トイレサービス', href: '/water/toilet/' },
+      { label: 'キッチンサービス', href: '/water/kitchen/' },
+      { label: 'お風呂サービス', href: '/water/bath/' },
+      { label: '洗面所サービス', href: '/water/washroom/' },
     ],
   },
   {
     label: '電気まわりサービス',
-    href: '/electricity',
+    href: '/electricity/',
     children: [
-      { label: 'ブレーカーサービス', href: '/electricity/breaker' },
-      { label: 'コンセントサービス', href: '/electricity/outlet' },
-      { label: '照明サービス', href: '/electricity/lighting' },
-      { label: 'アンテナ工事サービス', href: '/electricity/antenna' },
-      { label: '給湯器交換サービス', href: '/electricity/water-heater' },
+      { label: 'ブレーカーサービス', href: '/electricity/breaker/' },
+      { label: 'コンセントサービス', href: '/electricity/outlet/' },
+      { label: '照明サービス', href: '/electricity/lighting/' },
+      { label: 'アンテナ工事サービス', href: '/electricity/antenna/' },
+      { label: '給湯器交換サービス', href: '/electricity/water-heater/' },
     ],
   },
   {
     label: '会社案内',
-    href: '/company',
+    href: '/company/',
     children: [
-      { label: '会社概要', href: '/company/about' },
-      { label: '企業理念', href: '/company/philosophy' },
-      { label: '採用ページ', href: '/company/recruit' },
-      { label: '対応エリア', href: '/company/office' },
+      { label: '会社概要', href: '/company/about/' },
+      { label: '企業理念', href: '/company/philosophy/' },
+      { label: '採用ページ', href: '/company/recruit/' },
+      { label: '対応エリア', href: '/company/office/' },
     ],
   },
   {
     label: 'はじめてご利用の方へ',
     children: [
-      { label: '作業の流れ', href: '/flow' },
-      { label: '施工事例', href: '/case' },
-      { label: 'お客さまの声', href: '/voice' },
-      { label: 'コラム', href: '/columns' },
-      { label: 'よくある質問', href: '/faq' },
+      { label: '作業の流れ', href: '/flow/' },
+      { label: '施工事例', href: '/case/' },
+      { label: 'お客さまの声', href: '/voice/' },
+      { label: 'コラム', href: '/columns/' },
+      { label: 'よくある質問', href: '/faq/' },
     ],
   },
   {
     label: 'サイト情報',
     children: [
-      { label: '無料相談フォーム', href: '/contact' },
-      { label: 'プライバシーポリシー', href: '/privacy' },
-      { label: 'サイトマップ', href: '/sitemap' },
+      { label: '無料相談フォーム', href: '/contact/' },
+      { label: 'プライバシーポリシー', href: '/privacy/' },
+      { label: 'サイトマップ', href: '/sitemap/' },
     ],
   },
 ];

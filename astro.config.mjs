@@ -32,6 +32,11 @@ for (const file of readdirSync(blogDir).filter(f => f.endsWith('.md') || f.endsW
 export default defineConfig({
   site: SITE_CONFIG.siteUrl,
   output: 'static',
+  // Ở build tĩnh, `trailingSlash` KHÔNG sinh redirect — việc ép "/" cuối là do
+  // `"trailingSlash": true` trong vercel.json. Đặt 'always' ở đây để dev server
+  // 404 đúng chỗ production 308, nhờ vậy link thiếu "/" lộ ra ngay khi code.
+  trailingSlash: 'always',
+  build: { format: 'directory' },
   compressHTML: true,
   image: {
     service: {

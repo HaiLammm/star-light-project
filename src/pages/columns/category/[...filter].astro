@@ -8,7 +8,7 @@ import BlogCard from '../../../components/BlogCard.astro';
 import BlogCategorySidebar from '../../../components/BlogCategorySidebar.astro';
 import { formatDateDot } from '../../../utils/formatters';
 import { BLOG_SUBCATEGORY_MAP, BLOG_CATEGORY_LABEL_MAP, subcategorySlug, normalizeSubcategory, postCategory } from '../../../data/blogData';
-import { SITE_CONFIG } from '@config/site';
+import { absoluteUrl, withTrailingSlash } from '../../../utils/url';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
@@ -64,11 +64,11 @@ const metaDescription = `${filterLabel}のトラブルに関する記事を${pos
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
   { label: 'コラム', href: '/columns/' },
-  { label: filterLabel, href: Astro.url.pathname },
+  { label: filterLabel, href: withTrailingSlash(Astro.url.pathname) },
 ];
 ---
 
-<BaseLayout title={`${filterLabel}の記事一覧｜お役立ち情報｜設備プロ`} description={metaDescription} canonicalUrl={`${SITE_CONFIG.siteUrl}${Astro.url.pathname}`}>
+<BaseLayout title={`${filterLabel}の記事一覧｜お役立ち情報｜設備プロ`} description={metaDescription} canonicalUrl={absoluteUrl(Astro.url.pathname)}>
   <section class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1200px] mx-auto px-3 sm:px-4">
       <Breadcrumb items={breadcrumbItems} />

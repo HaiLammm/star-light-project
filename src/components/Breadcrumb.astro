@@ -1,6 +1,6 @@
 ---
 import { generateBreadcrumb, serializeJsonLd, type BreadcrumbItem } from '../utils/schema';
-import { SITE_CONFIG } from '@config/site';
+import { absoluteUrl } from '../utils/url';
 
 interface Props {
   items: Array<{ label: string; href: string }>;
@@ -10,7 +10,7 @@ const { items } = Astro.props;
 
 const breadcrumbData: BreadcrumbItem[] = items.map((item) => ({
   name: item.label,
-  url: item.href.startsWith('http') ? item.href : SITE_CONFIG.siteUrl + item.href,
+  url: absoluteUrl(item.href),
 }));
 
 const jsonLd = generateBreadcrumb(breadcrumbData);

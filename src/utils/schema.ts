@@ -1,4 +1,5 @@
 import { SITE_CONFIG, type OfficeAddress, type RegionalOffice } from '@config/site';
+import { absoluteUrl, withTrailingSlash } from './url';
 
 type SchemaContext = 'https://schema.org';
 
@@ -220,12 +221,6 @@ export interface OrganizationSchema {
 
 const SCHEMA_CONTEXT: SchemaContext = 'https://schema.org';
 
-/** Ghép đường dẫn tương đối thành URL tuyệt đối — structured data của Google
- *  bỏ qua giá trị tương đối, khác với thẻ og:image do trình duyệt tự resolve. */
-const absoluteUrl = (path: string): string => new URL(path, SITE_CONFIG.siteUrl).href;
-
-const ensureTrailingSlash = (url: string): string =>
-  url.endsWith('/') ? url : `${url}/`;
 
 /** `@id` cố định cho thực thể Organization, để WebSite/Article trỏ về cùng một node. */
 const ORGANIZATION_ID = `${SITE_CONFIG.siteUrl}/#organization`;
@@ -257,13 +252,13 @@ const buildProviderReference = (name?: string, url?: string): OrganizationRefere
   return {
     '@type': 'LocalBusiness',
     name: name ?? SITE_CONFIG.companyName,
-    url: ensureTrailingSlash(url ?? SITE_CONFIG.siteUrl),
+    url: withTrailingSlash(url ?? SITE_CONFIG.siteUrl),
     telephone: SITE_CONFIG.phone.display,
   };
 };
 
 export function generateLocalBusiness(office: LocalBusinessInput): LocalBusinessSchema {
-  const url = ensureTrailingSlash(office.url ?? SITE_CONFIG.siteUrl);
+  const url = withTrailingSlash(office.url ?? SITE_CONFIG.siteUrl);
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'LocalBusiness',
@@ -281,7 +276,7 @@ export function generateLocalBusiness(office: LocalBusinessInput): LocalBusiness
 }
 
 export function generateService(service: ServiceInput): ServiceSchema {
-  const url = ensureTrailingSlash(service.url);
+  const url = withTrailingSlash(service.url);
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'Service',
@@ -400,7 +395,7 @@ export function generateAggregateRating(
     // thấy hai Organization trùng tên trên cùng một trang.
     ...(item?.name || item?.url ? {} : { '@id': ORGANIZATION_ID }),
     name: item?.name ?? SITE_CONFIG.companyName,
-    url: item?.url ?? SITE_CONFIG.siteUrl,
+    url: withTrailingSlash(item?.url ?? SITE_CONFIG.siteUrl),
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: average.toFixed(1),
@@ -437,7 +432,8 @@ export function generateBreadcrumb(crumbs: BreadcrumbItem[]): BreadcrumbListSche
       '@type': 'ListItem',
       position: index + 1,
       name: crumb.name,
-      item: crumb.url,
+      // Lớp phòng thủ cuối: hàm này còn được gọi ngoài Breadcrumb.astro.
+      item: withTrailingSlash(crumb.url),
     })),
   };
 }
@@ -454,13 +450,13 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
       '@type': 'Organization',
       '@id': ORGANIZATION_ID,
       name: post.author,
-      url: ensureTrailingSlash(SITE_CONFIG.siteUrl),
+      url: withTrailingSlash(SITE_CONFIG.siteUrl),
     },
     publisher: {
       '@type': 'Organization',
       '@id': ORGANIZATION_ID,
       name: SITE_CONFIG.companyName,
-      url: ensureTrailingSlash(SITE_CONFIG.siteUrl),
+      url: withTrailingSlash(SITE_CONFIG.siteUrl),
       logo: buildLogo(),
     },
     inLanguage: 'ja',
@@ -468,9 +464,9 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
       '@type': 'WebSite',
       '@id': WEBSITE_ID,
       name: SITE_CONFIG.companyName,
-      url: ensureTrailingSlash(SITE_CONFIG.siteUrl),
+      url: withTrailingSlash(SITE_CONFIG.siteUrl),
     },
-    mainEntityOfPage: ensureTrailingSlash(post.url),
+    mainEntityOfPage: withTrailingSlash(post.url),
     ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
   };
 }
