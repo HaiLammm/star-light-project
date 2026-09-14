@@ -3,7 +3,7 @@ title: "キッチンの蛇口がぐらつく原因は？まず確認したい場
 description: "キッチンの蛇口がぐらつくときは、根元の固定ねじやナットの緩み、固定部品の劣化などが考えられます。ぐらつく場所とシンク下の水漏れを確認し、安全に締め直す手順を解説。自分で対応できる範囲や放置するリスク、修理・蛇口交換を依頼する目安も紹介します。判断に迷う場合は専門業者へ相談しましょう。"
 excerpt: "キッチンの蛇口がぐらつく原因と、最初に確認する場所を解説します。安全な締め直し方や修理・交換を依頼する目安も確認できます。"
 publishedDate: 2026-08-17
-updatedDate: 2026-09-14
+updatedDate: 2026-08-17
 category: water
 subcategory: "キッチン"
 image: /images/SEO/kitchen-faucet-loose-2/thumbnail.jpg
@@ -254,4 +254,4 @@ imageAlt: "キッチンの蛇口が根元からぐらついている状態"
 
 &nbsp;
 
-[お問い合わせはこちら](https://www.setsubi-pro.net/contact)
+[お問い合わせはこちら](https://www.setsubi-pro.net/contact/)

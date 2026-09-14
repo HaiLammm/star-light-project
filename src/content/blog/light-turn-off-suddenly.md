@@ -3,7 +3,7 @@ title: "さっきまでついていた照明が急に消えた！順番に確認
 description: "照明が急に消えた原因は電球だけではありません。点けてすぐ消える・数分後に消える・チカチカして消えるなど症状別の原因と、安全な対処法を分かりやすく解説します。"
 excerpt: "さっきまでついていた照明が急に消えた時に、消え方、ブレーカー、リモコン、電球を順番に確認する方法を紹介します。焦げたにおい、発熱、煙など危険なサインがある場合の判断も整理します。"
 publishedDate: 2026-08-03
-updatedDate: 2026-09-14
+updatedDate: 2026-08-03
 category: electricity
 subcategory: "照明"
 image: /images/SEO/light-turn-off-suddenly/thumbnail.jpg
@@ -220,4 +220,4 @@ LED照明で「点灯後しばらくすると消える」「一度消えると�
 
 &nbsp;
 
-[お問い合わせはこちら](https://www.setsubi-pro.net/contact)
+[お問い合わせはこちら](https://www.setsubi-pro.net/contact/)

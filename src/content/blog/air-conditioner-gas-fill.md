@@ -3,7 +3,7 @@ title: "エアコンのガス入れとは？必要なケースと費用・作業
 description: "エアコンのガス入れは、冷えないときに必ず必要とは限りません。冷媒ガスは通常自然に減らないため、不足している場合は配管や接続部からの漏れを確認し、先に修理することが重要です。ガス補充が必要なケース、作業の流れ、費用と時間を左右する項目、業者へ依頼する前の確認点を解説します。"
 excerpt: "エアコンの冷えが弱くても、すぐにガス補充が必要とは限りません。ガス不足の原因や補充作業の流れ、費用、依頼前に確認したいポイントを紹介します。"
 publishedDate: 2026-09-08
-updatedDate: 2026-09-14
+updatedDate: 2026-09-08
 category: electricity
 subcategory: "エアコン"
 image: /images/SEO/air-conditioner-gas-fill/thumbnail.jpg
@@ -244,4 +244,4 @@ imageAlt: "エアコンのガス入れが必要か確認する作業員"
 
 &nbsp;
 
-[お問い合わせはこちら](https://www.setsubi-pro.net/contact)
+[お問い合わせはこちら](https://www.setsubi-pro.net/contact/)
