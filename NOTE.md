@@ -212,13 +212,20 @@ Sau deploy: kiểm tra URL bài bằng **Google Rich Results Test** và **Schema
 | `scripts/check-trailing-slash.mjs` | Quét `dist/` tìm URL thiếu `/` và mọi `//` (`npm run check:slashes`) |
 | `astro.config.mjs` | Sitemap + `lastmod` theo `updatedDate`; `trailingSlash: 'always'` |
 | `vercel.json` | `"trailingSlash": true` (R15) + redirect 301 đổi slug (R18) + security headers |
-| `public/robots.txt` | Allow all, chặn `/admin/`, trỏ sitemap |
+| `public/robots.txt` | Allow all, chặn `/admin/`, trỏ sitemap, khai báo `Llms-txt` |
+| `public/llms.txt` | Chỉ mục dịch vụ/khu vực/bài viết cho AI search (§9.7) |
+| `src/utils/rehypeArticleImages.mjs` | Ảnh trong thân bài: `loading=lazy`, `decoding=async`, width/height thật đọc từ `public/` (§9.5) |
+| `src/components/RelatedPosts.astro` | 4 bài liên quan cuối mỗi bài (§9.4) |
+| `src/pages/rss.xml.js` | RSS feed + autodiscovery trong `BaseLayout` |
+| `setsubi-pro.net-audit/` | Báo cáo audit 8/9 (điểm 55/100) + `ACTION-PLAN.md` — xem §9.10 |
 
 ---
 
 # PageSpeed Insights — setsubi-pro.net (Mobile)
 
 Báo cáo ngày: 22/08/2026
+
+> ✅ **Đã xử lý xong trong cùng ngày 22/8** — mobile Lighthouse **99–100**. Các số liệu dưới đây là trạng thái *trước khi sửa*; kết quả và cách làm xem §9.6.
 
 ## Điểm tổng quan
 
@@ -526,3 +533,145 @@ Import trace: node:crypto ← ./lib/publish-stamp.ts ← ./lib/jobs.ts
 
 **8. Resubmit `sitemap-index.xml` trên GSC** — "Đã gửi sơ đồ trang web thành công": Đã gửi 14/9, đọc lần cuối 14/9, **Thành công**, 108 trang. Google giờ đọc được 37 mốc `lastmod` thật thay vì một ngày duy nhất.
 
+
+---
+
+# 9. Nhật ký: các đợt cải thiện SEO trước §8 (2026-05-29 → 2026-09-12)
+
+Tổng hợp lại từ git history của `star-light` và `~/Projects/auto_workflow/seo-cockpit`, theo thứ tự thời gian. Mỗi mục ghi **vấn đề → nguyên nhân → cách xử lý**, kèm commit để tra lại.
+
+## 9.1 Nền móng SEO khi redesign (29/5)
+
+| Vấn đề | Xử lý | Commit |
+|---|---|---|
+| Canonical/`site` vẫn trỏ `star-light15.net` (site cũ) → mọi canonical, sitemap, OG sai domain | Đổi `site` trong `astro.config.mjs` + `robots.txt` sang `https://www.setsubi-pro.net` | `61905e0` |
+| Header dùng `<h1>` cho logo → mỗi trang 2 H1; trang chủ không có H1 thật | Logo đổi thành `<div>`, thêm H1 riêng cho trang chủ | `61905e0` |
+| Bài viết không có mục lục, heading không đánh số | TOC sticky bên trái + heading đánh số | `61905e0` |
+| Share lên mạng xã hội không có ảnh preview | `BaseLayout` phát `og:image` mặc định (URL tuyệt đối qua `Astro.site`) + đủ Twitter Card | `d8700cc` |
+| Footer logo mất `alt` toàn site — code tham chiếu `SITE_CONFIG.siteName` không tồn tại, Astro âm thầm bỏ thuộc tính | Trỏ sang `companyName` | `d8700cc` |
+| JSON-LD chèn thẳng chuỗi → nội dung chứa `</script>` có thể phá thẻ | `serializeJsonLd()` escape `<` cho cả 13 chỗ chèn | `2c31406` |
+| Trang `/voice` phát nhiều node `Review` rời rạc | Gộp thành 1 node `Organization` mang `aggregateRating` + reviews lồng bên trong | `2c31406` |
+
+## 9.2 Domain & sitemap (18/6)
+
+- **non-www → www trả 307 (tạm thời)** → Google không chuyển tín hiệu. Thêm redirect `permanent` trong `vercel.json`. (`3b7940f`)
+- **Mọi URL trong sitemap cùng `lastmod = new Date()`** (thời điểm build) → Google coi `lastmod` là nhiễu và bỏ qua. Sửa: bài blog lấy `publishedDate` từ frontmatter; trang tĩnh **bỏ hẳn** `lastmod` (Google thích thiếu hơn là ngày giả). (`3b7940f`) → sau đó nâng lên ưu tiên `updatedDate` (`ea83e03`, R14).
+
+## 9.3 URL & tín hiệu bài viết (7/2026)
+
+- **URL subcategory chứa chữ Nhật** (`/columns/category/water/お風呂/`) → URL percent-encode dài, dễ trùng lặp. Đổi đoạn path sang slug latin (`/water/bath/`), chữ Nhật chỉ còn là nhãn hiển thị. Thêm 301 cho **cả dạng thô lẫn dạng percent-encoded** để giữ trang đã index. (`e1190f7`)
+- **Trang bài viết dùng `og:type=website` và og:image mặc định** → đổi sang `og:type=article` + og:image riêng của bài. (`0fa3874`)
+- **Bài chỉ hiện 1 mốc ngày, `dateModified` trống khi thiếu `updatedDate`** → luôn hiện 公開日 + 更新日, `dateModified` cùng nguồn; backfill `updatedDate` cho 19 bài theo ngày commit gần nhất. (`22890e7`)
+- Pipeline (`64fbd6a`) bắt đầu ghi `updatedDate = hôm nay` **mỗi lần đăng** — ⚠️ đây chính là gốc của lỗi dập ngày hàng loạt, sửa ở §8.4(c).
+- Prompt sinh bài: internal link phải là URL đầy đủ `https://www.setsubi-pro.net/columns/<slug>/` thay vì `/blog/<slug>`. (`f85ba19`) — sau này phát hiện nguồn slug sai, sửa ở §8.4(b).
+
+## 9.4 Đợt SEO 11–12/8
+
+### (a) Bài đổi slug để lại bản trùng (seo-cockpit `82a578c`, `e1cfab4`)
+Pipeline chỉ ghi file theo slug hiện tại → đổi slug là repo giữ **cả file cũ**: cùng một bài phục vụ ở 2 URL, bản cũ đóng băng nội dung sai (`anzen-breaker-tripped` vs `safety-breaker-tripped`, `water-heater-not-working` vs `waterheater-not-working`, `breaker-trip-first-steps` vs `breaker-tripping`).
+
+**Sửa:** thêm `Article.publishedSlug`. Slug khác → publish **xoá file cũ và thêm 301 trong cùng một commit** (site không bao giờ build ở trạng thái URL cũ đã mất mà chưa có redirect). `mergeRedirects()` chèn rule mới lên **đầu** mảng — chèn cuối sẽ bị catch-all non-www nuốt. Redirect ghi `statusCode: 301` tường minh thay vì `permanent: true` (Vercel phát 308).
+
+### (b) Bài đã xoá vẫn được index nhưng 404 (`ea83e03`)
+3 bài gas điều hoà (`aircon-gas-refill`, `aircon-gas-leak-repair`, `aircon-gas-leak-symptoms`) → 301 về `air-conditioner-not-cooling`.
+
+### (c) Internal linking yếu (`ea83e03`, `9ba2ff8`)
+Lúc đó Google chỉ index **11/81 URL**.
+- `RelatedPosts`: 4 bài cùng subcategory (bù bằng cùng category) cuối mỗi bài.
+- Trang chủ thêm khối "お困りごと別コラム" link **toàn bộ** bài theo chuyên mục con + 10 trang chuyên mục (trước chỉ 6 bài mới nhất) → đường crawl trực tiếp từ trang mạnh nhất.
+- **4 bài rơi khỏi mọi trang chuyên mục** vì gắn subcategory `給湯器` + category `water` không khớp cấu hình → thêm `normalizeSubcategory()` / `postCategory()` trong `blogData.ts`.
+- Thêm `/rss.xml` + autodiscovery link.
+
+### (d) Meta description (`33662bf` + seo-cockpit `41c3572`)
+| Vấn đề | Xử lý |
+|---|---|
+| 5 bài dài 121–171 ký tự — prompt sinh bài yêu cầu **160–300** ký tự | Sửa prompt → 90–120 ký tự, keyword chính trong 40 ký tự đầu |
+| Trang phân trang `/columns`, `/case`, `/voice` trang 2+ dùng **chung** một description | Thêm số trang |
+| Trang category chỉ ~30 ký tự | Viết mô tả riêng theo chuyên mục |
+| 11 trang tĩnh quá ngắn | Mở rộng |
+
+Kết quả: 0/82 trang ngoài khoảng 70–120 ký tự, 0 description trùng. (R12 sau đó siết thêm: thông tin chính trong 70 ký tự đầu.)
+
+### (e) Schema & brand (`33662bf`, `9ba2ff8`, `ff264b2`)
+- **Article `author` là `Person` mang tên công ty** → sai thực thể, Google không quy uy tín cho Person không có thật. Đổi sang `Organization` + `url`.
+- Thêm `Organization` + `WebSite` JSON-LD toàn site, meta `max-image-preview:large`, icon 512px (→ R3, R4, R7).
+- **NAP/khu vực mâu thuẫn**: 4 nơi nói 4 kiểu (東海・中国 / 名古屋・広島 / 4拠点 / 栃木県). Thống nhất theo `REGIONAL_OFFICES` — cùng nguồn với `LocalBusiness` schema; `AreaMap` dẫn xuất từ config, bản đồ SVG tô lại đúng 10 tỉnh.
+- Thống nhất separator tiêu đề sang `｜` (R9).
+
+### (f) Favicon hiện logo Astro trên Google (`ff264b2`, `d448363`)
+`favicon.ico` vẫn là file mặc định của framework → Search Console hiện chữ "A". Lần 1 (11/8) thay bằng mark logo + thêm `apple-touch-icon`/`icon-192`/`icon-512`, xoá `favicon.svg`; lần 2 (21/8) phải **tạo lại `favicon.ico`** vì Google vẫn nhận icon cũ (→ R8).
+
+## 9.5 Ảnh không được tối ưu (`271e29c`, `9ba2ff8`, `0eb2169`)
+
+| Vấn đề | Nguyên nhân | Xử lý |
+|---|---|---|
+| **Trang chủ nặng 34,6 MB** | Ảnh process trỏ `.png` trong khi asset trong `src/assets` là `.jpg` → `resolveImage()` không khớp, rơi về 5 PNG gốc 2656×1600 (~34MB) dù chỉ hiển thị 400×240 | `resolveImage()` dò cả đuôi khác → **0,5 MB** |
+| 97 ảnh trong thân bài không có `loading`/width/height → CLS + tải sớm | Markdown sinh `<img>` trần | `rehypeArticleImages.mjs` thêm `loading=lazy`, `decoding=async`, kích thước thật |
+| Thumbnail `/columns` là JPG gốc 50–80KB, hiện muộn như mất ảnh | Thumbnail chỉ nằm ở `public/` | Bổ sung bản `src/assets` cho 24 bài (12/8); 12/9 chuyển hẳn 16 thumbnail còn lại, xoá 31 bản `public/` trùng md5 + 3 PNG sót (−1,2MB). Thumbnail **71kB → 15kB** webp |
+
+Pipeline sửa tương ứng (seo-cockpit `7b05b18`): ảnh `THUMBNAIL` commit thẳng vào `src/assets/images/SEO` qua `frontmatterMap.thumbnailFolder`; ảnh thân bài **giữ ở `public/`** vì markdown tham chiếu bằng URL `/images/SEO/...` và `rehypeArticleImages` đọc kích thước từ đó.
+
+> ⚠️ Bug tiện thể: `upsertWebsite` ghi đè cả cột JSON `frontmatterMap` bằng 5 key của form → chỉ cần mở settings một Website rồi bấm Lưu là mất `requiredFields`, `categoryOptions`, `generation`, `redirectsFile`… Đã đổi sang merge.
+
+> ⚠️ Mặt trái: đổi hàng loạt URL ảnh buộc Google crawl lại toàn bộ ảnh — một trong hai nguyên nhân đốt crawl budget ở §8.3.
+
+## 9.6 Core Web Vitals mobile: 58 → 99–100 (21–22/8, story 6.3)
+
+Xuất phát từ báo cáo PSI ở phần đầu file (Perf 58, FCP 7,4s, LCP 8,4s).
+
+| Vòng | Thay đổi | Kết quả |
+|---|---|---|
+| 21/8 | Preload hero, logo header qua Astro `<Image>` (75KB JPEG → 2–4KB WebP), `HeroCarousel` React → Astro (0 JS), hoãn hydrate (`88a2a7a`, `c33f974`, `c6cadc9`) | — |
+| 22/8 · 1 | `MobileMenu` React (`client:load`, ~58KB gz trên **mọi** trang) → Astro thuần; Swiper lazy qua `IntersectionObserver`; `ServiceSlider` → `client:visible`; width/height cho logo CTA (`9928fe0`) | Perf **86**, FCP 3,0s, LCP 3,4s |
+| 22/8 · 2 | Font còn 400/700/900; hero mobile 29KB → 18,6KB; **Astro hoist `import('swiper/css')` thành `<link>` chặn render ở `<head>`** → đổi sang `swiper/css?url` và chèn stylesheet lúc lazy-init (`8e67e89`, `4fec4ec`) | Hết render-blocking; FCP 1,3s / LCP 1,5s |
+| 22/8 · 3 | PSI của user thấy **CLS 0,191** do font swap trên hero → **bỏ hẳn Google Fonts**, dùng font hệ thống JP (Android có sẵn Noto Sans CJK); 4 logo raw còn lại → webp (`76fec02`, `3b9f86f`) | **Perf 99–100**, LCP 1,4–1,5s, CLS 0, **221KB / 27 request** (từ 1.268KB / 132) |
+
+Bài học:
+- `font-display: optional` cải thiện mobile nhưng làm tụt desktop → đã revert về `swap` (`1c6dcf7`) trước khi quyết định bỏ webfont.
+- Điểm Lighthouse chạy local dao động 79–90 giữa các lần — kết luận phải dựa trên PSI hoặc nhiều lần chạy ổn định.
+
+## 9.7 Audit toàn diện 8/9 → sửa ngay (`5044191`)
+
+Chạy SEO audit (lưu ở `setsubi-pro.net-audit/`) — **điểm 55/100**: Technical 72, Content 52, On-Page 58, Schema 55, CWV 70, AI readiness 41, Local 25.
+
+Đã sửa trong cùng đợt:
+
+| Vấn đề audit | Xử lý |
+|---|---|
+| `BreadcrumbList` trên trang category/service có `item` = `#` → schema không hợp lệ | Thay bằng URL trang thật (`[category]/index.astro`, `[category]/[service].astro`) |
+| **Trang 404 indexable** — có canonical, hreflang, breadcrumb schema | `noindex,follow`, gỡ canonical/hreflang/breadcrumb |
+| `X-Frame-Options: SAMEORIGIN` mâu thuẫn CSP `frame-ancestors 'none'` | Đổi sang `DENY` |
+| 5 testimonial trùng (008–012) | Xoá |
+| Icon CTA thiếu width/height (CLS), không lazy | Thêm kích thước + `loading="lazy"` cho icon dưới màn hình đầu |
+| URL trong schema lúc có lúc không `/` | `ensureTrailingSlash` cho mọi URL schema (sau này thay bằng helper ở §8.2) |
+| Các node schema không liên kết | `@id` cho `Organization`/`WebSite`/`LocalBusiness`, `LocalBusiness.parentOrganization` |
+| AggregateRating chỉ tính một phần review | `/voice` dùng **toàn bộ** testimonial; thêm AggregateRating ở trang chủ |
+| Không có tín hiệu cho AI search | Tạo `/llms.txt` + khai báo trong `robots.txt` |
+
+## 9.8 Đo lường
+
+- Vercel Web Analytics đã bật trên project nhưng **chưa nhúng script** → 0 pageview. Thêm script insights vào `BaseLayout` (`3a68f2d`, 3/7).
+- Kiểm tra index qua Google Search Console trong Chrome (`sc-domain:setsubi-pro.net`), không dùng `site:`.
+
+## 9.9 Tổng kết theo nhóm lỗi
+
+| Nhóm | Lỗi lặp lại | Quy tắc rút ra |
+|---|---|---|
+| Nguồn sinh bài | description quá dài, link sai slug, `updatedDate` giả, link thiếu `/` | Sửa ở `seo-cockpit`, **không vá markdown** (R11, R14, §8.4) |
+| Ảnh | fallback về file gốc, thiếu kích thước, thumbnail ở `public/` | R2b, R13; `resolveImage` + `rehypeArticleImages` |
+| URL | domain cũ, non-www 307, slug tiếng Nhật, slug đổi để lại trùng, trailing slash | Một URL canonical duy nhất; mọi thay đổi URL đi kèm 301 trong **cùng** commit (R15–R18) |
+| Schema | URL tương đối, `#`, Person giả, node trùng không `@id` | R1–R6 |
+| Tín hiệu giả | `lastmod` = ngày build, `updatedDate` dập hàng loạt | Thiếu còn hơn sai |
+
+## 9.10 Việc còn tồn từ audit 8/9 (`setsubi-pro.net-audit/ACTION-PLAN.md`)
+
+Chưa làm (kiểm tra source ngày 14/9):
+
+- [ ] **E-E-A-T — ưu tiên cao nhất:** chưa có tác giả/người giám sát trên bài viết; chưa có trang chứng chỉ nhân viên; chưa hiện số giấy phép (電気工事士, 指定給水装置工事事業者…).
+- [ ] **Local SEO (25/100):** chưa có Google Business Profile đã xác minh; chưa có landing page theo thành phố/tỉnh (Tokyo, Osaka…); chưa đăng ký くらしのマーケット / ユアマイスター / Yahoo!ロコ; chưa nhúng Google Maps ở `/contact/`, `/company/office/`.
+- [ ] Schema `HowTo` cho bài hướng dẫn từng bước — chưa có (lưu ý: Google đã ngừng hiện rich result HowTo, giá trị chủ yếu cho AI search).
+- [ ] IndexNow trong pipeline publish — chưa có.
+- [ ] Redirect 2 hop `http://setsubi-pro.net/` → `https://` → `www`.
+- [ ] Viết lại mở bài theo kiểu trả lời trực tiếp; thêm trích dẫn nguồn ngoài (nhà sản xuất, số liệu).
+- [ ] Mở rộng `/company/about/` (817 → 2.000+ ký tự).
+- [ ] Bảo mật: CSP còn `unsafe-inline`, HSTS chưa `preload`, CORS wildcard trên HTML.
