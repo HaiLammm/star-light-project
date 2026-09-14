@@ -484,10 +484,45 @@ Google mất **vài ngày đến 2 tuần** để chạy xong một lần xác t
 
 ## 8.6 Việc còn phải làm
 
-- [ ] **Trên môi trường deploy của cockpit: deploy code mới + chạy `npm run db:push`** — 2 cột mới chưa có ở đó.
-- [ ] **Sau đó** mới chạy "Đăng lại tất cả" để ghi 37 ngày thật vào repo. Đây là lần bulk re-publish cuối cùng còn cần thiết — từ giờ nó không dập ngày nữa. Rồi resubmit sitemap.
-
-  > ⚠️ Commit `e3626dd` (14/9 01:07) đã chạy "Đăng lại tất cả" **trước khi** cockpit được deploy code mới, nên vẫn dập `2026-09-14` lên cả 57 bài. Không mất gì: dữ liệu backfill trong DB còn nguyên (57/57 bài có hash, 37 ngày khác nhau), chỉ cần deploy rồi chạy lại một lần nữa. **Thứ tự bắt buộc: deploy + `db:push` TRƯỚC, re-publish SAU.**
+- [x] ~~Deploy code mới cho cockpit + `db:push`~~ — xong 14/9, xem §8.7.
+- [x] ~~"Đăng lại tất cả" để ghi 37 ngày thật vào repo + resubmit sitemap~~ — xong 14/9, xem §8.7.
 - [ ] `/columns/light-flickering/` ("Đã thu thập – chưa index"): tín hiệu chất lượng nội dung. Nâng độ sâu bài rồi dùng Kiểm tra URL → Yêu cầu lập chỉ mục.
 - [ ] Theo dõi 1–2 tuần: số "Đã phát hiện – chưa index" và tỉ lệ "Khám phá" trong Crawl Stats.
 - [ ] Cân nhắc gắn `npm run check:slashes` vào CI — hiện nó là lớp bảo vệ **duy nhất** cho R15/R16, và repo không có test nào khác.
+
+## 8.7 Triển khai lên production (14/9)
+
+Stack cockpit chạy bằng docker compose trên máy nhà (xem `seo-cockpit/DEPLOY.md`), DB là container `seo-cockpit-db-1` ở `localhost:5435`. Trước khi làm, image đang chạy build từ **9/8 (runner) và 13/8 (cockpit)** — toàn bộ commit gần đây chưa từng được deploy. Đó là lý do commit `e3626dd` lúc 01:07 vẫn dập `2026-09-14`.
+
+**1. `db:push`** — diff đúng 2 câu `ADD COLUMN` nullable, không mất dữ liệu.
+
+**2. Rebuild lần 1 FAIL:**
+```
+Module build failed: UnhandledSchemeError: Reading from "node:crypto"
+Import trace: node:crypto ← ./lib/publish-stamp.ts ← ./lib/jobs.ts
+```
+`instrumentation.ts` được Next build cho **cả** nodejs lẫn Edge. Guard cũ là early return (`if (NEXT_RUNTIME !== "nodejs") return;`) — chỉ chặn lúc chạy, webpack vẫn resolve dynamic import nằm sau `return` khi build bản Edge. Trước đây cây import của `lib/jobs` không có module `node:` nào nên lọt; `publish-stamp.ts` làm lộ lỗi tiềm ẩn này.
+
+**Sửa (commit `bb0681b`):** đặt import **bên trong** `if (NEXT_RUNTIME === "nodejs")` — webpack constant-fold biến này và bỏ nhánh chết trước khi resolve import. Sửa ở gốc thay vì đổi `node:crypto` → `crypto`, để import Node-only nào thêm vào `lib/jobs` sau này cũng không vỡ build nữa. Verify bằng `next build` local trước khi rebuild Docker.
+
+> ⚠️ Bài học: lần 1 background task báo "exit 0" dù build fail, vì lệnh kết thúc bằng `echo`. Khi chạy `docker compose up --build`, phải giữ nguyên exit code của compose (`code=$?; ...; exit $code`) và kiểm tra container thật sự được tạo lại (`docker ps` → "Up N seconds").
+
+**3. Bug trong script CLI (commit `22d87c5`):** `scripts/republish-all.ts` tự đánh dấu Job DONE nên `lib/jobs` không bao giờ materialize job đó — nó chép logic cập nhật `publishedSlug` nhưng bỏ sót stamp. Sửa: giữ `parts.stamp` mà `buildArticleCommit` đã tính cho từng file, ghi cùng `publishedSlug` khi runner báo DONE.
+
+**4. Mô phỏng trước khi đăng thật** (gọi `buildArticleCommit` cho cả 57 bài, không commit): 0 lỗi, 37 ngày khác nhau, 0 bài mang `2026-09-14`, 0 link `/contact` thiếu `/`.
+
+**5. Rebuild lần 2 thành công** — cockpit + runner lên image mới, cockpit trả 307 (về trang đăng nhập) cả local lẫn `https://sesubi-pro.net`, log sạch.
+
+**6. Đăng lại 57 bài** qua `npx tsx scripts/republish-all.ts setsubi-pro --apply` — DONE sau 235 giây, commit `675d1fc`.
+
+**7. Kết quả đã verify:**
+
+| Chỗ kiểm | Trước | Sau |
+|---|---|---|
+| `updatedDate` trong repo (57 bài) | 1 ngày (`2026-09-14`) | **37 ngày**, 2026-05-15 → 2026-09-11 |
+| DB `publishedContentHash` / `publishedUpdatedDate` | — | 57/57 bài |
+| `<lastmod>` trên sitemap live | 1 ngày | **37 ngày** (108 `<loc>`, 57 `<lastmod>`) |
+| Link `/contact` thiếu `/` trong content | 56 | **0** |
+
+**8. Resubmit `sitemap-index.xml` trên GSC** — "Đã gửi sơ đồ trang web thành công": Đã gửi 14/9, đọc lần cuối 14/9, **Thành công**, 108 trang. Google giờ đọc được 37 mốc `lastmod` thật thay vì một ngày duy nhất.
+
