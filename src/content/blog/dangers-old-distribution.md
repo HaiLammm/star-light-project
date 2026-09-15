@@ -5,7 +5,7 @@ excerpt: "長年使用している分電盤は、内部の絶縁性能や接続�
 publishedDate: 2026-09-15
 updatedDate: 2026-09-15
 category: electricity
-subcategory: "分電盤"
+subcategory: "ブレーカー"
 image: /images/SEO/dangers-old-distribution/thumbnail.jpg
 imageAlt: "劣化が進んだ古い分電盤の状態と感電・火災の危険性"
 ---
