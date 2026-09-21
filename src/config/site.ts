@@ -13,6 +13,11 @@ export interface OfficeAddress {
   addressCountry: 'JP';
 }
 
+export interface GeoCoordinates {
+  latitude: number;
+  longitude: number;
+}
+
 export type OfficeKey = 'kanto' | 'nagoya' | 'osaka' | 'hyogo';
 
 export interface RegionalOffice {
@@ -21,6 +26,14 @@ export interface RegionalOffice {
   shortName: string;
   address: OfficeAddress;
   formattedAddress: string;
+  /** Tọa độ (geocode 国土地理院). Chỉ khai báo khi có địa chỉ tới số nhà — Hyogo chưa có. */
+  geo?: GeoCoordinates;
+  /**
+   * Link chia sẻ của Google Business Profile (dạng https://maps.app.goo.gl/...) sau khi
+   * GBP được xác minh. Có giá trị → schema `sameAs`/`hasMap` trỏ về GBP và bản đồ dùng
+   * link này thay cho tìm kiếm theo địa chỉ. Xem NOTE.md §11.
+   */
+  googleBusinessProfileUrl?: string;
   phone: PhoneConfig;
   areaServed: string[];
   prefecturesServed: string[];
@@ -70,9 +83,9 @@ export const SITE_CONFIG: SiteConfig = {
   logoPath: '/images/site_logo_no-mark.jpeg',
   phone: SITE_PHONE,
   email: {
-    display: 'abcxyz@gmail.com',
-    href: 'mailto:abcxyz@gmail.com',
-    ariaLabel: 'メールでお問い合わせ abcxyz@gmail.com',
+    display: 'hoaloha.setsubipro@gmail.com',
+    href: 'mailto:hoaloha.setsubipro@gmail.com',
+    ariaLabel: 'メールでお問い合わせ hoaloha.setsubipro@gmail.com',
   },
   businessHours: '24時間365日',
   defaultDescription:
@@ -95,6 +108,7 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
       addressCountry: 'JP',
     },
     formattedAddress: '〒311-2113 茨城県鉾田市上幡木1418-35',
+    geo: { latitude: 36.080685, longitude: 140.602325 },
     phone: SITE_PHONE,
     areaServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
     prefecturesServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
@@ -110,6 +124,7 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
       addressCountry: 'JP',
     },
     formattedAddress: '大阪府大阪市北区曽根崎新地1丁目11-20-9E',
+    geo: { latitude: 34.698051, longitude: 135.499222 },
     phone: SITE_PHONE,
     areaServed: ['大阪市', '豊中市', '吹田市', '堺市'],
     prefecturesServed: ['大阪府', '京都府', '奈良県', '和歌山県'],

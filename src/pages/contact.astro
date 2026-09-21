@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
-import { SITE_CONFIG } from '@config/site';
+import { SITE_CONFIG, REGIONAL_OFFICES } from '@config/site';
+import { officeMapUrl } from '../utils/maps';
 
 const breadcrumbItems = [
   { label: 'TOP', href: '/' },
@@ -47,6 +48,36 @@ const breadcrumbItems = [
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Offices (NAP + link bản đồ; iframe chỉ đặt ở /company/office/ để trang form nhẹ) -->
+  <section class="pb-[80px] md:pb-[120px]">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="text-[22px] md:text-[28px] font-black text-center text-navy mb-8 md:mb-10">営業所</h2>
+      <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        {REGIONAL_OFFICES.map((office) => {
+          const mapUrl = officeMapUrl(office);
+          return (
+            <li class="bg-white border border-[#e0e0e0] rounded-2xl p-5 md:p-6">
+              <p class="text-[16px] md:text-[18px] font-bold text-[#333]">{office.name}</p>
+              <p class="mt-2 text-[14px] md:text-[15px] text-[#555] leading-relaxed" style="overflow-wrap:anywhere;">{office.formattedAddress}</p>
+              <p class="mt-1 text-[14px] md:text-[15px]">
+                <a href={office.phone.href} class="text-water hover:underline">{office.phone.display}</a>
+                <span class="text-[12px] text-[#999] ml-1">（{SITE_CONFIG.businessHours}）</span>
+              </p>
+              {mapUrl && (
+                <a href={mapUrl} target="_blank" rel="noopener" class="mt-2 inline-flex items-center min-h-[44px] text-[14px] font-bold text-water hover:underline">
+                  Googleマップで見る<span class="sr-only">（新しいタブで開きます）</span>
+                </a>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <p class="mt-6 text-center">
+        <a href="/company/office/" class="inline-flex items-center min-h-[44px] text-[14px] md:text-[15px] font-bold text-water hover:underline">営業所一覧・対応エリアを見る</a>
+      </p>
     </div>
   </section>
 

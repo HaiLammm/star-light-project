@@ -1,5 +1,6 @@
 import { SITE_CONFIG, type OfficeAddress, type RegionalOffice } from '@config/site';
 import { absoluteUrl, withTrailingSlash } from './url';
+import { officeMapUrl } from './maps';
 
 type SchemaContext = 'https://schema.org';
 
@@ -29,7 +30,6 @@ interface OfferSchema {
 
 export interface LocalBusinessInput extends RegionalOffice {
   url?: string;
-  openingHours?: string[];
   priceRange?: string;
   image?: string[];
 }
@@ -77,18 +77,33 @@ export interface ArticleInput {
   modifiedDate?: string;
 }
 
+interface OpeningHoursSpecificationSchema {
+  '@type': 'OpeningHoursSpecification';
+  dayOfWeek: string[];
+  opens: string;
+  closes: string;
+}
+
 export interface LocalBusinessSchema {
   '@context': SchemaContext;
-  '@type': 'LocalBusiness';
+  '@type': ['Plumber', 'Electrician'];
   '@id': string;
   name: string;
   url: string;
   telephone: string;
+  email: string;
   parentOrganization: { '@id': string };
   address: PostalAddressSchema;
+  geo?: {
+    '@type': 'GeoCoordinates';
+    latitude: number;
+    longitude: number;
+  };
+  hasMap?: string;
+  sameAs?: string[];
   areaServed: string[];
-  openingHours: string[];
-  image?: string[];
+  openingHoursSpecification: OpeningHoursSpecificationSchema[];
+  image: string[];
   priceRange?: string;
 }
 
@@ -195,6 +210,24 @@ export interface ArticleSchema {
   image?: string[];
 }
 
+export interface HowToInput {
+  name: string;
+  steps: { name: string; text: string }[];
+}
+
+export interface HowToSchema {
+  '@context': SchemaContext;
+  '@type': 'HowTo';
+  name: string;
+  inLanguage: 'ja';
+  step: {
+    '@type': 'HowToStep';
+    position: number;
+    name: string;
+    text: string;
+  }[];
+}
+
 export interface WebSiteSchema {
   '@context': SchemaContext;
   '@type': 'WebSite';
@@ -257,20 +290,47 @@ const buildProviderReference = (name?: string, url?: string): OrganizationRefere
   };
 };
 
+// 24時間365日 — Google khuyến nghị dạng 00:00–23:59 cho mọi ngày thay vì chuỗi `openingHours`.
+const OPEN_24_7: OpeningHoursSpecificationSchema = {
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+  opens: '00:00',
+  closes: '23:59',
+};
+
+/**
+ * Mỗi 営業所 là một node riêng (`#office-<key>`) gắn về Organization. Kiểu
+ * `Plumber` + `Electrician` (subtype của LocalBusiness) khớp hai danh mục GBP
+ * 水道工事業者 / 電気工事業者 — xem NOTE.md §11.
+ */
 export function generateLocalBusiness(office: LocalBusinessInput): LocalBusinessSchema {
   const url = withTrailingSlash(office.url ?? SITE_CONFIG.siteUrl);
+  const mapUrl = officeMapUrl(office);
   return {
     '@context': SCHEMA_CONTEXT,
-    '@type': 'LocalBusiness',
+    '@type': ['Plumber', 'Electrician'],
     '@id': `${SITE_CONFIG.siteUrl}/#office-${office.key}`,
     name: office.name,
     url,
     telephone: office.phone.display,
+    email: SITE_CONFIG.email.display,
     parentOrganization: { '@id': ORGANIZATION_ID },
     address: buildPostalAddress(office.address),
+    ...(office.geo
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: office.geo.latitude,
+            longitude: office.geo.longitude,
+          },
+        }
+      : {}),
+    ...(mapUrl ? { hasMap: mapUrl } : {}),
+    ...(office.googleBusinessProfileUrl ? { sameAs: [office.googleBusinessProfileUrl] } : {}),
     areaServed: office.areaServed,
-    openingHours: office.openingHours ?? ['Mo-Su 00:00-23:59'],
-    ...(office.image ? { image: office.image } : {}),
+    openingHoursSpecification: [OPEN_24_7],
+    // Google cảnh báo thiếu `image` ở LocalBusiness; mặc định dùng logo.
+    image: office.image ?? [absoluteUrl(SITE_CONFIG.logoPath)],
     ...(office.priceRange ? { priceRange: office.priceRange } : {}),
   };
 }
@@ -468,6 +528,25 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
     },
     mainEntityOfPage: withTrailingSlash(post.url),
     ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
+  };
+}
+
+/**
+ * Google đã ngừng hiện rich result HowTo (2023); markup vẫn giúp Bing và AI search
+ * hiểu cấu trúc thủ tục. Dữ liệu vào lấy từ `extractStepGroups()` — chỉ bước hiển thị thật.
+ */
+export function generateHowTo(input: HowToInput): HowToSchema {
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'HowTo',
+    name: input.name,
+    inLanguage: 'ja',
+    step: input.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
   };
 }
 

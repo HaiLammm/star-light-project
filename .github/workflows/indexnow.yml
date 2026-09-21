@@ -1,0 +1,40 @@
+# Báo IndexNow các bài viết vừa đổi, SAU KHI Vercel deploy Production thành công.
+# Vercel GitHub integration tạo GitHub Deployment + status cho mỗi lần deploy,
+# nên workflow bám vào sự kiện đó thay vì `push` (lúc push site chưa build xong).
+name: IndexNow
+
+on: deployment_status
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  ping:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
+          fetch-depth: 0
+
+      - name: Tìm commit của lần deploy Production thành công trước đó
+        id: prev
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          CUR_ID: ${{ github.event.deployment.id }}
+          CUR_SHA: ${{ github.event.deployment.sha }}
+        run: |
+          base=""
+          for row in $(gh api "repos/$REPO/deployments?environment=Production&per_page=50" --jq '.[] | "\(.id):\(.sha)"'); do
+            id=${row%%:*}; sha=${row#*:}
+            if [ "$id" -ge "$CUR_ID" ] || [ "$sha" = "$CUR_SHA" ]; then continue; fi
+            state=$(gh api "repos/$REPO/deployments/$id/statuses" --jq '.[0].state')
+            if [ "$state" = "success" ]; then base=$sha; break; fi
+          done
+          echo "base=${base:-$CUR_SHA~1}" >> "$GITHUB_OUTPUT"
+
+      - name: Gửi IndexNow
+        run: node scripts/indexnow.mjs "${{ steps.prev.outputs.base }}" "${{ github.event.deployment.sha }}"

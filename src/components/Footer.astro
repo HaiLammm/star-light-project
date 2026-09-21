@@ -1,5 +1,5 @@
 ---
-import { SITE_CONFIG } from '@config/site';
+import { SITE_CONFIG, REGIONAL_OFFICES } from '@config/site';
 import { FOOTER_NAV } from '@config/navigation';
 import { Image } from 'astro:assets';
 import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
@@ -56,7 +56,11 @@ import siteLogo from '../assets/images/site_logo_no-mark.jpeg';
         </a>
         <p class="text-[12px] md:text-[13px] text-[#666]">電話相談無料！{SITE_CONFIG.businessHours}対応</p>
         <ul class="mt-[6px] flex flex-col gap-[4px] text-[12px] md:text-[13px] text-[#555]">
-          <li>関東営業所：〒311-2113 茨城県鉾田市上幡木1418-35</li>
+          {/* NAP phải trùng từng ký tự với schema LocalBusiness và GBP → lấy chung REGIONAL_OFFICES.
+              Chỉ liệt kê 営業所 có địa chỉ tới số nhà (geo). */}
+          {REGIONAL_OFFICES.filter((office) => office.geo).map((office) => (
+            <li>{office.shortName}：{office.formattedAddress}</li>
+          ))}
         </ul>
       </div>
     </div>

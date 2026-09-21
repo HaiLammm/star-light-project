@@ -47,7 +47,12 @@ export default defineConfig({
     rehypePlugins: [rehypeArticleImages],
   },
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      // Không inline <script> của component (mặc định Astro inline file < 4KB) để CSP
+      // bỏ được 'unsafe-inline' ở script-src (R19). Trả undefined = giữ mặc định cho CSS/ảnh.
+      assetsInlineLimit: (filePath) => (filePath.endsWith('.js') ? false : undefined),
+    },
   },
   integrations: [
     sitemap({

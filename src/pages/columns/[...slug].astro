@@ -6,7 +6,8 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import { formatDateDot } from '../../utils/formatters';
 import { BLOG_CATEGORY_COLOR_MAP, postCategory } from '../../data/blogData';
-import { generateArticle, serializeJsonLd } from '../../utils/schema';
+import { generateArticle, generateHowTo, serializeJsonLd } from '../../utils/schema';
+import { extractStepGroups } from '../../utils/articleSteps';
 import { SITE_CONFIG } from '@config/site';
 import { resolveImage } from '../../utils/imageImports';
 
@@ -74,10 +75,16 @@ const articleSchema = generateArticle({
   image: shareImageSrc,
   modifiedDate: updatedDate.toISOString(),
 });
+
+// HowTo chỉ phát cho cụm "**手順N：…**" thật sự hiển thị trong bài (xem articleSteps.ts).
+const howToSchemas = extractStepGroups(post.body ?? '').map((group) =>
+  generateHowTo({ name: group.heading ?? post.data.title, steps: group.steps }),
+);
 ---
 
 <BaseLayout title={`${post.data.title}｜設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`} ogType="article" ogImage={shareImageSrc}>
   <script type="application/ld+json" set:html={serializeJsonLd(articleSchema)} />
+  {howToSchemas.map((schema) => <script type="application/ld+json" set:html={serializeJsonLd(schema)} />)}
 
   <article class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1180px] mx-auto px-3 sm:px-4">

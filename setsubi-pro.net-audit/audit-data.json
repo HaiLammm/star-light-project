@@ -1,0 +1,428 @@
+{
+  "summary": {
+    "health_score": 55,
+    "business_type": "Local Service — Home Repair (Plumbing + Electrical), Hybrid SAB",
+    "industry": "Home Services",
+    "region": "Kanto + Kansai, Japan",
+    "site_tech": "Astro v5.18.1 SSG, Vercel hosting",
+    "pages_indexed": 112,
+    "audit_date": "2026-09-08",
+    "top_findings": [
+      "E-E-A-T critically weak: zero author attribution on 42 articles, no license numbers displayed, company only 5 months old",
+      "Local SEO infrastructure nearly absent: no verified GBP, no city-level landing pages, NAP inconsistency across 3 offices",
+      "Schema breadcrumb URLs broken on /water/ service pages (invalid # anchor)",
+      "404 page is indexable with canonical, hreflang, and BreadcrumbList — sends wrong signals to Google",
+      "AI search readiness low (41/100): no llms.txt, no HowTo schema, articles bury direct answers after intros"
+    ],
+    "quick_wins": [
+      "Add noindex to 404 page and strip hreflang from it (1 file change)",
+      "Fix broken breadcrumb URLs on /water/ pages (replace # with correct path)",
+      "Add width/height to 9 images missing dimensions (CLS fix)",
+      "Add loading=lazy to 14 below-fold images",
+      "Reduce homepage image preloads from 6 to 2 (hero only)"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 72,
+      "weight": 0.22,
+      "what_works": [
+        "Astro SSG — full HTML in raw response, zero JS execution required by Googlebot",
+        "LCP hero image has fetchpriority=high, loading=eager, and rel=preload",
+        "System font stack eliminates font-related render blocking",
+        "All 33 redirect rules in vercel.json return 301",
+        "Responsive images with srcset, 44px touch targets, mobile nav"
+      ],
+      "findings": [
+        {
+          "title": "404 page is indexable",
+          "severity": "High",
+          "description": "Custom /404/ page has no noindex directive, carries self-referencing canonical, hreflang alternates, and BreadcrumbList JSON-LD",
+          "recommendation": "Add <meta name='robots' content='noindex,follow'> to 404 layout; remove hreflang alternates"
+        },
+        {
+          "title": "9 images missing width/height attributes",
+          "severity": "High",
+          "description": "Without explicit dimensions, browser cannot reserve space before images load — causes CLS",
+          "recommendation": "Add dimensions to every <img> tag; prefer Astro's <Image /> component"
+        },
+        {
+          "title": "X-Frame-Options contradicts CSP frame-ancestors",
+          "severity": "High",
+          "description": "vercel.json sets X-Frame-Options: SAMEORIGIN but CSP sets frame-ancestors 'none'",
+          "recommendation": "Change X-Frame-Options to DENY to match CSP intent"
+        },
+        {
+          "title": "2-hop redirect for http://setsubi-pro.net/",
+          "severity": "High",
+          "description": "http://setsubi-pro.net/ → https://setsubi-pro.net/ → https://www.setsubi-pro.net/ (2 hops)",
+          "recommendation": "Add direct Vercel redirect from http://setsubi-pro.net/ to https://www.setsubi-pro.net/"
+        },
+        {
+          "title": "IndexNow not implemented",
+          "severity": "Medium",
+          "description": "Site publishes articles frequently via automated pipeline but sends no IndexNow signals",
+          "recommendation": "Generate key, place key file at domain root, POST new URLs in generateWorker.ts"
+        },
+        {
+          "title": "CSP uses unsafe-inline for script-src and style-src",
+          "severity": "Medium",
+          "description": "Neutralizes most XSS protection due to inline script blocks",
+          "recommendation": "Move inline scripts to external modules, tighten to nonce or strict-dynamic"
+        },
+        {
+          "title": "14 images without loading attribute",
+          "severity": "Medium",
+          "description": "Default eager loading means below-fold images compete with above-fold resources",
+          "recommendation": "Add loading=lazy to all images outside initial viewport"
+        },
+        {
+          "title": "6 image preloads on homepage (excessive)",
+          "severity": "Medium",
+          "description": "Only hero pair needs preloading; 4 sanitary service images are not above-fold on mobile",
+          "recommendation": "Remove preloads for sanitary_01-04, keep only hero mobile+desktop"
+        },
+        {
+          "title": "HSTS missing preload; max-age inconsistent",
+          "severity": "Medium",
+          "description": "Canonical returns max-age=31536000; non-www returns max-age=63072000. Neither includes preload",
+          "recommendation": "Standardize to max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "title": "CORS wildcard on HTML responses",
+          "severity": "Medium",
+          "description": "access-control-allow-origin: * on HTML documents exposes pages to cross-origin fetch",
+          "recommendation": "Scope CORS wildcard to asset paths only"
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 52,
+      "weight": 0.23,
+      "what_works": [
+        "42 column articles all exceed thin content threshold (min 2,046 JP chars, avg 3,455)",
+        "Article titles are well-crafted (question format, high specificity)",
+        "Articles have clear H2/H3 diagnostic hierarchies",
+        "FAQ page has 30+ self-contained Q&A pairs"
+      ],
+      "findings": [
+        {
+          "title": "Zero author attribution on all 42 column articles",
+          "severity": "Critical",
+          "description": "Under Sept 2025 QRG, anonymous technical content on safety-adjacent topics (electrical/plumbing) is a direct E-E-A-T liability. FAQ mentions 国家資格 but no license types, names, or certificate numbers appear anywhere",
+          "recommendation": "Add author/supervisor attribution to all articles; create a staff credentials page with qualification details"
+        },
+        {
+          "title": "E-E-A-T composite score critically low (44/100)",
+          "severity": "Critical",
+          "description": "Company only 5 months old, no outbound authority links (only 1 found across 42 articles), NAP inconsistency, no license numbers displayed",
+          "recommendation": "Display contractor license numbers, add external citations to articles, build author expertise pages"
+        },
+        {
+          "title": "Duplicate testimonial detected",
+          "severity": "High",
+          "description": "Two voice entries for 給湯器交換 大阪市阿倍野区 ¥19,800 have near-identical body text under different initials (Y.T.様 / T.N.様)",
+          "recommendation": "Verify and remove duplicate; audit remaining testimonials for similar issues"
+        },
+        {
+          "title": "Meta descriptions leave 60-80 chars unused",
+          "severity": "Medium",
+          "description": "Non-article pages have 76-84 char descriptions, consistently leaving SERP space unused",
+          "recommendation": "Expand descriptions to 120-155 chars with specific keywords and value propositions"
+        },
+        {
+          "title": "Columns index page skips H2 level",
+          "severity": "Medium",
+          "description": "H1 → H3 heading hierarchy violation on /columns/ listing page",
+          "recommendation": "Add categorical H2 headings to group articles by topic"
+        },
+        {
+          "title": "Company about page is thin (817 JP chars)",
+          "severity": "Medium",
+          "description": "Only page below thin content threshold — just a company table with two boilerplate paragraphs",
+          "recommendation": "Expand with company story, team qualifications, service philosophy details"
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 58,
+      "weight": 0.20,
+      "what_works": [
+        "Canonical tags correctly implemented sitewide",
+        "Hreflang (ja + x-default) present",
+        "RSS feed available",
+        "OG tags properly configured",
+        "Internal linking: 95 unique internal links on homepage"
+      ],
+      "findings": [
+        {
+          "title": "No city-level landing pages",
+          "severity": "Critical",
+          "description": "Zero city or prefecture pages despite serving 10+ prefectures. Cannot rank for [city]+[service] queries — the dominant pattern in Japanese local home services search",
+          "recommendation": "Create location pages starting with Tokyo and Osaka, then remaining prefectures"
+        },
+        {
+          "title": "No pricing tables on service pages",
+          "severity": "High",
+          "description": "Competitors show ¥7,500-¥12,000 ranges in SERP snippets. WEB割引 ¥5,000 coupon buried in FAQ, not on service pages",
+          "recommendation": "Add pricing tables to service pages; promote WEB割引 prominently"
+        },
+        {
+          "title": "No pinned mobile CTA (tap-to-call)",
+          "severity": "High",
+          "description": "Emergency users must scroll to find phone number. For a 24/7 emergency service, this is a critical conversion gap",
+          "recommendation": "Add sticky bottom bar with tap-to-call button on mobile"
+        },
+        {
+          "title": "Articles bury direct answers after problem-description intros",
+          "severity": "Medium",
+          "description": "Most articles start with sympathy/problem intro instead of answering the title question directly. One article (air-conditioner-suddenly-stop-working) does it right",
+          "recommendation": "Rewrite article intros to lead with direct answer; use the working article as template"
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 55,
+      "weight": 0.10,
+      "what_works": [
+        "Organization + WebSite JSON-LD on every page",
+        "LocalBusiness schema with 3 office locations",
+        "FAQPage schema on homepage and FAQ page",
+        "Article schema on column pages with headline, image, datePublished, author",
+        "BreadcrumbList on all inner pages",
+        "Proper ISO 8601 dates, correct openingHours format"
+      ],
+      "findings": [
+        {
+          "title": "Broken breadcrumb URLs on /water/ pages",
+          "severity": "Critical",
+          "description": "BreadcrumbList items have 'item': 'https://www.setsubi-pro.net#' — invalid # anchor URL. Will fail Google Rich Results Test",
+          "recommendation": "Fix breadcrumb component to output correct path URLs for water service pages"
+        },
+        {
+          "title": "Hyogo LocalBusiness has no streetAddress or postalCode",
+          "severity": "High",
+          "description": "Google requires streetAddress for Local Business rich results eligibility",
+          "recommendation": "Add real street address for Hyogo office or remove that LocalBusiness entry"
+        },
+        {
+          "title": "Trailing slash inconsistency in schema URLs",
+          "severity": "Medium",
+          "description": "LocalBusiness.url, Article.publisher.url, BreadcrumbList items use no trailing slash while canonical uses trailing slash",
+          "recommendation": "Standardize all schema URLs to match canonical format (with trailing slash)"
+        },
+        {
+          "title": "No @id on WebSite and LocalBusiness entities",
+          "severity": "Medium",
+          "description": "Prevents clean cross-referencing in the entity graph; Article duplicates Organization data instead of referencing by @id",
+          "recommendation": "Add @id to all entities and use $ref linking"
+        },
+        {
+          "title": "Missing AggregateRating in LocalBusiness",
+          "severity": "Medium",
+          "description": "30+ testimonials exist but no star ratings, no aggregate rating schema. Competitors show stars in SERP",
+          "recommendation": "Add star ratings to testimonials and implement AggregateRating schema"
+        },
+        {
+          "title": "No HowTo schema on step-by-step articles",
+          "severity": "Medium",
+          "description": "Many diagnostic articles follow step-by-step format but lack HowTo schema for featured snippet eligibility",
+          "recommendation": "Add HowTo schema to applicable column articles"
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 70,
+      "weight": 0.10,
+      "what_works": [
+        "LCP: hero image correctly configured with fetchpriority=high + preload",
+        "No web fonts — system font stack eliminates FOIT/FOUT",
+        "Astro SSG delivers pre-rendered HTML with minimal JS",
+        "Vercel serves with Brotli compression"
+      ],
+      "findings": [
+        {
+          "title": "CLS risk from 9 images without dimensions",
+          "severity": "High",
+          "description": "Images without width/height cause layout shifts as they load",
+          "recommendation": "Add explicit width/height attributes to all images"
+        },
+        {
+          "title": "Excessive image preloads competing for bandwidth",
+          "severity": "Medium",
+          "description": "6 preloads on homepage; only hero pair is above-fold on mobile",
+          "recommendation": "Reduce to 2 preloads (hero variants only)"
+        },
+        {
+          "title": "Homepage HTML is 262.9 KB",
+          "severity": "Low",
+          "description": "Duplicated mobile/desktop nav markup and inline JSON-LD contribute to size",
+          "recommendation": "Monitor; acceptable with Brotli but reduce if it grows"
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 41,
+      "weight": 0.10,
+      "what_works": [
+        "All AI crawlers implicitly allowed via robots.txt",
+        "Static Astro SSG — no JS rendering barrier for AI crawlers",
+        "Comprehensive sitemap (112 URLs)",
+        "FAQ answers are within optimal 134-167 word AI citation window"
+      ],
+      "findings": [
+        {
+          "title": "No llms.txt present (404)",
+          "severity": "High",
+          "description": "No machine-readable summary for AI assistants to reference the brand accurately",
+          "recommendation": "Create /llms.txt with curated service/area/content index"
+        },
+        {
+          "title": "No YouTube presence",
+          "severity": "High",
+          "description": "YouTube has highest correlation (~0.737) with AI citation frequency. Critical for home repair topics",
+          "recommendation": "Start YouTube channel with repair demonstration and diagnostic videos"
+        },
+        {
+          "title": "Zero external citations in articles",
+          "severity": "Medium",
+          "description": "No sourced statistics or authority references across 42 articles",
+          "recommendation": "Add manufacturer references, industry statistics, and regulatory citations"
+        },
+        {
+          "title": "Article dates not in ISO 8601 format in visible text",
+          "severity": "Low",
+          "description": "Dates display as YYYY.M.D — not machine-readable in visible content (OK in schema)",
+          "recommendation": "Use <time datetime='...'> elements wrapping the visible date"
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 55,
+      "weight": 0.05,
+      "what_works": [
+        "0 images missing alt text entirely",
+        "Responsive images with srcset on key images",
+        "Hero image properly prioritized"
+      ],
+      "findings": [
+        {
+          "title": "10 images with empty alt text",
+          "severity": "Medium",
+          "description": "Empty alt='' is correct only for decorative images; verify these are truly decorative",
+          "recommendation": "Audit each empty-alt image; add descriptive alt for content-bearing images"
+        },
+        {
+          "title": "9 images missing width/height",
+          "severity": "High",
+          "description": "Causes CLS and poor performance scores",
+          "recommendation": "Add dimensions; use Astro <Image /> component"
+        },
+        {
+          "title": "14 images without loading attribute",
+          "severity": "Medium",
+          "description": "Below-fold images load eagerly by default",
+          "recommendation": "Add loading=lazy to below-fold images"
+        }
+      ]
+    }
+  ],
+  "local_seo": {
+    "score": 25,
+    "business_type": "Hybrid SAB — 3 offices (Kanto/Ibaraki, Osaka, Hyogo)",
+    "incorporated": "2026-04-09",
+    "critical_issues": [
+      "No verified GBP listings detected",
+      "NAP inconsistency: footer shows Ibaraki, company/about leads with Osaka",
+      "Hyogo office has no street address",
+      "Operating name inconsistency: 設備プロ vs 株式会社Hoaloha（設備プロ）",
+      "Zero city-level landing pages for 10+ service prefectures",
+      "No Google Maps embed anywhere",
+      "Testimonials lack star ratings, dates, and Review schema"
+    ]
+  },
+  "sxo": {
+    "score": 47,
+    "key_finding": "Trust-authority mismatch: 5-month-old company competing against marketplaces with 13,000+ verified reviews",
+    "persona_scores": {
+      "emergency_homeowner": 54,
+      "cost_researcher": 42,
+      "planned_maintenance": 38,
+      "credential_verifier": 28,
+      "symptom_searcher": 52
+    }
+  },
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes",
+        "timeframe": "Week 1",
+        "items": [
+          "Fix broken breadcrumb URLs on /water/ pages (replace # with correct path)",
+          "Add noindex,follow to 404 page layout; strip hreflang",
+          "Resolve NAP: choose one canonical primary address; apply sitewide in footer and schema",
+          "Change X-Frame-Options to DENY in vercel.json",
+          "Fix duplicate testimonial on /voice/ pages",
+          "Add 301 redirects for dead column slugs (aircon-lamp-blinking, toilet-flush-weak)"
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Add author/supervisor attribution to all 42 column articles",
+          "Create staff credentials page with qualification details and license numbers",
+          "Display contractor license numbers in footer and service pages",
+          "Add width/height to all images missing dimensions",
+          "Add loading=lazy to 14 below-fold images",
+          "Reduce homepage preloads from 6 to 2",
+          "Add AggregateRating + star ratings to testimonials",
+          "Add HowTo schema to step-by-step diagnostic articles",
+          "Create /llms.txt with service/area/content index",
+          "Add pinned mobile CTA bar (tap-to-call) for emergency users",
+          "Add pricing tables to service pages; promote WEB割引 coupon"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority",
+        "timeframe": "Month 2",
+        "items": [
+          "Create city-level landing pages (Tokyo, Osaka first, then remaining prefectures)",
+          "Create and verify GBP listings for Kanto and Osaka offices",
+          "Expand company/about page with team qualifications and company story",
+          "Add external citations to articles (manufacturer refs, industry stats)",
+          "Rewrite article introductions to lead with direct answers",
+          "Expand meta descriptions to 120-155 chars on non-article pages",
+          "Register on Japanese citations: くらしのマーケット, ユアマイスター, Yahoo!ロコ",
+          "Implement IndexNow for automated publish notifications",
+          "Fix @id linking in schema entity graph"
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration",
+        "timeframe": "Ongoing",
+        "items": [
+          "Start YouTube channel with repair demonstration videos",
+          "Create LINE Official Account for customer communication",
+          "Tighten CSP from unsafe-inline to nonce-based",
+          "Standardize HSTS with preload directive; submit to hstspreload.org",
+          "Monitor CWV field data when Google API credentials are configured",
+          "Create emergency service landing pages targeting 緊急 queries",
+          "Scope CORS wildcard to asset paths only",
+          "Build drift baseline for ongoing SEO monitoring"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

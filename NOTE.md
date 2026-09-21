@@ -158,6 +158,25 @@ Nên biến thể không-`/` hiện **không bao giờ khớp**. Vẫn giữ nó
 
 ---
 
+## 4b. Rules — bảo mật header
+
+### R19. `script-src` KHÔNG có `'unsafe-inline'`
+CSP site (`vercel.json`, source `/((?!admin).*)`) chỉ cho `'self'` + hash của đúng 2 inline script runtime `<astro-island>`. Hai điều kiện giữ nó đứng vững:
+
+| Cơ chế | Chỗ | Tác dụng |
+|---|---|---|
+| `vite.build.assetsInlineLimit` trả `false` cho `.js` | `astro.config.mjs` | `<script>` trong component được tách ra `/_astro/*.js` thay vì inline (mặc định Astro inline file < 4KB) |
+| `scripts/check-csp.mjs` | chạy trong `npm run build` | Hash mọi inline script thực thi được trong `dist/` (trừ `/admin/`), **fail build** nếu có cái nào không nằm trong `script-src` |
+
+Checker nằm trong `build` chứ không chỉ `verify` vì Vercel chạy `npm run build`: nếu CSP lệch, menu/slider/form **chết im lặng** trên production — thà deploy fail còn hơn.
+
+- **Nâng Astro** hoặc thêm island loại mới → runtime đổi → build fail và in hash mới. Thay hash trong `vercel.json`, không thêm lại `'unsafe-inline'`.
+- **Không dùng `is:inline`** cho script thực thi trong trang public (JSON-LD `type="application/ld+json"` thì được — trình duyệt không thực thi nên CSP không áp).
+- `style-src` **vẫn giữ** `'unsafe-inline'`: bản build có ~7.000 thuộc tính `style=""` trên 109 trang; hash không áp cho thuộc tính style (trừ khi thêm `'unsafe-hashes'` + hash từng giá trị). Rủi ro chính của `unsafe-inline` là thực thi script, còn style injection thấp hơn nhiều.
+- Đã gỡ `fonts.googleapis.com` / `fonts.gstatic.com` khỏi CSP — site không còn webfont (§9.6).
+
+---
+
 ## 5. Những gì KHÔNG kiểm soát được bằng code
 
 - **Thời điểm Google hiện favicon/thumbnail** phụ thuộc lịch recrawl. Sau deploy, dùng Search Console → URL Inspection → *Request indexing* cho vài bài đại diện.
@@ -169,8 +188,9 @@ Nên biến thể không-`/` hiện **không bao giờ khớp**. Vẫn giữ nó
 ## 6. Checklist trước khi deploy
 
 ```bash
-# 0. Build + quét URL nội bộ thiếu "/" và mọi "//" (R15, R16).
-#    Phải in "OK — không có URL nội bộ nào thiếu trailing slash."
+# 0. Build + kiểm CSP (R19) + quét URL nội bộ thiếu "/" và mọi "//" (R15, R16).
+#    Phải in "OK — … mọi inline script đều được CSP cho phép" và
+#    "OK — không có URL nội bộ nào thiếu trailing slash."
 npm run verify
 
 # 0b. Sitemap không được hụt số: 108 <loc> / 57 <lastmod>.
@@ -217,6 +237,10 @@ Sau deploy: kiểm tra URL bài bằng **Google Rich Results Test** và **Schema
 | `src/utils/rehypeArticleImages.mjs` | Ảnh trong thân bài: `loading=lazy`, `decoding=async`, width/height thật đọc từ `public/` (§9.5) |
 | `src/components/RelatedPosts.astro` | 4 bài liên quan cuối mỗi bài (§9.4) |
 | `src/pages/rss.xml.js` | RSS feed + autodiscovery trong `BaseLayout` |
+| `scripts/check-csp.mjs` | Fail build nếu inline script trong `dist/` không có hash trong CSP (R19) |
+| `src/utils/articleSteps.ts` | Trích cụm `**手順N：…**` trong bài → `generateHowTo()` (§10.2) |
+| `scripts/indexnow.mjs` + `.github/workflows/indexnow.yml` | Báo IndexNow bài đổi sau mỗi deploy Production (§10.1) |
+| `public/<32 hex>.txt` | Key IndexNow — **public theo thiết kế**, đừng xoá/đổi tên |
 | `setsubi-pro.net-audit/` | Báo cáo audit 8/9 (điểm 55/100) + `ACTION-PLAN.md` — xem §9.10 |
 
 ---
@@ -668,10 +692,118 @@ Chạy SEO audit (lưu ở `setsubi-pro.net-audit/`) — **điểm 55/100**: Tec
 Chưa làm (kiểm tra source ngày 14/9):
 
 - [ ] **E-E-A-T — ưu tiên cao nhất:** chưa có tác giả/người giám sát trên bài viết; chưa có trang chứng chỉ nhân viên; chưa hiện số giấy phép (電気工事士, 指定給水装置工事事業者…).
-- [ ] **Local SEO (25/100):** chưa có Google Business Profile đã xác minh; chưa có landing page theo thành phố/tỉnh (Tokyo, Osaka…); chưa đăng ký くらしのマーケット / ユアマイスター / Yahoo!ロコ; chưa nhúng Google Maps ở `/contact/`, `/company/office/`.
-- [ ] Schema `HowTo` cho bài hướng dẫn từng bước — chưa có (lưu ý: Google đã ngừng hiện rich result HowTo, giá trị chủ yếu cho AI search).
-- [ ] IndexNow trong pipeline publish — chưa có.
-- [ ] Redirect 2 hop `http://setsubi-pro.net/` → `https://` → `www`.
+- [ ] **Local SEO (25/100):** (MEO phía site xong 21/9 — xem §11) chưa có Google Business Profile đã xác minh; chưa có landing page theo thành phố/tỉnh (Tokyo, Osaka…); chưa đăng ký くらしのマーケット / ユアマイスター / Yahoo!ロコ; ~~chưa nhúng Google Maps~~ (xong §11.1).
+- [x] ~~Schema `HowTo`~~ — xong 14/9, xem §10.2.
+- [x] ~~IndexNow~~ — xong 14/9, xem §10.1.
+- [x] ~~Redirect 2 hop `http://setsubi-pro.net/`~~ — **không phải lỗi, không sửa được trên Vercel**, xem §10.3.
+- [x] ~~CSP `unsafe-inline`~~ — gỡ khỏi `script-src` 14/9 (R19); `style-src` giữ có chủ đích.
 - [ ] Viết lại mở bài theo kiểu trả lời trực tiếp; thêm trích dẫn nguồn ngoài (nhà sản xuất, số liệu).
 - [ ] Mở rộng `/company/about/` (817 → 2.000+ ký tự).
-- [ ] Bảo mật: CSP còn `unsafe-inline`, HSTS chưa `preload`, CORS wildcard trên HTML.
+- [ ] Bảo mật: HSTS chưa `preload`, CORS wildcard trên HTML.
+
+---
+
+# 10. Nhật ký: xử lý tồn đọng kỹ thuật từ audit (2026-09-14)
+
+## 10.1 IndexNow
+
+**Vấn đề:** bài mới/sửa chỉ được công cụ tìm kiếm biết qua sitemap, phải chờ tới lượt đọc sitemap kế tiếp.
+
+**Phạm vi thật:** IndexNow được **Bing, Yandex, Naver, Seznam, Yep** dùng — **Google không dùng**. Phía Google vẫn là sitemap + GSC (§8.5). Lợi ích chính: Bing, và các dịch vụ AI dựa trên chỉ mục Bing.
+
+**Thiết kế — vì sao không đặt trong pipeline `seo-cockpit`:** lúc pipeline commit xong, Vercel **chưa build**. Ping lúc đó khiến Bing crawl trúng nội dung cũ. Nên bám vào sự kiện `deployment_status` mà Vercel GitHub integration tạo cho mỗi lần deploy:
+
+```
+push → Vercel build → GitHub Deployment "Production" state=success
+     → .github/workflows/indexnow.yml
+     → tìm SHA của lần deploy Production thành công TRƯỚC đó (gh api)
+     → scripts/indexnow.mjs <prevSha> <sha>
+     → git diff src/content/blog → URL bài đổi (+ / và /columns/) → POST api.indexnow.org
+```
+
+- Diff theo **lần deploy thành công trước**, không phải `HEAD~1`: nhiều commit có thể gộp vào một lần deploy, và deploy fail không được làm mất URL.
+- Commit không đụng bài (docs, CSS…) → script bỏ qua, không ping.
+- Bài đổi slug (rename) → gửi cả URL cũ (giờ là 301) lẫn URL mới.
+- Key nằm ở `public/<32 hex>.txt`; IndexNow tải file đó để xác minh quyền sở hữu domain. File `.txt` có đuôi nên không bị `trailingSlash` redirect.
+- Thử tay: `node scripts/indexnow.mjs <base> <head> --dry-run`.
+
+Sau deploy đầu tiên cần kiểm tra: tab Actions có run "IndexNow" chạy sau deploy, và `https://www.setsubi-pro.net/<key>.txt` trả 200.
+
+## 10.2 HowTo schema
+
+**Phát hiện khi khảo sát:** 57 bài phần lớn là dạng **chẩn đoán nguyên nhân** (原因は？), không phải thủ tục. 14 bài có heading chứa 手順/方法 nhưng **0 bài** dùng danh sách đánh số; chỉ **1 bài** (`breaker-tripping`) có cụm bước thật dạng `**手順1：…**`.
+
+**Cách làm:** `extractStepGroups()` (`src/utils/articleSteps.ts`) chỉ nhận cụm `**手順N：…**` (cả `ステップ`/`STEP`) có **≥2 bước dưới cùng một heading**. Tên bước = chữ in đậm; `text` = các gạch đầu dòng ngay sau; tên HowTo = heading chứa cụm. Không suy "bước" từ văn xuôi — structured data không khớp nội dung hiển thị vi phạm guideline của Google.
+
+**Kết quả:** 1 trang có HowTo (4 bước). Bài mới tự có HowTo nếu viết theo mẫu `**手順N：…**` — muốn tăng số bài thì sửa prompt ở `seo-cockpit`, không vá markdown.
+
+> ⚠️ Google đã **ngừng hiện rich result HowTo từ 9/2023** (cả mobile lẫn desktop). Markup không mang lại hiển thị đặc biệt trên Google; giá trị còn lại là giúp Bing/AI search hiểu cấu trúc thủ tục. Đừng kỳ vọng thay đổi trong GSC.
+
+## 10.3 Redirect 2 hop `http://setsubi-pro.net/` — không sửa, có lý do
+
+Đo trên production:
+```
+http://setsubi-pro.net/   → 308 https://setsubi-pro.net/      (Vercel CDN ép HTTPS)
+https://setsubi-pro.net/  → 308 https://www.setsubi-pro.net/  (domain redirect)
+```
+
+- **Không thể gộp thành 1 hop trên Vercel.** Việc nâng HTTP→HTTPS do CDN làm, "can't be disabled"; request HTTP không bao giờ tới `vercel.json`, domain settings hay middleware. (Rule `has: host` 301 cuối `vercel.json` cũng chỉ thấy request đã là HTTPS.)
+- **2 hop là hành vi đúng chuẩn.** hstspreload.org yêu cầu *"Redirect from HTTP to HTTPS on the same host"* trước — nhảy thẳng `http://apex` → `https://www` sẽ trượt điều kiện preload vì trình duyệt không bao giờ nhận HSTS của apex.
+- **Google không phạt:** Googlebot theo tới 10 hop, khuyến nghị ≤3. Chỉ cần mọi link nội bộ, canonical, sitemap đều là `https://www.` (đã đúng) để crawler không đi qua chuỗi này.
+
+Giống nhóm "Trang có lệnh chuyển hướng" ở §8.0 — đây là redirect mong muốn, **đừng tốn công sửa lại**.
+
+## 10.4 CSP bỏ `'unsafe-inline'` ở `script-src`
+
+Chi tiết quy tắc ở **R19**. Ghi lại quá trình:
+
+**Khảo sát `dist/` (112 trang):** 7 inline script khác nhau, 0 handler `on*=`, ~7.000 thuộc tính `style=""`.
+
+| Inline script | Nguồn | Xử lý |
+|---|---|---|
+| Header, MegaMenu, MobileMenu (109 trang), form liên hệ, FAQ toggle | `<script>` trong component, Astro inline vì < 4KB | Tách ra file qua `assetsInlineLimit` |
+| Runtime `<astro-island>` + directive `visible` (10 trang có React island) | Astro chèn trực tiếp, không cấu hình được | Cho phép bằng 2 hash |
+
+**Vì sao không dùng `experimental.csp` của Astro 5:** nó phát CSP qua `<meta>` và hash cả style → khi `style-src` có hash, trình duyệt **bỏ qua** `'unsafe-inline'` → ~7.000 thuộc tính `style=""` bị chặn, vỡ giao diện. Ngoài ra `<meta>` không hỗ trợ `frame-ancestors`.
+
+**Verify** (Playwright, mobile 390px, server tĩnh gắn đúng header CSP từ `vercel.json`, so với cùng trang không có CSP) trên `/`, `/water/toilet/`, `/electricity/`, `/columns/breaker-tripping/`, `/contact/`, `/faq/`:
+- 0 vi phạm CSP, 0 lỗi JS.
+- Kết quả hai chế độ **giống hệt**: island hydrate, Swiper 2/2 và 3/3, menu mobile mở, FAQ toggle, form liên hệ.
+- Đối chứng ngược: một inline script không có hash **bị chặn** → header thật sự có hiệu lực.
+
+---
+
+# 11. MEO (Google マップ対策) — 2026-09-21
+
+MEO = xuất hiện trong Local Pack / Google Maps khi tìm "水漏れ 修理 鉾田", "大阪 電気工事"… Thứ hạng do **Google Business Profile (GBP)** quyết định là chính; website chỉ là tín hiệu phụ (NAP khớp, schema, link từ GBP về site). Nên việc chia hai phần:
+
+## 11.1 Phần trên website (đã làm)
+
+| Hạng mục | Chi tiết |
+|---|---|
+| Schema LocalBusiness | `@type: ["Plumber","Electrician"]` (khớp 2 danh mục GBP), thêm `geo`, `hasMap`, `openingHoursSpecification` 00:00–23:59 cả tuần, `email`, `image` mặc định logo. `sameAs` → GBP khi có link. `src/utils/schema.ts` |
+| Tọa độ | Geocode bằng API 国土地理院: 関東 36.080685,140.602325 · 大阪 34.698051,135.499222. Hyogo **không** có (chưa có số nhà). `src/config/site.ts` |
+| Bản đồ | `OfficeMap.astro`: iframe Google Maps (không cần API key, `loading="lazy"`, giữ chỗ bằng aspect-ratio → không CLS) + link "Googleマップで見る" trên `/company/office/` (anchor `#kanto`, `#osaka`). CSP thêm `frame-src https://www.google.com` |
+| NAP thống nhất | Footer và `/contact/` lấy địa chỉ từ `REGIONAL_OFFICES` (trước đây footer hard-code, chỉ có 関東). `/contact/` chỉ có link bản đồ, không iframe, để trang form nhẹ |
+
+**Quy tắc:** tên/địa chỉ/điện thoại trên GBP phải **trùng từng ký tự** với `REGIONAL_OFFICES`. Sửa địa chỉ → sửa ở config, không sửa rải rác.
+
+## 11.2 Phần ngoài website (chủ doanh nghiệp phải làm — cần tài khoản Google + nhận mã xác minh)
+
+1. **Tạo GBP** tại business.google.com cho **関東営業所** và **大阪営業所** (Hyogo chưa có địa chỉ thật → chưa tạo được; lập listing ảo/địa chỉ ảo vi phạm guideline, bị suspend).
+   - Tên: `設備プロ` — **không** nhồi từ khóa ("設備プロ 水漏れ修理 24時間" là vi phạm, bị suspend).
+   - Danh mục chính: `水道工事業者`; phụ: `電気工事業者`, (nếu có trong danh sách) `給湯器修理サービス`, `エアコン修理サービス`.
+   - Loại hình: **非店舗型ビジネス (service-area business)** — khách không tới văn phòng → **ẩn địa chỉ**, khai khu vực phục vụ = `prefecturesServed` (tối đa 20 khu vực).
+   - Giờ: 24時間営業. Điện thoại: 050-8896-6909.
+   - Website: `https://www.setsubi-pro.net/?utm_source=google&utm_medium=organic&utm_campaign=gbp_kanto` (đổi `gbp_osaka` cho Osaka) để tách traffic từ Maps trong GA.
+2. **Xác minh** (video/bưu thiếp/điện thoại tùy Google yêu cầu). Chưa xác minh = không hiện trên Maps.
+3. **Sau khi xác minh:** lấy link chia sẻ (nút "共有" → `https://maps.app.goo.gl/...`) điền vào `googleBusinessProfileUrl` của office tương ứng trong `src/config/site.ts` → schema `sameAs`/`hasMap` và nút "Googleマップで見る" tự trỏ về GBP. Không cần sửa chỗ khác.
+4. **Hoàn thiện hồ sơ:** mô tả 750 ký tự (dịch vụ + khu vực + 見積無料/出張費無料), ≥10 ảnh thật (xe, nhân viên, trước/sau thi công — không dùng ảnh stock), danh sách dịch vụ kèm giá "〜円から" khớp trang dịch vụ.
+5. **Đánh giá (yếu tố xếp hạng lớn nhất sau khoảng cách):** sau mỗi ca làm, gửi khách link viết review (GBP → "クチコミを依頼"). Đều đặn, **không** mua/đổi quà lấy review. Trả lời mọi review trong vài ngày.
+6. **Bài đăng (投稿):** 1 bài/tuần — có thể tái dùng bài cột mới (tóm tắt + link).
+7. **Citation cùng NAP:** Yahoo!プレイス, Bing Places (import được từ GBP), Apple Business Connect, iタウンページ, くらしのマーケット.
+
+## 11.3 Cố ý không làm
+
+- **Không** đánh dấu `aggregateRating` cho LocalBusiness từ đánh giá tự đăng trên site: Google coi là *self-serving review*, không hiện sao và có thể bị manual action. Review cho MEO phải nằm trên GBP. (`generateAggregateRating` trên trang chủ đang gắn vào Organization — nên xem lại theo cùng lý do.)
+- **Không** tạo landing page hàng loạt theo thành phố từ template (doorway page). Trang khu vực chỉ làm khi có nội dung riêng (ca thực tế, thời gian tới nơi…).

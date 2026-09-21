@@ -4,10 +4,11 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run check:csp",
     "preview": "astro preview",
     "astro": "astro",
     "check:slashes": "node scripts/check-trailing-slash.mjs",
+    "check:csp": "node scripts/check-csp.mjs",
     "verify": "npm run build && npm run check:slashes"
   },
   "dependencies": {

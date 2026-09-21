@@ -172,7 +172,6 @@ if (!REGIONAL_OFFICES.length) throw new Error('REGIONAL_OFFICES must not be empt
 const localBusinessSchema = generateLocalBusiness({
   ...REGIONAL_OFFICES[0],
   url: SITE_CONFIG.siteUrl,
-  openingHours: ['Mo-Su 00:00-23:59'],
   // URL tuyệt đối — Google bỏ qua đường dẫn tương đối trong structured data.
   image: [new URL(SITE_CONFIG.logoPath, Astro.site).href],
 });

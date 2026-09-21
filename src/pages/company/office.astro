@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import OfficeMap from '../../components/OfficeMap.astro';
 import { SITE_CONFIG, REGIONAL_OFFICES } from '@config/site';
 import { generateLocalBusiness, serializeJsonLd } from '../../utils/schema';
 
@@ -15,7 +16,6 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
   generateLocalBusiness({
     ...office,
     url: `${SITE_CONFIG.siteUrl}/company/office`,
-    openingHours: ['Mo-Su 00:00-23:59'],
     priceRange: '¥¥',
   })
 );
@@ -46,7 +46,7 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {REGIONAL_OFFICES.map((office) => (
-          <div class="bg-white border border-[#e0e0e0] rounded-2xl p-6 md:p-8">
+          <div id={office.key} class="bg-white border border-[#e0e0e0] rounded-2xl p-6 md:p-8">
             <h3 class="text-[20px] md:text-[24px] font-bold mb-4">{office.name}</h3>
             <dl class="space-y-3 text-[14px] md:text-[16px]">
               <div class="flex">
@@ -77,6 +77,7 @@ const officeSchemas = REGIONAL_OFFICES.map((office) =>
                 </dd>
               </div>
             </dl>
+            <OfficeMap office={office} />
           </div>
         ))}
       </div>
