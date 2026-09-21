@@ -788,6 +788,8 @@ MEO = xuất hiện trong Local Pack / Google Maps khi tìm "水漏れ 修理 �
 
 **Quy tắc:** tên/địa chỉ/điện thoại trên GBP phải **trùng từng ký tự** với `REGIONAL_OFFICES`. Sửa địa chỉ → sửa ở config, không sửa rải rác.
 
+> **Hiện trạng 21/9:** đã có 1 GBP `設備プロ` đã xác minh (tài khoản luonghaimal@gmail.com), 非店舗型, khu vực 関西, danh mục 配管業者 (chính) / 電気工事業者 / エアコン修理, có mô tả, 24h. **CID 9764423267856902825** → gắn vào `googleBusinessProfileUrl` của 大阪営業所. Thiếu: ảnh (0), review (0), bài đăng. Chưa có GBP cho 関東.
+
 ## 11.2 Phần ngoài website (chủ doanh nghiệp phải làm — cần tài khoản Google + nhận mã xác minh)
 
 1. **Tạo GBP** tại business.google.com cho **関東営業所** và **大阪営業所** (Hyogo chưa có địa chỉ thật → chưa tạo được; lập listing ảo/địa chỉ ảo vi phạm guideline, bị suspend).

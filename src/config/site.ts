@@ -125,6 +125,8 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
     },
     formattedAddress: '大阪府大阪市北区曽根崎新地1丁目11-20-9E',
     geo: { latitude: 34.698051, longitude: 135.499222 },
+    // GBP 設備プロ (非店舗型, 関西). Link theo CID — ổn định, không hết hạn như maps.app.goo.gl.
+    googleBusinessProfileUrl: 'https://maps.google.com/?cid=9764423267856902825',
     phone: SITE_PHONE,
     areaServed: ['大阪市', '豊中市', '吹田市', '堺市'],
     prefecturesServed: ['大阪府', '京都府', '奈良県', '和歌山県'],
