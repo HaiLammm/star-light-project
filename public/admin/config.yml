@@ -105,10 +105,19 @@ collections:
       - { label: Description, name: description, widget: text }
       - { label: Excerpt, name: excerpt, widget: text }
       - { label: Published Date, name: publishedDate, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: Updated Date, name: updatedDate, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, required: false }
       - { label: Category, name: category, widget: select, options: [electricity, water] }
       - { label: Subcategory, name: subcategory, widget: string, required: false }
       - { label: Image, name: image, widget: image, required: false }
       - { label: Image Alt, name: imageAlt, widget: string, required: false }
+      - label: FAQ
+        name: faq
+        widget: list
+        required: false
+        hint: "記事内に表示されるよくある質問です。省略できます。"
+        fields:
+          - { label: Question, name: question, widget: string, hint: "読者が検索するときの言い回しで書いてください。" }
+          - { label: Answer, name: answer, widget: text, hint: "本文にすでに書かれている内容だけを言い換えてください。本文にない事実・料金・手順・安全上の注意を新たに書き加えないでください。" }
       - { label: Body, name: body, widget: markdown }
 
   - name: company

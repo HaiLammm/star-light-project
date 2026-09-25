@@ -93,6 +93,18 @@ const blog = defineCollection({
     subcategory: z.string(),
     image: z.string(),
     imageAlt: z.string(),
+    // Q&A tùy chọn: chỉ dùng để render section FAQ + phát FAQPage JSON-LD.
+    // Câu trả lời phải dựa trên nội dung thân bài, không được bịa thêm dữ kiện.
+    // Chuỗi rỗng / chỉ khoảng trắng cũng là markup hỏng (Question không có name),
+    // nên chặn ngay ở Zod để build báo đúng file thay vì phát JSON-LD vô nghĩa.
+    faq: z
+      .array(
+        z.object({
+          question: z.string().trim().min(1),
+          answer: z.string().trim().min(1),
+        }),
+      )
+      .optional(),
   }),
 });
 

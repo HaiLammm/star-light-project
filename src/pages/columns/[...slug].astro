@@ -6,7 +6,9 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import { formatDateDot } from '../../utils/formatters';
 import { BLOG_CATEGORY_COLOR_MAP, postCategory } from '../../data/blogData';
-import { generateArticle, generateHowTo, serializeJsonLd } from '../../utils/schema';
+import { generateArticle, generateFAQ, generateHowTo, serializeJsonLd } from '../../utils/schema';
+import type { FAQItem } from '../../utils/schema';
+import FAQAccordion from '../../components/FAQAccordion.astro';
 import { extractStepGroups } from '../../utils/articleSteps';
 import { SITE_CONFIG } from '@config/site';
 import { resolveImage } from '../../utils/imageImports';
@@ -22,6 +24,11 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 
+// Một nguồn sự thật duy nhất: `faqSchema` vừa quyết định có phát JSON-LD,
+// vừa quyết định có render section và mục lục FAQ — không thể lệch nhau.
+const faqItems: FAQItem[] = post.data.faq ?? [];
+const faqSchema = generateFAQ(faqItems);
+
 // Mục lục: lấy H2/H3, đánh số khớp với numbering heading (.article-numbered)
 let h2Count = 0;
 let h3Count = 0;
@@ -36,6 +43,13 @@ const tocItems = headings
     h3Count += 1;
     return { ...h, number: `${h2Count}-${h3Count}.` };
   });
+
+// Section FAQ nằm ngoài body markdown nên không có trong `headings`; thêm tay để
+// mục lục không bỏ sót section cuối trang.
+if (faqSchema) {
+  h2Count += 1;
+  tocItems.push({ depth: 2, slug: 'faq', text: 'よくいただくご質問', number: `${h2Count}.` });
+}
 
 const heroMeta = await resolveImage(post.data.image);
 // Không phóng to quá kích thước gốc: một phần ảnh bài chỉ rộng ~670px, ép lên
@@ -66,6 +80,8 @@ const breadcrumbItems = [
 // (không có `updatedDate`) coi ngày cập nhật = ngày đăng, thay vì ẩn dòng đó đi.
 const updatedDate = post.data.updatedDate ?? post.data.publishedDate;
 
+// Selector speakable phải khớp đúng 1 element: `#article-title` gắn cố định trên <h1>
+// bên dưới. Đổi selector và đổi id phải đi cùng nhau, nếu không markup trỏ vào hư không.
 const articleSchema = generateArticle({
   title: post.data.title,
   publishedDate: post.data.publishedDate.toISOString(),
@@ -74,6 +90,7 @@ const articleSchema = generateArticle({
   url: `${SITE_CONFIG.siteUrl}/columns/${post.id}/`,
   image: shareImageSrc,
   modifiedDate: updatedDate.toISOString(),
+  speakableSelectors: ['#article-title'],
 });
 
 // HowTo chỉ phát cho cụm "**手順N：…**" thật sự hiển thị trong bài (xem articleSteps.ts).
@@ -85,6 +102,7 @@ const howToSchemas = extractStepGroups(post.body ?? '').map((group) =>
 <BaseLayout title={`${post.data.title}｜設備プロ`} description={post.data.description} canonicalUrl={`${SITE_CONFIG.siteUrl}/columns/${post.id}/`} ogType="article" ogImage={shareImageSrc}>
   <script type="application/ld+json" set:html={serializeJsonLd(articleSchema)} />
   {howToSchemas.map((schema) => <script type="application/ld+json" set:html={serializeJsonLd(schema)} />)}
+  {faqSchema && <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />}
 
   <article class="py-[30px] sm:py-[40px] md:py-[60px]">
     <div class="max-w-[1180px] mx-auto px-3 sm:px-4">
@@ -122,7 +140,7 @@ const howToSchemas = extractStepGroups(post.body ?? '').map((group) =>
             </span>
           </div>
 
-          <h1 class="text-[20px] sm:text-[26px] md:text-[36px] font-bold leading-tight mb-[20px] sm:mb-[25px] md:mb-[30px]">
+          <h1 id="article-title" class="text-[20px] sm:text-[26px] md:text-[36px] font-bold leading-tight mb-[20px] sm:mb-[25px] md:mb-[30px]">
             {post.data.title}
           </h1>
 
@@ -166,6 +184,15 @@ const howToSchemas = extractStepGroups(post.body ?? '').map((group) =>
           ">
             <Content />
           </div>
+
+          {faqSchema && (
+            <section id="faq" class="mt-[32px] sm:mt-[40px] md:mt-[56px]">
+              <h2 class="text-[21px] sm:text-[24px] md:text-[28px] font-bold border-l-[4px] border-navy pl-[12px] leading-[1.5]">
+                よくいただくご質問
+              </h2>
+              <FAQAccordion items={faqItems} variant="article" />
+            </section>
+          )}
 
           <RelatedPosts currentId={post.id} category={postCategory(post.data)} subcategory={post.data.subcategory} />
         </div>

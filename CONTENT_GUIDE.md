@@ -196,10 +196,16 @@ title: エアコンのガス漏れ修理｜原因・費用・対処法を完全�
 description: エアコンのガス漏れの原因、修理費用の相場、対処法をわかりやすく解説します。
 excerpt: エアコンのガス漏れの原因、修理費用の相場、対処法をわかりやすく解説します。
 publishedDate: 2026-06-01
+updatedDate: 2026-06-01
 category: electricity
 subcategory: エアコン
 image: /images/column/col_02.jpg
 imageAlt: エアコンの室外機を点検する技術者
+faq:
+  - question: "エアコンのガス漏れは自分で直せますか？"
+    answer: "冷媒の補充や配管の作業には資格と専用工具が必要だと本文で説明しているとおり、自分では対応できません。"
+  - question: "ガス漏れを疑うサインはどれですか？"
+    answer: "本文で挙げた、冷房が効かない・室外機の配管に霜がつく・運転しても風がぬるいといった症状が目安になります。"
 ---
 
 Write the full article here using Markdown.
@@ -225,6 +231,32 @@ More content...
 | `subcategory` | Yes | Text | Subcategory in Japanese (e.g., `エアコン`, `トイレ`) |
 | `image` | Yes | Path | Image path relative to `public/` (e.g., `/images/column/col_01.jpg`) |
 | `imageAlt` | Yes | Text | Image description for accessibility |
+| `updatedDate` | No | Date | Last-updated date in `YYYY-MM-DD` format; falls back to `publishedDate` |
+| `faq` | No | List | Optional Q&A pairs, each with `question` and `answer` |
+
+### The `faq` field
+
+When present, the `faq` list renders a 「よくいただくご質問」 accordion after the
+article body (before the related posts) and emits `FAQPage` structured data so
+search and AI answer engines can cite the answers.
+
+Rules:
+
+- **Every answer must be supported by the article's own body text.** Never
+  introduce new facts, prices, procedures, or safety claims that the article does
+  not already state — the FAQ restates the article, it does not extend it.
+- Write the question the way a reader would search for it, and answer it in the
+  first sentence.
+- 2–4 pairs is the useful range. Omit the field entirely when the article has no
+  genuine questions to answer; an empty `faq: []` renders nothing.
+- Both `question` and `answer` are required on every entry, and neither may be
+  blank or whitespace-only. A missing or empty one fails the build and names the
+  file.
+- **Wrap both `question` and `answer` in double quotes.** YAML treats an
+  unquoted value specially when it contains an ASCII colon-space (`": "`) or
+  starts with `#`, `*`, `-`, `>`, `|`, `[`, or `{` — the article then fails to
+  parse. Quoting sidesteps all of it. (A double quote inside the text must be
+  escaped as `\"`; Japanese 「」 need no escaping.)
 
 ### Adding a blog image
 

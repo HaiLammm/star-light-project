@@ -75,6 +75,8 @@ export interface ArticleInput {
   /** Đường dẫn ảnh; tương đối hay tuyệt đối đều được, hàm sẽ tự absolute hóa. */
   image?: string;
   modifiedDate?: string;
+  /** Selector CSS trỏ tới đoạn đáng đọc to; phải khớp đúng 1 element trong DOM đã render. */
+  speakableSelectors?: string[];
 }
 
 interface OpeningHoursSpecificationSchema {
@@ -179,6 +181,11 @@ interface ImageObjectSchema {
   url: string;
 }
 
+interface SpeakableSpecificationSchema {
+  '@type': 'SpeakableSpecification';
+  cssSelector: string[];
+}
+
 export interface ArticleSchema {
   '@context': SchemaContext;
   '@type': 'Article';
@@ -208,6 +215,7 @@ export interface ArticleSchema {
   };
   mainEntityOfPage: string;
   image?: string[];
+  speakable?: SpeakableSpecificationSchema;
 }
 
 export interface HowToInput {
@@ -356,7 +364,13 @@ export function generateService(service: ServiceInput): ServiceSchema {
   };
 }
 
-export function generateFAQ(items: FAQItem[]): FAQPageSchema {
+/**
+ * FAQPage với `mainEntity` rỗng là markup không hợp lệ với Google, nên guard nằm
+ * ngay trong generator: không caller nào có thể phát ra schema rỗng.
+ */
+export function generateFAQ(items: FAQItem[]): FAQPageSchema | null {
+  if (items.length === 0) return null;
+
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'FAQPage',
@@ -528,6 +542,14 @@ export function generateArticle(post: ArticleInput): ArticleSchema {
     },
     mainEntityOfPage: withTrailingSlash(post.url),
     ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
+    ...(post.speakableSelectors && post.speakableSelectors.length > 0
+      ? {
+          speakable: {
+            '@type': 'SpeakableSpecification' as const,
+            cssSelector: post.speakableSelectors,
+          },
+        }
+      : {}),
   };
 }
 

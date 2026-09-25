@@ -6,19 +6,40 @@ interface FAQItem {
 
 interface Props {
   items: FAQItem[];
+  /**
+   * `default`: section full-width của trang dịch vụ/trang chủ (giữ nguyên như cũ).
+   * `article`: đặt trong cột bài viết — bỏ padding/max-width thừa và nâng cỡ chữ
+   * cho khớp prose xung quanh, vì 11px tiếng Nhật giữa bài là quá nhỏ để đọc.
+   */
+  variant?: 'default' | 'article';
 }
 
-const { items } = Astro.props;
+const { items, variant = 'default' } = Astro.props;
+
+const ROOT_CLASS = {
+  default: 'max-w-[920px] mx-auto mt-[8px] sm:mt-[10px] md:mt-[20px] px-3 sm:px-0',
+  article: 'mt-[8px] sm:mt-[10px] md:mt-[20px]',
+} as const;
+
+const QUESTION_CLASS = {
+  default: 'grow text-[13px] sm:text-[15px] md:text-[22px] font-bold mt-[2px] sm:mt-[4px] md:mt-[8px] min-w-0 break-words',
+  article: 'grow text-[16px] sm:text-[17px] md:text-[19px] font-bold mt-[2px] sm:mt-[4px] md:mt-[8px] min-w-0 break-words',
+} as const;
+
+const ANSWER_CLASS = {
+  default: 'grow min-w-0 text-[11px] sm:text-[12px] md:text-[14px] leading-[1.57] mt-[2px] sm:mt-[4px] md:mt-[8px] break-words',
+  article: 'grow min-w-0 text-[16px] md:text-[17px] leading-[1.85] mt-[2px] sm:mt-[4px] md:mt-[8px] break-words',
+} as const;
 ---
 
-<div class="max-w-[920px] mx-auto mt-[8px] sm:mt-[10px] md:mt-[20px] px-3 sm:px-0">
+<div class={ROOT_CLASS[variant]}>
   {items.map((item) => (
     <details class="group border-b border-dotted border-border-warm py-[10px] sm:py-[14px] md:py-[20px]">
       <summary class="flex items-start gap-[8px] sm:gap-[10px] md:gap-[15px] cursor-pointer list-none [&::-webkit-details-marker]:hidden min-h-[40px] sm:min-h-[44px]">
         <span class="shrink-0 w-[30px] sm:w-[36px] md:w-[50px] aspect-square rounded-full bg-water text-white font-[Roboto_Condensed] text-[16px] sm:text-[22px] md:text-[32px] font-semibold flex items-center justify-center flex-shrink-0">
           Q
         </span>
-        <p class="grow text-[13px] sm:text-[15px] md:text-[22px] font-bold mt-[2px] sm:mt-[4px] md:mt-[8px] min-w-0 break-words">
+        <p class={QUESTION_CLASS[variant]}>
           {item.question}
         </p>
         <span class="shrink-0 w-[16px] sm:w-[20px] md:w-[24px] aspect-square relative mt-[6px] sm:mt-[10px] md:mt-[14px] flex-shrink-0">
@@ -30,7 +51,7 @@ const { items } = Astro.props;
         <span class="shrink-0 w-[30px] sm:w-[36px] md:w-[50px] aspect-square flex items-center justify-center font-[Roboto_Condensed] text-[18px] sm:text-[26px] md:text-[36px] font-semibold text-water flex-shrink-0">
           A
         </span>
-        <p class="grow min-w-0 text-[11px] sm:text-[12px] md:text-[14px] leading-[1.57] mt-[2px] sm:mt-[4px] md:mt-[8px] break-words">
+        <p class={ANSWER_CLASS[variant]}>
           {item.answer}
         </p>
       </div>
