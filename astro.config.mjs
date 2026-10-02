@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { rehypeArticleImages } from './src/utils/rehypeArticleImages.mjs';
+import { remarkStripLegacyAreaBlock } from './src/utils/remarkStripLegacyAreaBlock.mjs';
 import { SITE_CONFIG } from './src/config/site';
 
 // Build a URL→lastmod map from blog frontmatter so sitemap entries get
@@ -44,6 +45,7 @@ export default defineConfig({
     },
   },
   markdown: {
+    remarkPlugins: [remarkStripLegacyAreaBlock],
     rehypePlugins: [rehypeArticleImages],
   },
   vite: {
