@@ -110,8 +110,8 @@ export const REGIONAL_OFFICES: RegionalOffice[] = [
     formattedAddress: '〒311-2113 茨城県鉾田市上幡木1418-35',
     geo: { latitude: 36.080685, longitude: 140.602325 },
     phone: SITE_PHONE,
-    areaServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
-    prefecturesServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県'],
+    areaServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県', '栃木県'],
+    prefecturesServed: ['東京都', '神奈川県', '埼玉県', '千葉県', '茨城県', '栃木県'],
   },
   {
     key: 'osaka',

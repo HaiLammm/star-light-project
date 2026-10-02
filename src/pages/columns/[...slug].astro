@@ -9,6 +9,7 @@ import { BLOG_CATEGORY_COLOR_MAP, postCategory } from '../../data/blogData';
 import { generateArticle, generateFAQ, generateHowTo, serializeJsonLd } from '../../utils/schema';
 import type { FAQItem } from '../../utils/schema';
 import FAQAccordion from '../../components/FAQAccordion.astro';
+import ArticleAreaBox from '../../components/ArticleAreaBox.astro';
 import { extractStepGroups } from '../../utils/articleSteps';
 import { SITE_CONFIG } from '@config/site';
 import { resolveImage } from '../../utils/imageImports';
@@ -184,6 +185,8 @@ const howToSchemas = extractStepGroups(post.body ?? '').map((group) =>
           ">
             <Content />
           </div>
+
+          <ArticleAreaBox />
 
           {faqSchema && (
             <section id="faq" class="mt-[32px] sm:mt-[40px] md:mt-[56px]">

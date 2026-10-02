@@ -1,0 +1,54 @@
+---
+import { REGIONAL_OFFICES, SITE_CONFIG } from '@config/site';
+
+// Khối "về 設備プロ" cuối mỗi bài cột. Trước đây biên tập viên dán tay một đoạn
+// 対応エリア vào thân bài trên cockpit, và đoạn đó bỏ sót toàn bộ 関西. Dẫn xuất thẳng
+// từ REGIONAL_OFFICES — cùng nguồn với AreaMap và LocalBusiness schema — để mọi bài
+// luôn nói đúng khu vực mà không ai phải sửa từng bài.
+const kanto = REGIONAL_OFFICES.find((o) => o.key === 'kanto');
+const kansaiPrefs = REGIONAL_OFFICES.filter((o) => o.key !== 'kanto').flatMap(
+  (o) => o.prefecturesServed
+);
+
+const regions = [
+  { name: '関東エリア', prefs: kanto?.prefecturesServed ?? [] },
+  { name: '関西エリア', prefs: [...new Set(kansaiPrefs)] },
+];
+---
+
+<aside
+  aria-labelledby="article-area-box-title"
+  class="mt-[32px] sm:mt-[40px] rounded-[16px] bg-cream border border-border-warm p-[18px_18px] sm:p-[24px_28px]"
+>
+  <p id="article-area-box-title" class="font-black text-navy text-[17px] sm:text-[19px]">
+    {SITE_CONFIG.companyName}について
+  </p>
+  <p class="mt-[8px] text-[14px] sm:text-[15px] leading-[1.8] text-[#333]">
+    電気設備・水まわり設備のトラブルに、{SITE_CONFIG.businessHours}対応しています。
+  </p>
+
+  <dl class="mt-[14px] flex flex-col gap-[10px]">
+    {regions.map((region) => (
+      <div class="flex flex-col sm:flex-row sm:gap-[12px]">
+        <dt class="shrink-0 font-bold text-navy text-[14px] sm:text-[15px] sm:w-[90px]">{region.name}</dt>
+        <dd class="text-[14px] sm:text-[15px] leading-[1.7] text-[#333]">{region.prefs.join('・')}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <div class="mt-[16px] flex flex-col sm:flex-row sm:items-center gap-[10px] sm:gap-[20px]">
+    <a
+      href={SITE_CONFIG.phone.href}
+      aria-label={SITE_CONFIG.phone.ariaLabel}
+      class="inline-flex items-center min-h-[44px] font-black text-navy text-[18px] sm:text-[20px] font-[Roboto] hover:text-water"
+    >
+      TEL {SITE_CONFIG.phone.display}
+    </a>
+    <a href="/contact/" class="inline-flex items-center min-h-[44px] text-[14px] sm:text-[15px] font-bold text-water hover:underline">
+      無料相談フォームで相談する
+    </a>
+    <a href="/company/office/" class="inline-flex items-center min-h-[44px] text-[14px] sm:text-[15px] font-bold text-water hover:underline">
+      営業所一覧・対応エリア
+    </a>
+  </div>
+</aside>
